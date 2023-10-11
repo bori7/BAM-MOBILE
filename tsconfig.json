@@ -1,0 +1,17 @@
+{
+  // "extends": "expo/tsconfig.base",
+  "extends": "@tsconfig/react-native/tsconfig.json",
+  "compilerOptions": {
+    "strict": true,
+    "jsx": "react"
+    // "baseUrl": ".",
+    // "paths": {
+    //   "@screens/*": ["screens/*"],
+    //   "@services/*": ["services/*"],
+    //   "@pages/*": ["pages/*"],
+    //   "@shared/*": ["shared/*"],
+    //   "@navigation/*": ["navigation/*"],
+    //   "@components/*": ["components/*"]
+    // }
+  }
+}

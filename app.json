@@ -1,0 +1,39 @@
+{
+  "expo": {
+    "name": "bible-app",
+    "slug": "bible-app",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./shared/assets/images/png/rvlogo.png",
+    "scheme": "myapp",
+    "userInterfaceStyle": "automatic",
+    "splash": {
+      "image": "./shared/assets/images/png/splash.png",
+      "resizeMode": "cover",
+      "backgroundColor": "#ffffff"
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": ["**/*"],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.boriios.FaceVer"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./shared/assets/images/png/rvlogo.png",
+        "backgroundColor": "#ffffff"
+      },
+      "package": "com.boriios.FaceVer"
+    },
+    "web": {
+      "favicon": "./shared/assets/images/jpeg/png/rvlogo.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "96a777af-6edd-4f86-b788-06530dae704e"
+      }
+    }
+  }
+}
