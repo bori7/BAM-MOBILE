@@ -26,7 +26,10 @@ export const COLORS = {
     colorThree: "#E0457B",
     colorFour: "#000",
     colorFive: "rgba(255, 255, 255, 0.40)",
-    colorSix: "#94A1AD",
+    greyText: "rgba(35, 35, 35, 0.4)",
+    deepGreyColor: "#838384",
+    deeperGreyColor: "#646464",
+    hashBackGround: "#F5F3F3",
     colorSeven: "rgba(113, 135, 156, 0.10)",
     colorSeven10: "rgba(113, 135, 156, 0.10)",
     colorEight: "#FEFAF7",
@@ -80,6 +83,8 @@ export const IMAGES = {
   splashScreen3: require("../shared/assets/images/png/splash-screen-image-3.png"),
   bamSplashScreen: require("../shared/assets/images/png/bam-splash-screen.png"),
   logoDailyAnswer: require("../shared/assets/images/png/Logo-Daily-Answer.png"),
+  googleLogo: require("../shared/assets/images/png/google.png"),
+  facebookLogo: require("../shared/assets/images/png/facebook.png"),
 };
 
 export const IconBottomBar = {};
