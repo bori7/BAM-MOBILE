@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Image, Text, StyleSheet, ImageBackground } from "react-native";
 import { COLORS, IMAGES } from "../../constants/Colors";
-import RiseLogoSVG from "../../shared/assets/images/svg/riselogo.svg";
+import BAMLogoSVG from "../../shared/assets/images/png/Logo-Daily-Answer.png";
 
 function CustomToast({ toast }: any) {
   return (
@@ -19,11 +19,7 @@ function CustomToast({ toast }: any) {
       <ImageBackground style={styles.toastContainer} source={IMAGES.HomeBg}>
         <View style={styles.toastBody}>
           <View style={styles.toastImage}>
-            <RiseLogoSVG
-              fill={COLORS.Light.background}
-              width={15}
-              height={15}
-            />
+            <BAMLogoSVG fill={COLORS.Light.background} width={15} height={15} />
           </View>
           <Text style={styles.toastHeaderText}>Bible App</Text>
         </View>

@@ -46,29 +46,29 @@ export default function Wrapper({ child }: props) {
     }
   };
 
-  const userState = useSelector((state: RootState) => state.user);
-  const { userError, userMessage, userData } = userState;
+  // const userState = useSelector((state: RootState) => state.user);
+  // const { userError, userMessage, userData } = userState;
 
-  const planState = useSelector((state: RootState) => state.plan);
-  const { planError, planMessage } = planState;
+  // const planState = useSelector((state: RootState) => state.plan);
+  // const { planError, planMessage } = planState;
 
-  const dispatch = useDispatch<AppDispatch>();
+  // const dispatch = useDispatch<AppDispatch>();
 
-  useEffect(() => {
-    if (userError !== null) {
-      Toaster("error", userError?.message, () => {});
-    }
-    if (userMessage) {
-      Toaster("success", userMessage, () => {});
-    }
+  // useEffect(() => {
+  //   if (userError !== null) {
+  //     Toaster("error", userError?.message, () => {});
+  //   }
+  //   if (userMessage) {
+  //     Toaster("success", userMessage, () => {});
+  //   }
 
-    if (planError !== null) {
-      Toaster("error", planError?.message, () => {});
-    }
-    if (planMessage) {
-      Toaster("success", planMessage, () => {});
-    }
-  }, [userError, userMessage, planError, planMessage]);
+  //   if (planError !== null) {
+  //     Toaster("error", planError?.message, () => {});
+  //   }
+  //   if (planMessage) {
+  //     Toaster("success", planMessage, () => {});
+  //   }
+  // }, [userError, userMessage, planError, planMessage]);
 
   useEffect(() => {}, []);
 

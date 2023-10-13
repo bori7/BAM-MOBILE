@@ -51,7 +51,7 @@ const MainButton: React.FC<MainButtonContainer> = ({
 const styles = StyleSheet.create({
   button: {
     width: "100%",
-    borderRadius: 15,
+    borderRadius: 30,
     height: 50,
     alignItems: "center",
     justifyContent: "center",

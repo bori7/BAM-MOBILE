@@ -9,7 +9,7 @@ import { MoreRoutes, MoreParamList } from "./routerMore";
 export enum RootRoutes {
   Auth = "AuthStack",
   Main = "MainStack",
-  Devotional = "Devotionaltack",
+  Devotional = "DevotionalStack",
   More = "MoreStack",
   Search = "SearchStack",
 }

@@ -18,9 +18,9 @@ const RootStackApp = (): React.ReactElement => {
       <RootStack.Screen component={MainStack} name={RootRoutes.Main} />
       <RootStack.Screen
         component={DevotionalStack}
-        name={RootRoutes.DevotionalStack}
+        name={RootRoutes.Devotional}
       />
-      <RootStack.Screen component={SearchStack} name={RootRoutes.FundWallet} />
+      <RootStack.Screen component={SearchStack} name={RootRoutes.Search} />
     </RootStack.Navigator>
   );
 };

@@ -21,11 +21,11 @@ export default {
 export const COLORS = {
   Light: {
     background: "#fff",
-    colorOne: "#0898A0",
+    colorOne: "#DC3868",
     colorTwo: "#0898A0",
     colorThree: "#E0457B",
     colorFour: "#000",
-    colorFive: "#8B9EAB",
+    colorFive: "rgba(255, 255, 255, 0.40)",
     colorSix: "#94A1AD",
     colorSeven: "rgba(113, 135, 156, 0.10)",
     colorSeven10: "rgba(113, 135, 156, 0.10)",
@@ -70,6 +70,16 @@ export const SIZES = {
   sizeEleven: 40,
 };
 
-export const IMAGES = {};
+export const IMAGES = {
+  devotionalSample1: require("../shared/assets/images/png/devotional-sample-picture-1.png"),
+  devotionalSample2: require("../shared/assets/images/png/devotional-sample-picture-2.png"),
+  devotionalSample3: require("../shared/assets/images/png/devotional-sample-picture-3.png"),
+  devotionalSample4: require("../shared/assets/images/png/devotional-sample-picture-4.png"),
+  splashScreen1: require("../shared/assets/images/png/splash-screen-image1.png"),
+  splashScreen2: require("../shared/assets/images/png/splash-screen-image-2.png"),
+  splashScreen3: require("../shared/assets/images/png/splash-screen-image-3.png"),
+  bamSplashScreen: require("../shared/assets/images/png/bam-splash-screen.png"),
+  logoDailyAnswer: require("../shared/assets/images/png/Logo-Daily-Answer.png"),
+};
 
 export const IconBottomBar = {};
