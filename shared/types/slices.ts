@@ -25,3 +25,25 @@ export interface UserDataType {
   password?: string;
   isRiseUserKey?: string;
 }
+
+export interface InitialScreenNotificationStateType {
+  notificationData: NotificationDataType | null;
+  notificationLoading: boolean;
+  notificationError: InitialUserErrorType | null;
+  notificationMessage: string;
+  notificationFunction: () => void;
+
+  screenData: ScreenDataType | null;
+  screenLoading: boolean;
+  screenError: InitialUserErrorType | null;
+  screenMessage: string;
+  screenFunction: () => void;
+}
+
+export interface NotificationDataType {
+  duration: number;
+}
+
+export interface ScreenDataType {
+  duration: number;
+}

@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Text, View } from "../../../components/Themed";
 import { AuthProps, AuthRoutes } from "../../../shared/const/routerAuth";
 import { COLORS, IMAGES, SIZES } from "../../../constants/Colors";
@@ -15,10 +15,14 @@ import { MainButton } from "../../../components";
 import CancelIcon from "../../../shared/assets/images/svg/iconoir_cancel.svg";
 import { TextInput } from "react-native-paper";
 import AppleLogo from "../../../shared/assets/images/svg/Apple.svg";
+import { useDispatch, useSelector } from "react-redux";
+import { screenNotificationActions } from "../../../store/slices/notification";
+import { AppDispatch, RootState } from "../../../store";
 
 type NavigationProps = AuthProps<AuthRoutes.SignUp>;
 
 const SignUp: React.FC<NavigationProps> = ({ navigation }) => {
+  const dispatch = useDispatch<AppDispatch>();
   const [email, setEmail] = useState<string>("");
   const [username, setUsername] = useState<string>("");
   const [fullName, setFullName] = useState<string>("");
@@ -27,6 +31,20 @@ const SignUp: React.FC<NavigationProps> = ({ navigation }) => {
   const [allowEmailError, setAllowEmailError] = useState<boolean>(false);
   const [emailErrorText, setEmailErrorText] = useState<string>("");
   const [hidePassword, setHidePassword] = useState<boolean>(true);
+
+  const screenNotificationState = useSelector(
+    (state: RootState) => state.screenNotification
+  );
+  const { screenLoading } = screenNotificationState;
+
+  useEffect(() => {
+    if (screenLoading)
+      setTimeout(() => {
+        navigation?.replace(AuthRoutes.SignIn);
+        dispatch(screenNotificationActions.updateScreenLoading(false));
+      }, 2000);
+  }, [screenLoading]);
+
   return (
     <View style={styles.main}>
       <StatusBar barStyle="dark-content" />
@@ -204,7 +222,23 @@ const SignUp: React.FC<NavigationProps> = ({ navigation }) => {
               <MainButton
                 title={"Continue"}
                 onPressFunction={() => {
-                  navigation?.navigate(AuthRoutes.SignUp);
+                  // navigation?.navigate(AuthRoutes.SignUp);
+                  dispatch(
+                    screenNotificationActions.updateScreenLoadingFunc({
+                      screenLoading: true,
+                      screenFunction: () => {
+                        // console.log("Inside screen function");
+                        // dispatch(
+                        //   screenNotificationActions.updateScreenLoadingFunc({
+                        //     screenLoading: false,
+                        //     screenFunction: () => {},
+                        //   })
+                        // );
+                        // console.log("After screen function");
+                        // navigation?.navigate(AuthRoutes.SignIn);
+                      },
+                    })
+                  );
                 }}
                 err={false}
                 btnStyle={styles.r8t1}
@@ -233,7 +267,11 @@ const SignUp: React.FC<NavigationProps> = ({ navigation }) => {
             </View>
             <View style={styles.r7}>
               <Text style={styles.r7t1}>Already have an account? </Text>
-              <TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => {
+                  navigation?.navigate(AuthRoutes.SignIn);
+                }}
+              >
                 <Text style={styles.r7t2}> Sign In</Text>
               </TouchableOpacity>
             </View>
@@ -377,6 +415,6 @@ const styles = StyleSheet.create({
     width: "100%",
     backgroundColor: COLORS.Light.background,
     marginBottom: 8,
-    padding: 5,
+    padding: 2,
   },
 });

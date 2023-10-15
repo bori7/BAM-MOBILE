@@ -4,6 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { useToast } from "react-native-toast-notifications";
 import { RootState, AppDispatch } from "../../store";
 import { COLORS, SIZES } from "../../constants/Colors";
+import { CustomLoadingModal } from "./CustomLoadingModal";
+import { screenNotificationActions } from "../../store/slices/notification";
 
 type props = {
   child: any;
@@ -11,6 +13,8 @@ type props = {
 
 export default function Wrapper({ child }: props) {
   const toast = useToast();
+  const dispatch = useDispatch<AppDispatch>();
+  // const [visible, setVisible] = useState(true);
 
   const Toaster = (
     type = "success",
@@ -49,8 +53,10 @@ export default function Wrapper({ child }: props) {
   // const userState = useSelector((state: RootState) => state.user);
   // const { userError, userMessage, userData } = userState;
 
-  // const planState = useSelector((state: RootState) => state.plan);
-  // const { planError, planMessage } = planState;
+  const screenNotificationState = useSelector(
+    (state: RootState) => state.screenNotification
+  );
+  const { screenLoading, screenFunction } = screenNotificationState;
 
   // const dispatch = useDispatch<AppDispatch>();
 
@@ -81,6 +87,19 @@ export default function Wrapper({ child }: props) {
           keyboardVerticalOffset={5}
         >
           <View style={{ height: "100%", width: "100%" }}>{child}</View>
+          <CustomLoadingModal
+            visible={screenLoading}
+            closeModal={() => {
+              dispatch(
+                screenNotificationActions.updateScreenLoadingFunc({
+                  screenLoading: false,
+                  screenFunction: () => {},
+                })
+              );
+            }}
+            onDismissFunc={screenFunction}
+            onShowFunc={() => {}}
+          />
         </KeyboardAvoidingView>
       </View>
     </View>

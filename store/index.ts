@@ -1,9 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
 import logger from "redux-logger";
-import userReducer from "./slices/user";
+import { screenNotificationReducer } from "./slices/notification";
+import { userReducer } from "./slices/user";
 
 const rootReducer = {
   user: userReducer,
+  screenNotification: screenNotificationReducer,
 };
 
 export const store = configureStore({

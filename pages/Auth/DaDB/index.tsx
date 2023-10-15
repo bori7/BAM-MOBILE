@@ -11,10 +11,13 @@ import { Text, View } from "../../../components/Themed";
 import { AuthProps, AuthRoutes } from "../../../shared/const/routerAuth";
 import { COLORS, IMAGES, SIZES } from "../../../constants/Colors";
 import { MainButton } from "../../../components";
+import { useDispatch } from "react-redux";
+import { screenNotificationActions } from "../../../store/slices/notification";
 
 type NavigationProps = AuthProps<AuthRoutes.DaDB>;
 
 const DaBD: React.FC<NavigationProps> = ({ navigation }) => {
+  const dispatch = useDispatch();
   return (
     <View style={styles.main}>
       <StatusBar barStyle="light-content" />
@@ -55,6 +58,7 @@ const DaBD: React.FC<NavigationProps> = ({ navigation }) => {
               title={"Get Started"}
               onPressFunction={() => {
                 navigation?.navigate(AuthRoutes.DaSB);
+                // dispatch(screenNotificationActions.updateScreenLoading(true));
               }}
               err={false}
               btnStyle={styles.r6t}
