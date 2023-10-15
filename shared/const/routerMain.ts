@@ -1,7 +1,7 @@
 import { StackNavigationProp, StackScreenProps } from "@react-navigation/stack";
 
 export enum MainRoutes {
-  Home = "Home",
+  HomeScreen = "HomeScreen",
   EditImage = "EditImage",
   Success = "Success",
   SelectImage = "SelectImage",
@@ -9,7 +9,7 @@ export enum MainRoutes {
 }
 
 export type MainParamList = {
-  [MainRoutes.Home]: undefined;
+  [MainRoutes.HomeScreen]: undefined;
   [MainRoutes.EditImage]: undefined;
   [MainRoutes.SelectImage]: undefined;
   [MainRoutes.VerseOfTheDay]: undefined;

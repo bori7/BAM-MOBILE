@@ -21,7 +21,7 @@ import { AppDispatch, RootState } from "../../../store";
 
 type NavigationProps = AuthProps<AuthRoutes.SignUp>;
 
-const SignUp: React.FC<NavigationProps> = ({ navigation }) => {
+const SignUp: React.FC<NavigationProps> = ({ navigation, route }) => {
   const dispatch = useDispatch<AppDispatch>();
   const [email, setEmail] = useState<string>("");
   const [username, setUsername] = useState<string>("");
@@ -38,10 +38,10 @@ const SignUp: React.FC<NavigationProps> = ({ navigation }) => {
   const { screenLoading } = screenNotificationState;
 
   useEffect(() => {
-    if (screenLoading)
-      setTimeout(() => {
+    if (screenLoading && route.name === "SignUp")
+      setTimeout(async () => {
+        await dispatch(screenNotificationActions.updateScreenLoading(false));
         navigation?.replace(AuthRoutes.SignIn);
-        dispatch(screenNotificationActions.updateScreenLoading(false));
       }, 2000);
   }, [screenLoading]);
 

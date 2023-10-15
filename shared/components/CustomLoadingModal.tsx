@@ -6,10 +6,11 @@ import {
   StyleSheet,
   TouchableOpacity,
   TouchableWithoutFeedback,
-  ActivityIndicator,
+  // ActivityIndicator,
 } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import { COLORS, IMAGES, SIZES } from "../../constants/Colors";
+import { ActivityIndicator } from "react-native-paper";
 // import { ActivityIndicator } from "react-native-paper";
 
 type ICustomLoadingProps = {

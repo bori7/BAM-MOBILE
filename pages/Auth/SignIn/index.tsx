@@ -18,10 +18,20 @@ import AppleLogo from "../../../shared/assets/images/svg/Apple.svg";
 import { useDispatch, useSelector } from "react-redux";
 import { screenNotificationActions } from "../../../store/slices/notification";
 import { AppDispatch, RootState } from "../../../store";
+import {
+  CommonActions,
+  CompositeScreenProps,
+  useFocusEffect,
+} from "@react-navigation/native";
+import { RootRoutes, RootScreenProps } from "../../../shared/const/routerRoot";
+import { MainRoutes } from "../../../shared/const/routerMain";
 
-type NavigationProps = AuthProps<AuthRoutes.SignIn>;
+type NavigationProps = CompositeScreenProps<
+  AuthProps<AuthRoutes.SignIn>,
+  RootScreenProps<RootRoutes.Main>
+>;
 
-const SignIn: React.FC<NavigationProps> = ({ navigation }) => {
+const SignIn: React.FC<NavigationProps> = ({ navigation, route }) => {
   const dispatch = useDispatch<AppDispatch>();
   const [email, setEmail] = useState<string>("");
   const [username, setUsername] = useState<string>("");
@@ -37,13 +47,25 @@ const SignIn: React.FC<NavigationProps> = ({ navigation }) => {
   );
   const { screenLoading } = screenNotificationState;
 
-  // useEffect(() => {
-  //   if (screenLoading)
-  //     setTimeout(() => {
-  //       navigation?.replace(AuthRoutes.SignIn);
-  //       dispatch(screenNotificationActions.updateScreenLoading(false));
-  //     }, 2000);
-  // }, [screenLoading]);
+  const resetAction = CommonActions.reset({
+    index: 1,
+    routes: [
+      {
+        name: RootRoutes.Main,
+        params: {
+          screen: MainRoutes.HomeScreen,
+        },
+      },
+    ],
+  });
+
+  useFocusEffect(() => {
+    if (screenLoading)
+      setTimeout(async () => {
+        await dispatch(screenNotificationActions.updateScreenLoading(false));
+        navigation?.dispatch(resetAction);
+      }, 2000);
+  });
 
   return (
     <View style={styles.main}>
@@ -146,9 +168,14 @@ const SignIn: React.FC<NavigationProps> = ({ navigation }) => {
               />
             </View>
 
-            <View style={styles.fp}>
+            <TouchableOpacity
+              style={styles.fp}
+              onPress={() => {
+                navigation?.navigate(AuthRoutes.ForgotPassword);
+              }}
+            >
               <Text style={styles.fpt}>Forgot Password?</Text>
-            </View>
+            </TouchableOpacity>
             <View style={styles.r8}>
               <MainButton
                 title={"Continue"}
@@ -293,7 +320,11 @@ const styles = StyleSheet.create({
   },
   r8t1: {},
   fp: {
-    marginVertical: 10,
+    marginTop: 10,
+    marginBottom: 30,
+    // borderWidth: 1,
+    width: "100%",
+    alignItems: "flex-end",
   },
   fpt: {
     color: COLORS.Light.deepGreyColor,
