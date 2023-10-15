@@ -63,7 +63,11 @@ const GFA: React.FC<NavigationProps> = ({ navigation }) => {
             />
             <View style={styles.r7}>
               <Text style={styles.r7t1}>Already have an account? </Text>
-              <TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => {
+                  navigation?.navigate(AuthRoutes.SignIn);
+                }}
+              >
                 <Text style={styles.r7t2}> Sign In</Text>
               </TouchableOpacity>
             </View>
