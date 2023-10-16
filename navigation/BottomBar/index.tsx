@@ -2,53 +2,91 @@ import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Platform, StyleSheet } from "react-native";
 import { COLORS, SIZES } from "../../constants/Colors";
-import Home from "../../pages/Main/Home";
 import { TabOptions } from "../../shared/const/routerBottomBar";
 import { View, Text } from "../../components/Themed";
-
 import { Octicons } from "@expo/vector-icons";
+import HomeIcon from "../../shared/assets/images/svg/home_icon.svg";
+import DevotionalIcon from "../../shared/assets/images/svg/devotional_icon.svg";
+import NotesIcon from "../../shared/assets/images/svg/notes_icon.svg";
+import SearchIcon from "../../shared/assets/images/svg/search_icon.svg";
+import MoreIcon from "../../shared/assets/images/svg/more_icon.svg";
+import { Home } from "../../pages/Main";
+import { ContentDevotional } from "../../pages/Devotional";
+import { MoreMain, Notes } from "../../pages/More";
+import { SearchMain } from "../../pages/Search";
 
 const Tab = createBottomTabNavigator();
 
 const TAB_OPTIONS: TabOptions = {
   Home: {
     label: "Home",
-
     icon: ({ color }: { color: string }) => {
-      return <></>;
+      return (
+        <>
+          <HomeIcon fill={color} />
+        </>
+      );
     },
     component: Home as React.FC,
   },
-  Bible: {
-    label: "Bible",
+
+  Devotional: {
+    label: "Devotional",
 
     icon: ({ color }: { color: string }) => {
-      return <></>;
+      return (
+        <>
+          <DevotionalIcon fill={color} />
+        </>
+      );
     },
-    component: Home as React.FC,
+    component: ContentDevotional as React.FC,
   },
-  Devotioanl: {
-    label: "Devotioanl",
+  // Bible: {
+  //   label: "Bible",
+
+  //   icon: ({ color }: { color: string }) => {
+  //     return <>
+  //     </>;
+  //   },
+  //   component: Home as React.FC,
+  // },
+
+  Notes: {
+    label: "Notes",
 
     icon: ({ color }: { color: string }) => {
-      return <></>;
+      return (
+        <>
+          <NotesIcon stroke={color} />
+        </>
+      );
     },
-    component: Home as React.FC,
+    component: Notes as React.FC,
   },
+
   Search: {
     label: "Search",
 
     icon: ({ color }: { color: string }) => {
-      return <></>;
+      return (
+        <>
+          <SearchIcon stroke={color} />
+        </>
+      );
     },
-    component: Home as React.FC,
+    component: SearchMain as React.FC,
   },
   More: {
     label: "More",
     icon: ({ color }: { color: string }) => {
-      return <></>;
+      return (
+        <>
+          <MoreIcon fill={color} />
+        </>
+      );
     },
-    component: Home as React.FC,
+    component: MoreMain as React.FC,
   },
 };
 
@@ -67,15 +105,19 @@ const BottomTabNavigator = (): React.ReactElement => {
             ]}
           >
             <CompToRender
-              color={focused ? COLORS.Light.colorOne : COLORS.Light.colorSix}
+              color={
+                focused ? COLORS.Light.colorOne : COLORS.Light.deeperGreyColor
+              }
             />
           </View>
 
           <Text
             style={{
-              color: focused ? COLORS.Light.colorOne : COLORS.Light.colorFour,
-              fontSize: SIZES.sizeSix,
-              fontWeight: "200",
+              color: focused
+                ? COLORS.Light.colorOne
+                : COLORS.Light.deeperGreyColor,
+              fontSize: SIZES.sizeFiveB,
+              fontWeight: "400",
             }}
           >
             {focused ? (
@@ -124,7 +166,7 @@ const styles = StyleSheet.create({
   containerItem: {
     alignItems: "center",
     gap: 8,
-    marginBottom: Platform.OS === "android" ? 10 : 15,
+    marginBottom: Platform.OS === "android" ? 20 : 25,
   },
   containerIcon: {
     height: 30,
