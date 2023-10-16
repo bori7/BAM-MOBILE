@@ -9,7 +9,6 @@ import {
 
 import React, { useEffect, useState } from "react";
 import { Text, View } from "../../../components/Themed";
-import { AuthProps, AuthRoutes } from "../../../shared/const/routerAuth";
 import { COLORS, IMAGES, SIZES } from "../../../constants/Colors";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../store";
@@ -18,8 +17,9 @@ import { Entypo, SimpleLineIcons } from "@expo/vector-icons";
 import MidDoubleTick from "../../../shared/assets/images/svg/mdi_check_all.svg";
 import SolidPray from "../../../shared/assets/images/svg/fa_solid_pray.svg";
 import { OptionsPopUp } from "./OptionsPopUp";
+import { MainProps, MainRoutes } from "../../../shared/const/routerMain";
 
-type NavigationProps = AuthProps<AuthRoutes.SignUp>;
+type NavigationProps = MainProps<MainRoutes.HomeScreen>;
 
 const Home: React.FC<NavigationProps> = ({ navigation, route }) => {
   const dispatch = useDispatch<AppDispatch>();
@@ -50,7 +50,11 @@ const Home: React.FC<NavigationProps> = ({ navigation, route }) => {
           >
             <View style={styles.v1}>
               <Text style={styles.v1t1}>Verse of the Day</Text>
-              <TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => {
+                  navigation?.navigate(MainRoutes.VerseOfTheDay);
+                }}
+              >
                 <Text style={styles.v1t2}>
                   Blessed are they which do hunger and thirst after
                   righteousness: for they shall be filled.
