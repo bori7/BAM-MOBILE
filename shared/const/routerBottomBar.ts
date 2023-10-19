@@ -6,6 +6,7 @@ export enum Tabs {
   Search = "Search",
   More = "More",
   Bible = "Bible",
+  Notes = "Notes",
 }
 
 export type TabsNavigatorParamList = {
@@ -14,6 +15,7 @@ export type TabsNavigatorParamList = {
   [Tabs.Search]: undefined;
   [Tabs.More]: undefined;
   [Tabs.Bible]: undefined;
+  [Tabs.Notes]: undefined;
 };
 
 export type TabsScreenProps<RouteName extends Tabs> = StackScreenProps<

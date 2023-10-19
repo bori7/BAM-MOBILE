@@ -11,7 +11,6 @@ import GivingHistory from "../../pages/More/GivingHistory";
 import Highlights from "../../pages/More/Highlights";
 import ImageDesigns from "../../pages/More/ImageDesigns";
 import MoreMain from "../../pages/More/MoreMain";
-import Notes from "../../pages/More/Notes";
 import Notifications from "../../pages/More/Notifications";
 import Prayer from "../../pages/More/Prayer";
 import Profile from "../../pages/More/Profile";
@@ -35,7 +34,6 @@ export {
   Highlights,
   ImageDesigns,
   MoreMain,
-  Notes,
   Notifications,
   Prayer,
   Profile,

@@ -27,8 +27,8 @@ import { RootRoutes, RootScreenProps } from "../../../shared/const/routerRoot";
 import { MainRoutes } from "../../../shared/const/routerMain";
 
 type NavigationProps = CompositeScreenProps<
-  AuthProps<AuthRoutes.SignIn>,
-  RootScreenProps<RootRoutes.Main>
+  RootScreenProps<RootRoutes.Main>,
+  AuthProps<AuthRoutes.SignIn>
 >;
 
 const SignIn: React.FC<NavigationProps> = ({ navigation, route }) => {

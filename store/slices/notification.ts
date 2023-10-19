@@ -10,7 +10,7 @@ const initialScreenNotificationState: InitialScreenNotificationStateType = {
   notificationLoading: false,
   notificationError: null,
   notificationMessage: "",
-  notifcationFunction: () => {},
+  notificationFunction: () => {},
 
   screenData: null,
   screenLoading: false,

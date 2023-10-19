@@ -6,6 +6,7 @@ import { RootState, AppDispatch } from "../../store";
 import { COLORS, SIZES } from "../../constants/Colors";
 import { CustomLoadingModal } from "./CustomLoadingModal";
 import { screenNotificationActions } from "../../store/slices/notification";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 type props = {
   child: any;

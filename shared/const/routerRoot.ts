@@ -5,6 +5,7 @@ import { AuthRoutes, AuthParamList } from "./routerAuth";
 import { SearchRoutes, SearchParamList } from "./routerSearch";
 import { MainParamList, MainRoutes } from "./routerMain";
 import { MoreRoutes, MoreParamList } from "./routerMore";
+import { NotesParamList, NotesRoutes } from "./routerNotes";
 
 export enum RootRoutes {
   Auth = "AuthStack",
@@ -12,6 +13,7 @@ export enum RootRoutes {
   Devotional = "DevotionalStack",
   More = "MoreStack",
   Search = "SearchStack",
+  Notes = "NotesStack",
 }
 
 export type RootParamList = {
@@ -31,6 +33,10 @@ export type RootParamList = {
   [RootRoutes.Search]?: {
     screen: SearchRoutes;
   };
+  [RootRoutes.Notes]?: {
+    screen: NotesRoutes;
+    params: any | undefined;
+  };
 };
 
 export type RootScreenProps<RouteName extends RootRoutes> = StackScreenProps<
@@ -44,6 +50,7 @@ export type RootNavigationProps = StackNavigationProp<
     SearchParamList &
     DevotionalParamList &
     MoreParamList &
+    NotesParamList &
     MainParamList
 >;
 
@@ -53,6 +60,7 @@ const screens = {
   ...MainRoutes,
   ...MoreRoutes,
   ...SearchRoutes,
+  ...NotesRoutes,
 };
 
 export type ScreensType = typeof screens;

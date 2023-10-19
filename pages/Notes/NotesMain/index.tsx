@@ -9,23 +9,35 @@ import React, { useEffect, useState } from "react";
 import { Text, View } from "../../../components/Themed";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../store";
+import { NotesProps, NotesRoutes } from "../../../shared/const/routerNotes";
 import { COLORS, SIZES } from "../../../constants/Colors";
 import { AntDesign, Feather } from "@expo/vector-icons";
 import { CompositeScreenProps, useFocusEffect } from "@react-navigation/native";
 import { RootScreenProps, RootRoutes } from "../../../shared/const/routerRoot";
-import { SearchProps, SearchRoutes } from "../../../shared/const/routerSearch";
+import { NoteProps } from "../../../shared/types/slices";
+import { notesActions } from "../../../store/slices/notes";
 
 // type NavigationProps = NotesProps<NotesRoutes.NotesMain>;
 
 type NavigationProps = CompositeScreenProps<
-  SearchProps<SearchRoutes.SearchMain>,
-  RootScreenProps<RootRoutes.Search>
+  NotesProps<NotesRoutes.NotesMain>,
+  RootScreenProps<RootRoutes.Notes>
 >;
 
-const SearchMain: React.FC<NavigationProps> = ({ navigation, route }) => {
+const NotesMain: React.FC<NavigationProps> = ({ navigation, route }) => {
   const dispatch = useDispatch<AppDispatch>();
   const [email, setEmail] = useState<string>("");
   const [validEmail, setValidEmail] = useState<boolean>(false);
+  const [notes, setNotes] = useState<NoteProps[]>([]);
+
+  const notesState = useSelector((state: RootState) => state.notes);
+  const { notesData } = notesState;
+
+  useFocusEffect(() => {
+    // const navigationState = navigation.getState();
+    // console.log(navigationState);
+    setNotes(notesData?.notesList || []);
+  });
 
   const screenNotificationState = useSelector(
     (state: RootState) => state.screenNotification
@@ -39,35 +51,73 @@ const SearchMain: React.FC<NavigationProps> = ({ navigation, route }) => {
         <View style={styles.subContainer}>
           <View style={styles.r1}>
             <TouchableOpacity style={styles.r1t1}>
-              <Text style={styles.r1t2}>Search</Text>
+              <Text style={styles.r1t2}>Notes</Text>
             </TouchableOpacity>
           </View>
           <TouchableOpacity
             style={styles.r2}
             onPress={() => {
               // navigation?.navigate(NotesRoutes.NotesSearch);
-              navigation?.navigate(RootRoutes.Search, {
-                screen: SearchRoutes.SearchResults,
+              navigation?.navigate(RootRoutes.Notes, {
+                screen: NotesRoutes.NotesSearch,
+                params: undefined,
               });
             }}
           >
             <TouchableOpacity style={styles.r2t1}>
               <Feather name="search" size={25} color={COLORS.Light.colorFour} />
             </TouchableOpacity>
-            <Text style={styles.r2t2}>Search</Text>
+            <Text style={styles.r2t2}>Search notes</Text>
           </TouchableOpacity>
           <ScrollView
             showsVerticalScrollIndicator={false}
             contentContainerStyle={styles.scrollContent}
             style={styles.scroll}
-          ></ScrollView>
+          >
+            {notes?.map((note, idx) => (
+              <TouchableOpacity
+                style={styles.r3}
+                key={idx}
+                onPress={() => {
+                  // navigation?.navigate(NotesRoutes.NotesEdit);
+                  navigation.navigate(RootRoutes.Notes, {
+                    screen: NotesRoutes.NotesEdit,
+                    params: {
+                      noteId: note.uid,
+                    },
+                  });
+                }}
+              >
+                <Text style={styles.r3t1}>{note?.title}</Text>
+                <Text style={styles.r3t2}>{note?.text}</Text>
+                {/* <Text style={styles.r3t3}>{note?.datetime}</Text> */}
+                <Text style={styles.r3t3}>
+                  {note?.time} {note?.date}
+                </Text>
+              </TouchableOpacity>
+            ))}
+          </ScrollView>
         </View>
+        <TouchableOpacity
+          style={styles.floatingContent2}
+          onPress={() => {
+            // navigation?.navigate(NotesRoutes.NotesCreate);
+            navigation.navigate(RootRoutes.Notes, {
+              screen: NotesRoutes.NotesCreate,
+              params: undefined,
+            });
+          }}
+        >
+          <Text style={styles.fc2t}>
+            <AntDesign name="plus" size={50} color={COLORS.Light.background} />
+          </Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
 };
 
-export default SearchMain;
+export default NotesMain;
 
 const styles = StyleSheet.create({
   main: {

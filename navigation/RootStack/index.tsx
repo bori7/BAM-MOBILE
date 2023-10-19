@@ -5,6 +5,7 @@ import AuthStack from "../AuthStack";
 import MainStack from "../MainStack";
 import DevotionalStack from "../DevotionalStack";
 import SearchStack from "../SearchStack";
+import NotesStack from "../NotesStack";
 
 const RootStack = createStackNavigator<RootParamList>();
 
@@ -21,6 +22,7 @@ const RootStackApp = (): React.ReactElement => {
         name={RootRoutes.Devotional}
       />
       <RootStack.Screen component={SearchStack} name={RootRoutes.Search} />
+      <RootStack.Screen component={NotesStack} name={RootRoutes.Notes} />
     </RootStack.Navigator>
   );
 };

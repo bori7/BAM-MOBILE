@@ -12,8 +12,9 @@ import SearchIcon from "../../shared/assets/images/svg/search_icon.svg";
 import MoreIcon from "../../shared/assets/images/svg/more_icon.svg";
 import { Home } from "../../pages/Main";
 import { ContentDevotional } from "../../pages/Devotional";
-import { MoreMain, Notes } from "../../pages/More";
+import { MoreMain } from "../../pages/More";
 import { SearchMain } from "../../pages/Search";
+import { NotesMain } from "../../pages/Notes";
 
 const Tab = createBottomTabNavigator();
 
@@ -62,7 +63,7 @@ const TAB_OPTIONS: TabOptions = {
         </>
       );
     },
-    component: Notes as React.FC,
+    component: NotesMain as React.FC,
   },
 
   Search: {

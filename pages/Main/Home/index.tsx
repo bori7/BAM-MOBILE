@@ -13,7 +13,7 @@ import { COLORS, IMAGES, SIZES } from "../../../constants/Colors";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../store";
 import UserIcon from "../../../shared/assets/images/svg/solar_user_icon.svg";
-import { Entypo, SimpleLineIcons } from "@expo/vector-icons";
+import { Entypo, Feather, SimpleLineIcons } from "@expo/vector-icons";
 import MidDoubleTick from "../../../shared/assets/images/svg/mdi_check_all.svg";
 import SolidPray from "../../../shared/assets/images/svg/fa_solid_pray.svg";
 import { OptionsPopUp } from "./OptionsPopUp";
@@ -72,11 +72,24 @@ const Home: React.FC<NavigationProps> = ({ navigation, route }) => {
                       setHideOptions(!hideOptions);
                     }}
                   >
-                    <SimpleLineIcons
+                    {/* <SimpleLineIcons
                       name="options-vertical"
                       size={24}
                       color={COLORS.Light.gray}
-                    />
+                    /> */}
+                    {!hideOptions ? (
+                      <Entypo
+                        name="dots-three-vertical"
+                        size={24}
+                        color={COLORS.Light.gray}
+                      />
+                    ) : (
+                      <Feather
+                        name="x"
+                        size={25}
+                        color={COLORS.Light.colorFour}
+                      />
+                    )}
                   </TouchableOpacity>
                 </View>
               </View>
@@ -387,18 +400,19 @@ const styles = StyleSheet.create({
   xstyle: {
     width: 150,
     height: 150,
-    borderWidth: 2,
+
     top: 180,
     right: 0,
     borderTopLeftRadius: 20,
     borderBottomLeftRadius: 20,
-    borderColor: COLORS.Light.hashBackGround,
   },
   bstyle: {
     padding: "15%",
     alignItems: "flex-start",
     justifyContent: "center",
     flexDirection: "column",
+    borderColor: COLORS.Light.hashBackGround,
+    borderWidth: 2,
   },
   optionBody: {
     padding: "10%",

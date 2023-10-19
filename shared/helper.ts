@@ -24,7 +24,7 @@ export const formatDate = (date: Date) => {
   return `${year}-${month}-${day}`;
 };
 
-export const formatDatePlaDetails = (date: String | undefined) => {
+export const formatDatePlanDetails = (date: String | undefined) => {
   if (!date) {
     return date;
   }
@@ -41,6 +41,29 @@ export const formatDatePlaDetails = (date: String | undefined) => {
   const year = y;
   return `${day} ${month}, ${year}`;
   // return `${year}-${month}-${day}`;
+};
+
+export const formatNoteDate = (date: Date) => {
+  const months = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
+
+  const day = date.getDate();
+  const month = months[date.getMonth()];
+  const year = date.getFullYear();
+
+  return `${month} ${day}, ${year}`;
 };
 
 export const monthName = [

@@ -17,7 +17,6 @@ import {
   Highlights,
   ImageDesigns,
   MoreMain,
-  Notes,
   Notifications,
   Prayer,
   Profile,
@@ -104,11 +103,7 @@ const MainStack = (): React.ReactElement => {
         name={MoreRoutes.MoreMain}
         options={{ headerShown: false }}
       />
-      <More.Screen
-        component={Notes}
-        name={MoreRoutes.Notes}
-        options={{ headerShown: false }}
-      />
+
       <More.Screen
         component={Notifications}
         name={MoreRoutes.Notifications}

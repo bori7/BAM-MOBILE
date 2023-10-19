@@ -47,3 +47,23 @@ export interface NotificationDataType {
 export interface ScreenDataType {
   duration: number;
 }
+
+export interface InitialNotesStateType {
+  notesData: NotesDataType | null;
+  notesLoading: boolean;
+  notesError: InitialUserErrorType | null;
+  notesMessage: string;
+}
+
+export interface NotesDataType {
+  notesList: NoteProps[];
+}
+
+export interface NoteProps {
+  uid: string;
+  title: string;
+  text: string;
+  datetime: string;
+  date: string;
+  time: string;
+}
