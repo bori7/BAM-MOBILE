@@ -50,9 +50,13 @@ const FilterDevotional: React.FC<NavigationProps> = ({ navigation, route }) => {
     switch (type) {
       case "Devotional Info":
         navigation.navigate(DevotionalRoutes.AboutDevotional);
-      case "Pray":
         break;
-      case "Save":
+      case "Calendar":
+        navigation.navigate(DevotionalRoutes.CalendarDevotional);
+        break;
+      case "Settings":
+        navigation.navigate(DevotionalRoutes.SettingsDevotional);
+        break;
       case "Edit":
         break;
       case "Delete":
