@@ -1,3 +1,5 @@
+import { ImageSourcePropType } from "react-native";
+
 export interface InitialUserStateType {
   userData: UserDataType | null;
   userLoading: boolean;
@@ -66,4 +68,24 @@ export interface NoteProps {
   datetime: string;
   date: string;
   time: string;
+}
+
+export interface DevotionalItemProps {
+  uid: string;
+  image: ImageSourcePropType;
+  date: string;
+  title: string;
+  text: string;
+  ticked: boolean;
+}
+
+export interface InitialDevotionalStateType {
+  devotionalData: DevotionalDataType | null;
+  devotionalLoading: boolean;
+  devotionalError: InitialUserErrorType | null;
+  devotionalMessage: string;
+}
+
+export interface DevotionalDataType {
+  devotionalList: DevotionalItemProps[];
 }

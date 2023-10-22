@@ -36,6 +36,8 @@ export const COLORS = {
     hashHomeBackGround: "#EDEDED",
     hashHomeBackGroundL2: "#F9F9F9",
     gray: "#4F4F4F",
+    tickGray: "#BDBDBD",
+    modalOverlay: "rgba(31, 32, 33, 0.4)",
     colorSeven: "rgba(113, 135, 156, 0.10)",
     colorSeven10: "rgba(113, 135, 156, 0.10)",
     colorEight: "#FEFAF7",
@@ -78,6 +80,7 @@ export const SIZES = {
   sizeEight: 20,
   sizeEightB: 23,
   sizeNine: 25,
+  sizeNineB: 28,
   sizeTen: 30,
   sizeEleven: 40,
 };

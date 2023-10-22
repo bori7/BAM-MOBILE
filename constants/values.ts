@@ -1,6 +1,7 @@
 // ###############################################################
 
-import { NoteProps } from "../shared/types/slices";
+import { DevotionalItemProps, NoteProps } from "../shared/types/slices";
+import { IMAGES } from "./Colors";
 
 export const testNotes: NoteProps[] = [
   {
@@ -57,3 +58,46 @@ export const dateOptions = {
   month: "long" as const,
   day: "numeric" as const,
 };
+
+export const testDevotional: DevotionalItemProps[] = [
+  {
+    uid: "1",
+    image: IMAGES.devotionalSample2,
+    date: "September 20, 2023",
+    title: "SOUL MAINTENANCE",
+    text: "The Apostles went everywhere to share their faith in Christ. They did not go to hide themselves for fear...",
+    ticked: true,
+  },
+  {
+    uid: "2",
+    image: IMAGES.devotionalSample3,
+    date: "September 19, 2023",
+    title: "BE TRUTHFUL",
+    text: "The Apostles went everywhere to share their faith in Christ. They did not go to hide themselves for fear...",
+    ticked: false,
+  },
+  {
+    uid: "3",
+    image: IMAGES.devotionalSample4,
+    date: "September 18, 2023",
+    title: "AN EXAMPLE OF PURITY",
+    text: "The Apostles went everywhere to share their faith in Christ. They did not go to hide themselves for fear...",
+    ticked: true,
+  },
+  {
+    uid: "4",
+    image: IMAGES.devotionalSample4,
+    date: "September 18, 2023",
+    title: "AN EXAMPLE OF PURITY",
+    text: "The Apostles went everywhere to share their faith in Christ. They did not go to hide themselves for fear...",
+    ticked: true,
+  },
+  {
+    uid: "5",
+    image: IMAGES.devotionalSample1,
+    date: "September 26, 2023",
+    title: "SHARING YOUR FAITH",
+    text: "The Apostles went everywhere to share their faith in Christ. They did not go to hide themselves for fear...",
+    ticked: true,
+  },
+];
