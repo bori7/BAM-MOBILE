@@ -1,5 +1,6 @@
 import {
   Image,
+  Platform,
   ScrollView,
   StatusBar,
   StyleSheet,
@@ -19,6 +20,9 @@ import {
   DevotionalProps,
   DevotionalRoutes,
 } from "../../../shared/const/routerDevotional";
+import ClockModal from "./ClockModal";
+import { timeOptions } from "../../../constants/values";
+import { convertTo12HourFormat } from "../../../shared/helper";
 
 type NavigationProps = DevotionalProps<DevotionalRoutes.SettingsDevotional>;
 
@@ -29,9 +33,19 @@ const SettingsDevotional: React.FC<NavigationProps> = ({
   const dispatch = useDispatch<AppDispatch>();
   const [ticked, setTicked] = useState<boolean>(false);
   const [devotionals, setDevotionals] = useState<DevotionalItemProps[]>([]);
-  const [displayFilter, setDisplayFilter] = useState<boolean>(false);
+  const [selectedTime, setSelectedTime] = useState<string>();
 
-  useFocusEffect(() => {});
+  useEffect(() => {
+    const nowTIme = new Date()
+      .toLocaleTimeString("en-US", timeOptions)
+      ?.toLocaleUpperCase();
+    if (Platform.OS === "android") {
+      setSelectedTime(convertTo12HourFormat(nowTIme));
+      // console.log("selectedTime=>>", selectedTime);
+    } else {
+      setSelectedTime(nowTIme);
+    }
+  }, []);
 
   return (
     <View style={styles.main}>
@@ -68,7 +82,7 @@ const SettingsDevotional: React.FC<NavigationProps> = ({
               <Text style={styles.fr1r2}>Day 265 of 365 (23.4%)</Text>
               <View style={styles.fr1r3}></View>
               <TouchableOpacity style={styles.progressA}>
-                <View style={[styles.progressB, { width: `${66}%` }]}></View>
+                <View style={[styles.progressB, { width: `${23.4}%` }]}></View>
               </TouchableOpacity>
               <Text style={styles.fr1r4}>Start Date: Jan 1, 2023</Text>
               <Text style={styles.fr1r5}>End Date: Dec 31, 2023</Text>
@@ -77,12 +91,17 @@ const SettingsDevotional: React.FC<NavigationProps> = ({
               <Text style={styles.fr2r1}>Set Reminder</Text>
               <View style={styles.fr2r2}>
                 <View style={styles.fr2r2C}>
-                  <Text style={styles.fr2r2t1}>04:50 AM</Text>
+                  <Text style={styles.fr2r2t1}>{selectedTime}</Text>
                   <TouchableOpacity style={styles.fr2r2t2}>
-                    <AntDesign
+                    {/* <AntDesign
                       name="caretdown"
                       size={18}
                       color={COLORS.Light.colorFour}
+                    /> */}
+                    <ClockModal
+                      pickSelectedTime={function (time: string): void {
+                        setSelectedTime(time);
+                      }}
                     />
                   </TouchableOpacity>
                 </View>

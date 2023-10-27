@@ -11,6 +11,7 @@ import React, { useEffect, useState } from "react";
 import { Text, View } from "../../../components/Themed";
 import { COLORS, IMAGES, SIZES } from "../../../constants/Colors";
 import CustomDatePicker from "./CustomDatePicker";
+import { formatDate } from "../../../shared/helper";
 
 type Iprops = {
   isModalVisible: boolean;
@@ -25,8 +26,8 @@ const FilterModal = ({ isModalVisible, setModalVisible, onSave }: Iprops) => {
     setModalVisible();
   };
 
-  const [fromDate, setFromDate] = useState<string>("");
-  const [toDate, setToDate] = useState<string>("");
+  const [fromDate, setFromDate] = useState<string>(formatDate(new Date()));
+  const [toDate, setToDate] = useState<string>(formatDate(new Date()));
   return (
     <View>
       <Modal

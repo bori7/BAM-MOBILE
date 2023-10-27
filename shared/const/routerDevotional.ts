@@ -8,6 +8,7 @@ export enum DevotionalRoutes {
   NotesDevotional = "NotesDevotional",
   SettingsDevotional = "SettingsDevotional",
   SubscriptionDevotional = "SubscriptionDevotional",
+  MainDevotional = "MainDevotional",
 }
 
 export type DevotionalParamList = {
@@ -18,6 +19,7 @@ export type DevotionalParamList = {
   [DevotionalRoutes.NotesDevotional]: undefined;
   [DevotionalRoutes.SettingsDevotional]: undefined;
   [DevotionalRoutes.SubscriptionDevotional]: undefined;
+  [DevotionalRoutes.MainDevotional]: undefined;
 };
 
 export type DevotionalProps<RouteName extends DevotionalRoutes> =

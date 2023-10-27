@@ -8,11 +8,12 @@ import {
 import {
   AboutDevotional,
   CalendarDevotional,
-  SettingsDevotional,
   ContentDevotional,
-  NotesDevotional,
-  SubscriptionDevotional,
   FilterDevotional,
+  MainDevotional,
+  NotesDevotional,
+  SettingsDevotional,
+  SubscriptionDevotional,
 } from "../../pages/Devotional";
 
 const Devotional = createStackNavigator<DevotionalParamList>();
@@ -20,7 +21,7 @@ const Devotional = createStackNavigator<DevotionalParamList>();
 const DevotionalStack = (): React.ReactElement => {
   return (
     <Devotional.Navigator
-      initialRouteName={DevotionalRoutes.ContentDevotional}
+      initialRouteName={DevotionalRoutes.MainDevotional}
       screenOptions={{ headerShown: false }}
     >
       <Devotional.Screen
@@ -41,6 +42,11 @@ const DevotionalStack = (): React.ReactElement => {
       <Devotional.Screen
         component={ContentDevotional}
         name={DevotionalRoutes.ContentDevotional}
+        options={{ headerShown: false }}
+      />
+      <Devotional.Screen
+        component={MainDevotional}
+        name={DevotionalRoutes.MainDevotional}
         options={{ headerShown: false }}
       />
       <Devotional.Screen

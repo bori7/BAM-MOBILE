@@ -66,6 +66,24 @@ export const formatNoteDate = (date: Date) => {
   return `${month} ${day}, ${year}`;
 };
 
+export const convertTo12HourFormat = (timeStr: string) => {
+  const [hour, minute, second] = timeStr.split(":");
+  const hh = parseInt(hour, 10);
+
+  // Determine AM or PM
+  const ampm = hh >= 12 ? "PM" : "AM";
+
+  // Convert to 12-hour format
+  const hh12 = hh % 12 || 12; // 0 should be converted to 12
+
+  // Formatted time string
+  // const formattedTime = `${hh12}:${minute}:${second} ${ampm}`;
+
+  const formattedTime = `${hh12}:${minute} ${ampm}`;
+
+  return formattedTime;
+};
+
 export const monthName = [
   "January",
   "February",

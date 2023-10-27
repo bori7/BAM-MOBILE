@@ -11,7 +11,7 @@ import NotesIcon from "../../shared/assets/images/svg/notes_icon.svg";
 import SearchIcon from "../../shared/assets/images/svg/search_icon.svg";
 import MoreIcon from "../../shared/assets/images/svg/more_icon.svg";
 import { Home } from "../../pages/Main";
-import { ContentDevotional } from "../../pages/Devotional";
+import { ContentDevotional, MainDevotional } from "../../pages/Devotional";
 import { MoreMain } from "../../pages/More";
 import { SearchMain } from "../../pages/Search";
 import { NotesMain } from "../../pages/Notes";
@@ -41,7 +41,7 @@ const TAB_OPTIONS: TabOptions = {
         </>
       );
     },
-    component: ContentDevotional as React.FC,
+    component: MainDevotional as React.FC,
   },
   // Bible: {
   //   label: "Bible",

@@ -11,22 +11,16 @@ import { Text, View } from "../../../components/Themed";
 import { COLORS, IMAGES, SIZES } from "../../../constants/Colors";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../store";
-import { AntDesign, Feather } from "@expo/vector-icons";
-import MidDoubleTick from "../../../shared/assets/images/svg/mdi_check_all.svg";
+import { Entypo, FontAwesome5, Ionicons } from "@expo/vector-icons";
 import { CompositeScreenProps, useFocusEffect } from "@react-navigation/native";
 import { DevotionalItemProps } from "../../../shared/types/slices";
-import { RootScreenProps, RootRoutes } from "../../../shared/const/routerRoot";
 import {
   DevotionalProps,
   DevotionalRoutes,
 } from "../../../shared/const/routerDevotional";
+import { NotePadSVG, SpeakerSVG } from "../../../shared/components/SVGS";
 
-// type NavigationProps = MainProps<MainRoutes.HomeScreen>;
-
-type NavigationProps = CompositeScreenProps<
-  DevotionalProps<DevotionalRoutes.ContentDevotional>,
-  RootScreenProps<RootRoutes.Devotional>
->;
+type NavigationProps = DevotionalProps<DevotionalRoutes.ContentDevotional>;
 
 const ContentDevotional: React.FC<NavigationProps> = ({
   navigation,
@@ -35,9 +29,37 @@ const ContentDevotional: React.FC<NavigationProps> = ({
   const dispatch = useDispatch<AppDispatch>();
   const [hideOptions, setHideOptions] = useState<boolean>(false);
   const [devotionals, setDevotionals] = useState<DevotionalItemProps[]>([]);
+  const [play, setPlay] = useState<boolean>(false);
+
+  const togglePlay = () => {
+    setPlay(!play);
+  };
 
   const devotionalState = useSelector((state: RootState) => state.devotional);
   const { devotionalData } = devotionalState;
+
+  const options = [
+    { name: "Devotional Info" },
+    { name: "Calendar" },
+    { name: "Settings" },
+  ];
+
+  const onClickOption = (type: string) => {
+    switch (type) {
+      case "Devotional Info":
+        navigation.navigate(DevotionalRoutes.AboutDevotional);
+      case "Pray":
+        break;
+      case "Save":
+      case "Edit":
+        break;
+      case "Delete":
+        navigation?.goBack();
+        break;
+      default:
+        break;
+    }
+  };
 
   useFocusEffect(() => {
     setDevotionals(devotionalData?.devotionalList || []);
@@ -47,102 +69,140 @@ const ContentDevotional: React.FC<NavigationProps> = ({
     <View style={styles.main}>
       <StatusBar barStyle="dark-content" />
       <View style={styles.container}>
-        <View style={styles.headerContainer}>
+        <View style={[styles.headerContainer, styles.headerShadow]}>
           <View style={styles.header}>
             <View style={styles.headerC1}>
-              <Image source={IMAGES.logoDailyAnswer} style={styles.r2t} />
-              <Text style={styles.headerC1t1}>Devotional</Text>
-              {/* <Text style={styles.headerC1t2}>Friday September 22, 2023</Text> */}
+              <TouchableOpacity
+                // style={styles.r2t}
+                onPress={() => {
+                  navigation?.goBack();
+                }}
+              >
+                <Ionicons
+                  name="arrow-back-sharp"
+                  size={28}
+                  color={COLORS.Light.colorFour}
+                />
+              </TouchableOpacity>
+              <Text style={styles.r1t2}>Devotional</Text>
             </View>
-            <TouchableOpacity
-              style={styles.headerC2}
-              onPress={() => {
-                navigation?.navigate(RootRoutes.Devotional, {
-                  screen: DevotionalRoutes.FilterDevotional,
-                });
-              }}
-            >
-              <Feather name="search" size={28} color={COLORS.Light.colorFour} />
-            </TouchableOpacity>
+            <View style={styles.h}>
+              <TouchableOpacity style={styles.h1r1}>
+                <SpeakerSVG />
+                {/* <Text style={styles.h1r1t}>
+                
+                </Text> */}
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.h1r2}>
+                <Text style={styles.h1r2t}>Aa</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.h1r3}>
+                <NotePadSVG />
+                {/* <Text style={styles.h1r3t}>
+                 
+                </Text> */}
+              </TouchableOpacity>
+            </View>
           </View>
         </View>
+
         <View style={styles.bodyContainer}>
           <ScrollView
             showsVerticalScrollIndicator={false}
             contentContainerStyle={styles.scrollContent}
             style={styles.scroll}
           >
-            <View style={styles.contentHeaderC}>
-              <Text style={styles.ft1}>Today’s Devotional</Text>
-              <TouchableOpacity style={styles.contentHeaderC2}>
-                <Text style={styles.contentHeaderC2t1}>See all</Text>
-                <Text style={styles.contentHeaderC2t2}>
-                  <AntDesign name="right" size={16} color={COLORS.Light.gray} />
-                </Text>
+            {/* <View style={styles.contentHeaderC}>
+              <Text style={styles.ft1}>Filter</Text>
+              <TouchableOpacity
+                style={styles.contentHeaderC2}
+                onPress={() => {
+                  toggleFilterModal();
+                }}
+              >
+                <Ionicons name="filter" size={28} color={COLORS.Light.gray} />
               </TouchableOpacity>
-            </View>
-            <View style={styles.v2}>
-              <TouchableOpacity style={styles.v2r1}>
-                <Image
-                  source={IMAGES.devotionalSample1}
-                  style={styles.v2r1Image}
-                  borderTopLeftRadius={25}
-                  borderTopRightRadius={25}
-                />
-              </TouchableOpacity>
-              <View style={styles.v2r2}>
-                <View style={styles.v2r2a}>
-                  <View style={styles.v2r2aC1}>
-                    <Text style={styles.v2r2t1}>September 22, 2023</Text>
-                    <Text style={styles.v2r2t2}>SHARING YOUR FAITH</Text>
-                  </View>
-                  <TouchableOpacity style={styles.v2r2aC2}>
-                    <MidDoubleTick
-                      fill={COLORS.Light.colorThirteen}
-                      // stroke={COLORS.Light.colorThirteen}
-                    />
-                  </TouchableOpacity>
-                </View>
-                <Text style={styles.v2r2t}>
-                  The Apostles went everywhere to share their faith in Christ.
-                  They did not go to hide themselves for fear of suffering or
-                  persecution. They utilized every opport...
-                </Text>
-              </View>
-            </View>
-            <Text style={styles.ft2}>Previous Days</Text>
-            {devotionals.map((devo, idx) => (
-              <View style={styles.v2} key={idx}>
-                <TouchableOpacity style={styles.v2r1}>
-                  <Image
-                    source={devo.image}
-                    style={styles.v2r1Image}
-                    borderTopLeftRadius={25}
-                    borderTopRightRadius={25}
-                  />
-                </TouchableOpacity>
-                <View style={styles.v2r2}>
-                  <View style={styles.v2r2a}>
-                    <View style={styles.v2r2aC1}>
-                      <Text style={styles.v2r2t1}>{devo.date}</Text>
-                      <Text style={styles.v2r2t2}>{devo.title}</Text>
-                    </View>
-                    <TouchableOpacity style={styles.v2r2aC2}>
-                      <MidDoubleTick
-                        fill={
-                          devo.ticked
-                            ? COLORS.Light.colorThirteen
-                            : COLORS.Light.tickGray
-                        }
-                        // stroke={COLORS.Light.colorThirteen}
-                      />
-                    </TouchableOpacity>
-                  </View>
-                  <Text style={styles.v2r2t}>{devo.text}</Text>
-                </View>
-              </View>
-            ))}
+            </View> */}
+            {/* <Image source={IMAGES.logoDailyAnswer} style={styles.r2t} /> */}
+            <Text style={styles.fv1}>Friday September 22, 2023</Text>
+            <Text style={styles.fv3}>Understand Your Identity</Text>
+            <Text style={styles.fv1}>READ:</Text>
+            <Text style={styles.fv3}>Psalm 109 : 21 -31</Text>
+            <Text style={styles.fv1}>KEY VERSE:</Text>
+            <Text style={styles.fv2}>
+              It’s in Christ that we find out who we are and what we are living
+              for. Long before we first heard of Christ and got our hopes up, he
+              had his eye on us, had designs on us for glorious living, part of
+              the overall purpose he is working out in everything and everyone.
+            </Text>
+            <Text style={styles.fv5}>Ephesians 1 : 11</Text>
+            <Text style={styles.fv1}>MESSAGE:</Text>
+            <Text style={styles.fv4}>
+              Many struggle with a low self-image. The New Testament answer to
+              this problem is to know who you are in Christ Jesus: ‘It’s in
+              Christ that we find out who we are and what we are living for’
+              (v.11, MSG). Understand what your identity is in Christ. While you
+              may not have every material blessing you want (Paul was in prison
+              when he wrote this letter), God has blessed you ‘with every
+              spiritual blessing in Christ’ (v.3). This passage lists many of
+              these blessings: You are redeemed through his blood (v.7a; Isaiah
+              52:3,9).
+            </Text>
+            <Text style={styles.fv6}>Grace and peace</Text>
+            <Text style={styles.fv4}>
+              Paul starts his greetings with ‘grace and peace’ (v.2). Later he
+              says, ‘The riches of God’s grace... [have been] lavished on us’
+              (vv.7–8). Grace is love that cares and stoops and rescues. You
+              have peace with God.
+            </Text>
+            <Text style={styles.fv6}>Chosen, destined and adopted</Text>
+            <Text style={styles.fv4}>
+              ‘Even as [in His love] He chose us [actually picked us out for
+              Himself as His own] in Christ before the foundation of the
+              world... He foreordained us (destined us, planned in love for us)
+              to be adopted (revealed) as His own children’ (vv.4–5, AMP; see
+              also v.11).
+            </Text>
+            <Text style={styles.fv6}>Redeemed, forgiven and free</Text>
+            <Text style={styles.fv4}>
+              ‘Redeemed’ was the word used for the buying back of a slave – a
+              captive set free for a price.
+            </Text>
+
+            <Text style={styles.fv1}>PRAYER:</Text>
+            <Text style={styles.fv2}>
+              Lord, I praise you for every spiritual blessing that you have
+              given me in Christ. May the eyes of my heart be enlightened in
+              order that I may know the hope to which you have called me, the
+              riches of your glorious inheritances, and your incomparably great
+              power living within me. (Ephesians 1 : 17-19)
+            </Text>
           </ScrollView>
+          <View style={styles.floatingContainer}>
+            <TouchableOpacity style={styles.floatingContent1}>
+              <Text style={styles.fc1t}>Daily Living Devotional 2023</Text>
+              <Text style={styles.fc3t}>Day 265</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.floatingContent2}
+              onPress={() => {
+                togglePlay();
+              }}
+            >
+              <Text style={styles.fc2t}>
+                <FontAwesome5
+                  name={!play ? "play" : "pause"}
+                  size={28}
+                  color={COLORS.Light.background}
+                />
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.floatingContent3}>
+              <Text style={styles.fc3t}>
+                <Entypo name="share" size={30} color={COLORS.Light.colorOne} />
+              </Text>
+            </TouchableOpacity>
+          </View>
         </View>
       </View>
     </View>
@@ -155,14 +215,14 @@ const styles = StyleSheet.create({
   main: {
     flex: 1,
     // borderWidth: 1,
-    backgroundColor: COLORS.Light.hashBackGroundL2,
+    backgroundColor: COLORS.Light.background,
   },
   container: {
     flex: 1,
     alignItems: "center",
     // justifyContent: "center",
     // marginHorizontal: "5%",
-    backgroundColor: COLORS.Light.hashBackGroundL2,
+    backgroundColor: COLORS.Light.background,
   },
   headerContainer: {
     justifyContent: "flex-end",
@@ -170,7 +230,19 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
     paddingHorizontal: "8%",
     backgroundColor: COLORS.Light.background,
-    height: "16%",
+    height: "13%",
+  },
+  headerShadow: {
+    shadowColor: COLORS.Light.deeperGreyColor,
+    shadowOffset: {
+      width: 0,
+      height: 0,
+    },
+    shadowOpacity: 0.3,
+    shadowRadius: 5,
+    elevation: 4,
+    zIndex: 10,
+    // borderWidth: 1,
   },
   header: {
     flexDirection: "row",
@@ -178,7 +250,7 @@ const styles = StyleSheet.create({
   },
   headerC1: {
     // borderWidth: 1,
-    justifyContent: "center",
+    // justifyContent: "center",
     flexDirection: "row",
     alignItems: "center",
   },
@@ -201,7 +273,7 @@ const styles = StyleSheet.create({
     // borderWidth: 1,
     width: "90%",
     height: "100%",
-    backgroundColor: COLORS.Light.hashBackGroundL2,
+    backgroundColor: COLORS.Light.background,
     paddingBottom: "30%",
   },
   scroll: {
@@ -218,7 +290,182 @@ const styles = StyleSheet.create({
     backgroundColor: "transparent",
     // marginBottom: 50,
     paddingVertical: 5,
-    paddingBottom: "10%",
+    paddingBottom: "40%",
+  },
+
+  ft1: {
+    alignSelf: "flex-start",
+    marginVertical: 20,
+    color: COLORS.Light.colorFour,
+    fontSize: SIZES.sizeEight,
+    fontWeight: "600",
+  },
+  ft2: {
+    alignSelf: "flex-start",
+    marginVertical: 40,
+    color: COLORS.Light.gray,
+    fontSize: SIZES.sizeSeven,
+    fontWeight: "500",
+  },
+  xstyle: {
+    width: 220,
+    height: 150,
+    top: 110,
+    right: 0,
+    borderTopLeftRadius: 20,
+    borderBottomLeftRadius: 20,
+  },
+  bstyle: {
+    paddingVertical: "10%",
+    paddingHorizontal: "8%",
+    alignItems: "flex-start",
+    justifyContent: "center",
+    flexDirection: "column",
+    borderColor: COLORS.Light.hashBackGround,
+    borderWidth: 2,
+  },
+  optionBody: {
+    padding: "5%",
+    marginVertical: "5%",
+  },
+  optionText: {
+    fontSize: SIZES.sizeSeven,
+    // fontWeight: "600",
+  },
+  r2t: {
+    alignItems: "center",
+    justifyContent: "center",
+    height: 120,
+    width: 120,
+    marginVertical: 10,
+    // borderWidth: 1,
+  },
+  contentHeaderC: {
+    backgroundColor: "transparent",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    width: "100%",
+    marginBottom: 20,
+  },
+  contentHeaderC2: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+  contentHeaderC2t1: {
+    color: COLORS.Light.gray,
+    fontSize: SIZES.sizeSeven,
+    fontWeight: "500",
+  },
+  contentHeaderC2t2: {
+    marginLeft: "1%",
+  },
+  fv1: {
+    marginVertical: 20,
+    color: COLORS.Light.colorThirteen,
+    fontSize: SIZES.sizeEight,
+    fontWeight: "600",
+    alignSelf: "flex-start",
+    fontFamily: "Bitter",
+  },
+  fv2: {
+    // marginVertical: 5,
+    lineHeight: 28,
+    marginStart: 15,
+    fontSize: SIZES.sizeSixB,
+    fontFamily: "Bitter",
+  },
+  fv3: {
+    marginTop: 2,
+    marginBottom: 15,
+    alignSelf: "flex-start",
+    fontWeight: "800",
+    fontSize: SIZES.sizeNine,
+    fontFamily: "Bitter",
+  },
+  fv4: {
+    // marginVertical: 20,
+    lineHeight: 28,
+    fontFamily: "Bitter",
+    fontSize: SIZES.sizeSixB,
+    marginBottom: 25,
+    alignSelf: "flex-start",
+  },
+  fv6: {
+    alignSelf: "flex-start",
+    lineHeight: 28,
+    fontFamily: "Bitter",
+    fontSize: SIZES.sizeSixC,
+  },
+  fv5: {
+    marginVertical: 20,
+    color: COLORS.Light.colorFour,
+    fontSize: SIZES.sizeSevenB,
+    fontWeight: "600",
+    alignSelf: "flex-start",
+    fontFamily: "Bitter",
+    marginStart: 15,
+  },
+  r1t2: {
+    marginLeft: "8%",
+    color: COLORS.Light.colorFour,
+    fontSize: SIZES.sizeEightB,
+    fontWeight: "600",
+    textAlign: "center",
+  },
+  h: {
+    // borderWidth: 1,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+  h1r1: {
+    // borderWidth: 1,
+    marginLeft: "2%",
+    paddingVertical: 5,
+    paddingHorizontal: 15,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: COLORS.Light.colorBlueBackGround,
+    borderTopLeftRadius: 20,
+    borderBottomLeftRadius: 20,
+  },
+  h1r1t: {
+    justifyContent: "center",
+    alignItems: "center",
+    textAlign: "center",
+    // borderWidth: 1,
+  },
+  h1r2: {
+    marginLeft: "2%",
+    paddingVertical: 5,
+    paddingHorizontal: 10,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: COLORS.Light.colorBlueBackGround,
+  },
+  h1r2t: {
+    justifyContent: "center",
+    alignItems: "center",
+    // borderWidth: 1,
+    fontSize: SIZES.sizeEight,
+    fontWeight: "400",
+  },
+  h1r3: {
+    // borderWidth: 1,
+    marginLeft: "2%",
+    paddingVertical: 5,
+    paddingHorizontal: 15,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: COLORS.Light.colorBlueBackGround,
+    borderTopRightRadius: 20,
+    borderBottomRightRadius: 20,
+  },
+  h1r3t: {
+    justifyContent: "center",
+    alignItems: "center",
+    // borderWidth: 1,
   },
   v1: {
     backgroundColor: COLORS.Light.background,
@@ -287,7 +534,7 @@ const styles = StyleSheet.create({
   v2r1Image: {
     height: 200,
     resizeMode: "cover",
-    // borderWidth: 1,
+
     width: "100%",
   },
   v2r2: {
@@ -309,7 +556,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-
   v2r2t1: {
     color: COLORS.Light.deepGreyColor,
     fontSize: SIZES.sizeSixB,
@@ -377,67 +623,78 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     fontSize: SIZES.sizeSixC,
   },
-
-  ft1: {
-    alignSelf: "flex-start",
-    marginVertical: 20,
-    color: COLORS.Light.colorThirteen,
-    fontSize: SIZES.sizeSeven,
-    fontWeight: "600",
-  },
-  ft2: {
-    alignSelf: "flex-start",
-    marginVertical: 40,
-    color: COLORS.Light.gray,
-    fontSize: SIZES.sizeSeven,
-    fontWeight: "500",
-  },
-  xstyle: {
-    width: 150,
-    height: 150,
-
-    top: 180,
-    right: 0,
-    borderTopLeftRadius: 20,
-    borderBottomLeftRadius: 20,
-  },
-  bstyle: {
-    padding: "15%",
-    alignItems: "flex-start",
-    justifyContent: "center",
-    flexDirection: "column",
-    borderColor: COLORS.Light.hashBackGround,
-    borderWidth: 2,
-  },
-  optionBody: {
-    padding: "10%",
-    marginVertical: "5%",
-  },
-  optionText: {
-    fontSize: SIZES.sizeSeven,
-    // fontWeight: "600",
-  },
-  r2t: {
-    width: 65,
-    height: 65,
-  },
-  contentHeaderC: {
-    backgroundColor: "transparent",
-    flexDirection: "row",
-    justifyContent: "space-between",
+  floatingContainer: {
+    // borderWidth: 1,
+    height: 50,
     width: "100%",
-  },
-  contentHeaderC2: {
-    flexDirection: "row",
-    justifyContent: "space-between",
+    position: "absolute",
+    top: "90%",
+    // left: "5%",
     alignItems: "center",
+    justifyContent: "center",
+    zIndex: 10,
   },
-  contentHeaderC2t1: {
-    color: COLORS.Light.gray,
-    fontSize: SIZES.sizeSeven,
+  floatingContent1: {
+    height: 65,
+    width: "100%",
+    // borderWidth: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: COLORS.Light.colorTwentyOne,
+    borderTopColor: COLORS.Light.hashHomeBackGround,
+    borderTopWidth: 1,
+    position: "absolute",
+  },
+  floatingContent2: {
+    height: 68,
+    width: 68,
+    position: "absolute",
+    top: "-148%",
+    backgroundColor: COLORS.Light.colorOne,
+    borderRadius: 40,
+    alignItems: "center",
+    justifyContent: "center",
+    shadowColor: COLORS.Light.colorOneLightA,
+    shadowOffset: {
+      width: 0,
+      height: 8,
+    },
+    shadowOpacity: 0.9,
+    shadowRadius: 10,
+    elevation: 10,
+  },
+  floatingContent3: {
+    alignItems: "center",
+    justifyContent: "center",
+    position: "absolute",
+    height: 70,
+    width: 70,
+    backgroundColor: COLORS.Light.colorNineteen,
+    right: 8,
+    top: -50,
+    borderRadius: 40,
+    shadowColor: COLORS.Light.deeperGreyColor,
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.3,
+    shadowRadius: 5,
+    elevation: 4,
+  },
+  fc1t: {
+    fontSize: SIZES.sizeSixC,
     fontWeight: "500",
   },
-  contentHeaderC2t2: {
-    marginLeft: "1%",
+  fc2t: {
+    alignItems: "center",
+    justifyContent: "center",
+    textAlign: "center",
+    marginLeft: "8%",
+  },
+  fc3t: {
+    fontSize: SIZES.sizeSixC,
+    fontWeight: "500",
+    color: COLORS.Light.greyText,
   },
 });

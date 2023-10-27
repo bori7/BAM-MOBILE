@@ -38,6 +38,7 @@ export const COLORS = {
     gray: "#4F4F4F",
     tickGray: "#BDBDBD",
     modalOverlay: "rgba(31, 32, 33, 0.4)",
+    colorBlueBackGround: " rgba(38, 120, 242, 0.08)",
     colorSeven: "rgba(113, 135, 156, 0.10)",
     colorSeven10: "rgba(113, 135, 156, 0.10)",
     colorEight: "#FEFAF7",
