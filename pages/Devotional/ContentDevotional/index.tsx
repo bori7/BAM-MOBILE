@@ -11,7 +11,7 @@ import { Text, View } from "../../../components/Themed";
 import { COLORS, IMAGES, SIZES } from "../../../constants/Colors";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../store";
-import { Entypo, FontAwesome5, Ionicons } from "@expo/vector-icons";
+import { Entypo, Feather, FontAwesome5, Ionicons } from "@expo/vector-icons";
 import { CompositeScreenProps, useFocusEffect } from "@react-navigation/native";
 import {
   DevotionalItemProps,
@@ -22,6 +22,10 @@ import {
   DevotionalRoutes,
 } from "../../../shared/const/routerDevotional";
 import { NotePadSVG, SpeakerSVG } from "../../../shared/components/SVGS";
+import ControlModal from "./ControlModal";
+import SpeakerModal from "./SpeakerModal";
+import TextFormatModal from "./TextFormatModal";
+import NotesModal from "./NotesModal";
 
 type NavigationProps = DevotionalProps<DevotionalRoutes.ContentDevotional>;
 
@@ -31,6 +35,8 @@ const ContentDevotional: React.FC<NavigationProps> = ({
 }) => {
   const dispatch = useDispatch<AppDispatch>();
   const [hideOptions, setHideOptions] = useState<boolean>(false);
+  const [hideModal, setHideModal] = useState<boolean>(false);
+  const [modalType, setModalType] = useState<"speaker" | "text" | "notes">();
   const [selectedDevotional, setSelectedDevotionals] =
     useState<SelectedDevotionalDataType | null>();
   const [play, setPlay] = useState<boolean>(false);
@@ -91,20 +97,32 @@ const ContentDevotional: React.FC<NavigationProps> = ({
               <Text style={styles.r1t2}>Devotional</Text>
             </View>
             <View style={styles.h}>
-              <TouchableOpacity style={styles.h1r1}>
+              <TouchableOpacity
+                style={styles.h1r1}
+                onPress={() => {
+                  setHideModal(true);
+                  setModalType("speaker");
+                }}
+              >
                 <SpeakerSVG />
-                {/* <Text style={styles.h1r1t}>
-                
-                </Text> */}
               </TouchableOpacity>
-              <TouchableOpacity style={styles.h1r2}>
+              <TouchableOpacity
+                style={styles.h1r2}
+                onPress={() => {
+                  setHideModal(true);
+                  setModalType("text");
+                }}
+              >
                 <Text style={styles.h1r2t}>Aa</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.h1r3}>
+              <TouchableOpacity
+                style={styles.h1r3}
+                onPress={() => {
+                  setHideModal(true);
+                  setModalType("notes");
+                }}
+              >
                 <NotePadSVG />
-                {/* <Text style={styles.h1r3t}>
-                 
-                </Text> */}
               </TouchableOpacity>
             </View>
           </View>
@@ -116,18 +134,6 @@ const ContentDevotional: React.FC<NavigationProps> = ({
             contentContainerStyle={styles.scrollContent}
             style={styles.scroll}
           >
-            {/* <View style={styles.contentHeaderC}>
-              <Text style={styles.ft1}>Filter</Text>
-              <TouchableOpacity
-                style={styles.contentHeaderC2}
-                onPress={() => {
-                  toggleFilterModal();
-                }}
-              >
-                <Ionicons name="filter" size={28} color={COLORS.Light.gray} />
-              </TouchableOpacity>
-            </View> */}
-            {/* <Image source={IMAGES.logoDailyAnswer} style={styles.r2t} /> */}
             <Text style={styles.fv1}>{selectedDevotional?.date}</Text>
             <Text style={styles.fv3}>{selectedDevotional?.title}</Text>
             <Text style={styles.fv1}>READ:</Text>
@@ -144,20 +150,6 @@ const ContentDevotional: React.FC<NavigationProps> = ({
                 <Text style={styles.fv4}>{subMessage.message}</Text>
               </View>
             ))}
-
-            {/* <Text style={styles.fv6}>Chosen, destined and adopted</Text> */}
-            {/* <Text style={styles.fv4}>
-              ‘Even as [in His love] He chose us [actually picked us out for
-              Himself as His own] in Christ before the foundation of the
-              world... He foreordained us (destined us, planned in love for us)
-              to be adopted (revealed) as His own children’ (vv.4–5, AMP; see
-              also v.11).
-            </Text>
-            <Text style={styles.fv6}>Redeemed, forgiven and free</Text>
-            <Text style={styles.fv4}>
-              ‘Redeemed’ was the word used for the buying back of a slave – a
-              captive set free for a price.
-            </Text> */}
 
             <Text style={styles.fv1}>PRAYER:</Text>
             <Text style={styles.fv2}>{selectedDevotional?.prayer}</Text>
@@ -188,6 +180,19 @@ const ContentDevotional: React.FC<NavigationProps> = ({
             </TouchableOpacity>
           </View>
         </View>
+        <ControlModal
+          visible={hideModal}
+          closeModal={() => {
+            setHideModal(false);
+          }}
+          children={
+            <>
+              {modalType === "speaker" && <SpeakerModal />}
+              {modalType === "text" && <TextFormatModal />}
+              {modalType === "notes" && <NotesModal />}
+            </>
+          }
+        />
       </View>
     </View>
   );
