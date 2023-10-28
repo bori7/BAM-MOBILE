@@ -3,8 +3,9 @@ import {
   InitialDevotionalStateType,
   DevotionalDataType,
   DevotionalItemProps,
+  SelectedDevotionalDataType,
 } from "../../shared/types/slices";
-import { testDevotional } from "../../constants/values";
+import { testDevotional, testSelectedDevotional } from "../../constants/values";
 import { formatNoteDate } from "../../shared/helper";
 
 const initialDevotionalState: InitialDevotionalStateType = {
@@ -14,19 +15,25 @@ const initialDevotionalState: InitialDevotionalStateType = {
   devotionalLoading: false,
   devotionalError: null,
   devotionalMessage: "",
+  selectedDevotionalData: testSelectedDevotional || null,
 };
 
 export const devotionalSlice = createSlice({
   name: "devotionalslice",
   initialState: initialDevotionalState,
   reducers: {
+    updateSelectedDevotionalData: (
+      state,
+      action: PayloadAction<SelectedDevotionalDataType>
+    ) => {
+      state.selectedDevotionalData = action.payload;
+    },
     updateDevotionalData: (
       state,
       action: PayloadAction<DevotionalDataType>
     ) => {
       state.devotionalData = action.payload;
     },
-
     updateOrAddDevotional: (
       state,
       action: PayloadAction<DevotionalItemProps>
@@ -39,7 +46,7 @@ export const devotionalSlice = createSlice({
       //   const time = new Date()
       //     .toLocaleTimeString(undefined, timeOptions)
       //     .toLocaleUpperCase();
-      // const date = new Date()
+      //   const date = new Date()
       //   .toLocaleDateString(undefined, dateOptions)
       //   .toLocaleUpperCase();
       const date = formatNoteDate(new Date());
@@ -49,7 +56,6 @@ export const devotionalSlice = createSlice({
         { ...action.payload, date, uid },
         ...newDevotionalList,
       ];
-
       state.devotionalData = {
         ...state.devotionalData,
         devotionalList: newDevotionalList,
@@ -61,7 +67,6 @@ export const devotionalSlice = createSlice({
         state.devotionalData?.devotionalList?.filter((note, _) => {
           return note.uid != action.payload;
         }) || [];
-
       state.devotionalData = {
         ...state.devotionalData,
         devotionalList: newDevotionalList,

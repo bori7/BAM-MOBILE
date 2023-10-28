@@ -13,7 +13,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../store";
 import { Entypo, FontAwesome5, Ionicons } from "@expo/vector-icons";
 import { CompositeScreenProps, useFocusEffect } from "@react-navigation/native";
-import { DevotionalItemProps } from "../../../shared/types/slices";
+import {
+  DevotionalItemProps,
+  SelectedDevotionalDataType,
+} from "../../../shared/types/slices";
 import {
   DevotionalProps,
   DevotionalRoutes,
@@ -28,7 +31,8 @@ const ContentDevotional: React.FC<NavigationProps> = ({
 }) => {
   const dispatch = useDispatch<AppDispatch>();
   const [hideOptions, setHideOptions] = useState<boolean>(false);
-  const [devotionals, setDevotionals] = useState<DevotionalItemProps[]>([]);
+  const [selectedDevotional, setSelectedDevotionals] =
+    useState<SelectedDevotionalDataType | null>();
   const [play, setPlay] = useState<boolean>(false);
 
   const togglePlay = () => {
@@ -36,7 +40,7 @@ const ContentDevotional: React.FC<NavigationProps> = ({
   };
 
   const devotionalState = useSelector((state: RootState) => state.devotional);
-  const { devotionalData } = devotionalState;
+  const { selectedDevotionalData } = devotionalState;
 
   const options = [
     { name: "Devotional Info" },
@@ -62,7 +66,7 @@ const ContentDevotional: React.FC<NavigationProps> = ({
   };
 
   useFocusEffect(() => {
-    setDevotionals(devotionalData?.devotionalList || []);
+    setSelectedDevotionals(selectedDevotionalData);
   });
 
   return (
@@ -124,39 +128,25 @@ const ContentDevotional: React.FC<NavigationProps> = ({
               </TouchableOpacity>
             </View> */}
             {/* <Image source={IMAGES.logoDailyAnswer} style={styles.r2t} /> */}
-            <Text style={styles.fv1}>Friday September 22, 2023</Text>
-            <Text style={styles.fv3}>Understand Your Identity</Text>
+            <Text style={styles.fv1}>{selectedDevotional?.date}</Text>
+            <Text style={styles.fv3}>{selectedDevotional?.title}</Text>
             <Text style={styles.fv1}>READ:</Text>
-            <Text style={styles.fv3}>Psalm 109 : 21 -31</Text>
+            <Text style={styles.fv3}>{selectedDevotional?.bibleVerse}</Text>
             <Text style={styles.fv1}>KEY VERSE:</Text>
-            <Text style={styles.fv2}>
-              It’s in Christ that we find out who we are and what we are living
-              for. Long before we first heard of Christ and got our hopes up, he
-              had his eye on us, had designs on us for glorious living, part of
-              the overall purpose he is working out in everything and everyone.
-            </Text>
-            <Text style={styles.fv5}>Ephesians 1 : 11</Text>
+            <Text style={styles.fv2}>{selectedDevotional?.keyText}</Text>
+            <Text style={styles.fv5}>{selectedDevotional?.keyVerse}</Text>
             <Text style={styles.fv1}>MESSAGE:</Text>
-            <Text style={styles.fv4}>
-              Many struggle with a low self-image. The New Testament answer to
-              this problem is to know who you are in Christ Jesus: ‘It’s in
-              Christ that we find out who we are and what we are living for’
-              (v.11, MSG). Understand what your identity is in Christ. While you
-              may not have every material blessing you want (Paul was in prison
-              when he wrote this letter), God has blessed you ‘with every
-              spiritual blessing in Christ’ (v.3). This passage lists many of
-              these blessings: You are redeemed through his blood (v.7a; Isaiah
-              52:3,9).
-            </Text>
-            <Text style={styles.fv6}>Grace and peace</Text>
-            <Text style={styles.fv4}>
-              Paul starts his greetings with ‘grace and peace’ (v.2). Later he
-              says, ‘The riches of God’s grace... [have been] lavished on us’
-              (vv.7–8). Grace is love that cares and stoops and rescues. You
-              have peace with God.
-            </Text>
-            <Text style={styles.fv6}>Chosen, destined and adopted</Text>
-            <Text style={styles.fv4}>
+            <Text style={styles.fv4}>{selectedDevotional?.message}</Text>
+
+            {selectedDevotional?.subMessages?.map((subMessage, idx) => (
+              <View key={idx} style={styles.fvv4}>
+                <Text style={styles.fv6}>{subMessage?.title}</Text>
+                <Text style={styles.fv4}>{subMessage.message}</Text>
+              </View>
+            ))}
+
+            {/* <Text style={styles.fv6}>Chosen, destined and adopted</Text> */}
+            {/* <Text style={styles.fv4}>
               ‘Even as [in His love] He chose us [actually picked us out for
               Himself as His own] in Christ before the foundation of the
               world... He foreordained us (destined us, planned in love for us)
@@ -167,16 +157,10 @@ const ContentDevotional: React.FC<NavigationProps> = ({
             <Text style={styles.fv4}>
               ‘Redeemed’ was the word used for the buying back of a slave – a
               captive set free for a price.
-            </Text>
+            </Text> */}
 
             <Text style={styles.fv1}>PRAYER:</Text>
-            <Text style={styles.fv2}>
-              Lord, I praise you for every spiritual blessing that you have
-              given me in Christ. May the eyes of my heart be enlightened in
-              order that I may know the hope to which you have called me, the
-              riches of your glorious inheritances, and your incomparably great
-              power living within me. (Ephesians 1 : 17-19)
-            </Text>
+            <Text style={styles.fv2}>{selectedDevotional?.prayer}</Text>
           </ScrollView>
           <View style={styles.floatingContainer}>
             <TouchableOpacity style={styles.floatingContent1}>
@@ -292,7 +276,6 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
     paddingBottom: "40%",
   },
-
   ft1: {
     alignSelf: "flex-start",
     marginVertical: 20,
@@ -390,6 +373,10 @@ const styles = StyleSheet.create({
     fontSize: SIZES.sizeSixB,
     marginBottom: 25,
     alignSelf: "flex-start",
+  },
+  fvv4: {
+    justifyContent: "flex-start",
+    alignItems: "flex-start",
   },
   fv6: {
     alignSelf: "flex-start",

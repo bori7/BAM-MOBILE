@@ -39,7 +39,7 @@ export interface InitialScreenNotificationStateType {
   screenLoading: boolean;
   screenError: InitialUserErrorType | null;
   screenMessage: string;
-  screenFunction: () => void;
+  screenFunction?: () => void;
 }
 
 export interface NotificationDataType {
@@ -81,11 +81,30 @@ export interface DevotionalItemProps {
 
 export interface InitialDevotionalStateType {
   devotionalData: DevotionalDataType | null;
+  selectedDevotionalData: SelectedDevotionalDataType | null;
   devotionalLoading: boolean;
   devotionalError: InitialUserErrorType | null;
   devotionalMessage: string;
 }
-
 export interface DevotionalDataType {
   devotionalList: DevotionalItemProps[];
+}
+
+export interface SelectedDevotionalDataType {
+  uid: string;
+  image: ImageSourcePropType;
+  date: string;
+  title: string;
+  ticked: boolean;
+  bibleVerse: string;
+  keyText: string;
+  keyVerse: string;
+  message: string;
+  subMessages: SubTopicType[];
+  prayer: string;
+}
+
+export interface SubTopicType {
+  title: string;
+  message: string;
 }

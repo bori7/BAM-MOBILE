@@ -18,14 +18,39 @@ import MidDoubleTick from "../../../shared/assets/images/svg/mdi_check_all.svg";
 import SolidPray from "../../../shared/assets/images/svg/fa_solid_pray.svg";
 import { OptionsPopUp } from "./OptionsPopUp";
 import { MainProps, MainRoutes } from "../../../shared/const/routerMain";
+import { screenNotificationActions } from "../../../store/slices/notification";
+import { CompositeScreenProps, useFocusEffect } from "@react-navigation/native";
+import { RootRoutes, RootScreenProps } from "../../../shared/const/routerRoot";
+import { DevotionalRoutes } from "../../../shared/const/routerDevotional";
 
-type NavigationProps = MainProps<MainRoutes.HomeScreen>;
+// type NavigationProps = MainProps<MainRoutes.HomeScreen>;
+
+type NavigationProps = CompositeScreenProps<
+  MainProps<MainRoutes.HomeScreen>,
+  RootScreenProps<RootRoutes.Notes>
+>;
 
 const Home: React.FC<NavigationProps> = ({ navigation, route }) => {
   const dispatch = useDispatch<AppDispatch>();
   const [hideOptions, setHideOptions] = useState<boolean>(false);
 
   const options = [{ name: "Share" }, { name: "Copy" }];
+
+  const screenNotificationState = useSelector(
+    (state: RootState) => state.screenNotification
+  );
+  const { screenLoading } = screenNotificationState;
+
+  useFocusEffect(() => {
+    if (screenLoading) {
+      setTimeout(async () => {
+        await dispatch(screenNotificationActions.updateScreenLoading(false));
+        navigation?.navigate(RootRoutes.Devotional, {
+          screen: DevotionalRoutes.ContentDevotional,
+        });
+      }, 2000);
+    }
+  });
 
   return (
     <View style={styles.main}>
@@ -117,7 +142,16 @@ const Home: React.FC<NavigationProps> = ({ navigation, route }) => {
             </View>
             <Text style={styles.ft1}>Today’s Devotional</Text>
             <View style={styles.v2}>
-              <TouchableOpacity style={styles.v2r1}>
+              <TouchableOpacity
+                style={styles.v2r1}
+                onPress={() => {
+                  dispatch(
+                    screenNotificationActions.updateScreenLoadingFunc({
+                      screenLoading: true,
+                    })
+                  );
+                }}
+              >
                 <Image
                   source={IMAGES.devotionalSample1}
                   style={styles.v2r1Image}

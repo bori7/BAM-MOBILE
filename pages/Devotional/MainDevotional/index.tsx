@@ -20,6 +20,7 @@ import {
   DevotionalProps,
   DevotionalRoutes,
 } from "../../../shared/const/routerDevotional";
+import { screenNotificationActions } from "../../../store/slices/notification";
 
 // type NavigationProps = MainProps<MainRoutes.HomeScreen>;
 
@@ -36,8 +37,24 @@ const MainDevotional: React.FC<NavigationProps> = ({ navigation, route }) => {
   const devotionalState = useSelector((state: RootState) => state.devotional);
   const { devotionalData } = devotionalState;
 
+  const screenNotificationState = useSelector(
+    (state: RootState) => state.screenNotification
+  );
+  const { screenLoading } = screenNotificationState;
+
   useFocusEffect(() => {
     setDevotionals(devotionalData?.devotionalList || []);
+  });
+
+  useFocusEffect(() => {
+    if (screenLoading) {
+      setTimeout(async () => {
+        await dispatch(screenNotificationActions.updateScreenLoading(false));
+        navigation?.navigate(RootRoutes.Devotional, {
+          screen: DevotionalRoutes.ContentDevotional,
+        });
+      }, 2000);
+    }
   });
 
   return (
@@ -82,9 +99,11 @@ const MainDevotional: React.FC<NavigationProps> = ({ navigation, route }) => {
               <TouchableOpacity
                 style={styles.v2r1}
                 onPress={() => {
-                  navigation?.navigate(RootRoutes.Devotional, {
-                    screen: DevotionalRoutes.ContentDevotional,
-                  });
+                  dispatch(
+                    screenNotificationActions.updateScreenLoadingFunc({
+                      screenLoading: true,
+                    })
+                  );
                 }}
               >
                 <Image
@@ -120,9 +139,11 @@ const MainDevotional: React.FC<NavigationProps> = ({ navigation, route }) => {
                 <TouchableOpacity
                   style={styles.v2r1}
                   onPress={() => {
-                    navigation?.navigate(RootRoutes.Devotional, {
-                      screen: DevotionalRoutes.ContentDevotional,
-                    });
+                    dispatch(
+                      screenNotificationActions.updateScreenLoadingFunc({
+                        screenLoading: true,
+                      })
+                    );
                   }}
                 >
                   <Image

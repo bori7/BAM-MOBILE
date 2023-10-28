@@ -1,6 +1,10 @@
 // ###############################################################
 
-import { DevotionalItemProps, NoteProps } from "../shared/types/slices";
+import {
+  DevotionalItemProps,
+  NoteProps,
+  SelectedDevotionalDataType,
+} from "../shared/types/slices";
 import { IMAGES } from "./Colors";
 
 export const testNotes: NoteProps[] = [
@@ -101,3 +105,36 @@ export const testDevotional: DevotionalItemProps[] = [
     ticked: true,
   },
 ];
+
+export const testSelectedDevotional: SelectedDevotionalDataType = {
+  uid: "1",
+  image: IMAGES.devotionalSample2,
+  date: "Friday September 22, 2023",
+  title: "Understand Your Identity",
+  ticked: true,
+  bibleVerse: "Psalm 109 : 21 -31",
+  keyText:
+    "It’s in Christ that we find out who we are and what we are living for. Long before we first heard of Christ and got our hopes up, he had his eye on us, had designs on us for glorious living, part of the overall purpose he is working out in everything and everyone.",
+  keyVerse: "Ephesians 1 : 11",
+  message:
+    " Many struggle with a low self-image. The New Testament answer to this problem is to know who you are in Christ Jesus: ‘It’s in Christ that we find out who we are and what we are living for’ (v.11, MSG). Understand what your identity is in Christ. While you may not have every material blessing you want (Paul was in prison when he wrote this letter), God has blessed you ‘with every spiritual blessing in Christ’ (v.3). This passage lists many of these blessings: You are redeemed through his blood (v.7a; Isaiah 52:3,9).",
+  subMessages: [
+    {
+      title: "Grace and peace",
+      message:
+        " Paul starts his greetings with ‘grace and peace’ (v.2). Later he says, ‘The riches of God’s grace... [have been] lavished on us’ (vv.7–8). Grace is love that cares and stoops and rescues. You have peace with God.",
+    },
+    {
+      title: "Chosen, destined and adopted",
+      message:
+        "‘Even as [in His love] He chose us [actually picked us out for Himself as His own] in Christ before the foundation of the world... He foreordained us (destined us, planned in love for us) to be adopted (revealed) as His own children’ (vv.4–5, AMP; see also v.11).",
+    },
+    {
+      title: "Redeemed, forgiven and free",
+      message:
+        " ‘Redeemed’ was the word used for the buying back of a slave – a captive set free for a price.",
+    },
+  ],
+  prayer:
+    "Lord, I praise you for every spiritual blessing that you have given me in Christ. May the eyes of my heart be enlightened in order that I may know the hope to which you have called me, the riches of your glorious inheritances, and your incomparably great power living within me.(Ephesians 1 : 17-19)",
+};

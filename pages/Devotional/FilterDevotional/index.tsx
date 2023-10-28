@@ -21,6 +21,7 @@ import {
 } from "../../../shared/const/routerDevotional";
 import { OptionsPopUp } from "../../Main/Home/OptionsPopUp";
 import FilterModal from "./FilterModal";
+import { screenNotificationActions } from "../../../store/slices/notification";
 
 type NavigationProps = DevotionalProps<DevotionalRoutes.FilterDevotional>;
 
@@ -39,6 +40,11 @@ const FilterDevotional: React.FC<NavigationProps> = ({ navigation, route }) => {
 
   const devotionalState = useSelector((state: RootState) => state.devotional);
   const { devotionalData } = devotionalState;
+
+  const screenNotificationState = useSelector(
+    (state: RootState) => state.screenNotification
+  );
+  const { screenLoading } = screenNotificationState;
 
   const options = [
     { name: "Devotional Info" },
@@ -69,6 +75,14 @@ const FilterDevotional: React.FC<NavigationProps> = ({ navigation, route }) => {
 
   useFocusEffect(() => {
     setDevotionals(devotionalData?.devotionalList || []);
+  });
+
+  useFocusEffect(() => {
+    if (screenLoading)
+      setTimeout(async () => {
+        await dispatch(screenNotificationActions.updateScreenLoading(false));
+        navigation?.navigate(DevotionalRoutes.ContentDevotional);
+      }, 2000);
   });
 
   return (
@@ -152,7 +166,16 @@ const FilterDevotional: React.FC<NavigationProps> = ({ navigation, route }) => {
 
             {devotionals.map((devo, idx) => (
               <View style={styles.v2} key={idx}>
-                <TouchableOpacity style={styles.v2r1}>
+                <TouchableOpacity
+                  style={styles.v2r1}
+                  onPress={() => {
+                    dispatch(
+                      screenNotificationActions.updateScreenLoadingFunc({
+                        screenLoading: true,
+                      })
+                    );
+                  }}
+                >
                   <Image
                     source={devo.image}
                     style={styles.v2r1Image}
