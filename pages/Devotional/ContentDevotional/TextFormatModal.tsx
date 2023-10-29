@@ -109,6 +109,6 @@ const styles = StyleSheet.create({
     fontSize: SIZES.sizeEightB,
   },
   r2b: {
-    // marginRight: 20,
+    // marginRight: 20
   },
 });
