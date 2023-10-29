@@ -14,14 +14,52 @@ import { COLORS, IMAGES, SIZES } from "../../../constants/Colors";
 import { Feather, FontAwesome5 } from "@expo/vector-icons";
 import { ProgressBarButton } from "../../../shared/components/ProgressBarButton";
 import { Back10SVG, Front10SVG } from "../../../shared/components/SVGS";
+import { OptionsPopUp } from "../../Main/Home/OptionsPopUp";
 
+type ISpeedProps = "0.75x" | "1x" | "1.25x" | "1.5x" | "2x";
+type IVoiceProps = "Male" | "Female";
+type ISpeedsProps = {
+  name: ISpeedProps;
+};
+type IVoicesProps = {
+  name: IVoiceProps;
+};
 const SpeakerModal = () => {
   const cWidth = 23;
-  const [audioPercent, setAudioPercent] = useState<number>(5); //5-97.5
+  const speeds: ISpeedsProps[] = [
+    {
+      name: "0.75x",
+    },
+    {
+      name: "1x",
+    },
+    {
+      name: "1.25x",
+    },
+    {
+      name: "1.5x",
+    },
+    {
+      name: "2x",
+    },
+  ];
+  const voices: IVoicesProps[] = [
+    {
+      name: "Male",
+    },
+    {
+      name: "Female",
+    },
+  ];
+  const [audioPercent, setAudioPercent] = useState<number>(23); //5-97.5
   const handleSetAudioPercent = (val: number) => {
     setAudioPercent(val);
   };
   const [play, setPlay] = useState<boolean>(false);
+  const [speed, setSpeed] = useState<ISpeedProps>("1x");
+  const [voice, setVoice] = useState<IVoiceProps>("Male");
+  const [hideSpeed, setHideSpeed] = useState<boolean>(false);
+  const [hideVoice, setHideVoice] = useState<boolean>(false);
   const togglePlay = () => {
     setPlay(!play);
   };
@@ -44,6 +82,7 @@ const SpeakerModal = () => {
           cWidth={cWidth}
           pad={0}
           setExternalProgress={handleSetAudioPercent}
+          initialPercentage={audioPercent}
         ></ProgressBarButton>
       </View>
       <View style={styles.mr2}>
@@ -51,9 +90,14 @@ const SpeakerModal = () => {
         <Text style={styles.mr2t2}>4:49</Text>
       </View>
       <View style={styles.mr3}>
-        <TouchableOpacity>
-          <Text style={styles.mr3a}>1x</Text>
+        <TouchableOpacity
+          onPress={() => {
+            setHideSpeed(!hideSpeed);
+          }}
+        >
+          <Text style={styles.mr3a}>{speed}</Text>
         </TouchableOpacity>
+
         <View style={styles.mr3b}>
           <TouchableOpacity>
             <Back10SVG />
@@ -77,9 +121,94 @@ const SpeakerModal = () => {
             <Front10SVG />
           </TouchableOpacity>
         </View>
-        <TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => {
+            setHideVoice(!hideVoice);
+          }}
+        >
           <Text style={styles.mr3c}>VOICE</Text>
         </TouchableOpacity>
+        {hideSpeed && (
+          <OptionsPopUp
+            bstyle={styles.bSstyle}
+            xstyle={styles.xSstyle}
+            children={
+              <>
+                <Text
+                  style={[
+                    styles.optionSText,
+                    {
+                      padding: "4%",
+                      fontWeight: "600",
+                    },
+                  ]}
+                >
+                  Speed
+                </Text>
+                {speeds.map((option, idx) => (
+                  <TouchableOpacity
+                    key={idx}
+                    style={styles.optionSBody}
+                    onPress={() => {
+                      setHideSpeed(!hideSpeed);
+                      setSpeed(option.name);
+                    }}
+                  >
+                    <Text style={styles.optionSText}>{option.name}</Text>
+                    {option.name === speed && (
+                      <Feather
+                        name="check"
+                        size={24}
+                        color={COLORS.Light.colorFour}
+                      />
+                    )}
+                  </TouchableOpacity>
+                ))}
+              </>
+            }
+          />
+        )}
+        {hideVoice && (
+          <OptionsPopUp
+            bstyle={styles.bvstyle}
+            xstyle={styles.xvstyle}
+            children={
+              <>
+                <Text
+                  style={[
+                    styles.optionvText,
+                    {
+                      padding: "4%",
+                      fontWeight: "600",
+                    },
+                  ]}
+                >
+                  Voice
+                </Text>
+
+                {voices.map((option, idx) => (
+                  <TouchableOpacity
+                    key={idx}
+                    style={styles.optionvBody}
+                    onPress={() => {
+                      setHideVoice(!hideVoice);
+                      setVoice(option.name);
+                    }}
+                  >
+                    <Text style={styles.optionvText}>{option.name}</Text>
+                    {option.name === voice && (
+                      <Feather
+                        name="check"
+                        size={24}
+                        color={COLORS.Light.colorFour}
+                      />
+                    )}
+                  </TouchableOpacity>
+                ))}
+              </>
+            }
+          />
+        )}
       </View>
     </>
   );
@@ -213,5 +342,79 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     textAlign: "center",
     marginLeft: "8%",
+  },
+  xvstyle: {
+    width: 180,
+    // height: 190,
+    top: -150,
+    right: -15,
+    borderRadius: 10,
+    // borderWidth: 2,
+    shadowColor: COLORS.Light.greyText,
+    shadowOffset: {
+      width: 0,
+      height: 8,
+    },
+    shadowOpacity: 0.9,
+    shadowRadius: 10,
+    elevation: 10,
+  },
+  bvstyle: {
+    paddingVertical: "10%",
+    paddingHorizontal: "8%",
+    alignItems: "flex-start",
+    justifyContent: "center",
+    flexDirection: "column",
+    borderColor: COLORS.Light.hashBackGround,
+    borderWidth: 2,
+    height: 180,
+  },
+  optionvBody: {
+    padding: "5%",
+    marginVertical: "5%",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    width: "100%",
+  },
+  optionvText: {
+    fontSize: SIZES.sizeSeven,
+    // fontWeight: "600",
+  },
+  xSstyle: {
+    width: 180,
+    // height: 190,
+    top: -250,
+    left: -5,
+    borderRadius: 10,
+    // borderWidth: 2,
+    shadowColor: COLORS.Light.greyText,
+    shadowOffset: {
+      width: 0,
+      height: 8,
+    },
+    shadowOpacity: 0.9,
+    shadowRadius: 10,
+    elevation: 10,
+  },
+  bSstyle: {
+    paddingVertical: "10%",
+    paddingHorizontal: "8%",
+    alignItems: "flex-start",
+    justifyContent: "center",
+    flexDirection: "column",
+    borderColor: COLORS.Light.hashBackGround,
+    borderWidth: 2,
+    // height: 180,
+  },
+  optionSBody: {
+    padding: "5%",
+    marginVertical: "5%",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    width: "100%",
+  },
+  optionSText: {
+    fontSize: SIZES.sizeSeven,
+    // fontWeight: "600",
   },
 });

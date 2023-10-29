@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Easing, StyleProp, ViewStyle } from "react-native";
 import { Animated, StyleSheet, Dimensions } from "react-native";
 import { PanGestureHandler } from "react-native-gesture-handler";
@@ -11,12 +11,14 @@ export const ProgressBarButton = ({
   pad,
   setExternalProgress,
   children,
+  initialPercentage = 0,
 }: {
   buttonStyle: StyleProp<ViewStyle>;
   cWidth: number;
   pad: number;
   setExternalProgress: Function;
   children?: any;
+  initialPercentage?: number;
 }) => {
   const BUTTON_WIDTH = cWidth || 50;
   const DEVICE_WIDTH = Dimensions.get("window").width;
@@ -25,6 +27,10 @@ export const ProgressBarButton = ({
 
   const position = useRef(new Animated.Value(0));
   const [percentage, setPercentage] = useState(0);
+
+  useEffect(() => {
+    position?.current.setValue((initialPercentage * ALLOWANCE) / 100);
+  }, []);
 
   const onHandlerStateChange = (event: {
     nativeEvent: { state: number; translationX?: any };

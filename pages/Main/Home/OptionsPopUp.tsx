@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
     top: 25,
     zIndex: 150,
     width: 300,
-    height: 200,
+    // height: 200,
   },
   container: {
     backgroundColor: COLORS.Light.background,
