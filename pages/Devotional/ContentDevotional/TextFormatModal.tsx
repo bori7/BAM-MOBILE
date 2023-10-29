@@ -28,7 +28,7 @@ const TextFormatModal = () => {
       <View style={styles.r2}>
         <View style={styles.r2a}>
           <Text style={styles.r2at1}>
-            <Ionicons name="moon" size={30} color={COLORS.Light.colorFour} />
+            <Ionicons name="moon" size={26} color={COLORS.Light.colorFour} />
           </Text>
           <Text style={styles.r2at2}>Dark Mode</Text>
         </View>
@@ -106,7 +106,7 @@ const styles = StyleSheet.create({
   },
   r2at2: {
     fontWeight: "600",
-    fontSize: SIZES.sizeEightB,
+    fontSize: SIZES.sizeSeven,
   },
   r2b: {
     // marginRight: 20

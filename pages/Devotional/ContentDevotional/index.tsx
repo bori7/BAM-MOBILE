@@ -191,7 +191,17 @@ const ContentDevotional: React.FC<NavigationProps> = ({
           <>
             {modalType === "speaker" && <SpeakerModal />}
             {modalType === "text" && <TextFormatModal />}
-            {modalType === "notes" && <NotesModal />}
+            {modalType === "notes" && (
+              <NotesModal
+                noteTitle={
+                  selectedDevotional?.title ||
+                  `New Note ${new Date().toISOString()}`
+                }
+                setModalVisible={() => {
+                  setHideModal(false);
+                }}
+              />
+            )}
           </>
         }
       />

@@ -27,6 +27,7 @@ const ControlModal2 = ({ visible, closeModal, children }: IProps) => {
       animationOutTiming={150}
       deviceWidth={Layout.window.width}
       deviceHeight={Layout.window.height}
+      avoidKeyboard={true}
     >
       {/* <View style={styles.modalContainer}> */}
       {/* <TouchableWithoutFeedback onPress={closeModal}>
