@@ -13,6 +13,7 @@ import Wrapper from "./shared/components/Wrapper";
 import { Provider as PaperProvider } from "react-native-paper";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { useFonts } from "expo-font";
+// import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 const queryClient = new QueryClient();
 
@@ -40,7 +41,9 @@ export default function App() {
           <QueryClientProvider client={queryClient}>
             <Provider store={store}>
               <PaperProvider>
+                {/* <GestureHandlerRootView> */}
                 <Wrapper child={<Navigation colorScheme={colorScheme} />} />
+                {/* </GestureHandlerRootView> */}
                 <StatusBar />
               </PaperProvider>
             </Provider>

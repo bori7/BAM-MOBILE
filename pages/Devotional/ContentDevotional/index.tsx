@@ -26,6 +26,7 @@ import ControlModal from "./ControlModal";
 import SpeakerModal from "./SpeakerModal";
 import TextFormatModal from "./TextFormatModal";
 import NotesModal from "./NotesModal";
+import ControlModal2 from "./ControlModal2";
 
 type NavigationProps = DevotionalProps<DevotionalRoutes.ContentDevotional>;
 
@@ -100,8 +101,8 @@ const ContentDevotional: React.FC<NavigationProps> = ({
               <TouchableOpacity
                 style={styles.h1r1}
                 onPress={() => {
-                  setHideModal(true);
                   setModalType("speaker");
+                  setHideModal(true);
                 }}
               >
                 <SpeakerSVG />
@@ -109,8 +110,8 @@ const ContentDevotional: React.FC<NavigationProps> = ({
               <TouchableOpacity
                 style={styles.h1r2}
                 onPress={() => {
-                  setHideModal(true);
                   setModalType("text");
+                  setHideModal(true);
                 }}
               >
                 <Text style={styles.h1r2t}>Aa</Text>
@@ -118,8 +119,8 @@ const ContentDevotional: React.FC<NavigationProps> = ({
               <TouchableOpacity
                 style={styles.h1r3}
                 onPress={() => {
-                  setHideModal(true);
                   setModalType("notes");
+                  setHideModal(true);
                 }}
               >
                 <NotePadSVG />
@@ -180,20 +181,20 @@ const ContentDevotional: React.FC<NavigationProps> = ({
             </TouchableOpacity>
           </View>
         </View>
-        <ControlModal
-          visible={hideModal}
-          closeModal={() => {
-            setHideModal(false);
-          }}
-          children={
-            <>
-              {modalType === "speaker" && <SpeakerModal />}
-              {modalType === "text" && <TextFormatModal />}
-              {modalType === "notes" && <NotesModal />}
-            </>
-          }
-        />
       </View>
+      <ControlModal2
+        visible={hideModal}
+        closeModal={() => {
+          setHideModal(false);
+        }}
+        children={
+          <>
+            {modalType === "speaker" && <SpeakerModal />}
+            {modalType === "text" && <TextFormatModal />}
+            {modalType === "notes" && <NotesModal />}
+          </>
+        }
+      />
     </View>
   );
 };

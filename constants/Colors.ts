@@ -53,7 +53,7 @@ export const COLORS = {
     colorSeventeen: "#41BCC4",
     colorEighteen: "rgba(0, 0, 0, 0.40)",
     colorNineteen: "#F7F7F7",
-    colorTwenty: "rgba(235, 87, 87, 0.15)",
+    colorTwenty: "rgba(235, 87, 87, 0.17)",
     colorTwentyOne: "#F8F8F8",
     colorTwentyFour: "#71879C",
     colorTwentyFive: "#222",
