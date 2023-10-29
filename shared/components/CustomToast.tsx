@@ -1,7 +1,6 @@
 import React from "react";
-import { View, Image, Text, StyleSheet, ImageBackground } from "react-native";
-import { COLORS, IMAGES } from "../../constants/Colors";
-import BAMLogoSVG from "../../shared/assets/images/png/Logo-Daily-Answer.png";
+import { View, Image, Text, StyleSheet } from "react-native";
+import { COLORS, IMAGES, SIZES } from "../../constants/Colors";
 
 function CustomToast({ toast }: any) {
   return (
@@ -16,11 +15,13 @@ function CustomToast({ toast }: any) {
         },
       ]}
     >
-      <ImageBackground style={styles.toastContainer} source={IMAGES.HomeBg}>
+      <View style={styles.toastContainer}>
         <View style={styles.toastBody}>
-          <View style={styles.toastImage}>
-            <BAMLogoSVG fill={COLORS.Light.background} width={15} height={15} />
+          <View style={styles.toastImageContainer}>
+            <Image source={IMAGES.logoDailyAnswer} style={styles.toastImage} />
           </View>
+          {/* <BAMLogoSVG fill={COLORS.Light.background} width={15} height={15} /> */}
+
           <Text style={styles.toastHeaderText}>Bible App</Text>
         </View>
         <View style={styles.toastContent}>
@@ -29,7 +30,7 @@ function CustomToast({ toast }: any) {
         </Text> */}
         </View>
         <Text style={toast.textStyle}>{toast.message}</Text>
-      </ImageBackground>
+      </View>
     </View>
   );
 }
@@ -64,16 +65,19 @@ const styles = StyleSheet.create({
   toastBody: {
     display: "flex",
     flexDirection: "row",
-    alignItems: "flex-end",
-    marginBottom: 3,
+    alignItems: "center",
+    // marginBottom: 3,
     width: "100%",
+    justifyContent: "flex-start",
     // borderWidth: 1,
   },
   toastHeaderText: {
     color: "black",
-    fontWeight: "300",
-    fontSize: 15,
+    fontWeight: "500",
+    fontSize: SIZES.sizeSeven,
     marginLeft: 5,
+    textAlign: "center",
+    marginTop: 6,
   },
   toastContent: {
     marginVertical: 5,
@@ -82,13 +86,19 @@ const styles = StyleSheet.create({
     color: "black",
     fontWeight: "bold",
   },
-  toastImage: {
-    width: 20,
-    height: 20,
-    // borderColor: COLORS.Light.colorTwentyFive,
-    borderRadius: 5,
-    backgroundColor: COLORS.Light.colorOne,
+  toastImageContainer: {
     alignItems: "center",
     justifyContent: "center",
+  },
+  toastImage: {
+    width: 30,
+    height: 30,
+    // borderColor: COLORS.Light.colorTwentyFive,
+    borderRadius: 5,
+    // backgroundColor: COLORS.Light.colorOne,
+    alignItems: "center",
+    justifyContent: "center",
+    resizeMode: "contain",
+    alignSelf: "center",
   },
 });

@@ -1,21 +1,13 @@
-import {
-  Image,
-  Modal,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  TouchableOpacity,
-  TouchableWithoutFeedback,
-} from "react-native";
+import { ScrollView, StyleSheet, TouchableOpacity } from "react-native";
 
-import React, { ReactElement, useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Text, View } from "../../../components/Themed";
 import { COLORS, IMAGES, SIZES } from "../../../constants/Colors";
-import { Feather } from "@expo/vector-icons";
 import { notesActions } from "../../../store/slices/notes";
 import { AppDispatch } from "../../../store";
 import { useDispatch } from "react-redux";
 import { TextInput } from "react-native-paper";
+import { screenNotificationActions } from "../../../store/slices/notification";
 
 type Iprops = {
   noteTitle: string;
@@ -44,6 +36,12 @@ const NotesModal = ({ setModalVisible, noteTitle }: Iprops) => {
       })
     );
     closeModal();
+    dispatch(
+      screenNotificationActions.updateNotificationData({
+        duration: 50000,
+        message: "Your note has been saved",
+      })
+    );
   };
 
   return (

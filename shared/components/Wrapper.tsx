@@ -19,8 +19,9 @@ export default function Wrapper({ child }: props) {
 
   const Toaster = (
     type = "success",
-    message = "Rise Auth...",
-    onShownFunc = () => {}
+    message = "Bible App Auth...",
+    onShownFunc = () => {},
+    duration = 4000
   ) => {
     console.log("Toast type: ", type, " via Wrapper");
     console.log("Toast message: ", message, " via Wrapper");
@@ -31,7 +32,7 @@ export default function Wrapper({ child }: props) {
       toast?.show(message, {
         type: type === "error" ? "danger" : type,
         placement: "top",
-        duration: 4000,
+        duration: duration,
         animationType: "slide-in",
         textStyle: {
           fontSize: SIZES.sizeSix,
@@ -57,25 +58,26 @@ export default function Wrapper({ child }: props) {
   const screenNotificationState = useSelector(
     (state: RootState) => state.screenNotification
   );
-  const { screenLoading, screenFunction } = screenNotificationState;
+  const { screenLoading, screenFunction, notificationData } =
+    screenNotificationState;
 
-  // const dispatch = useDispatch<AppDispatch>();
+  useEffect(() => {
+    if (notificationData !== null) {
+      Toaster("success", notificationData?.message, () => {
+        dispatch(screenNotificationActions.clearNotificationState());
+      });
+    }
+    // if (userMessage) {
+    //   Toaster("success", userMessage, () => {});
+    // }
 
-  // useEffect(() => {
-  //   if (userError !== null) {
-  //     Toaster("error", userError?.message, () => {});
-  //   }
-  //   if (userMessage) {
-  //     Toaster("success", userMessage, () => {});
-  //   }
-
-  //   if (planError !== null) {
-  //     Toaster("error", planError?.message, () => {});
-  //   }
-  //   if (planMessage) {
-  //     Toaster("success", planMessage, () => {});
-  //   }
-  // }, [userError, userMessage, planError, planMessage]);
+    // if (planError !== null) {
+    //   Toaster("error", planError?.message, () => {});
+    // }
+    // if (planMessage) {
+    //   Toaster("success", planMessage, () => {});
+    // }
+  }, [notificationData]);
 
   useEffect(() => {}, []);
 

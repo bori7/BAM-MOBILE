@@ -82,6 +82,18 @@ export const screeNotificationSlice = createSlice({
       state.notificationMessage = "";
       state.notificationData = null;
     },
+    clearScreenState: (state) => {
+      state.screenLoading = false;
+      state.screenError = null;
+      state.screenMessage = "";
+      state.screenData = null;
+    },
+    clearNotificationState: (state) => {
+      state.notificationLoading = false;
+      state.notificationError = null;
+      state.notificationMessage = "";
+      state.notificationData = null;
+    },
   },
 });
 

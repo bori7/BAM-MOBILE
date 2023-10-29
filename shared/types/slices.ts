@@ -44,6 +44,7 @@ export interface InitialScreenNotificationStateType {
 
 export interface NotificationDataType {
   duration: number;
+  message: string;
 }
 
 export interface ScreenDataType {
