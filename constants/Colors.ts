@@ -33,6 +33,7 @@ export const COLORS = {
     deeperGreyColor: "#646464",
     hashBackGround: "#F5F3F3",
     hashBackGroundL2: "#F3F3F3",
+    hashBackGroundL3: "#F2F2F2",
     hashHomeBackGround: "#EDEDED",
     hashHomeBackGroundL2: "#F9F9F9",
     gray: "#4F4F4F",
