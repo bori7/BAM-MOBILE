@@ -49,7 +49,7 @@ const NotesModal = ({ setModalVisible, noteTitle }: Iprops) => {
   return (
     <View style={styles.modalHeader}>
       <View style={styles.r1}>
-        <Text style={styles.r1t}>Understand Your Identity</Text>
+        <Text style={styles.r1t}>{noteTitle}</Text>
       </View>
       <View style={styles.r2}>
         <ScrollView
@@ -109,7 +109,7 @@ const styles = StyleSheet.create({
     // borderWidth: 1,
     justifyContent: "center",
     alignItems: "center",
-    marginBottom: 20,
+    marginBottom: 5,
   },
   r1: {
     justifyContent: "center",
@@ -118,14 +118,14 @@ const styles = StyleSheet.create({
     borderBottomWidth: 2,
     width: "150%",
     paddingTop: 10,
-    paddingBottom: 20,
+    paddingBottom: 10,
   },
   r1t: {
     fontSize: SIZES.sizeEight,
     fontWeight: "500",
   },
   r2: {
-    paddingVertical: 30,
+    paddingVertical: 20,
     // borderWidth: 2,
     width: "100%",
     minHeight: 250,

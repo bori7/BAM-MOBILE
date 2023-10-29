@@ -1,4 +1,9 @@
-import { StyleSheet, TouchableWithoutFeedback } from "react-native";
+import {
+  KeyboardAvoidingView,
+  Platform,
+  StyleSheet,
+  TouchableWithoutFeedback,
+} from "react-native";
 
 import React, { ReactElement } from "react";
 import { Text, View } from "../../../components/Themed";
@@ -29,13 +34,18 @@ const ControlModal2 = ({ visible, closeModal, children }: IProps) => {
       deviceHeight={Layout.window.height}
       avoidKeyboard={true}
     >
-      {/* <View style={styles.modalContainer}> */}
-      {/* <TouchableWithoutFeedback onPress={closeModal}>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "android" ? "padding" : "height"} // You can use "height" or "position" as well
+        style={styles.modalKeyboardAvoiding}
+      >
+        {/* <View style={styles.modalContainer}> */}
+        {/* <TouchableWithoutFeedback onPress={closeModal}>
         <View style={styles.modalOverlay} />
       </TouchableWithoutFeedback> */}
 
-      <View style={[styles.modalContent]}>{children}</View>
-      {/* </View> */}
+        <View style={[styles.modalContent]}>{children}</View>
+        {/* </View> */}
+      </KeyboardAvoidingView>
     </Modal>
   );
 };
@@ -52,6 +62,10 @@ const styles = StyleSheet.create({
     marginBottom: "auto",
     marginTop: "auto",
   },
+  modalKeyboardAvoiding: {
+    flex: 1,
+  },
+
   modalContent: {
     // height: "65%",
     marginTop: "auto",
