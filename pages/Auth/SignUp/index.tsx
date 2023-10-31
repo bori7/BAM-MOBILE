@@ -59,7 +59,7 @@ const SignUp: React.FC<NavigationProps> = ({ navigation, route }) => {
               <TouchableOpacity
                 style={styles.r1t1}
                 onPress={() => {
-                  navigation?.navigate(AuthRoutes.GFA);
+                  navigation?.navigate(AuthRoutes.DaDBSwiper);
                 }}
               >
                 <CancelIcon width={30} height={30} />

@@ -6,6 +6,7 @@ import SignUp from "../../pages/Auth/SignUp";
 import ForgotPassword from "../../pages/Auth/ForgotPassword";
 import ConfirmEmail from "../../pages/Auth/ConfirmEmail";
 import NewPassword from "../../pages/Auth/NewPassword";
+import DaDBSwiper from "../../pages/Auth/DaDB_SWIPER";
 
 export {
   DaDB,
@@ -16,4 +17,5 @@ export {
   ForgotPassword,
   ConfirmEmail,
   NewPassword,
+  DaDBSwiper,
 };

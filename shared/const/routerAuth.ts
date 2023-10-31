@@ -9,6 +9,7 @@ export enum AuthRoutes {
   NewPassword = "NewPassword",
   SignIn = "SignIn",
   SignUp = "SignUp",
+  DaDBSwiper = "DaDBSwiper",
 }
 
 export type AuthParamList = {
@@ -20,6 +21,7 @@ export type AuthParamList = {
   [AuthRoutes.NewPassword]: undefined;
   [AuthRoutes.SignIn]: undefined;
   [AuthRoutes.SignUp]: undefined;
+  [AuthRoutes.DaDBSwiper]: undefined;
 };
 
 export type AuthProps<RouteName extends AuthRoutes> = StackScreenProps<

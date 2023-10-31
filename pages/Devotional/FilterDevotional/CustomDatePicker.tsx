@@ -123,6 +123,9 @@ const CustomDatePicker = ({ pickSelectedDate }: IProps) => {
             is24Hour
             minimumDate={formattedMinDate}
             maximumDate={formattedMaxDate}
+            accentColor={COLORS.Light.colorOne}
+            textColor={COLORS.Light.colorOne}
+            buttonTextColorIOS={COLORS.Light.colorOne}
           />
         </>
       )}

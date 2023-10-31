@@ -11,6 +11,7 @@ import {
   ForgotPassword,
   ConfirmEmail,
   NewPassword,
+  DaDBSwiper,
 } from "../../pages/Auth";
 
 const Auth = createStackNavigator<AuthParamList>();
@@ -26,6 +27,11 @@ const AuthStack = (): React.ReactElement => {
         }
       }
     >
+      <Auth.Screen
+        component={DaDBSwiper}
+        name={AuthRoutes.DaDBSwiper}
+        options={{ headerShown: false }}
+      />
       <Auth.Screen
         component={DaDB}
         name={AuthRoutes.DaDB}

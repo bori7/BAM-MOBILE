@@ -26,10 +26,12 @@ import {
 import { RootRoutes, RootScreenProps } from "../../../shared/const/routerRoot";
 import { MainRoutes } from "../../../shared/const/routerMain";
 
-type NavigationProps = CompositeScreenProps<
-  RootScreenProps<RootRoutes.Main>,
-  AuthProps<AuthRoutes.SignIn>
->;
+// type NavigationProps = CompositeScreenProps<
+//   RootScreenProps<RootRoutes.Main>,
+//   AuthProps<AuthRoutes.SignIn>
+// >;
+
+type NavigationProps = AuthProps<AuthRoutes.SignIn>;
 
 const SignIn: React.FC<NavigationProps> = ({ navigation, route }) => {
   const dispatch = useDispatch<AppDispatch>();
@@ -81,7 +83,7 @@ const SignIn: React.FC<NavigationProps> = ({ navigation, route }) => {
               <TouchableOpacity
                 style={styles.r1t1}
                 onPress={() => {
-                  navigation?.navigate(AuthRoutes.GFA);
+                  navigation?.navigate(AuthRoutes.DaDBSwiper);
                 }}
               >
                 <CancelIcon width={30} height={30} />

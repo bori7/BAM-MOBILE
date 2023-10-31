@@ -49,7 +49,7 @@ export const CustomLoadingModal = ({
           <View style={styles.modalLogoImage}>
             <ActivityIndicator
               color={COLORS.Light.colorOne}
-              size={100}
+              size={73}
               animating={true}
               style={styles.loader}
             />
@@ -99,8 +99,8 @@ const styles = StyleSheet.create({
     fontWeight: "400",
   },
   modalImage: {
-    width: 40,
-    height: 40,
+    width: 25,
+    height: 25,
     borderRadius: 50,
     backgroundColor: COLORS.Light.colorSeven,
     alignItems: "center",
@@ -116,11 +116,11 @@ const styles = StyleSheet.create({
     left: "35%",
   },
   r2t: {
-    width: 65,
-    height: 65,
+    width: 50,
+    height: 50,
     position: "absolute",
-    top: "26%",
-    left: "29%",
+    top: "31%",
+    left: "33%",
   },
   loader: {
     height: 150,
