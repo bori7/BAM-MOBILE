@@ -27,16 +27,25 @@ import SpeakerModal from "./SpeakerModal";
 import TextFormatModal from "./TextFormatModal";
 import NotesModal from "./NotesModal";
 import ControlModal2 from "./ControlModal2";
+import SubscriptionModal from "./SubscriptionModal";
+import { RootRoutes, RootScreenProps } from "../../../shared/const/routerRoot";
+import { NotesRoutes } from "../../../shared/const/routerNotes";
+import { MoreRoutes } from "../../../shared/const/routerMore";
 
-type NavigationProps = DevotionalProps<DevotionalRoutes.ContentDevotional>;
+// type NavigationProps = DevotionalProps<DevotionalRoutes.ContentDevotional>;
+
+type NavigationProps = CompositeScreenProps<
+  DevotionalProps<DevotionalRoutes.ContentDevotional>,
+  RootScreenProps<RootRoutes.Devotional>
+>;
 
 const ContentDevotional: React.FC<NavigationProps> = ({
   navigation,
   route,
 }) => {
   const dispatch = useDispatch<AppDispatch>();
-  const [hideOptions, setHideOptions] = useState<boolean>(false);
   const [hideModal, setHideModal] = useState<boolean>(false);
+  const [hideSubscription, setHideSubscription] = useState<boolean>(false);
   const [modalType, setModalType] = useState<"speaker" | "text" | "notes">();
   const [selectedDevotional, setSelectedDevotionals] =
     useState<SelectedDevotionalDataType | null>();
@@ -49,31 +58,19 @@ const ContentDevotional: React.FC<NavigationProps> = ({
   const devotionalState = useSelector((state: RootState) => state.devotional);
   const { selectedDevotionalData } = devotionalState;
 
-  const options = [
-    { name: "Devotional Info" },
-    { name: "Calendar" },
-    { name: "Settings" },
-  ];
-
-  const onClickOption = (type: string) => {
-    switch (type) {
-      case "Devotional Info":
-        navigation.navigate(DevotionalRoutes.AboutDevotional);
-      case "Pray":
-        break;
-      case "Save":
-      case "Edit":
-        break;
-      case "Delete":
-        navigation?.goBack();
-        break;
-      default:
-        break;
-    }
-  };
+  const userState = useSelector((state: RootState) => state.user);
+  const { userData } = userState;
 
   useFocusEffect(() => {
     setSelectedDevotionals(selectedDevotionalData);
+  });
+
+  useFocusEffect(() => {
+    setTimeout(() => {
+      setHideModal(false);
+      setHideSubscription(userData?.hasSubscribed || false);
+      // setHideSubscription(false);
+    }, 3000);
   });
 
   return (
@@ -205,6 +202,19 @@ const ContentDevotional: React.FC<NavigationProps> = ({
           </>
         }
       />
+      <SubscriptionModal
+        visible={hideSubscription}
+        closeModal={() => {
+          setHideSubscription(false);
+          navigation?.goBack();
+        }}
+        handleUpgrade={() => {
+          setHideSubscription(false);
+          navigation?.navigate(RootRoutes.More, {
+            screen: MoreRoutes.SubscriptionMain,
+          });
+        }}
+      />
     </View>
   );
 };
@@ -228,7 +238,7 @@ const styles = StyleSheet.create({
     justifyContent: "flex-end",
     width: "100%",
     paddingBottom: 10,
-    paddingHorizontal: "8%",
+    paddingHorizontal: "5%",
     backgroundColor: COLORS.Light.background,
     height: "13%",
   },
@@ -410,7 +420,7 @@ const styles = StyleSheet.create({
     marginStart: 15,
   },
   r1t2: {
-    marginLeft: "8%",
+    marginLeft: "10%",
     color: COLORS.Light.colorFour,
     fontSize: SIZES.sizeEightB,
     fontWeight: "600",

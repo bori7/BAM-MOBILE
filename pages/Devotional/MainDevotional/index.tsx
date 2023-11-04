@@ -53,7 +53,7 @@ const MainDevotional: React.FC<NavigationProps> = ({ navigation, route }) => {
         navigation?.navigate(RootRoutes.Devotional, {
           screen: DevotionalRoutes.ContentDevotional,
         });
-      }, 20000);
+      }, 2000);
     }
   });
 

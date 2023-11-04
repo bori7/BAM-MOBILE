@@ -44,28 +44,20 @@ export const formatDatePlanDetails = (date: String | undefined) => {
 };
 
 export const formatNoteDate = (date: Date) => {
-  const months = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
-  ];
-
   const day = date.getDate();
-  const month = months[date.getMonth()];
+  const month = monthName[date.getMonth()];
   const year = date.getFullYear();
 
   return `${month} ${day}, ${year}`;
 };
 
+export const formatSubscriptionDate = (date: Date) => {
+  const day = date.getDate();
+  const month = monthName[date.getMonth()];
+  const year = date.getFullYear();
+
+  return `${month.substring(0, 3)} ${day}, ${year}`;
+};
 export const convertTo12HourFormat = (timeStr: string) => {
   const [hour, minute, second] = timeStr.split(":");
   const hh = parseInt(hour, 10);
@@ -172,3 +164,18 @@ export async function getStuffFromSecureStore(key: string) {
 export async function secureDelete(key: string) {
   await SecureStore.deleteItemAsync(key);
 }
+
+export const generateUUID = () => {
+  return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, (c) => {
+    var r = (Math.random() * 16) | 0,
+      v = c === "x" ? r : (r & 0x3) | 0x8;
+    let l = v
+      .toString(16)
+      .replace("-", "")
+      .replace("-", "")
+      .replace("-", "")
+      .replace("-", "")
+      .replace("-", "");
+    return l;
+  });
+};

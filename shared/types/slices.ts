@@ -18,14 +18,13 @@ export interface UserDataType {
   first_name?: string;
   last_name?: string;
   username?: string;
-  total_balance?: string;
-  total_returns?: string;
+  hasSubscribed?: boolean;
   token?: string;
   created_at?: string;
   phone_number?: string;
   date_of_birth?: string;
   password?: string;
-  isRiseUserKey?: string;
+  isBibleAppUserKey?: string;
 }
 
 export interface InitialScreenNotificationStateType {
@@ -108,4 +107,40 @@ export interface SelectedDevotionalDataType {
 export interface SubTopicType {
   title: string;
   message: string;
+}
+
+export interface InitialMoreStateType {
+  moreData: MoreDataType | null;
+  activeSubscriptionData: ActiveSubscriptionDataType | null;
+  moreLoading: boolean;
+  moreError: InitialUserErrorType | null;
+  moreMessage: string;
+  givingTransactions: GivingTransactionDataType[];
+  selectedGivingTransaction: GivingTransactionDataType | null;
+}
+export interface MoreDataType {}
+export interface ActiveSubscriptionDataType {
+  subscriptionType: SubscriptionType;
+  dateNextSubscription?: string;
+  numberOfDaysLeft?: string | number;
+  status: StatusType;
+  amountPaid: string;
+  paymentMethod: PaymentMethodType;
+  dateOfSubscription?: Date;
+}
+
+export type SubscriptionType = "Annually" | "Quarterly" | "Monthly";
+export type StatusType = "Active" | "Suspended" | "Pending";
+export type PaymentMethodType = "Account" | "Card" | "Transfer";
+export type GivingPaymentMethodType = "D" | "T" | "C" | "A";
+export interface GivingTransactionDataType {
+  uid?: string;
+  currency: string;
+  amount: string;
+  status?: string;
+  date?: string;
+  time?: string;
+  datetime?: string;
+  paymentMethod: GivingPaymentMethodType;
+  reference?: string;
 }

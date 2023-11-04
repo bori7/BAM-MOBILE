@@ -59,7 +59,7 @@ const TAB_OPTIONS: TabOptions = {
     icon: ({ color }: { color: string }) => {
       return (
         <>
-          <NotesIcon stroke={color} />
+          <NotesIcon stroke={color} strokeWidth={2} />
         </>
       );
     },

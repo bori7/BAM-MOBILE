@@ -2,6 +2,7 @@
 
 import {
   DevotionalItemProps,
+  GivingTransactionDataType,
   NoteProps,
   SelectedDevotionalDataType,
 } from "../shared/types/slices";
@@ -138,3 +139,51 @@ export const testSelectedDevotional: SelectedDevotionalDataType = {
   prayer:
     "Lord, I praise you for every spiritual blessing that you have given me in Christ. May the eyes of my heart be enlightened in order that I may know the hope to which you have called me, the riches of your glorious inheritances, and your incomparably great power living within me.(Ephesians 1 : 17-19)",
 };
+
+// ##############################################################################
+export const testGivingTransactions: GivingTransactionDataType[] = [
+  {
+    uid: "0",
+    currency: "usd",
+    amount: "20,000",
+    status: "Successful",
+    date: "Sep 27, 2023",
+    time: "05:42 PM",
+    datetime: "",
+    paymentMethod: "C",
+    reference: "124DJK28DG5",
+  },
+  {
+    uid: "1",
+    currency: "ngn",
+    amount: "10,000.00",
+    status: "Successful",
+    date: "Sep 27, 2023",
+    time: "05:42 PM",
+    datetime: "",
+    paymentMethod: "C",
+    reference: "124DJK28DG5",
+  },
+  {
+    uid: "2",
+    currency: "ngn",
+    amount: "10,000.00",
+    status: "Pending",
+    date: "Sep 27, 2023",
+    time: "05:42 PM",
+    datetime: "",
+    paymentMethod: "C",
+    reference: "124DJK28DG5",
+  },
+  {
+    uid: "3",
+    currency: "ngn",
+    amount: "10,000.00",
+    status: "Failed",
+    date: "Sep 27, 2023",
+    time: "05:42 PM",
+    datetime: "",
+    paymentMethod: "C",
+    reference: "124DJK28DG5",
+  },
+];

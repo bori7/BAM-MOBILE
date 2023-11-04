@@ -58,4 +58,4 @@ export type MoreProps<RouteName extends MoreRoutes> = StackScreenProps<
   RouteName
 >;
 
-export type SearchNavigationProps = StackNavigationProp<MoreParamList>;
+export type MoreNavigationProps = StackNavigationProp<MoreParamList>;

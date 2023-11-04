@@ -5,7 +5,9 @@ import { secureSave } from "../../shared/helper";
 import { InitialUserStateType, UserDataType } from "../../shared/types/slices";
 
 const initialUserState: InitialUserStateType = {
-  userData: null,
+  userData: {
+    hasSubscribed: true,
+  },
   userLoading: false,
   userError: null,
   userMessage: "",
@@ -17,6 +19,12 @@ export const userSlice = createSlice({
   reducers: {
     updateUserData: (state, action: PayloadAction<UserDataType>) => {
       state.userData = action.payload;
+    },
+    updateUserSubscriptionStatus: (state, action: PayloadAction<boolean>) => {
+      state.userData = {
+        ...state.userData,
+        hasSubscribed: action.payload,
+      };
     },
     updateUserState: (state, action: PayloadAction<InitialUserStateType>) => {
       state.userData = action.payload.userData;

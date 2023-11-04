@@ -6,6 +6,7 @@ import { SearchRoutes, SearchParamList } from "./routerSearch";
 import { MainParamList, MainRoutes } from "./routerMain";
 import { MoreRoutes, MoreParamList } from "./routerMore";
 import { NotesParamList, NotesRoutes } from "./routerNotes";
+import { Tabs } from "./routerBottomBar";
 
 export enum RootRoutes {
   Auth = "AuthStack",
@@ -14,6 +15,7 @@ export enum RootRoutes {
   More = "MoreStack",
   Search = "SearchStack",
   Notes = "NotesStack",
+  Tabs = "BottomBar",
 }
 
 export type RootParamList = {
@@ -35,6 +37,10 @@ export type RootParamList = {
   };
   [RootRoutes.Notes]?: {
     screen: NotesRoutes;
+    params: any | undefined;
+  };
+  [RootRoutes.Tabs]?: {
+    screen: Tabs;
     params: any | undefined;
   };
 };

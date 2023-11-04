@@ -16,7 +16,7 @@ import CancelIcon from "../../../shared/assets/images/svg/iconoir_cancel.svg";
 import { TextInput } from "react-native-paper";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../store";
-import SendMailImage from "../../../shared/assets/images/svg/send_mail2.svg";
+import { SendMailImageSVG } from "../../../shared/components/SVGS";
 
 type NavigationProps = AuthProps<AuthRoutes.ConfirmEmail>;
 
@@ -64,7 +64,7 @@ const ConfirmEmail: React.FC<NavigationProps> = ({ navigation, route }) => {
               </Text>
             </View>
             <View style={styles.r3}>
-              <SendMailImage
+              <SendMailImageSVG
               // fill={"white"}
               />
             </View>
