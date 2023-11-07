@@ -4,6 +4,7 @@ import {
   DevotionalItemProps,
   GivingTransactionDataType,
   NoteProps,
+  PrayerProps,
   SelectedDevotionalDataType,
 } from "../shared/types/slices";
 import { IMAGES } from "./Colors";
@@ -49,6 +50,54 @@ export const testNotes: NoteProps[] = [
     datetime: "11:49 AM September 27, 2023",
     time: "11:49 AM",
     date: "September 27, 2023",
+  },
+];
+
+export const testPrayers: PrayerProps[] = [
+  {
+    uid: "1",
+    title: "Lord grant me favour this week",
+    text: "Financial blessings, opportunities, goodness and I am great. Financial blessings, opportunities, goodness and I am great. Financial blessings, opportunities, goodness and I am great. Financial blessings, opportunities, goodness and I am great.Financial blessings, opportunities, goodness and I am great",
+    datetime: "11:49 AM September 27, 2023",
+    time: "11:49 AM",
+    date: "September 27, 2023",
+    answered: false,
+  },
+  {
+    uid: "2",
+    title: "Lord grant me favour this week",
+    text: "Financial blessings, opportunities, goodness and I am great. Financial blessings, opportunities, goodness and I am great. Financial blessings, opportunities, goodness and I am great. Financial blessings, opportunities, goodness and I am great.Financial blessings, opportunities, goodness and I am great",
+    datetime: "11:49 AM September 27, 2023",
+    time: "11:49 AM",
+    date: "September 27, 2023",
+    answered: false,
+  },
+  {
+    uid: "3",
+    title: "Lord grant me favour this week",
+    text: "Financial blessings, opportunities, goodness and I am great. Financial blessings, opportunities, goodness and I am great. Financial blessings, opportunities, goodness and I am great. Financial blessings, opportunities, goodness and I am great.Financial blessings, opportunities, goodness and I am great",
+    datetime: "11:49 AM September 27, 2023",
+    time: "11:49 AM",
+    date: "September 27, 2023",
+    answered: false,
+  },
+  {
+    uid: "4",
+    title: "Lord grant me favour this week",
+    text: "Financial blessings, opportunities, goodness and I am great. Financial blessings, opportunities, goodness and I am great. Financial blessings, opportunities, goodness and I am great. Financial blessings, opportunities, goodness and I am great.Financial blessings, opportunities, goodness and I am great",
+    datetime: "11:49 AM September 27, 2023",
+    time: "11:49 AM",
+    date: "September 27, 2023",
+    answered: false,
+  },
+  {
+    uid: "5",
+    title: "Lord grant me favour this week",
+    text: "Financial blessings, opportunities, goodness and I am great. Financial blessings, opportunities, goodness and I am great. Financial blessings, opportunities, goodness and I am great. Financial blessings, opportunities, goodness and I am great.Financial blessings, opportunities, goodness and I am great",
+    datetime: "11:49 AM September 27, 2023",
+    time: "11:49 AM",
+    date: "September 27, 2023",
+    answered: false,
   },
 ];
 

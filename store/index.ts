@@ -5,6 +5,7 @@ import { userReducer } from "./slices/user";
 import { notesReducer } from "./slices/notes";
 import { devotionalReducer } from "./slices/devotional";
 import { moreReducer } from "./slices/more";
+import { prayersReducer } from "./slices/prayer";
 
 const rootReducer = {
   user: userReducer,
@@ -12,6 +13,7 @@ const rootReducer = {
   notes: notesReducer,
   devotional: devotionalReducer,
   more: moreReducer,
+  prayer: prayersReducer,
 };
 
 export const store = configureStore({

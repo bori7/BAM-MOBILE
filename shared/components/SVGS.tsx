@@ -19,6 +19,7 @@ import Success from "../assets/images/svg/success.svg";
 import CardAdd from "../assets/images/svg/cardadd.svg";
 import MdiBank from "../assets/images/svg/mdi-bank-outline.svg";
 import RewardHeart from "../assets/images/svg/give-reward-heart-hand.svg";
+import CheckMark from "../assets/images/svg/checkmark-outline.svg";
 import { COLORS } from "../../constants/Colors";
 
 export const SpeakerSVG = () => {
@@ -74,10 +75,18 @@ export const MoreAboutSVG = () => {
     </>
   );
 };
-export const HandsPrayingSVG = () => {
+export const HandsPrayingSVG = ({
+  color = COLORS.Light.colorOne,
+  height = 30,
+  width = 25,
+}: {
+  color?: string;
+  height?: number;
+  width?: number;
+}) => {
   return (
     <>
-      <HandsPraying height={30} />
+      <HandsPraying height={height} width={width} fill={color} />
     </>
   );
 };
@@ -159,6 +168,19 @@ export const SuccessSVG = () => {
   );
 };
 
+export const CheckMarkSVG = () => {
+  return (
+    <>
+      <CheckMark
+        width={80}
+        height={80}
+        // style={{ borderWidth: 1 }}
+      />
+    </>
+  );
+};
+
+CheckMark;
 export const CardAddSVG = () => {
   return (
     <>

@@ -19,6 +19,7 @@ import {
   MoreMain,
   Notifications,
   Prayer,
+  PrayerEdit,
   Profile,
   PushNotifications,
   SettingsMore,
@@ -145,6 +146,12 @@ const MainStack = (): React.ReactElement => {
       <More.Screen
         component={Support}
         name={MoreRoutes.Support}
+        options={{ headerShown: false }}
+      />
+
+      <More.Screen
+        component={PrayerEdit}
+        name={MoreRoutes.PrayerEdit}
         options={{ headerShown: false }}
       />
     </More.Navigator>

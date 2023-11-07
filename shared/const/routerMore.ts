@@ -23,6 +23,7 @@ export enum MoreRoutes {
   SubscriptionMain = "SubscriptionMain",
   SubscriptionSummary = "SubscriptionSummary",
   Support = "Support",
+  PrayerEdit = "PrayerEdit",
 }
 
 export type MoreParamList = {
@@ -51,6 +52,11 @@ export type MoreParamList = {
   [MoreRoutes.SubscriptionSummary]: undefined;
 
   [MoreRoutes.Support]: undefined;
+  [MoreRoutes.PrayerEdit]: {
+    // params: {
+    prayerId: string;
+    // };
+  };
 };
 
 export type MoreProps<RouteName extends MoreRoutes> = StackScreenProps<

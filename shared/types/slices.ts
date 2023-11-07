@@ -144,3 +144,23 @@ export interface GivingTransactionDataType {
   paymentMethod: GivingPaymentMethodType;
   reference?: string;
 }
+
+export interface InitialPrayersStateType {
+  prayersData: PrayersDataType | null;
+  prayersLoading: boolean;
+  prayersError: InitialUserErrorType | null;
+  prayersMessage: string;
+}
+
+export interface PrayersDataType {
+  prayersList: PrayerProps[];
+}
+export interface PrayerProps {
+  uid: string;
+  title: string;
+  text: string;
+  datetime: string;
+  date: string;
+  time: string;
+  answered: boolean;
+}

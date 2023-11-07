@@ -19,6 +19,7 @@ import SettingsMore from "./SettingsMore";
 import SubscriptionMain from "../../pages/More/SubscriptionMain";
 import SubscriptionSummary from "../../pages/More/SubscriptionSummary";
 import Support from "../../pages/More/Support";
+import PrayerEdit from "./PrayerEdit";
 
 export {
   AboutGive,
@@ -42,4 +43,5 @@ export {
   SubscriptionMain,
   SubscriptionSummary,
   Support,
+  PrayerEdit,
 };

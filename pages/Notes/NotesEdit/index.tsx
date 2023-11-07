@@ -392,6 +392,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     marginVertical: 25,
     fontSize: SIZES.sizeSixC,
+    lineHeight: 24,
   },
   inputContentTitle: {
     fontSize: SIZES.sizeSevenB,

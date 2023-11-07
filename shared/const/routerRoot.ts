@@ -31,6 +31,7 @@ export type RootParamList = {
   };
   [RootRoutes.More]?: {
     screen: MoreRoutes;
+    params: any | undefined;
   };
   [RootRoutes.Search]?: {
     screen: SearchRoutes;
