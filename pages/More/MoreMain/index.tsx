@@ -44,7 +44,12 @@ const MoreMain: React.FC<NavigationProps> = ({ navigation, route }) => {
     {
       icon: <MoreProfileSVG />,
       name: "Your Profile",
-      onPressFunc: () => {},
+      onPressFunc: () => {
+        navigation?.navigate(RootRoutes.More, {
+          screen: MoreRoutes.Profile,
+          params: undefined,
+        });
+      },
     },
     {
       icon: <MoreCreditCardSVG />,
@@ -52,6 +57,7 @@ const MoreMain: React.FC<NavigationProps> = ({ navigation, route }) => {
       onPressFunc: () => {
         navigation?.navigate(RootRoutes.More, {
           screen: MoreRoutes.SubscriptionMain,
+          params: undefined,
         });
         // navigation?.navigate(MoreRoutes.SubscriptionMain);
       },
@@ -72,6 +78,7 @@ const MoreMain: React.FC<NavigationProps> = ({ navigation, route }) => {
       onPressFunc: () => {
         navigation?.navigate(RootRoutes.More, {
           screen: MoreRoutes.Prayer,
+          params: undefined,
         });
       },
     },
@@ -81,6 +88,8 @@ const MoreMain: React.FC<NavigationProps> = ({ navigation, route }) => {
       onPressFunc: () => {
         navigation?.navigate(RootRoutes.More, {
           screen: MoreRoutes.Give,
+
+          params: undefined,
         });
       },
     },

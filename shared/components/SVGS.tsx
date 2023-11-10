@@ -6,6 +6,7 @@ import Back10 from "../assets/images/svg/skip-backward-10.svg";
 import Front10 from "../assets/images/svg/skip-forward-10.svg";
 import MoreCreditCard from "../assets/images/svg/more_credit-card.svg";
 import MoreProfile from "../assets/images/svg/more_profile.svg";
+import MainProfile from "../assets/images/svg/main-profile.svg";
 import MoreAbout from "../assets/images/svg/more-about-circle-outline.svg";
 import HandsPraying from "../assets/images/svg/more-hands-praying-duotone.svg";
 import CalendarHeart from "../assets/images/svg/more-interface-calendar-heart-calendar-date-day-favorite-heart-like-month.svg";
@@ -20,6 +21,7 @@ import CardAdd from "../assets/images/svg/cardadd.svg";
 import MdiBank from "../assets/images/svg/mdi-bank-outline.svg";
 import RewardHeart from "../assets/images/svg/give-reward-heart-hand.svg";
 import CheckMark from "../assets/images/svg/checkmark-outline.svg";
+import CameraIcon from "../assets/images/svg/ph-camera.svg";
 import { COLORS } from "../../constants/Colors";
 
 export const SpeakerSVG = () => {
@@ -61,13 +63,40 @@ export const MoreCreditCardSVG = () => {
   );
 };
 
-export const MoreProfileSVG = () => {
+export const MoreProfileSVG = ({
+  height = 34,
+  width = 28,
+  color = COLORS.Light.colorOne,
+}) => {
   return (
     <>
-      <MoreProfile height={34} width={28} />
+      <MoreProfile
+        height={height}
+        width={width}
+        fill={color}
+        // strokeWidth={1.8625}
+      />
     </>
   );
 };
+
+export const MainProfileSVG = ({
+  height = 34,
+  width = 28,
+  color = COLORS.Light.colorOne,
+}) => {
+  return (
+    <>
+      <MainProfile
+        height={height}
+        width={width}
+        fill={color}
+        // strokeWidth={1.8625}
+      />
+    </>
+  );
+};
+
 export const MoreAboutSVG = () => {
   return (
     <>
@@ -201,6 +230,14 @@ export const RewardHeartSVG = () => {
   return (
     <>
       <RewardHeart height={80} width={80} />
+    </>
+  );
+};
+
+export const CameraIconSVG = () => {
+  return (
+    <>
+      <CameraIcon height={25} width={25} />
     </>
   );
 };
