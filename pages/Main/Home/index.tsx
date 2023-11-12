@@ -22,6 +22,11 @@ import { screenNotificationActions } from "../../../store/slices/notification";
 import { CompositeScreenProps, useFocusEffect } from "@react-navigation/native";
 import { RootRoutes, RootScreenProps } from "../../../shared/const/routerRoot";
 import { DevotionalRoutes } from "../../../shared/const/routerDevotional";
+import {
+  formatNoteDate,
+  getDayOfTheWeek,
+  getPartOfDay,
+} from "../../../shared/helper";
 
 // type NavigationProps = MainProps<MainRoutes.HomeScreen>;
 
@@ -59,8 +64,11 @@ const Home: React.FC<NavigationProps> = ({ navigation, route }) => {
         <View style={styles.headerContainer}>
           <View style={styles.header}>
             <View style={styles.headerC1}>
-              <Text style={styles.headerC1t1}>Good Morning 👋</Text>
-              <Text style={styles.headerC1t2}>Friday September 22, 2023</Text>
+              <Text style={styles.headerC1t1}>Good {getPartOfDay()} 👋</Text>
+              <Text style={styles.headerC1t2}>
+                {getDayOfTheWeek(new Date().getUTCDay())}{" "}
+                {formatNoteDate(new Date())}
+              </Text>
             </View>
             <TouchableOpacity style={styles.headerC2}>
               <UserIcon width={35} height={35} />

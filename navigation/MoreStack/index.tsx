@@ -135,7 +135,11 @@ const MainStack = (): React.ReactElement => {
       <More.Screen
         component={SubscriptionMain}
         name={MoreRoutes.SubscriptionMain}
-        options={{ headerShown: false }}
+        options={{
+          headerShown: false,
+          // cardStyle: { backgroundColor: "transparent" },
+          // presentation: "modal",
+        }}
       />
 
       <More.Screen

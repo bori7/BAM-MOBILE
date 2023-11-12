@@ -51,6 +51,34 @@ export const formatNoteDate = (date: Date) => {
   return `${month} ${day}, ${year}`;
 };
 
+export const getDayOfTheWeek = (val: number) => {
+  const daysOfWeek = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+  ];
+  // const date = new Date(dateString);
+  // const dayOfWeek = date.getDay();
+
+  return daysOfWeek[val];
+};
+
+export const getPartOfDay = () => {
+  const currentHour = new Date().getHours();
+
+  if (currentHour >= 5 && currentHour < 12) {
+    return "Morning";
+  } else if (currentHour >= 12 && currentHour < 18) {
+    return "Afternoon";
+  } else {
+    return "Evening";
+  }
+};
+
 export const formatSubscriptionDate = (date: Date) => {
   const day = date.getDate();
   const month = monthName[date.getMonth()];
