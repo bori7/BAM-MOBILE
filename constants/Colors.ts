@@ -69,6 +69,7 @@ export const COLORS = {
     colorL1: "rgba(255, 255, 255, 0.06) 99.99%",
     colorL2: "#FFF",
     colorOverlay: "rgba(31, 32, 33, 0.40)",
+    colorBlue: "#0B66C3",
   },
   Dark: {},
 };

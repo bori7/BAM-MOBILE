@@ -40,9 +40,16 @@ type NavigationProps = CompositeScreenProps<
 >;
 
 const MoreMain: React.FC<NavigationProps> = ({ navigation, route }) => {
+  const userState = useSelector((state: RootState) => state.user);
+  const { userImageBase64 } = userState;
+
   const moreContent: MoreContentType[] = [
     {
-      icon: <MoreProfileSVG />,
+      icon: userImageBase64 ? (
+        <Image source={{ uri: userImageBase64 }} style={styles.facecapture} />
+      ) : (
+        <MoreProfileSVG />
+      ),
       name: "Your Profile",
       onPressFunc: () => {
         navigation?.navigate(RootRoutes.More, {
@@ -293,4 +300,15 @@ const styles = StyleSheet.create({
     // color: COLORS.Light.deeperGreyColor,
   },
   iC2: {},
+  facecapture: {
+    // marginVertical: 5,
+    height: 30,
+    width: 30,
+    // padding: 5,
+    // borderWidth: 1,
+    // borderColor: COLORS.Light.colorSixteen,
+    // justifyContent: "space-between",
+    // borderWidth: 1,
+    borderRadius: 15,
+  },
 });

@@ -26,6 +26,9 @@ export const userSlice = createSlice({
         hasSubscribed: action.payload,
       };
     },
+    updateImageBase64: (state, action: PayloadAction<string>) => {
+      state.userImageBase64 = action.payload;
+    },
     updateUserState: (state, action: PayloadAction<InitialUserStateType>) => {
       state.userData = action.payload.userData;
       state.userError = action.payload.userError;

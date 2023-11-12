@@ -234,10 +234,14 @@ export const RewardHeartSVG = () => {
   );
 };
 
-export const CameraIconSVG = () => {
+export const CameraIconSVG = ({
+  height = 25,
+  width = 25,
+  color = COLORS.Light.gray,
+}) => {
   return (
     <>
-      <CameraIcon height={25} width={25} />
+      <CameraIcon height={height} width={width} fill={color} />
     </>
   );
 };

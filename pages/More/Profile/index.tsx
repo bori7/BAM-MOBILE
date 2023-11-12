@@ -116,6 +116,9 @@ const Profile: React.FC<NavigationProps> = ({ navigation, route }) => {
   //     }, 2000);
   // }, [screenLoading]);
 
+  const userState = useSelector((state: RootState) => state.user);
+  const { userData, userImageBase64 } = userState;
+
   return (
     <View style={styles.main}>
       <StatusBar barStyle="dark-content" />
@@ -158,16 +161,23 @@ const Profile: React.FC<NavigationProps> = ({ navigation, route }) => {
                 </TouchableOpacity>
               </View>
               <View style={styles.r7b}>
-                <MainProfileSVG
-                  color={COLORS.Light.gray}
-                  height={100}
-                  width={100}
-                />
+                {userImageBase64 ? (
+                  <Image
+                    source={{ uri: userImageBase64 }}
+                    style={styles.facecapture}
+                  />
+                ) : (
+                  <MainProfileSVG
+                    color={COLORS.Light.gray}
+                    height={110}
+                    width={110}
+                  />
+                )}
               </View>
-              <Text style={styles.r7c}>Irechukwu Kenneth</Text>
-              <Text style={styles.r7d}>@irekenn</Text>
-              <Text style={styles.r7e}>{"<Jesus> My Life </Jesus>"}</Text>
-              <Text style={styles.r7f}>Lagos, Nigeria</Text>
+              <Text style={styles.r7c}>{userData?.fullname}</Text>
+              <Text style={styles.r7d}>{userData?.username}</Text>
+              <Text style={styles.r7e}>{userData?.bio}</Text>
+              <Text style={styles.r7f}>{userData?.location}</Text>
               <View style={styles.r7g}>
                 <TouchableOpacity
                   style={[
@@ -355,9 +365,11 @@ const styles = StyleSheet.create({
     width: "100%",
     alignItems: "center",
     backgroundColor: COLORS.Light.colorTwentyOne,
-    paddingHorizontal: "4%",
+    paddingHorizontal: "2%",
     paddingTop: "4%",
     marginTop: 15,
+    borderTopLeftRadius: 15,
+    borderTopRightRadius: 15,
   },
   r7a: {
     width: "100%",
@@ -366,10 +378,15 @@ const styles = StyleSheet.create({
   r7b: {
     height: 100,
     width: 100,
-    marginTop: 20,
+    marginTop: 25,
     backgroundColor: "transparent",
     alignItems: "center",
     justifyContent: "center",
+  },
+  facecapture: {
+    height: 120,
+    width: 120,
+    borderRadius: 60,
   },
   r7c: {
     marginTop: 15,
@@ -421,7 +438,7 @@ const styles = StyleSheet.create({
     borderBottomColor: COLORS.Light.colorOne,
   },
   r7gt: {
-    fontSize: SIZES.sizeEight,
+    fontSize: SIZES.sizeSevenB,
     fontWeight: "600",
     color: COLORS.Light.colorFour,
   },

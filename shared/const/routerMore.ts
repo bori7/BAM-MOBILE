@@ -24,6 +24,7 @@ export enum MoreRoutes {
   SubscriptionSummary = "SubscriptionSummary",
   Support = "Support",
   PrayerEdit = "PrayerEdit",
+  ImageCapture = "ImageCapture",
 }
 
 export type MoreParamList = {
@@ -57,6 +58,7 @@ export type MoreParamList = {
     prayerId: string;
     // };
   };
+  [MoreRoutes.ImageCapture]: undefined;
 };
 
 export type MoreProps<RouteName extends MoreRoutes> = StackScreenProps<

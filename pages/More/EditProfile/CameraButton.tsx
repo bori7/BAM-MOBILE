@@ -2,8 +2,10 @@ import {
   Image,
   ScrollView,
   StatusBar,
+  StyleProp,
   StyleSheet,
   TouchableOpacity,
+  ViewStyle,
 } from "react-native";
 
 import React, { ReactNode, useEffect, useState } from "react";
@@ -13,11 +15,24 @@ import { COLORS } from "../../../constants/Colors";
 
 type IProps = {
   onPressFunc: () => void;
+  xstyle?: StyleProp<ViewStyle>;
+  height?: number;
+  width?: number;
+  strokeColor?: string;
 };
-const CameraButton = ({ onPressFunc }: IProps) => {
+const CameraButton = ({
+  onPressFunc,
+  xstyle = undefined,
+  height,
+  width,
+  strokeColor,
+}: IProps) => {
   return (
-    <TouchableOpacity style={styles.container} onPress={onPressFunc}>
-      <CameraIconSVG />
+    <TouchableOpacity
+      style={[xstyle || styles.container]}
+      onPress={onPressFunc}
+    >
+      <CameraIconSVG height={height} width={width} color={strokeColor} />
     </TouchableOpacity>
   );
 };

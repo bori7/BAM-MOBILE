@@ -11,44 +11,15 @@ import { Text, View } from "../../../components/Themed";
 import { COLORS, IMAGES, SIZES } from "../../../constants/Colors";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../store";
-import {
-  AntDesign,
-  Entypo,
-  Feather,
-  Ionicons,
-  MaterialCommunityIcons,
-} from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
 import { MoreProps, MoreRoutes } from "../../../shared/const/routerMore";
 import { CompositeScreenProps, useFocusEffect } from "@react-navigation/native";
 import { RootRoutes, RootScreenProps } from "../../../shared/const/routerRoot";
 import { TextInput } from "react-native-paper";
-import DropDownInput from "../../../components/DropDownInput";
-import {
-  CardAddSVG,
-  MainProfileSVG,
-  MdiBankSVG,
-  MdiNairaSVG,
-  MoreProfileSVG,
-  RewardHeartSVG,
-} from "../../../shared/components/SVGS";
-import { MainButton } from "../../../components";
-import { screenNotificationActions } from "../../../store/slices/notification";
-import { MainRoutes } from "../../../shared/const/routerMain";
-import { moreActions } from "../../../store/slices/more";
-import ControlModal2 from "../../Devotional/ContentDevotional/ControlModal2";
-import { OptionsPopUp } from "../../Main/Home/OptionsPopUp";
-import CustomDatePicker from "../../Devotional/FilterDevotional/CustomDatePicker";
-import { formatDate } from "../../../shared/helper";
-import {
-  GivingPaymentMethodType,
-  NoteProps,
-  PrayerProps,
-} from "../../../shared/types/slices";
-import { NotesRoutes } from "../../../shared/const/routerNotes";
-import PrayerListView from "../Prayer/PrayerListView";
+import { MainProfileSVG } from "../../../shared/components/SVGS";
 import CameraButton from "./CameraButton";
 import SelectImageModal from "./SelectImageModal";
-import FaceCapture from "./FaceCapture";
+import { userActions } from "../../../store/slices/user";
 
 type NavigationProps = CompositeScreenProps<
   MoreProps<MoreRoutes.EditProfile>,
@@ -58,37 +29,32 @@ type NavigationProps = CompositeScreenProps<
 const EditProfile: React.FC<NavigationProps> = ({ navigation, route }) => {
   const dispatch = useDispatch<AppDispatch>();
   const [showModal, setShowModal] = useState<boolean>(false);
-  const [amount, setAmount] = useState<string>("");
-  const [amountF, setAmountF] = useState<string>("0.00");
-  const [tabView, setTabView] = useState<"Notes" | "Prayers">("Notes");
-  const [paymentMethod, setPaymentMethod] =
-    useState<GivingPaymentMethodType>("C");
+
   // const [allowEmailError, setAllowEmailError] = useState<boolean>(false);
-  const [hideCurrency, setHideCurrency] = useState<boolean>(false);
-  const [selectedCurrencyIndex, setSelectedCurrencyIndex] = useState<number>(0);
-  const [toDate, setToDate] = useState<string>(formatDate(new Date()));
-  const [hideModal, setHideModal] = useState<boolean>(false);
-  const [prayers, setPrayers] = useState<PrayerProps[]>([]);
-  const [notes, setNotes] = useState<NoteProps[]>([]);
 
   const [username, setUsername] = useState<string>("");
   const [fullName, setFullName] = useState<string>("");
   const [bio, setBio] = useState<string>("");
   const [location, setLocation] = useState<string>("");
 
-  const [imageData, setImageData] = useState<{
-    uri: string;
-    base64: string;
-  } | null>(null);
-
   const [validEmail, setValidEmail] = useState<boolean>(false);
   const [allowEmailError, setAllowEmailError] = useState<boolean>(false);
-  const [emailErrorText, setEmailErrorText] = useState<string>("");
+  const [imageBase64, setImageBase64] = useState<string>("");
 
   const screenNotificationState = useSelector(
     (state: RootState) => state.screenNotification
   );
   const { screenLoading } = screenNotificationState;
+
+  const userState = useSelector((state: RootState) => state.user);
+  const { userData, userImageBase64 } = userState;
+
+  useEffect(() => {
+    setUsername(userData?.username || "");
+    setFullName(userData?.fullname || "");
+    setBio(userData?.bio || "");
+    setLocation(userData?.location || "");
+  }, []);
 
   return (
     <View style={styles.main}>
@@ -115,6 +81,15 @@ const EditProfile: React.FC<NavigationProps> = ({ navigation, route }) => {
               style={[styles.v3c]}
               onPress={() => {
                 // navigation?.navigate(MoreRoutes.EditProfile);
+                dispatch(
+                  userActions.updateUserData({
+                    ...userData,
+                    fullname: fullName,
+                    username,
+                    bio,
+                    location,
+                  })
+                );
               }}
             >
               <Text style={[styles.v3ct]}>Save</Text>
@@ -129,25 +104,40 @@ const EditProfile: React.FC<NavigationProps> = ({ navigation, route }) => {
             style={styles.scroll}
           >
             <View style={styles.r7}>
-              <View style={styles.r7a}>
-                <MainProfileSVG
-                  color={COLORS.Light.gray}
-                  height={120}
-                  width={120}
-                />
+              <TouchableOpacity
+                style={styles.r7a}
+                onPress={() => {
+                  setShowModal(!showModal);
+                }}
+              >
+                {userImageBase64 ? (
+                  <Image
+                    source={{ uri: userImageBase64 }}
+                    style={styles.facecapture}
+                  />
+                ) : (
+                  <MainProfileSVG
+                    color={COLORS.Light.gray}
+                    height={120}
+                    width={120}
+                  />
+                )}
+
                 <CameraButton
                   onPressFunc={() => {
                     setShowModal(!showModal);
                   }}
+                  xstyle={styles.cameraxstyle}
                 />
-              </View>
+              </TouchableOpacity>
               <SelectImageModal
                 isModalVisible={showModal}
                 setModalVisible={(): void => {
                   setShowModal(!showModal);
                 }}
-                onSave={function (): void {
-                  throw new Error("Function not implemented.");
+                onChooseImage={(base64: string): void => {
+                  dispatch(userActions.updateImageBase64(base64));
+                  // setImageBase64(base64);
                 }}
               />
               {/* <View style={styles.r7b}></View>
@@ -156,10 +146,6 @@ const EditProfile: React.FC<NavigationProps> = ({ navigation, route }) => {
               <Text style={styles.r7e}></Text>
               <Text style={styles.r7f}></Text>
               <View style={styles.r7g}></View> */}
-              {/* <FaceCapture
-                style={styles.facecapture}
-                setImageData={setImageData}
-              /> */}
 
               <View style={styles.r3}>
                 <Text style={styles.r3t1}>Full name</Text>
@@ -175,7 +161,7 @@ const EditProfile: React.FC<NavigationProps> = ({ navigation, route }) => {
                   autoCorrect={false}
                   selectionColor={
                     // validEmail && allowEmailError
-                    // ?
+                    // ?''''''''''
                     COLORS.Light.colorOne
                     // : COLORS.Light.colorFourteen
                   }
@@ -413,15 +399,40 @@ const styles = StyleSheet.create({
     // backgroundColor: COLORS.Light.colorTwentyOne,
     paddingHorizontal: "4%",
     paddingTop: "4%",
+    // borderWidth: 1,
   },
   r7a: {
-    width: "100%",
+    // width: "100%",
     backgroundColor: "transparent",
     alignItems: "center",
     justifyContent: "center",
     marginVertical: "15%",
     marginBottom: "10%",
     // borderWidth: 1,
+    height: 120,
+    width: 120,
+    borderRadius: 60,
+  },
+  facecapture: {
+    // marginVertical: 5,
+    height: 120,
+    width: 120,
+    // padding: 5,
+    // borderWidth: 1,
+    // borderColor: COLORS.Light.colorSixteen,
+    // justifyContent: "space-between",
+    // borderWidth: 1,
+    borderRadius: 60,
+  },
+  cameraxstyle: {
+    position: "absolute",
+    bottom: "-1%",
+    right: "-2%",
+    backgroundColor: COLORS.Light.background,
+    borderRadius: 50,
+    padding: 8,
+    borderWidth: 2,
+    borderColor: COLORS.Light.hashHomeBackGroundL3,
   },
   r7b: {
     height: 120,
@@ -661,14 +672,5 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.Light.background,
     marginBottom: 8,
     padding: 2,
-  },
-  facecapture: {
-    marginVertical: 5,
-    height: "75%",
-    width: "90%",
-    padding: 5,
-    // borderWidth: 1,
-    // borderColor: COLORS.Light.colorSixteen,
-    justifyContent: "space-between",
   },
 });

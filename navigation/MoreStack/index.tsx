@@ -27,6 +27,7 @@ import {
   SubscriptionSummary,
   Support,
 } from "../../pages/More";
+import ImageCapture from "../../pages/More/EditProfile/ImageCapture";
 
 const More = createStackNavigator<MoreParamList>();
 
@@ -152,6 +153,12 @@ const MainStack = (): React.ReactElement => {
       <More.Screen
         component={PrayerEdit}
         name={MoreRoutes.PrayerEdit}
+        options={{ headerShown: false }}
+      />
+
+      <More.Screen
+        component={ImageCapture}
+        name={MoreRoutes.ImageCapture}
         options={{ headerShown: false }}
       />
     </More.Navigator>

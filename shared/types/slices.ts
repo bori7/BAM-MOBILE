@@ -2,6 +2,7 @@ import { ImageSourcePropType } from "react-native";
 
 export interface InitialUserStateType {
   userData: UserDataType | null;
+  userImageBase64?: string;
   userLoading: boolean;
   userError: InitialUserErrorType | null;
   userMessage: string;
@@ -18,6 +19,9 @@ export interface UserDataType {
   first_name?: string;
   last_name?: string;
   username?: string;
+  fullname?: string;
+  bio?: string;
+  location?: string;
   hasSubscribed?: boolean;
   token?: string;
   created_at?: string;
