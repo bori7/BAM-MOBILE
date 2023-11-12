@@ -20,6 +20,7 @@ import { MainProfileSVG } from "../../../shared/components/SVGS";
 import CameraButton from "./CameraButton";
 import SelectImageModal from "./SelectImageModal";
 import { userActions } from "../../../store/slices/user";
+import { screenNotificationActions } from "../../../store/slices/notification";
 
 type NavigationProps = CompositeScreenProps<
   MoreProps<MoreRoutes.EditProfile>,
@@ -88,6 +89,12 @@ const EditProfile: React.FC<NavigationProps> = ({ navigation, route }) => {
                     username,
                     bio,
                     location,
+                  })
+                );
+                dispatch(
+                  screenNotificationActions.updateNotificationData({
+                    duration: 4000,
+                    message: "Profile is updated successfully 🎉",
                   })
                 );
               }}

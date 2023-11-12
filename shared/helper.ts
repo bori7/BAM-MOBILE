@@ -9,7 +9,7 @@ export const apiCallInit = (otherHeaders: any) =>
       ...otherHeaders,
     },
     // timeout: 5000,
-    timeoutErrorMessage: "RISE API Time out Exceeded",
+    timeoutErrorMessage: "Bible App API timed out",
   });
 
 export const formatDate = (date: Date) => {

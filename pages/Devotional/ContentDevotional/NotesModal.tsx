@@ -38,7 +38,7 @@ const NotesModal = ({ setModalVisible, noteTitle }: Iprops) => {
     closeModal();
     dispatch(
       screenNotificationActions.updateNotificationData({
-        duration: 50000,
+        duration: 4000,
         message: "Your note has been saved",
       })
     );
