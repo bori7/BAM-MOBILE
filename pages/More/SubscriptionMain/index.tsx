@@ -42,6 +42,11 @@ type NavigationProps = CompositeScreenProps<
 >;
 
 const SubscriptionMain: React.FC<NavigationProps> = ({ navigation, route }) => {
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      presentation: "modal",
+    });
+  }, [navigation]);
   const dispatch = useDispatch<AppDispatch>();
   const [selectedSubscriptionIndex, setSelectedSubscriptionIndex] =
     useState<number>(0);
