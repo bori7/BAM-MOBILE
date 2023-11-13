@@ -123,7 +123,7 @@ const styles = StyleSheet.create({
     // alignItems: "center",
     // justifyContent: "center",
     width: "85%",
-    // height: "23%",
+    // height: 150,
     // shadowColor: "#000",
     shadowOffset: {
       width: 0,
@@ -132,11 +132,13 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 3.84,
     elevation: 5,
+    // borderWidth: 1,
   },
   modalR1: {
     flexDirection: "row",
     justifyContent: "space-between",
     // marginBottom: "10%",
+    paddingBottom: "8%",
   },
   modalR1C1: {
     // width: "40%",
@@ -157,9 +159,10 @@ const styles = StyleSheet.create({
   },
   modalR1C1tb: {
     // color: COLORS.Light.deeperGreyColor,
-    fontSize: SIZES.sizeSixB,
+    fontSize: SIZES.sizeSixC,
     fontWeight: "400",
     marginRight: 10,
+    marginBottom: "8%",
   },
   modalR1C1tc: {},
   modalR2: {
@@ -209,6 +212,7 @@ const styles = StyleSheet.create({
   },
   cancelGuy: {
     alignSelf: "flex-end",
+    marginBottom: 10,
   },
   //   modalR1:{},
 });

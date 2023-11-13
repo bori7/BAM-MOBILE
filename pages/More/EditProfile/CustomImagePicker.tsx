@@ -90,7 +90,7 @@ const styles = StyleSheet.create({
   },
   modalR1C1tb: {
     // color: COLORS.Light.deeperGreyColor,
-    fontSize: SIZES.sizeSixB,
+    fontSize: SIZES.sizeSixC,
     fontWeight: "400",
     marginRight: 10,
   },

@@ -113,7 +113,12 @@ const MoreMain: React.FC<NavigationProps> = ({ navigation, route }) => {
     {
       icon: <MoreSettingSVG />,
       name: "Settings",
-      onPressFunc: () => {},
+      onPressFunc: () => {
+        navigation?.navigate(RootRoutes.More, {
+          screen: MoreRoutes.Settings,
+          params: undefined,
+        });
+      },
     },
   ];
   return (

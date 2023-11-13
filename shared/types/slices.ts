@@ -168,3 +168,28 @@ export interface PrayerProps {
   time: string;
   answered: boolean;
 }
+
+export interface InitialGeneralStateType {
+  generalData: GeneralDataType | null;
+  generalLoading: boolean;
+  generalError: InitialUserErrorType | null;
+  generalMessage: string;
+}
+
+export interface GeneralDataType {
+  id?: string;
+  email_address?: string;
+  first_name?: string;
+  last_name?: string;
+  username?: string;
+  fullname?: string;
+  bio?: string;
+  location?: string;
+  hasSubscribed?: boolean;
+  token?: string;
+  created_at?: string;
+  phone_number?: string;
+  date_of_birth?: string;
+  password?: string;
+  isBibleAppUserKey?: string;
+}
