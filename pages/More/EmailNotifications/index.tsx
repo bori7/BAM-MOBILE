@@ -14,14 +14,14 @@ import { COLORS, IMAGES, SIZES } from "../../../constants/Colors";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../store";
 import { AntDesign, Ionicons } from "@expo/vector-icons";
-import { CompositeScreenProps, useFocusEffect } from "@react-navigation/native";
 
 import { timeOptions } from "../../../constants/values";
 import { convertTo12HourFormat } from "../../../shared/helper";
 import { MoreProps, MoreRoutes } from "../../../shared/const/routerMore";
-import ClockModal from "../../Devotional/SettingsDevotional/ClockModal";
+import { generalActions } from "../../../store/slices/general";
+import EmailClockModal from "./EmailClockModal";
 
-type NotificationsFormType = {
+export type NotificationsFormType = {
   name: string;
   timeValue: string;
   setTimeValue: (val: string) => void;
@@ -48,57 +48,59 @@ const EmailNotifications: React.FC<NavigationProps> = ({
   const [selectedTimePR, setSelectedTimePR] = useState<string>(
     new Date().toISOString()
   );
+  const [notificationsForm, setNotificationsForm] =
+    useState<NotificationsFormType[]>();
 
-  const notificationsForm: NotificationsFormType[] = [
-    {
-      name: "Verse of the day",
-      timeValue: selectedTimeVOD,
-      setTimeValue: (val) => {
-        setSelectedTimeVOD(val);
-      },
-      enable: tickedVOD,
-      setEnable: (val) => {
-        setTickedVOD(val);
-      },
-    },
-    {
-      name: "Daily Answer Devotional",
-      timeValue: selectedTimeDAD,
-      setTimeValue: (val) => {
-        setSelectedTimeDAD(val);
-      },
-      enable: tickedDAD,
-      setEnable: (val) => {
-        setTickedDAD(val);
-      },
-    },
-    {
-      name: "Prayer Reminder",
-      timeValue: selectedTimePR,
-      setTimeValue: (val) => {
-        setSelectedTimePR(val);
-      },
-      enable: tickedPR,
-      setEnable: (val) => {
-        setTickedPR(val);
-      },
-    },
-  ];
+  const generalState = useSelector((state: RootState) => state.general);
+  const { generalEmailNotificationForms: generalNotificationForms } =
+    generalState;
 
   useEffect(() => {
-    notificationsForm.forEach((notiForm, idx) => {
-      const nowTIme = new Date(notiForm.timeValue)
-        .toLocaleTimeString("en-US", timeOptions)
-        ?.toLocaleUpperCase();
-      if (Platform.OS === "android") {
-        notiForm.setTimeValue(convertTo12HourFormat(nowTIme));
-        console.log("selectedTime=>>", nowTIme);
-      } else {
-        notiForm.setTimeValue(nowTIme);
-        console.log("selectedTime=>>", nowTIme);
-      }
-    });
-  }, []);
+    const notificationsFormTemp: NotificationsFormType[] = Object.keys(
+      generalNotificationForms
+    )?.map((form, idx) => ({
+      name: form || "",
+      timeValue:
+        generalNotificationForms[form].timeValue || new Date().toISOString(),
+      enable: generalNotificationForms[form].enable || false,
+      setTimeValue: (val) => {
+        dispatch(
+          generalActions.updateEmailNotificationsForm({
+            name: form,
+            enable: generalNotificationForms[form].enable,
+            timeValue: val,
+          })
+        );
+      },
+      setEnable: (val) => {
+        dispatch(
+          generalActions.updateEmailNotificationsForm({
+            name: form,
+            enable: val,
+            timeValue: generalNotificationForms[form].timeValue,
+          })
+        );
+      },
+    }));
+
+    // console.log(notificationsFormTemp);
+    setNotificationsForm(notificationsFormTemp);
+  }, [generalNotificationForms]);
+
+  const formatTimeValue = (val: string) => {
+    let newTime;
+    let nowTIme = new Date(val)
+      .toLocaleTimeString("en-US", timeOptions)
+      ?.toLocaleUpperCase();
+    if (Platform.OS === "android") {
+      nowTIme = convertTo12HourFormat(nowTIme);
+      console.log("selectedTime =>>", nowTIme);
+    } else {
+      // newTime = nowTIme;
+      // console.log("selectedTime =>>", nowTIme);
+    }
+    return nowTIme;
+  };
 
   return (
     <View style={styles.main}>
@@ -145,16 +147,18 @@ const EmailNotifications: React.FC<NavigationProps> = ({
                 <Text style={styles.fr2r1}>{notiForm.name}</Text>
                 <View style={styles.fr2r2}>
                   <View style={styles.fr2r2C}>
-                    <Text style={styles.fr2r2t1}>{notiForm.timeValue}</Text>
+                    <Text style={styles.fr2r2t1}>
+                      {formatTimeValue(notiForm.timeValue)}
+                    </Text>
                     <TouchableOpacity style={styles.fr2r2t2}>
-                      <ClockModal
+                      <EmailClockModal
                         pickSelectedTime={(time: string): void => {
+                          console.log("lol-lol", time);
                           notiForm.setTimeValue(time);
                         }}
                       />
                     </TouchableOpacity>
                   </View>
-
                   <Switch
                     trackColor={{
                       true: COLORS.Light.colorOne,
@@ -171,7 +175,6 @@ const EmailNotifications: React.FC<NavigationProps> = ({
                 </View>
               </View>
             ))}
-
             {/* <View style={styles.fr3}>
               <Text style={styles.fr3t1}>Language</Text>
               <Text style={styles.fr3t2}>English</Text>
@@ -392,3 +395,54 @@ const styles = StyleSheet.create({
     fontSize: SIZES.sizeSixB,
   },
 });
+
+// const notificationsForm2: NotificationsFormType[] = [
+//   {
+//     name: "Verse of the day",
+//     timeValue: selectedTimeVOD,
+//     setTimeValue: (val) => {
+//       setSelectedTimeVOD(val);
+//     },
+//     enable: tickedVOD,
+//     setEnable: (val) => {
+//       setTickedVOD(val);
+//     },
+//   },
+//   {
+//     name: "Daily Answer Devotional",
+//     timeValue: selectedTimeDAD,
+//     setTimeValue: (val) => {
+//       setSelectedTimeDAD(val);
+//     },
+//     enable: tickedDAD,
+//     setEnable: (val) => {
+//       setTickedDAD(val);
+//     },
+//   },
+//   {
+//     name: "Prayer Reminder",
+//     timeValue: selectedTimePR,
+//     setTimeValue: (val) => {
+//       setSelectedTimePR(val);
+//     },
+//     enable: tickedPR,
+//     setEnable: (val) => {
+//       setTickedPR(val);
+//     },
+//   },
+// ];
+
+// useEffect(() => {
+//   notificationsForm?.forEach((notiForm, idx) => {
+//     const nowTIme = new Date(notiForm.timeValue)
+//       .toLocaleTimeString("en-US", timeOptions)
+//       ?.toLocaleUpperCase();
+//     if (Platform.OS === "android") {
+//       notiForm.setTimeValue(convertTo12HourFormat(nowTIme));
+//       console.log("selectedTime=>>", nowTIme);
+//     } else {
+//       notiForm.setTimeValue(nowTIme);
+//       console.log("selectedTime=>>", nowTIme);
+//     }
+//   });
+// }, [notificationsForm]);

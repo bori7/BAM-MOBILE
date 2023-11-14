@@ -1,4 +1,5 @@
 import { ImageSourcePropType } from "react-native";
+import { NotificationsFormType } from "../../pages/More/EmailNotifications";
 
 export interface InitialUserStateType {
   userData: UserDataType | null;
@@ -171,25 +172,15 @@ export interface PrayerProps {
 
 export interface InitialGeneralStateType {
   generalData: GeneralDataType | null;
+  generalEmailNotificationForms: NotificationsFormSliceType;
+  generalPushNotificationForms: NotificationsFormSliceType;
   generalLoading: boolean;
   generalError: InitialUserErrorType | null;
   generalMessage: string;
 }
 
-export interface GeneralDataType {
-  id?: string;
-  email_address?: string;
-  first_name?: string;
-  last_name?: string;
-  username?: string;
-  fullname?: string;
-  bio?: string;
-  location?: string;
-  hasSubscribed?: boolean;
-  token?: string;
-  created_at?: string;
-  phone_number?: string;
-  date_of_birth?: string;
-  password?: string;
-  isBibleAppUserKey?: string;
+export interface GeneralDataType {}
+
+export interface NotificationsFormSliceType {
+  [key: string]: Pick<NotificationsFormType, "timeValue" | "enable">;
 }

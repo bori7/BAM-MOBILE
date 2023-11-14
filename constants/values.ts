@@ -4,6 +4,7 @@ import {
   DevotionalItemProps,
   GivingTransactionDataType,
   NoteProps,
+  NotificationsFormSliceType,
   PrayerProps,
   SelectedDevotionalDataType,
 } from "../shared/types/slices";
@@ -236,3 +237,19 @@ export const testGivingTransactions: GivingTransactionDataType[] = [
     reference: "124DJK28DG5",
   },
 ];
+
+// ##############################################################################
+export const testNotificationsForm: NotificationsFormSliceType = {
+  "Verse of the day": {
+    timeValue: new Date().toISOString(),
+    enable: false,
+  },
+  "Daily Answer Devotional": {
+    timeValue: new Date().toISOString(),
+    enable: false,
+  },
+  "Prayer Reminder": {
+    timeValue: new Date().toISOString(),
+    enable: false,
+  },
+};

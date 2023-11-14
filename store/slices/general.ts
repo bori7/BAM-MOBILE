@@ -3,34 +3,27 @@ import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import {
   InitialGeneralStateType,
   GeneralDataType,
+  NotificationsFormSliceType,
 } from "../../shared/types/slices";
+import { testNotificationsForm } from "../../constants/values";
+import { NotificationsFormType } from "../../pages/More/EmailNotifications";
 
 const initialGeneralState: InitialGeneralStateType = {
-  generalData: {
-    hasSubscribed: true,
-  },
+  generalData: null,
+  generalEmailNotificationForms: testNotificationsForm,
+  generalPushNotificationForms: testNotificationsForm,
   generalLoading: false,
   generalError: null,
   generalMessage: "",
 };
 
 export const generalSlice = createSlice({
-  name: "generalSlice",
+  name: "generalslice",
   initialState: initialGeneralState,
   reducers: {
     updateGeneralData: (state, action: PayloadAction<GeneralDataType>) => {
       state.generalData = action.payload;
     },
-    updateGeneralSubscriptionStatus: (
-      state,
-      action: PayloadAction<boolean>
-    ) => {
-      state.generalData = {
-        ...state.generalData,
-        hasSubscribed: action.payload,
-      };
-    },
-
     updateGeneralState: (
       state,
       action: PayloadAction<InitialGeneralStateType>
@@ -45,6 +38,30 @@ export const generalSlice = createSlice({
       state.generalError = null;
       state.generalMessage = "";
       state.generalData = null;
+    },
+    updateEmailNotificationsForm: (
+      state,
+      action: PayloadAction<
+        Pick<NotificationsFormType, "name" | "enable" | "timeValue">
+      >
+    ) => {
+      // let newNotificationsForm = state.generalNotificationForms || {};
+      state.generalEmailNotificationForms[action.payload.name] = {
+        timeValue: action.payload.timeValue,
+        enable: action.payload.enable,
+      };
+    },
+    updatePushNotificationsForm: (
+      state,
+      action: PayloadAction<
+        Pick<NotificationsFormType, "name" | "enable" | "timeValue">
+      >
+    ) => {
+      // let newNotificationsForm = state.generalNotificationForms || {};
+      state.generalPushNotificationForms[action.payload.name] = {
+        timeValue: action.payload.timeValue,
+        enable: action.payload.enable,
+      };
     },
   },
 });
