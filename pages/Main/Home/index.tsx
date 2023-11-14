@@ -39,7 +39,7 @@ const Home: React.FC<NavigationProps> = ({ navigation, route }) => {
   const dispatch = useDispatch<AppDispatch>();
   const [hideOptions, setHideOptions] = useState<boolean>(false);
 
-  const options = [{ name: "Share" }, { name: "Copy" }];
+  const options = [{ name: "Copy" }, { name: "Pray" }];
 
   const screenNotificationState = useSelector(
     (state: RootState) => state.screenNotification
@@ -440,16 +440,16 @@ const styles = StyleSheet.create({
     fontWeight: "600",
   },
   xstyle: {
-    width: 150,
-    height: 150,
-
-    top: 180,
+    width: 180,
+    // height: 150,
+    top: 170,
     right: 0,
     borderTopLeftRadius: 20,
     borderBottomLeftRadius: 20,
+    backgroundColor: "transparent",
   },
   bstyle: {
-    padding: "15%",
+    padding: "5%",
     alignItems: "flex-start",
     justifyContent: "center",
     flexDirection: "column",
@@ -457,8 +457,8 @@ const styles = StyleSheet.create({
     borderWidth: 2,
   },
   optionBody: {
-    padding: "10%",
-    marginVertical: "5%",
+    padding: "8%",
+    marginVertical: "3%",
   },
   optionText: {
     fontSize: SIZES.sizeSeven,
