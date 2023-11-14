@@ -324,8 +324,10 @@ const styles = StyleSheet.create({
   },
   fr2: {
     alignSelf: "flex-start",
-    marginVertical: 20,
+    paddingVertical: 20,
     width: "100%",
+    borderBottomWidth: 1,
+    borderBottomColor: COLORS.Light.hashHomeBackGroundL3,
   },
   fr2r1: {
     fontWeight: "400",

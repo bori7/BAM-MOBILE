@@ -211,11 +211,11 @@ const styles = StyleSheet.create({
     paddingVertical: 18,
     paddingHorizontal: 15,
     borderRadius: 12,
-    borderWidth: 1,
+    borderWidth: 2,
     marginVertical: 10,
     alignItems: "center",
     width: "100%",
-    borderColor: COLORS.Light.hashHomeBackGroundL3,
+    borderColor: COLORS.Light.hashHomeBackGroundL2,
   },
   iC1: {
     flexDirection: "row",

@@ -153,7 +153,7 @@ const EmailNotifications: React.FC<NavigationProps> = ({
                     <TouchableOpacity style={styles.fr2r2t2}>
                       <EmailClockModal
                         pickSelectedTime={(time: string): void => {
-                          console.log("lol-lol", time);
+                          // console.log("lol-lol", time);
                           notiForm.setTimeValue(time);
                         }}
                       />
@@ -349,8 +349,10 @@ const styles = StyleSheet.create({
   },
   fr2: {
     alignSelf: "flex-start",
-    marginVertical: 20,
+    paddingVertical: 20,
     width: "100%",
+    borderBottomWidth: 1,
+    borderBottomColor: COLORS.Light.hashHomeBackGroundL3,
   },
   fr2r1: {
     fontWeight: "400",
