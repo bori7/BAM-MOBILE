@@ -118,9 +118,14 @@ const SettingsMore: React.FC<NavigationProps> = ({ navigation, route }) => {
                 <Text style={styles.innerTimeText}>Notifications</Text>
               </TouchableOpacity>
             </View>
-            <Text style={styles.timeText}>PREFERNCES</Text>
+            <Text style={styles.timeText}>PREFERENCES</Text>
             <View style={styles.innerTimeTexts}>
-              <TouchableOpacity style={styles.innerTimeTextC}>
+              <TouchableOpacity
+                style={styles.innerTimeTextC}
+                onPress={() => {
+                  navigation?.navigate(MoreRoutes.DarkMode);
+                }}
+              >
                 <Text style={styles.innerTimeText}>Dark Mode</Text>
               </TouchableOpacity>
               {/* <TouchableOpacity style={styles.innerTimeTextC}>

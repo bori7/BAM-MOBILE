@@ -34,10 +34,10 @@ const NotesMain: React.FC<NavigationProps> = ({ navigation, route }) => {
   const { notesData } = notesState;
 
   useFocusEffect(() => {
-    // const navigationState = navigation.getState();
-    // console.log(navigationState);
     setNotes(notesData?.notesList || []);
   });
+
+  useEffect(() => {}, []);
 
   const screenNotificationState = useSelector(
     (state: RootState) => state.screenNotification

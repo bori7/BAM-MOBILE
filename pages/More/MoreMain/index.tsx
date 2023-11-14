@@ -26,6 +26,7 @@ import {
 } from "../../../shared/components/SVGS";
 import { CompositeScreenProps } from "@react-navigation/native";
 import { RootScreenProps, RootRoutes } from "../../../shared/const/routerRoot";
+import { NotesRoutes } from "../../../shared/const/routerNotes";
 
 type MoreContentType = {
   icon: ReactNode;
@@ -66,6 +67,7 @@ const MoreMain: React.FC<NavigationProps> = ({ navigation, route }) => {
           screen: MoreRoutes.SubscriptionMain,
           params: undefined,
         });
+
         // navigation?.navigate(MoreRoutes.SubscriptionMain);
       },
     },
@@ -77,7 +79,13 @@ const MoreMain: React.FC<NavigationProps> = ({ navigation, route }) => {
     {
       icon: <MoreNotesOutlineSVG />,
       name: "Notes",
-      onPressFunc: () => {},
+      onPressFunc: () => {
+        navigation?.navigate(RootRoutes.Notes, {
+          screen: NotesRoutes.NotesMain,
+          params: undefined,
+        });
+        navigation.setOptions({ title: "My Notes" });
+      },
     },
     {
       icon: <HandsPrayingSVG />,
