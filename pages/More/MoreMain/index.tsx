@@ -29,7 +29,7 @@ import { RootScreenProps, RootRoutes } from "../../../shared/const/routerRoot";
 import { NotesRoutes } from "../../../shared/const/routerNotes";
 import { DevotionalRoutes } from "../../../shared/const/routerDevotional";
 
-type MoreContentType = {
+export type MoreContentType = {
   icon: ReactNode;
   name: string;
   onPressFunc: () => void;
@@ -125,7 +125,12 @@ const MoreMain: React.FC<NavigationProps> = ({ navigation, route }) => {
     {
       icon: <MoreSupportSVG />,
       name: "Support",
-      onPressFunc: () => {},
+      onPressFunc: () => {
+        navigation?.navigate(RootRoutes.More, {
+          screen: MoreRoutes.Support,
+          params: undefined,
+        });
+      },
     },
     {
       icon: <MoreSettingSVG />,

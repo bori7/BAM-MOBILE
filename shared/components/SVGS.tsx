@@ -22,8 +22,40 @@ import MdiBank from "../assets/images/svg/mdi-bank-outline.svg";
 import RewardHeart from "../assets/images/svg/give-reward-heart-hand.svg";
 import CheckMark from "../assets/images/svg/checkmark-outline.svg";
 import CameraIcon from "../assets/images/svg/ph-camera.svg";
+import CarbonDocumnet from "../assets/images/svg/carbon-document.svg";
+import BaselineShare from "../assets/images/svg/icon-baseline-share.svg";
+import EmailLight from "../assets/images/svg/icon-email-light.svg";
+import UiPadlock from "../assets/images/svg/uil-padlock.svg";
 import { COLORS } from "../../constants/Colors";
 
+export const CarbonDocumnetSVG = () => {
+  return (
+    <>
+      <CarbonDocumnet height={30} />
+    </>
+  );
+};
+export const BaselineShareSVG = () => {
+  return (
+    <>
+      <BaselineShare height={30} />
+    </>
+  );
+};
+export const EmailLightSVG = () => {
+  return (
+    <>
+      <EmailLight height={30} />
+    </>
+  );
+};
+export const UiPadlockSVG = () => {
+  return (
+    <>
+      <UiPadlock height={30} />
+    </>
+  );
+};
 export const SpeakerSVG = () => {
   return (
     <>
@@ -209,7 +241,6 @@ export const CheckMarkSVG = () => {
   );
 };
 
-CheckMark;
 export const CardAddSVG = () => {
   return (
     <>
