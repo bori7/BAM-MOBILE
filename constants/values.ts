@@ -2,6 +2,7 @@
 
 import {
   DevotionalItemProps,
+  GeneralVerseOfTheDayType,
   GivingTransactionDataType,
   NoteProps,
   NotificationsFormSliceType,
@@ -253,3 +254,42 @@ export const testNotificationsForm: NotificationsFormSliceType = {
     enable: false,
   },
 };
+
+// ##############################################################################
+export const testVerseOfTheDayList: GeneralVerseOfTheDayType[] = [
+  {
+    verse: "Matthew 5:19 KJV",
+    text: "Blessed are they which do hunger and thirst after righteousness: for they shall be filled.",
+    date: "September 27",
+  },
+  {
+    verse: "Matthew 5:10 KJV",
+    text: "Blessed are they which do hunger and thirst after righteousness: for they shall be filled.",
+    date: "September 26",
+  },
+  {
+    verse: "Matthew 5:19 KJV",
+    text: "Blessed are they which do hunger and thirst after righteousness: for they shall be filled.",
+    date: "September 25",
+  },
+  {
+    verse: "Matthew 5:8 KJV",
+    text: "Blessed are they which do hunger and thirst after righteousness: for they shall be filled.",
+    date: "September 24",
+  },
+  {
+    verse: "Matthew 5:2 KJV",
+    text: "Blessed are they which do hunger and thirst after righteousness: for they shall be filled.",
+    date: "September 23",
+  },
+  {
+    verse: "Matthew 5:17 KJV",
+    text: "Blessed are they which do hunger and thirst after righteousness: for they shall be filled.",
+    date: "September 22",
+  },
+  {
+    verse: "Matthew 5:2 KJV",
+    text: "Blessed are they which do hunger and thirst after righteousness: for they shall be filled.",
+    date: "September 22",
+  },
+];

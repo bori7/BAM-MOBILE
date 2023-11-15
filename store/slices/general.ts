@@ -5,13 +5,17 @@ import {
   GeneralDataType,
   NotificationsFormSliceType,
 } from "../../shared/types/slices";
-import { testNotificationsForm } from "../../constants/values";
+import {
+  testNotificationsForm,
+  testVerseOfTheDayList,
+} from "../../constants/values";
 import { NotificationsFormType } from "../../pages/More/EmailNotifications";
 
 const initialGeneralState: InitialGeneralStateType = {
   generalData: null,
   generalEmailNotificationForms: testNotificationsForm,
   generalPushNotificationForms: testNotificationsForm,
+  generalVerseOfTheDayList: testVerseOfTheDayList,
   generalLoading: false,
   generalError: null,
   generalMessage: "",

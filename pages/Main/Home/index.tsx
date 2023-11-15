@@ -27,6 +27,7 @@ import {
   getDayOfTheWeek,
   getPartOfDay,
 } from "../../../shared/helper";
+import { GeneralVerseOfTheDayType } from "../../../shared/types/slices";
 
 // type NavigationProps = MainProps<MainRoutes.HomeScreen>;
 
@@ -38,6 +39,7 @@ type NavigationProps = CompositeScreenProps<
 const Home: React.FC<NavigationProps> = ({ navigation, route }) => {
   const dispatch = useDispatch<AppDispatch>();
   const [hideOptions, setHideOptions] = useState<boolean>(false);
+  const [currVOD, setCurrVod] = useState<GeneralVerseOfTheDayType>();
 
   const options = [{ name: "Copy" }, { name: "Pray" }];
 
@@ -45,6 +47,13 @@ const Home: React.FC<NavigationProps> = ({ navigation, route }) => {
     (state: RootState) => state.screenNotification
   );
   const { screenLoading } = screenNotificationState;
+
+  const generalState = useSelector((state: RootState) => state.general);
+  const { generalVerseOfTheDayList } = generalState;
+
+  useEffect(() => {
+    setCurrVod(generalVerseOfTheDayList[0] || null);
+  }, []);
 
   useFocusEffect(() => {
     if (screenLoading) {
@@ -85,16 +94,15 @@ const Home: React.FC<NavigationProps> = ({ navigation, route }) => {
               <Text style={styles.v1t1}>Verse of the Day</Text>
               <TouchableOpacity
                 onPress={() => {
-                  navigation?.navigate(MainRoutes.VerseOfTheDay);
+                  navigation?.navigate(MainRoutes.VerseOfTheDay, {
+                    vodId: 0,
+                  });
                 }}
               >
-                <Text style={styles.v1t2}>
-                  Blessed are they which do hunger and thirst after
-                  righteousness: for they shall be filled.
-                </Text>
+                <Text style={styles.v1t2}>{currVOD?.text}</Text>
               </TouchableOpacity>
               <View style={styles.v1r}>
-                <Text style={styles.v1rt1}>Matthew 5:6 KJV</Text>
+                <Text style={styles.v1rt1}>{currVOD?.verse}</Text>
                 <View style={styles.v1rb}>
                   <TouchableOpacity style={styles.v1rbt1}>
                     <Entypo name="share" size={24} color={COLORS.Light.gray} />

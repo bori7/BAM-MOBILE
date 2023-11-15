@@ -28,6 +28,7 @@ import {
   Support,
 } from "../../pages/More";
 import ImageCapture from "../../pages/More/EditProfile/ImageCapture";
+import VOD from "../../pages/More/VOD";
 
 const More = createStackNavigator<MoreParamList>();
 
@@ -61,6 +62,11 @@ const MainStack = (): React.ReactElement => {
       <More.Screen
         component={DarkMode}
         name={MoreRoutes.DarkMode}
+        options={{ headerShown: false }}
+      />
+      <More.Screen
+        component={VOD}
+        name={MoreRoutes.VOD}
         options={{ headerShown: false }}
       />
       <More.Screen

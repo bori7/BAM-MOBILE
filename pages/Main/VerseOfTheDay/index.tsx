@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Text, View } from "../../../components/Themed";
 import {
   ScrollView,
@@ -10,10 +10,22 @@ import { COLORS, SIZES } from "../../../constants/Colors";
 import { MainProps, MainRoutes } from "../../../shared/const/routerMain";
 import { Entypo, FontAwesome5, Ionicons } from "@expo/vector-icons";
 import { MainButton } from "../../../components";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../store";
+import { GeneralVerseOfTheDayType } from "../../../shared/types/slices";
 
 type NavigationProps = MainProps<MainRoutes.VerseOfTheDay>;
 
 const VerseOfTheDay: React.FC<NavigationProps> = ({ navigation, route }) => {
+  const [currVOD, setCurrVod] = useState<GeneralVerseOfTheDayType>();
+  const generalState = useSelector((state: RootState) => state.general);
+  const { generalVerseOfTheDayList } = generalState;
+
+  const { vodId } = route.params;
+
+  useEffect(() => {
+    setCurrVod(generalVerseOfTheDayList[vodId] || null);
+  }, []);
   return (
     <View style={styles.main}>
       <StatusBar barStyle="dark-content" />
@@ -25,7 +37,8 @@ const VerseOfTheDay: React.FC<NavigationProps> = ({ navigation, route }) => {
                 <TouchableOpacity
                   style={styles.r1t1}
                   onPress={() => {
-                    navigation?.navigate(MainRoutes.HomeScreen);
+                    // navigation?.navigate(MainRoutes.HomeScreen);
+                    navigation?.goBack();
                   }}
                 >
                   <Ionicons
@@ -46,14 +59,13 @@ const VerseOfTheDay: React.FC<NavigationProps> = ({ navigation, route }) => {
             style={styles.scroll}
           >
             <Text style={styles.r2}>
-              <Text style={styles.r2t1}>9 </Text>
-              <Text style={styles.r2t2}>
-                Blessed are they which do hunger and thirst after righteousness:
-                for they shall be filled.
+              <Text style={styles.r2t1}>
+                {currVOD?.verse.split(":")[1].split(" ")[0]}{" "}
               </Text>
+              <Text style={styles.r2t2}>{currVOD?.text}</Text>
             </Text>
             <TouchableOpacity style={styles.r3}>
-              <Text style={styles.r3t}>Matthew 5:6 KJV</Text>
+              <Text style={styles.r3t}>{currVOD?.verse}</Text>
             </TouchableOpacity>
             <View style={styles.r8}>
               <MainButton
@@ -69,7 +81,7 @@ const VerseOfTheDay: React.FC<NavigationProps> = ({ navigation, route }) => {
           </ScrollView>
           <View style={styles.floatingContainer}>
             <TouchableOpacity style={styles.floatingContent1}>
-              <Text style={styles.fc1t}>Matthew 5 : 6 KJV</Text>
+              <Text style={styles.fc1t}>{currVOD?.verse}</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.floatingContent2}>
               <Text style={styles.fc2t}>

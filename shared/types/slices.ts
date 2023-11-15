@@ -174,6 +174,7 @@ export interface InitialGeneralStateType {
   generalData: GeneralDataType | null;
   generalEmailNotificationForms: NotificationsFormSliceType;
   generalPushNotificationForms: NotificationsFormSliceType;
+  generalVerseOfTheDayList: GeneralVerseOfTheDayType[];
   generalLoading: boolean;
   generalError: InitialUserErrorType | null;
   generalMessage: string;
@@ -183,4 +184,10 @@ export interface GeneralDataType {}
 
 export interface NotificationsFormSliceType {
   [key: string]: Pick<NotificationsFormType, "timeValue" | "enable">;
+}
+
+export interface GeneralVerseOfTheDayType {
+  verse: string;
+  text: string;
+  date: string;
 }

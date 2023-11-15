@@ -74,7 +74,12 @@ const MoreMain: React.FC<NavigationProps> = ({ navigation, route }) => {
     {
       icon: <CalendarHeartSVG />,
       name: "Verse of the day",
-      onPressFunc: () => {},
+      onPressFunc: () => {
+        navigation?.navigate(RootRoutes.More, {
+          screen: MoreRoutes.VOD,
+          params: undefined,
+        });
+      },
     },
     {
       icon: <MoreNotesOutlineSVG />,
@@ -103,7 +108,6 @@ const MoreMain: React.FC<NavigationProps> = ({ navigation, route }) => {
       onPressFunc: () => {
         navigation?.navigate(RootRoutes.More, {
           screen: MoreRoutes.Give,
-
           params: undefined,
         });
       },

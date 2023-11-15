@@ -25,6 +25,7 @@ export enum MoreRoutes {
   Support = "Support",
   PrayerEdit = "PrayerEdit",
   ImageCapture = "ImageCapture",
+  VOD = "VOD",
 }
 
 export type MoreParamList = {
@@ -35,7 +36,6 @@ export type MoreParamList = {
   [MoreRoutes.DarkMode]: undefined;
   [MoreRoutes.EditProfile]: undefined;
   [MoreRoutes.EmailNotifications]: undefined;
-
   [MoreRoutes.GiftSummary]: undefined;
   [MoreRoutes.Give]: undefined;
   [MoreRoutes.GivingHistory]: undefined;
@@ -52,6 +52,7 @@ export type MoreParamList = {
   [MoreRoutes.SubscriptionMain]: undefined;
   [MoreRoutes.SubscriptionSummary]: undefined;
 
+  [MoreRoutes.VOD]: undefined;
   [MoreRoutes.Support]: undefined;
   [MoreRoutes.PrayerEdit]: {
     // params: {

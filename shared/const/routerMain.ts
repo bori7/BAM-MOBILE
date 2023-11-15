@@ -12,7 +12,9 @@ export type MainParamList = {
   [MainRoutes.HomeScreen]: undefined;
   [MainRoutes.EditImage]: undefined;
   [MainRoutes.SelectImage]: undefined;
-  [MainRoutes.VerseOfTheDay]: undefined;
+  [MainRoutes.VerseOfTheDay]: {
+    vodId: number;
+  };
   [MainRoutes.Success]: {
     mainText: string;
     subText: string;
