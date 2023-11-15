@@ -27,6 +27,7 @@ import {
 import { CompositeScreenProps } from "@react-navigation/native";
 import { RootScreenProps, RootRoutes } from "../../../shared/const/routerRoot";
 import { NotesRoutes } from "../../../shared/const/routerNotes";
+import { DevotionalRoutes } from "../../../shared/const/routerDevotional";
 
 type MoreContentType = {
   icon: ReactNode;
@@ -115,7 +116,11 @@ const MoreMain: React.FC<NavigationProps> = ({ navigation, route }) => {
     {
       icon: <MoreAboutSVG />,
       name: "About",
-      onPressFunc: () => {},
+      onPressFunc: () => {
+        navigation?.navigate(RootRoutes.Devotional, {
+          screen: DevotionalRoutes.AboutDevotional,
+        });
+      },
     },
     {
       icon: <MoreSupportSVG />,

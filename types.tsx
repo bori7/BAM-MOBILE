@@ -8,6 +8,7 @@ import { CompositeScreenProps } from "@react-navigation/native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootParamList } from "./shared/const/routerRoot";
 import { StyleProp, TextStyle, ViewStyle } from "react-native";
+import { ReactNode } from "react";
 
 declare global {
   namespace ReactNavigation {
@@ -40,7 +41,7 @@ export type RootTabScreenProps<Screen extends keyof RootTabParamList> =
   >;
 
 export interface MainButtonContainer {
-  title: string;
+  title: string | ReactNode;
   disabled?: boolean;
   // whiteStyling?: boolean,
   btnStyle?: StyleProp<ViewStyle>;

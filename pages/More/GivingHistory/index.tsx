@@ -342,7 +342,6 @@ const styles = StyleSheet.create({
     color: COLORS.Light.deeperGreyColor,
     textAlign: "center",
   },
-
   r4: {
     marginTop: 15,
     writingDirection: "rtl",

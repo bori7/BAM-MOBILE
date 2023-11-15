@@ -11,15 +11,23 @@ import { Text, View } from "../../../components/Themed";
 import { COLORS, IMAGES, SIZES } from "../../../constants/Colors";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../store";
-import { Ionicons } from "@expo/vector-icons";
+import { Feather, Ionicons } from "@expo/vector-icons";
 import { CompositeScreenProps, useFocusEffect } from "@react-navigation/native";
 import { DevotionalItemProps } from "../../../shared/types/slices";
 import {
   DevotionalProps,
   DevotionalRoutes,
 } from "../../../shared/const/routerDevotional";
+import { MainButton } from "../../../components";
+import { RootRoutes, RootScreenProps } from "../../../shared/const/routerRoot";
+import { MoreRoutes } from "../../../shared/const/routerMore";
 
-type NavigationProps = DevotionalProps<DevotionalRoutes.AboutDevotional>;
+// type NavigationProps = DevotionalProps<DevotionalRoutes.AboutDevotional>;
+
+type NavigationProps = CompositeScreenProps<
+  DevotionalProps<DevotionalRoutes.AboutDevotional>,
+  RootScreenProps<RootRoutes.Devotional>
+>;
 
 const AboutDevotional: React.FC<NavigationProps> = ({ navigation, route }) => {
   const dispatch = useDispatch<AppDispatch>();
@@ -120,6 +128,30 @@ const AboutDevotional: React.FC<NavigationProps> = ({ navigation, route }) => {
               sed quis. Cras egestas adipiscing nibh vivamus lacus pellentesque.
               Vitae ac arcu erat proin nisl egestas magnis{" "}
             </Text>
+            <View style={styles.r4}>
+              <MainButton
+                // title={"Give Now"}
+                title={
+                  <View style={styles.r4BtnTextContainer}>
+                    <Text style={styles.r4BtnText}>{"Give Now"}</Text>
+                    <Feather
+                      name="arrow-right"
+                      size={24}
+                      color={COLORS.Light.background}
+                    />
+                  </View>
+                }
+                onPressFunction={() => {
+                  navigation?.navigate(RootRoutes.More, {
+                    screen: MoreRoutes.Give,
+                    params: undefined,
+                  });
+                }}
+                err={false}
+                btnStyle={styles.r4btn}
+                // disabled={!proceed}
+              />
+            </View>
           </ScrollView>
         </View>
       </View>
@@ -454,5 +486,29 @@ const styles = StyleSheet.create({
   fv4: {
     marginVertical: 20,
     lineHeight: 22,
+  },
+  r4: {
+    marginTop: 25,
+    writingDirection: "rtl",
+    width: "88%",
+  },
+  r4btn: {
+    height: 60,
+    // padin
+  },
+  r4BtnText: {
+    // textAlign: "center",
+    color: COLORS.Light.background,
+    fontSize: SIZES.sizeSixC,
+    fontWeight: "600",
+    marginRight: 10,
+  },
+  r4BtnTextContainer: {
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "transparent",
+    flexDirection: "row",
+    // borderWidth: 1,
+    // width: "30%",
   },
 });
