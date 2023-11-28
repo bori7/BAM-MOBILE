@@ -25,14 +25,18 @@
         "foregroundImage": "./shared/assets/images/png/Logo-Daily-Answer.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.boriios.FaceVer"
+      "package": "com.boriios.FaceVer",
+      "permissions": [
+        "android.permission.CAMERA",
+        "android.permission.RECORD_AUDIO"
+      ]
     },
     "web": {
       "favicon": "./shared/assets/images/jpeg/png/Logo-Daily-Answer.png"
     },
     "extra": {
       "eas": {
-        "projectId": "96a777af-6edd-4f86-b788-06530dae704e"
+        "projectId": "96f6d30b-853f-45a7-bdc1-9d9267717811"
       }
     },
     "plugins": [
