@@ -18,14 +18,14 @@
     "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.boriios.FaceVer"
+      "bundleIdentifier": "com.boriios.bamobile"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./shared/assets/images/png/Logo-Daily-Answer.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.boriios.FaceVer",
+      "package": "com.boriios.bamobile",
       "permissions": [
         "android.permission.CAMERA",
         "android.permission.RECORD_AUDIO"

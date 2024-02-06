@@ -164,12 +164,12 @@ export const testSelectedDevotional: SelectedDevotionalDataType = {
   date: "Friday September 22, 2023",
   title: "Understand Your Identity",
   ticked: true,
-  bibleVerse: "Psalm 109 : 21 -31",
+  bibleVerse: "Psalm 109 : 21-31",
   keyText:
     "It’s in Christ that we find out who we are and what we are living for. Long before we first heard of Christ and got our hopes up, he had his eye on us, had designs on us for glorious living, part of the overall purpose he is working out in everything and everyone.",
   keyVerse: "Ephesians 1 : 11",
   message:
-    " Many struggle with a low self-image. The New Testament answer to this problem is to know who you are in Christ Jesus: ‘It’s in Christ that we find out who we are and what we are living for’ (v.11, MSG). Understand what your identity is in Christ. While you may not have every material blessing you want (Paul was in prison when he wrote this letter), God has blessed you ‘with every spiritual blessing in Christ’ (v.3). This passage lists many of these blessings: You are redeemed through his blood (v.7a; Isaiah 52:3,9).",
+    "Many struggle with a low self-image. The New Testament answer to this problem is to know who you are in Christ Jesus: ‘It’s in Christ that we find out who we are and what we are living for’ (v.11, MSG). Understand what your identity is in Christ. While you may not have every material blessing you want (Paul was in prison when he wrote this letter), God has blessed you ‘with every spiritual blessing in Christ’ (v.3). This passage lists many of these blessings: You are redeemed through his blood (v.7a; Isaiah 52:3,9).",
   subMessages: [
     {
       title: "Grace and peace",
