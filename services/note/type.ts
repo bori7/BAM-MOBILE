@@ -20,3 +20,7 @@ export interface CreateNoteRequestType {
 export interface CreateNotePayloadType {
   noteId: string;
 }
+
+export interface FetchNoteByIdType {
+  noteId?: string
+}

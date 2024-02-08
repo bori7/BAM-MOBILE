@@ -14,3 +14,8 @@ export interface FetchUserDevotionalPayloadType {
   userId: string;
   readIds: string[];
 }
+
+export interface FetchUserDevotionalByIdType {
+  userDevotionalId?: string
+  title?: string
+}

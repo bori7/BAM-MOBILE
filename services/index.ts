@@ -180,8 +180,8 @@ export const getBy = async <T>(
 export const getByWithPathParam = async <T>(
   url: string,
   token: string | undefined,
-  param: string | [],
-  paramValue: string | number | undefined | []
+  param: string | string[],
+  paramValue: string | number | undefined | any[]
 ): Promise<T> => {
   const headers = {
     Authorization: `Bearer ${token}`,
