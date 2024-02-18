@@ -1,5 +1,8 @@
 export const BASE_IP = "http://localhost:9082";
+export const PAYMENT_BASE_IP = "http://localhost:9084";
 export const BASE_URL = `${BASE_IP}/bible-app-mobile`;
+export const PAYMENT_BASE_URL = `${PAYMENT_BASE_IP}/bible-app-mobile-finance`;
+
 export const ADMIN_ADD_ROLES_URL = `${BASE_URL}/admin/add-roles`;
 export const CREATE_DEVOTIONAL_URL = `${BASE_URL}/devotional/create`;
 export const FETCH_ALL_DEVOTIONAL_URL = `${BASE_URL}/devotional`;
@@ -43,3 +46,14 @@ export const GOOGLE_SIGN_IN_URL = `${BASE_URL}/google/sign-in`;
 // #######################################USER_AUTH############################################################
 export const USER_SIGN_UP_URL = `${BASE_URL}/user/sign-up`;
 export const USER_SIGN_IN_URL = `${BASE_URL}/user/sign-in`;
+// #######################################PAYMENT############################################################
+export const PAYSTACK_INITIATE_URL = `${PAYMENT_BASE_URL}/paystack`;
+export const PAYSTACK_VERIFY_URL = `${PAYMENT_BASE_URL}/paystack/{paymentref}`;
+// #######################################GIVING############################################################
+export const GIVING_FETCH_ALL_URL = `${PAYMENT_BASE_URL}/giving/all/{userId}`;
+export const GIVING_FETCH_URL = `${PAYMENT_BASE_URL}/giving/{giving_ref}`;
+// #######################################SUBSCRIPTION############################################################
+export const SUBSCRIPTION_FETCH_URL = `${PAYMENT_BASE_URL}/subscription/{subscriptionId}`;
+// #######################################PAYMENT_CALLBACK############################################################
+export const CALLBACK_POST_URL = `${PAYMENT_BASE_URL}/paystack/callback`;
+export const CALLBACK_GET_URL = `${PAYMENT_BASE_URL}/paystack/callback?trxref={trxref}&reference={ref}`;

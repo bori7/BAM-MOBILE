@@ -1,16 +1,12 @@
-import {CreateNotePayloadType, CreateNoteRequestType, FetchNoteByIdType} from "../note/type";
 import {AxiosRequestHeaders} from "axios";
 import {GenericResponseType} from "../type";
-import {getByWithPathParam, getFor, postCall, putCall} from "../index";
+import {getFor, postCall, putCall} from "../index";
 import {
-    CREATE_NOTE_URL,
     CREATE_VOD_URL,
-    DELETE_NOTE_URL, DELETE_VOD_URL, FETCH_ALL_DEVOTIONAL_URL,
-    FETCH_NOTE_BY_ID_URL, FETCH_VOD_URL,
-    UPDATE_NOTE_URL, UPDATE_VOD_URL
+    DELETE_VOD_URL, FETCH_VOD_URL,
+    UPDATE_VOD_URL
 } from "../../constants/url";
 import {CreateVODPayloadType, CreateVODRequestType} from "./type";
-import {FetchDevotionalPayloadType} from "../devotional/type";
 
 export class VODService {
 

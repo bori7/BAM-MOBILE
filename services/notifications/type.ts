@@ -27,3 +27,7 @@ export interface NotificationType {
 export interface CreateNotificationsPayloadType {
   notificationId: string;
 }
+
+export interface FetchNotificationByIdType {
+  notificationId?: string;
+}

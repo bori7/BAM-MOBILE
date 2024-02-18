@@ -18,6 +18,7 @@ export interface InitiatePaystackPayloadType {
 }
 
 export interface VerifyPaystackRequestType {
+    event?: string;
     status: boolean;
     message: string;
     data: {
