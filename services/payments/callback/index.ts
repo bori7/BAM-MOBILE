@@ -1,15 +1,11 @@
-import {CreatePrayerPayloadType, CreatePrayerRequestType} from "../../prayer/type";
 import {AxiosRequestHeaders} from "axios";
 import {GenericResponseType} from "../../type";
 import {getByWithPathParam, postCall} from "../../index";
 import {
     CALLBACK_GET_URL,
-    CALLBACK_POST_URL,
-    CREATE_PRAYER_URL,
-    FETCH_DEVOTIONAL_BY_ID_URL
+    CALLBACK_POST_URL
 } from "../../../constants/url";
 import {CallbackGetRequestType, CallbackGetResponsePayload, CallbackPostRequestType} from "./type";
-import {FetchDevotionalByIdType, FetchDevotionalByParamPayloadType} from "../../devotional/type";
 
 export class CallbackService {
 

@@ -46,11 +46,11 @@ export interface SignInPayloadType {
   roles: RoleType[];
 }
 
-export interface GoogleSignUpRequestType<T> {
+export interface GoogleSignUpRequestType {
   deviceId: string;
   idToken: string;
 }
 
-export interface GoogleSignInRequestType<T> {
+export interface GoogleSignInRequestType {
   idToken: string;
 }
