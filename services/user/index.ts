@@ -1,12 +1,10 @@
-import {RegisterDeviceTokenPayloadType, RegisterDeviceTokenRequestType} from "../firenotification/type";
 import {AxiosRequestHeaders} from "axios";
 import {GenericResponseType} from "../type";
 import {postCall, putCall} from "../index";
 import {
     GOOGLE_SIGN_IN_URL,
     GOOGLE_SIGN_UP_URL,
-    REGISTER_FIRE_NOTIFICATION_URL,
-    UPDATE_NOTE_URL, USER_DELETE_URL,
+    USER_DELETE_URL,
     USER_SIGN_IN_URL,
     USER_SIGN_UP_URL, USER_UPDATE_URL
 } from "../../constants/url";
@@ -18,7 +16,6 @@ import {
     SignUpPayloadType,
     SignUpRequestType
 } from "./type";
-import {CreateNotePayloadType, CreateNoteRequestType} from "../note/type";
 
 export class UserService {
 
