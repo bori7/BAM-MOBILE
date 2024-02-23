@@ -15,6 +15,7 @@
   "dependencies": {
     "@expo/vector-icons": "^13.0.0",
     "@expo/webpack-config": "^0.17.2",
+    "@react-native-async-storage/async-storage": "^1.22.1",
     "@react-native-community/datetimepicker": "6.7.0",
     "@react-navigation/bottom-tabs": "^6.0.5",
     "@react-navigation/native": "^6.1.9",
@@ -27,6 +28,7 @@
     "expo-camera": "~13.1.0",
     "expo-checkbox": "~2.2.2",
     "expo-constants": "~14.0.2",
+    "expo-device": "^5.9.3",
     "expo-file-system": "~15.1.1",
     "expo-font": "~11.0.1",
     "expo-image-manipulator": "~11.0.0",
@@ -34,6 +36,7 @@
     "expo-linear-gradient": "~12.0.1",
     "expo-linking": "~3.3.1",
     "expo-modules-core": "~1.1.1",
+    "expo-network": "^5.8.0",
     "expo-secure-store": "~12.0.0",
     "expo-splash-screen": "~0.17.5",
     "expo-status-bar": "~1.4.2",
@@ -60,7 +63,8 @@
     "react-native-webview": "11.23.1",
     "react-query": "^3.39.3",
     "react-redux": "^8.0.5",
-    "redux-logger": "^3.0.6"
+    "redux-logger": "^3.0.6",
+    "redux-persist": "^6.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
