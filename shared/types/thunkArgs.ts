@@ -1,6 +1,7 @@
 import {CreateNoteRequestType, FetchNoteByIdType} from "../../services/note/type";
 import {StateSchema} from "../../store/config";
 import {CallbackGetRequestType, CallbackPostRequestType} from "../../services/payments/callback/type";
+import {InitiatePaystackRequestType} from "../../services/payments/paystack/type";
 
 export type InitBAMThunkApiConfig = { state: StateSchema };
 
@@ -35,4 +36,20 @@ export type InitPaystaclkGetThunkArg = {
 
 export type InitFetchAllGivingThunkArg = {
     fetchAllGivingRequest: null;
+}
+
+export type InitFetchGivingThunkArg = {
+    fetchGivingRequest: null;
+}
+
+export type InitInitiatePaymentThunkArg = {
+    initiatePaymentPaystack: InitiatePaystackRequestType;
+}
+
+export type InitVerifyPaymentThunkArg = {
+    verifyPaymentPaystack: null;
+}
+
+export type InitFetchLiveSubscriptionThunkArg = {
+    fetchLiveSubscriptionRequest: null;
 }
