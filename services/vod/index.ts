@@ -18,7 +18,6 @@ export class VODService {
         return await postCall(CREATE_VOD_URL, token, extraHeaders, request);
     }
 
-
     static async fetchAllVOD(
         token: string | undefined,
         extraHeaders?: AxiosRequestHeaders | undefined | {}

@@ -114,7 +114,7 @@ export const fetchNoteByUserIdCall = createAsyncThunk<
     }
 );
 
-export const deleteCartCall = createAsyncThunk<
+export const deleteNoteCall = createAsyncThunk<
     GenericResponseType<CreateNotePayloadType>,
     InitDeleteNoteThunkArg,
     InitBAMThunkApiConfig
