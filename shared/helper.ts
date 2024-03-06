@@ -215,7 +215,14 @@ export const getDeviceIpAddress = async () => {
         const deviceIpAddress = await getIpAddressAsync();
         return deviceIpAddress;
     } catch (error) {
-        debug.error('Error getting device IP address:', error);
+        console.log('Error getting device IP address:', error);
         return null;
     }
 };
+
+export const objectValidator = (
+    valObj: Object
+) => {
+
+
+}

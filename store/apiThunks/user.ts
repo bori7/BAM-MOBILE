@@ -1,15 +1,15 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
 import {GenericResponseType} from "../../services/type";
-import {CreateDevotionalPayloadType} from "../../services/devotional/type";
 import {
     InitBAMThunkApiConfig,
-    InitCreateDevotionalThunkArg, InitSignInGoogleThunkArg, InitSignInThunkArg,
+    InitSignInGoogleThunkArg, InitSignInThunkArg,
     InitSignUpGoogleThunkArg, InitSignUpThunkArg
 } from "../../shared/types/thunkArgs";
 import {getDeviceIpAddress} from "../../shared/helper";
-import {DevotionalService} from "../../services/devotional";
 import {SignInPayloadType, SignUpPayloadType} from "../../services/user/type";
 import {UserService} from "../../services/user";
+// import * as Constants from "expo-constants";
+import * as Device from 'expo-device';
 
 
 export const signUpGoogleCall = createAsyncThunk<
@@ -71,6 +71,10 @@ export const signUpCall = createAsyncThunk<
         let ipAddress = await getDeviceIpAddress();
         const state = getState();
 
+        signUpRequest = {
+            ...signUpRequest,
+            deviceId: `${Device.modelName}_${Device.osVersion}`
+        }
         const accessToken = state.user.userData?.token || "";
         return await UserService.signUp(accessToken, signUpRequest)
             .then((res) => {

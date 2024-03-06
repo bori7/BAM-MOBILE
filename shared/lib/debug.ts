@@ -31,6 +31,7 @@ enum DebugStyle {
 //   return result;
 // }
 export const newConsole = function () {
+
   const finishText = (variant: DebugStyle, text: string) => {
     switch (variant) {
       case DebugStyle.SUCCESS:
@@ -93,3 +94,4 @@ export const newConsole = function () {
     },
   };
 };
+

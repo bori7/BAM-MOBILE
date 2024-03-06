@@ -6,19 +6,24 @@ import useColorScheme from "./hooks/useColorScheme";
 import Navigation from "./navigation";
 import { store } from "./store";
 import { ToastProvider } from "react-native-toast-notifications";
-import React from "react";
+import React, {useEffect} from "react";
 import CustomToast from "./shared/components/CustomToast";
 import InactivityWrapper from "./shared/components/InactivityWrapper";
 import Wrapper from "./shared/components/Wrapper";
 import { Provider as PaperProvider } from "react-native-paper";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { useFonts } from "expo-font";
+import {newConsole} from "./shared/lib/debug";
+
 // import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 const queryClient = new QueryClient();
 
+
 export default function App() {
   const colorScheme = useColorScheme();
+
+
 
   const [areFontsLoaded] = useFonts({
     Roboto: require("./shared/assets/fonts/Roboto-Regular.ttf"),
@@ -29,6 +34,12 @@ export default function App() {
     // Fonts are still loading, you can return a loading indicator if needed
     return null;
   }
+
+
+    debug = newConsole();
+
+
+
 
   return (
     <ToastProvider

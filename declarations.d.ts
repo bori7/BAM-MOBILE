@@ -1,3 +1,5 @@
+
+
 declare module "*.svg" {
     import {SvgProps} from "react-native-svg";
 
@@ -32,3 +34,4 @@ declare let debug: {
     api_success(text: string, data?: unknown): void;
     api_error(text: string, data?: unknown): void;
 };
+
