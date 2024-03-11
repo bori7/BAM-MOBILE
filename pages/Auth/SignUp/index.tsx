@@ -19,6 +19,8 @@ import {useDispatch, useSelector} from "react-redux";
 import {screenNotificationActions} from "../../../store/slices/notification";
 import {AppDispatch, RootState} from "../../../store";
 import {signUpCall} from "../../../store/apiThunks/user";
+import {validateObject} from "../../../shared/helper";
+import ValidateData from "../../../shared/lib/validateData";
 
 type NavigationProps = AuthProps<AuthRoutes.SignUp>;
 
@@ -38,7 +40,27 @@ const SignUp: React.FC<NavigationProps> = ({navigation, route}) => {
     );
     const {screenLoading} = screenNotificationState;
 
+
+    const SCHEME = {
+        fullName: (fullName: string) => ValidateData.userName(fullName),
+        username: (username: string) => ValidateData.userName(username),
+        email: (email: string) => ValidateData.email(email),
+        password: (password: string) => ValidateData.special(password),
+    };
+
     const handleContinue = async () => {
+
+
+        const validation = validateObject(
+            {
+                fullName: fullName,
+                username: username,
+                email: email,
+                password: password,
+            },
+            // @ts-ignore
+            SCHEME,
+        );
 
         await dispatch(signUpCall(
             {
