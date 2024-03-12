@@ -22,9 +22,13 @@ export const postCall = async <R, T>(
     request: R
 ): Promise<T> => {
     const headers = {
-        ...extraHeaders,
         Authorization: `Bearer ${token}`,
+        ...extraHeaders,
     };
+    if (!token) {
+        // @ts-ignore
+        delete headers.Authorization;
+    }
     try {
         // debug.log("request in postCall", request)
         const response = await apiPost(url, headers, request);

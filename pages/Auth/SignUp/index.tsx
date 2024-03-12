@@ -31,7 +31,7 @@ const SignUp: React.FC<NavigationProps> = ({navigation, route}) => {
     const [fullName, setFullName] = useState<string>("");
     const [password, setPassword] = useState<string>("");
     const [validEmail, setValidEmail] = useState<boolean>(false);
-    const [allowEmailError, setAllowEmailError] = useState<boolean>(false);
+    const [allowEmailError, setAllowEmailError] = useState<boolean>(true);
     const [emailErrorText, setEmailErrorText] = useState<string>("");
     const [hidePassword, setHidePassword] = useState<boolean>(true);
 
@@ -42,16 +42,31 @@ const SignUp: React.FC<NavigationProps> = ({navigation, route}) => {
 
 
     const SCHEME = {
-        fullName: (fullName: string) => ValidateData.userName(fullName),
+        fullName: (fullName: string) => fullName?.length > 4,
         username: (username: string) => ValidateData.userName(username),
         email: (email: string) => ValidateData.email(email),
         password: (password: string) => ValidateData.special(password),
     };
 
+    type TypeValidation = {
+        data: Record<keyof typeof SCHEME, { isValid: boolean }>;
+        isValid: boolean;
+    };
+
+    let validation: TypeValidation = validateObject(
+        {
+            fullName: fullName,
+            username: username,
+            email: email,
+            password: password,
+        },
+        // @ts-ignore
+        SCHEME,
+    );
+
     const handleContinue = async () => {
 
-
-        const validation = validateObject(
+        validation = validateObject(
             {
                 fullName: fullName,
                 username: username,
@@ -61,6 +76,11 @@ const SignUp: React.FC<NavigationProps> = ({navigation, route}) => {
             // @ts-ignore
             SCHEME,
         );
+
+        debug.log("validation", validation)
+        if (!validation.isValid) {
+            return;
+        }
 
         await dispatch(signUpCall(
             {
@@ -111,6 +131,19 @@ const SignUp: React.FC<NavigationProps> = ({navigation, route}) => {
             }, 2000);
     }, [screenLoading]);
 
+    useEffect(() => {
+        validation = validateObject(
+            {
+                fullName: fullName,
+                username: username,
+                email: email,
+                password: password,
+            },
+            // @ts-ignore
+            SCHEME,
+        );
+    }, [password, email, username, fullName]);
+
     return (
         <View style={styles.main}>
             <StatusBar barStyle="dark-content"/>
@@ -145,21 +178,21 @@ const SignUp: React.FC<NavigationProps> = ({navigation, route}) => {
                                 autoCapitalize="none"
                                 autoCorrect={false}
                                 selectionColor={
-                                    // validEmail && allowEmailError
-                                    // ?
-                                    COLORS.Light.colorOne
-                                    // : COLORS.Light.colorFourteen
+                                    validation?.data?.fullName.isValid && allowEmailError
+                                        ?
+                                        COLORS.Light.colorOne
+                                        : COLORS.Light.colorFourteen
                                 }
                                 outlineColor={
-                                    !validEmail && allowEmailError
+                                    !validation?.data?.fullName.isValid && allowEmailError
                                         ? COLORS.Light.colorFourteen
                                         : COLORS.Light.colorTwentySix
                                 }
                                 activeOutlineColor={
-                                    // validEmail
-                                    // ?
-                                    COLORS.Light.colorOne
-                                    // : COLORS.Light.colorFourteen
+                                    validation?.data?.fullName.isValid
+                                        ?
+                                        COLORS.Light.colorOne
+                                        : COLORS.Light.colorFourteen
                                 }
                                 value={fullName}
                                 onChangeText={(val) => {
@@ -181,21 +214,21 @@ const SignUp: React.FC<NavigationProps> = ({navigation, route}) => {
                                 autoCapitalize="none"
                                 autoCorrect={false}
                                 selectionColor={
-                                    // validEmail && allowEmailError
-                                    // ?
-                                    COLORS.Light.colorOne
-                                    // : COLORS.Light.colorFourteen
+                                    validation?.data?.username.isValid && allowEmailError
+                                        ?
+                                        COLORS.Light.colorOne
+                                        : COLORS.Light.colorFourteen
                                 }
                                 outlineColor={
-                                    !validEmail && allowEmailError
+                                    !validation?.data?.username.isValid && allowEmailError
                                         ? COLORS.Light.colorFourteen
                                         : COLORS.Light.colorTwentySix
                                 }
                                 activeOutlineColor={
-                                    // validEmail
-                                    // ?
-                                    COLORS.Light.colorOne
-                                    // : COLORS.Light.colorFourteen
+                                    validation?.data?.username.isValid
+                                        ?
+                                        COLORS.Light.colorOne
+                                        : COLORS.Light.colorFourteen
                                 }
                                 value={username}
                                 onChangeText={(val) => {
@@ -217,21 +250,21 @@ const SignUp: React.FC<NavigationProps> = ({navigation, route}) => {
                                 autoCapitalize="none"
                                 autoCorrect={false}
                                 selectionColor={
-                                    // validEmail && allowEmailError
-                                    // ?
-                                    COLORS.Light.colorOne
-                                    // : COLORS.Light.colorFourteen
+                                    validation?.data?.email.isValid && allowEmailError
+                                        ?
+                                        COLORS.Light.colorOne
+                                        : COLORS.Light.colorFourteen
                                 }
                                 outlineColor={
-                                    !validEmail && allowEmailError
+                                    !validation?.data?.email.isValid && allowEmailError
                                         ? COLORS.Light.colorFourteen
                                         : COLORS.Light.colorTwentySix
                                 }
                                 activeOutlineColor={
-                                    // validEmail
-                                    // ?
-                                    COLORS.Light.colorOne
-                                    // : COLORS.Light.colorFourteen
+                                    validation?.data?.email.isValid
+                                        ?
+                                        COLORS.Light.colorOne
+                                        : COLORS.Light.colorFourteen
                                 }
                                 value={email}
                                 onChangeText={(val) => {
@@ -254,21 +287,21 @@ const SignUp: React.FC<NavigationProps> = ({navigation, route}) => {
                                 autoCapitalize="none"
                                 autoCorrect={false}
                                 selectionColor={
-                                    // validEmail && allowEmailError
-                                    // ?
-                                    COLORS.Light.colorOne
-                                    // : COLORS.Light.colorFourteen
+                                    validation?.data?.password.isValid && allowEmailError
+                                        ?
+                                        COLORS.Light.colorOne
+                                        : COLORS.Light.colorFourteen
                                 }
                                 outlineColor={
-                                    !validEmail && allowEmailError
+                                    !validation?.data?.password.isValid && allowEmailError
                                         ? COLORS.Light.colorFourteen
                                         : COLORS.Light.colorTwentySix
                                 }
                                 activeOutlineColor={
-                                    // validEmail
-                                    // ?
-                                    COLORS.Light.colorOne
-                                    // : COLORS.Light.colorFourteen
+                                    validation?.data?.password.isValid
+                                        ?
+                                        COLORS.Light.colorOne
+                                        : COLORS.Light.colorFourteen
                                 }
                                 value={password}
                                 onChangeText={(val) => {
