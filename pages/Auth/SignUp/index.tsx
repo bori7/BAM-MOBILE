@@ -30,15 +30,16 @@ const SignUp: React.FC<NavigationProps> = ({navigation, route}) => {
     const [username, setUsername] = useState<string>("");
     const [fullName, setFullName] = useState<string>("");
     const [password, setPassword] = useState<string>("");
-    const [validEmail, setValidEmail] = useState<boolean>(false);
-    const [allowEmailError, setAllowEmailError] = useState<boolean>(true);
-    const [emailErrorText, setEmailErrorText] = useState<string>("");
+    // const [validEmail, setValidEmail] = useState<boolean>(false);
+    const [errorCount, setErrorCount] = useState<number>(0);
+    // const [emailErrorText, setEmailErrorText] = useState<string>("");
     const [hidePassword, setHidePassword] = useState<boolean>(true);
+    const [error, setError] = useState<boolean>(false);
 
-    const screenNotificationState = useSelector(
-        (state: RootState) => state.screenNotification
-    );
-    const {screenLoading} = screenNotificationState;
+    // const screenNotificationState = useSelector(
+    //     (state: RootState) => state.screenNotification
+    // );
+    // const {screenLoading} = screenNotificationState;
 
 
     const SCHEME = {
@@ -79,6 +80,7 @@ const SignUp: React.FC<NavigationProps> = ({navigation, route}) => {
 
         debug.log("validation", validation)
         if (!validation.isValid) {
+            // setError(true)
             return;
         }
 
@@ -100,22 +102,8 @@ const SignUp: React.FC<NavigationProps> = ({navigation, route}) => {
             }
         )).unwrap()
             .then((res) => {
-                dispatch(
-                    screenNotificationActions.updateScreenLoadingFunc({
-                        screenLoading: true,
-                        screenFunction: () => {
-                            // console.log("Inside screen function");
-                            // dispatch(
-                            //   screenNotificationActions.updateScreenLoadingFunc({
-                            //     screenLoading: false,
-                            //     screenFunction: () => {},
-                            //   })
-                            // );
-                            // console.log("After screen function");
-                            // navigation?.navigate(AuthRoutes.SignIn);
-                        },
-                    })
-                );
+                debug.log("res", res)
+                navigation?.replace(AuthRoutes.SignIn);
             }).catch((err) => {
                 debug.error("err", err)
             })
@@ -123,15 +111,19 @@ const SignUp: React.FC<NavigationProps> = ({navigation, route}) => {
 
     }
 
-    useEffect(() => {
-        if (screenLoading && route.name === "SignUp")
-            setTimeout(async () => {
-                await dispatch(screenNotificationActions.updateScreenLoading(false));
-                navigation?.replace(AuthRoutes.SignIn);
-            }, 2000);
-    }, [screenLoading]);
+    // useEffect(() => {
+    //     if (screenLoading && route.name === "SignUp")
+    //         setTimeout(async () => {
+    //             await dispatch(screenNotificationActions.updateScreenLoading(false));
+    //             navigation?.replace(AuthRoutes.SignIn);
+    //         }, 2000);
+    // }, [screenLoading]);
 
+    const filledFields = () => {
+        return !!password && !!email && !!username && !!fullName
+    }
     useEffect(() => {
+        setErrorCount(errorCount + 1)
         validation = validateObject(
             {
                 fullName: fullName,
@@ -142,6 +134,9 @@ const SignUp: React.FC<NavigationProps> = ({navigation, route}) => {
             // @ts-ignore
             SCHEME,
         );
+        if (!validation.isValid && errorCount >= 3 && filledFields()) {
+            setError(true)
+        }
     }, [password, email, username, fullName]);
 
     return (
@@ -178,13 +173,13 @@ const SignUp: React.FC<NavigationProps> = ({navigation, route}) => {
                                 autoCapitalize="none"
                                 autoCorrect={false}
                                 selectionColor={
-                                    validation?.data?.fullName.isValid && allowEmailError
+                                    validation?.data?.fullName.isValid && error
                                         ?
                                         COLORS.Light.colorOne
                                         : COLORS.Light.colorFourteen
                                 }
                                 outlineColor={
-                                    !validation?.data?.fullName.isValid && allowEmailError
+                                    !validation?.data?.fullName.isValid && error
                                         ? COLORS.Light.colorFourteen
                                         : COLORS.Light.colorTwentySix
                                 }
@@ -196,9 +191,12 @@ const SignUp: React.FC<NavigationProps> = ({navigation, route}) => {
                                 }
                                 value={fullName}
                                 onChangeText={(val) => {
+                                    // setErrorCount(errorCount + 1)
                                     setFullName(val);
                                 }}
                             />
+                            {(!validation?.data?.fullName.isValid && error) &&
+                                <Text style={styles.error}>{"Invalid fullname"}</Text>}
                         </View>
 
                         <View style={styles.r3}>
@@ -214,13 +212,13 @@ const SignUp: React.FC<NavigationProps> = ({navigation, route}) => {
                                 autoCapitalize="none"
                                 autoCorrect={false}
                                 selectionColor={
-                                    validation?.data?.username.isValid && allowEmailError
+                                    validation?.data?.username.isValid && error
                                         ?
                                         COLORS.Light.colorOne
                                         : COLORS.Light.colorFourteen
                                 }
                                 outlineColor={
-                                    !validation?.data?.username.isValid && allowEmailError
+                                    !validation?.data?.username.isValid && error
                                         ? COLORS.Light.colorFourteen
                                         : COLORS.Light.colorTwentySix
                                 }
@@ -232,9 +230,13 @@ const SignUp: React.FC<NavigationProps> = ({navigation, route}) => {
                                 }
                                 value={username}
                                 onChangeText={(val) => {
+                                    // setErrorCount(errorCount + 1)
                                     setUsername(val);
                                 }}
                             />
+                            {
+                                (!validation?.data?.username.isValid && error) &&
+                                <Text style={styles.error}>{"Invalid username"}</Text>}
                         </View>
 
                         <View style={styles.r3}>
@@ -250,13 +252,13 @@ const SignUp: React.FC<NavigationProps> = ({navigation, route}) => {
                                 autoCapitalize="none"
                                 autoCorrect={false}
                                 selectionColor={
-                                    validation?.data?.email.isValid && allowEmailError
+                                    validation?.data?.email.isValid && error
                                         ?
                                         COLORS.Light.colorOne
                                         : COLORS.Light.colorFourteen
                                 }
                                 outlineColor={
-                                    !validation?.data?.email.isValid && allowEmailError
+                                    !validation?.data?.email.isValid && error
                                         ? COLORS.Light.colorFourteen
                                         : COLORS.Light.colorTwentySix
                                 }
@@ -268,9 +270,12 @@ const SignUp: React.FC<NavigationProps> = ({navigation, route}) => {
                                 }
                                 value={email}
                                 onChangeText={(val) => {
+                                    // setErrorCount(errorCount + 1)
                                     setEmail(val);
                                 }}
                             />
+                            {(!validation?.data?.email.isValid && error) &&
+                                <Text style={styles.error}>{"Invalid email"}</Text>}
                         </View>
 
                         <View style={styles.r3}>
@@ -287,13 +292,13 @@ const SignUp: React.FC<NavigationProps> = ({navigation, route}) => {
                                 autoCapitalize="none"
                                 autoCorrect={false}
                                 selectionColor={
-                                    validation?.data?.password.isValid && allowEmailError
+                                    validation?.data?.password.isValid && error
                                         ?
                                         COLORS.Light.colorOne
                                         : COLORS.Light.colorFourteen
                                 }
                                 outlineColor={
-                                    !validation?.data?.password.isValid && allowEmailError
+                                    !validation?.data?.password.isValid && error
                                         ? COLORS.Light.colorFourteen
                                         : COLORS.Light.colorTwentySix
                                 }
@@ -305,6 +310,7 @@ const SignUp: React.FC<NavigationProps> = ({navigation, route}) => {
                                 }
                                 value={password}
                                 onChangeText={(val) => {
+                                    // setErrorCount(errorCount + 1)
                                     setPassword(val);
                                 }}
                                 right={
@@ -315,9 +321,15 @@ const SignUp: React.FC<NavigationProps> = ({navigation, route}) => {
                                     />
                                 }
                             />
+                            {
+                                (!validation?.data?.password.isValid && error) &&
+                                <Text style={styles.error}>{"Invalid Password"}</Text>}
+
                         </View>
 
+
                         <View style={styles.r8}>
+
                             <MainButton
                                 title={"Continue"}
                                 onPressFunction={() => {
@@ -326,7 +338,7 @@ const SignUp: React.FC<NavigationProps> = ({navigation, route}) => {
                                 }}
                                 err={false}
                                 btnStyle={styles.r8t1}
-                                // disabled={!proceed}
+                                disabled={!filledFields()}
                             />
                         </View>
                         <View style={styles.r9}>
@@ -500,5 +512,12 @@ const styles = StyleSheet.create({
         backgroundColor: COLORS.Light.background,
         marginBottom: 8,
         padding: 2,
+    },
+    error: {
+        color: COLORS.Light.colorFourteen,
+        fontSize: SIZES.sizeSix,
+        fontWeight: "500",
+        // textAlign: "center",
+        marginLeft: 5
     },
 });

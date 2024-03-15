@@ -65,9 +65,9 @@ export const userSlice = createSlice({
             state.userMessage = "";
             state.userData = null;
             state.userError = {
-                code: action?.payload?.responseCode || action.error?.code || "89",
+                code: action.payload?.response?.data?.responseCode || "89",
                 message:
-                    action.payload?.message ||
+                    action.payload?.response?.data?.message ||
                     // action.error?.message ||
                     "Unable to sign you up at the moment",
             }
@@ -80,7 +80,7 @@ export const userSlice = createSlice({
         builder.addCase(signInCall.fulfilled, (state, {payload}) => {
             state.userLoading = false;
             state.userError = null;
-            state.userMessage = `Welcome ${payload.payload.firstName}`
+            state.userMessage = `Welcome ${payload.payload.firstName || payload.payload.username}`
             state.userData = {
                 ...state.userData,
                 ...payload.payload
@@ -91,9 +91,9 @@ export const userSlice = createSlice({
             state.userMessage = "";
             state.userData = null;
             state.userError = {
-                code: action?.payload?.responseCode || action.error?.code || "89",
+                code: action.payload?.response?.data?.responseCode || "88",
                 message:
-                    action.payload?.message ||
+                    action.payload?.response?.data?.message ||
                     // action.error?.message ||
                     "Unable to sign you in at the moment",
             }

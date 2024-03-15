@@ -8,8 +8,9 @@ import {
 import {getDeviceIpAddress} from "../../shared/helper";
 import {SignInPayloadType, SignUpPayloadType} from "../../services/user/type";
 import {UserService} from "../../services/user";
-// import * as Constants from "expo-constants";
 import * as Device from 'expo-device';
+import {CipherUtils} from "../../shared/lib/cipher";
+import {AES_SECRET_KEY} from "../../constants/props";
 
 
 export const signUpGoogleCall = createAsyncThunk<
@@ -61,6 +62,7 @@ export const signInGoogleCall = createAsyncThunk<
 );
 
 
+
 export const signUpCall = createAsyncThunk<
     GenericResponseType<SignUpPayloadType>,
     InitSignUpThunkArg,
@@ -73,8 +75,11 @@ export const signUpCall = createAsyncThunk<
 
         signUpRequest = {
             ...signUpRequest,
+            // password: await  CipherUtils.encrypt(signUpRequest.password) || "",
             deviceId: `${Device.modelName}_${Device.osVersion}`
         }
+
+        // debug.log("fruitful", CipherUtils.decryptAesGCM_NoPadding(signUpRequest.password))
         const accessToken = state.user.userData?.token || "";
         return await UserService.signUp(accessToken, signUpRequest)
             .then((res) => {

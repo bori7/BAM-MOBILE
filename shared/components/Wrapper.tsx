@@ -54,7 +54,7 @@ export default function Wrapper({child}: props) {
     };
 
     const userState = useSelector((state: RootState) => state.user);
-    const {userError, userMessage} = userState;
+    const {userError, userMessage, userLoading} = userState;
 
     const screenNotificationState = useSelector(
         (state: RootState) => state.screenNotification
@@ -70,13 +70,13 @@ export default function Wrapper({child}: props) {
         }
         if (userMessage) {
             Toaster("success", userMessage, () => {
-                userActions.clearUserMessage()
+                dispatch(userActions.clearUserMessage())
             });
         }
 
         if (userError !== null) {
             Toaster("error", userError?.message, () => {
-                userActions.clearUserError()
+                dispatch(userActions.clearUserError())
             });
         }
 
@@ -98,7 +98,7 @@ export default function Wrapper({child}: props) {
                 >
                     <View style={{height: "100%", width: "100%"}}>{child}</View>
                     <CustomLoadingModal
-                        visible={screenLoading}
+                        visible={screenLoading || userLoading}
                         closeModal={() => {
                             dispatch(
                                 screenNotificationActions.updateScreenLoadingFunc({
