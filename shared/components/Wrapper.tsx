@@ -56,6 +56,10 @@ export default function Wrapper({child}: props) {
     const userState = useSelector((state: RootState) => state.user);
     const {userError, userMessage, userLoading} = userState;
 
+    const generalState = useSelector((state: RootState) => state.general);
+    const {generalLoading} = generalState;
+
+
     const screenNotificationState = useSelector(
         (state: RootState) => state.screenNotification
     );
@@ -98,7 +102,7 @@ export default function Wrapper({child}: props) {
                 >
                     <View style={{height: "100%", width: "100%"}}>{child}</View>
                     <CustomLoadingModal
-                        visible={screenLoading || userLoading}
+                        visible={screenLoading || userLoading || generalLoading}
                         closeModal={() => {
                             dispatch(
                                 screenNotificationActions.updateScreenLoadingFunc({

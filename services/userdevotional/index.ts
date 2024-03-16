@@ -23,9 +23,11 @@ export class UserDevotionalService {
 
     static async fetchUserDevotional(
         token: string | undefined,
+        userId: string,
         extraHeaders?: AxiosRequestHeaders | undefined | {}
     ): Promise<GenericResponseType<FetchUserDevotionalPayloadType>> {
-        return await getFor(FETCH_USER_DEVOTIONAL_BY_ID_URL, token);
+        const url = FETCH_USER_DEVOTIONAL_BY_ID_URL.replace("{id}", userId);
+        return await getFor(url, token);
     }
 
     static fetchUserDevotionalById = async (

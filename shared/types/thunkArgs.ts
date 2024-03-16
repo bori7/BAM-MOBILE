@@ -93,7 +93,7 @@ export type InitFetchAllNoteThunkArg = {
 }
 
 export type InitFetchAllDevotionalThunkArg = {
-    fetchAllDevotionalRequest: FetchNoteByIdType;
+    fetchAllDevotionalRequest: FetchNoteByIdType | null;
 }
 
 export type InitFetchAllVodThunkArg = {

@@ -142,6 +142,10 @@ export const getFor = async <T>(
     const headers = {
         Authorization: `Bearer ${token}`,
     };
+    if (!token) {
+        // @ts-ignore
+        delete headers.Authorization;
+    }
 
     try {
         const response = await apiGetFor(url, headers);

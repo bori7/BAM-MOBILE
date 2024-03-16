@@ -21,6 +21,7 @@ import {AppDispatch, RootState} from "../../../store";
 import {signUpCall} from "../../../store/apiThunks/user";
 import {validateObject} from "../../../shared/helper";
 import ValidateData from "../../../shared/lib/validateData";
+import {createUserDevotionalCall} from "../../../store/apiThunks/devotional";
 
 type NavigationProps = AuthProps<AuthRoutes.SignUp>;
 
@@ -101,8 +102,14 @@ const SignUp: React.FC<NavigationProps> = ({navigation, route}) => {
                 }
             }
         )).unwrap()
-            .then((res) => {
+            .then(async (res) => {
                 debug.log("res", res)
+                await dispatch(createUserDevotionalCall({
+                    createUserDevotionalRequest: {
+                        userId: res.payload?.userId,
+                        readIds: [],
+                    }
+                })).unwrap()
                 navigation?.replace(AuthRoutes.SignIn);
             }).catch((err) => {
                 debug.error("err", err)
@@ -176,18 +183,18 @@ const SignUp: React.FC<NavigationProps> = ({navigation, route}) => {
                                     validation?.data?.fullName.isValid && error
                                         ?
                                         COLORS.Light.colorOne
-                                        : COLORS.Light.colorFourteen
+                                        : COLORS.Light.colorFourteenC
                                 }
                                 outlineColor={
                                     !validation?.data?.fullName.isValid && error
-                                        ? COLORS.Light.colorFourteen
+                                        ? COLORS.Light.colorFourteenC
                                         : COLORS.Light.colorTwentySix
                                 }
                                 activeOutlineColor={
                                     validation?.data?.fullName.isValid
                                         ?
                                         COLORS.Light.colorOne
-                                        : COLORS.Light.colorFourteen
+                                        : COLORS.Light.colorFourteenC
                                 }
                                 value={fullName}
                                 onChangeText={(val) => {
@@ -215,18 +222,18 @@ const SignUp: React.FC<NavigationProps> = ({navigation, route}) => {
                                     validation?.data?.username.isValid && error
                                         ?
                                         COLORS.Light.colorOne
-                                        : COLORS.Light.colorFourteen
+                                        : COLORS.Light.colorFourteenC
                                 }
                                 outlineColor={
                                     !validation?.data?.username.isValid && error
-                                        ? COLORS.Light.colorFourteen
+                                        ? COLORS.Light.colorFourteenC
                                         : COLORS.Light.colorTwentySix
                                 }
                                 activeOutlineColor={
                                     validation?.data?.username.isValid
                                         ?
                                         COLORS.Light.colorOne
-                                        : COLORS.Light.colorFourteen
+                                        : COLORS.Light.colorFourteenC
                                 }
                                 value={username}
                                 onChangeText={(val) => {
@@ -255,18 +262,18 @@ const SignUp: React.FC<NavigationProps> = ({navigation, route}) => {
                                     validation?.data?.email.isValid && error
                                         ?
                                         COLORS.Light.colorOne
-                                        : COLORS.Light.colorFourteen
+                                        : COLORS.Light.colorFourteenC
                                 }
                                 outlineColor={
                                     !validation?.data?.email.isValid && error
-                                        ? COLORS.Light.colorFourteen
+                                        ? COLORS.Light.colorFourteenC
                                         : COLORS.Light.colorTwentySix
                                 }
                                 activeOutlineColor={
                                     validation?.data?.email.isValid
                                         ?
                                         COLORS.Light.colorOne
-                                        : COLORS.Light.colorFourteen
+                                        : COLORS.Light.colorFourteenC
                                 }
                                 value={email}
                                 onChangeText={(val) => {
@@ -295,18 +302,18 @@ const SignUp: React.FC<NavigationProps> = ({navigation, route}) => {
                                     validation?.data?.password.isValid && error
                                         ?
                                         COLORS.Light.colorOne
-                                        : COLORS.Light.colorFourteen
+                                        : COLORS.Light.colorFourteenC
                                 }
                                 outlineColor={
                                     !validation?.data?.password.isValid && error
-                                        ? COLORS.Light.colorFourteen
+                                        ? COLORS.Light.colorFourteenC
                                         : COLORS.Light.colorTwentySix
                                 }
                                 activeOutlineColor={
                                     validation?.data?.password.isValid
                                         ?
                                         COLORS.Light.colorOne
-                                        : COLORS.Light.colorFourteen
+                                        : COLORS.Light.colorFourteenC
                                 }
                                 value={password}
                                 onChangeText={(val) => {
@@ -514,7 +521,7 @@ const styles = StyleSheet.create({
         padding: 2,
     },
     error: {
-        color: COLORS.Light.colorFourteen,
+        color: COLORS.Light.colorFourteenC,
         fontSize: SIZES.sizeSix,
         fontWeight: "500",
         // textAlign: "center",

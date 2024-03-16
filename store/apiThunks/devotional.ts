@@ -90,7 +90,7 @@ export const fetchAllDevotionalCall = createAsyncThunk<
         const state = getState();
 
         const accessToken = state.user.userData?.token || "";
-        return await DevotionalService.fetchAllDevotional(accessToken, fetchAllDevotionalRequest)
+        return await DevotionalService.fetchAllDevotional(accessToken)
             .then((res) => {
                 debug.api_success("fetchAllDevotional", res);
 
@@ -114,7 +114,7 @@ export const fetchUserDevotionalCall = createAsyncThunk<
         const state = getState();
 
         const accessToken = state.user.userData?.token || "";
-        return await UserDevotionalService.fetchUserDevotional(accessToken)
+        return await UserDevotionalService.fetchUserDevotional(accessToken, state.user.userData?.id || "")
             .then((res) => {
                 debug.api_success("fetchAllDevotional", res);
 

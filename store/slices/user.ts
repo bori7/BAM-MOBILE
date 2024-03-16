@@ -48,13 +48,16 @@ export const userSlice = createSlice({
         clearUserError: (state) => {
             state.userError = null;
         },
+        stopUserLoading: (state) => {
+            state.userLoading = false;
+        },
     },
     extraReducers: builder => {
         builder.addCase(signUpCall.pending, state => {
             state.userLoading = true
         })
         builder.addCase(signUpCall.fulfilled, (state, {payload}) => {
-            debug.log("Sign_in", payload)
+            debug.log("Sign_up", payload)
             state.userLoading = false;
             state.userError = null;
             state.userMessage = ""
@@ -78,16 +81,16 @@ export const userSlice = createSlice({
 
         })
         builder.addCase(signInCall.fulfilled, (state, {payload}) => {
-            state.userLoading = false;
+            // state.userLoading = false;
             state.userError = null;
-            state.userMessage = `Welcome ${payload.payload.firstName || payload.payload.username}`
+            state.userMessage = `Welcome ${payload.payload.firstName || payload.payload.username} !!!`
             state.userData = {
                 ...state.userData,
                 ...payload.payload
             };
         })
         builder.addCase(signInCall.rejected, (state, action: any) => {
-            state.userLoading = false;
+            // state.userLoading = false;
             state.userMessage = "";
             state.userData = null;
             state.userError = {

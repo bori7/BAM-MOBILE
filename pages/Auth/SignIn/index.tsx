@@ -28,6 +28,9 @@ import {MainRoutes} from "../../../shared/const/routerMain";
 import ValidateData from "../../../shared/lib/validateData";
 import {validateObject} from "../../../shared/helper";
 import {signInCall, signUpCall} from "../../../store/apiThunks/user";
+import {fetchAllVodCall} from "../../../store/apiThunks/vod";
+import {userActions} from "../../../store/slices/user";
+import {fetchAllDevotionalCall, fetchUserDevotionalCall} from "../../../store/apiThunks/devotional";
 
 // type NavigationProps = CompositeScreenProps<
 //   RootScreenProps<RootRoutes.Main>,
@@ -115,11 +118,23 @@ const SignIn: React.FC<NavigationProps> = ({navigation, route}) => {
                 }
             }
         )).unwrap()
-            .then((res) => {
+            .then(async (res) => {
                 debug.log("res", res)
+                await dispatch(fetchAllVodCall(
+                    {fetchAllVodRequest: null}
+                )).unwrap()
+                await dispatch(fetchAllDevotionalCall({fetchAllDevotionalRequest: null})).unwrap()
+                await dispatch(fetchUserDevotionalCall({fetchUserDevotionalRequest: null}))
+                    .unwrap()
+                    // .catch((err) => {
+                    //     debug.error("err from fetchUserDevotionalCall in SignIn Screen", err)
+                    // })
+
                 navigation?.dispatch(resetAction);
             }).catch((err) => {
                 debug.error("err", err)
+            }).finally(() => {
+                dispatch(userActions.stopUserLoading())
             })
     }
 
@@ -178,17 +193,17 @@ const SignIn: React.FC<NavigationProps> = ({navigation, route}) => {
                                 selectionColor={
                                     validation?.data?.user.isValid && error
                                         ? COLORS.Light.colorOne
-                                        : COLORS.Light.colorFourteen
+                                        : COLORS.Light.colorFourteenC
                                 }
                                 outlineColor={
                                     !validation?.data?.user.isValid && error
-                                        ? COLORS.Light.colorFourteen
+                                        ? COLORS.Light.colorFourteenC
                                         : COLORS.Light.colorTwentySix
                                 }
                                 activeOutlineColor={
                                     validation?.data?.user.isValid && error ?
                                         COLORS.Light.colorOne
-                                        : COLORS.Light.colorFourteen
+                                        : COLORS.Light.colorFourteenC
                                 }
                                 value={fullName}
                                 onChangeText={(val) => {
@@ -216,17 +231,17 @@ const SignIn: React.FC<NavigationProps> = ({navigation, route}) => {
                                 selectionColor={
                                     validation?.data?.password.isValid && error ?
                                         COLORS.Light.colorOne
-                                        : COLORS.Light.colorFourteen
+                                        : COLORS.Light.colorFourteenC
                                 }
                                 outlineColor={
                                     !validation?.data?.password.isValid && error
-                                        ? COLORS.Light.colorFourteen
+                                        ? COLORS.Light.colorFourteenC
                                         : COLORS.Light.colorTwentySix
                                 }
                                 activeOutlineColor={
                                     validation?.data?.password.isValid && error ?
                                         COLORS.Light.colorOne
-                                        : COLORS.Light.colorFourteen
+                                        : COLORS.Light.colorFourteenC
                                 }
                                 value={password}
                                 onChangeText={(val) => {
@@ -257,6 +272,7 @@ const SignIn: React.FC<NavigationProps> = ({navigation, route}) => {
                         <View style={styles.r8}>
                             <MainButton
                                 title={"Continue"}
+                                disabled={!filledFields()}
                                 onPressFunction={() => {
                                     // navigation?.navigate(AuthRoutes.SignUp);
                                     handleContinue()
@@ -465,7 +481,7 @@ const styles = StyleSheet.create({
         padding: 2,
     },
     error: {
-        color: COLORS.Light.colorFourteen,
+        color: COLORS.Light.colorFourteenC,
         fontSize: SIZES.sizeSix,
         fontWeight: "500",
         // textAlign: "center",
