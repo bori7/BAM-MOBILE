@@ -65,7 +65,8 @@ export const createUserDevotionalCall = createAsyncThunk<
         let ipAddress = await getDeviceIpAddress();
         const state = getState();
 
-        const accessToken = state.user.userData?.token || "";
+        // const accessToken = state.user.userData?.token || "";
+        const accessToken =  "";
         return await UserDevotionalService.createUserDevotional(accessToken, createUserDevotionalRequest)
             .then((res) => {
                 debug.api_success("createUserDevotional", res);

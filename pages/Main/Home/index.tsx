@@ -1,6 +1,6 @@
 import {
     Image,
-    ImageBackground,
+    ImageBackground, ImageURISource,
     ScrollView,
     StatusBar,
     StyleSheet,
@@ -28,6 +28,8 @@ import {
     getPartOfDay,
 } from "../../../shared/helper";
 import {GeneralVerseOfTheDayType} from "../../../shared/types/slices";
+import {updateUserDevotionalCall} from "../../../store/apiThunks/devotional";
+import {devotionalActions} from "../../../store/slices/devotional";
 
 // type NavigationProps = MainProps<MainRoutes.HomeScreen>;
 
@@ -54,6 +56,9 @@ const Home: React.FC<NavigationProps> = ({navigation, route}) => {
     const userState = useSelector((state: RootState) => state.user);
     const {userData} = userState;
 
+    const devotionalState = useSelector((state: RootState) => state.devotional);
+    const {devotionalData: {devotionalList, userDevotional}} = devotionalState;
+
     useEffect(() => {
         setCurrVod(generalVerseOfTheDayList[0] || null);
     }, []);
@@ -61,11 +66,25 @@ const Home: React.FC<NavigationProps> = ({navigation, route}) => {
     useFocusEffect(() => {
         if (screenLoading) {
             setTimeout(async () => {
-                await dispatch(screenNotificationActions.updateScreenLoading(false));
+
+                const newReadIds = [...userDevotional?.readIds || [], devotionalList[0]?.uid]
+                await dispatch(updateUserDevotionalCall({
+                    updateUserDevotionalRequest: {
+                        userId: userData?.id as string,
+                        readIds: newReadIds
+                    }
+                })).unwrap()
+                    .then((res) => {
+                        dispatch(devotionalActions.updateUserDevotionalState(
+                            newReadIds
+                        ))
+                    })
+                dispatch(screenNotificationActions.updateScreenLoading(false));
                 navigation?.navigate(RootRoutes.Devotional, {
                     screen: DevotionalRoutes.ContentDevotional,
                 });
             }, 2000);
+
         }
     });
 
@@ -173,29 +192,37 @@ const Home: React.FC<NavigationProps> = ({navigation, route}) => {
                                 }}
                             >
                                 <Image
-                                    source={IMAGES.devotionalSample1}
+                                    source={devotionalList[0]?.image?.uri ? {uri: devotionalList[0]?.image?.uri} : IMAGES.devotionalSample1}
+                                    // source={IMAGES.devotionalSample1}
                                     style={styles.v2r1Image}
                                     borderTopLeftRadius={25}
                                     borderTopRightRadius={25}
+
                                 />
                             </TouchableOpacity>
                             <View style={styles.v2r2}>
                                 <View style={styles.v2r2a}>
                                     <View style={styles.v2r2aC1}>
-                                        <Text style={styles.v2r2t1}>September 22, 2023</Text>
-                                        <Text style={styles.v2r2t2}>SHARING YOUR FAITH</Text>
+                                        <Text
+                                            style={styles.v2r2t1}>{devotionalList[0]?.date || `September 22, 2023`}</Text>
+                                        <Text
+                                            style={styles.v2r2t2}>{devotionalList[0]?.title || `SHARING YOUR FAITH`}</Text>
                                     </View>
                                     <TouchableOpacity style={styles.v2r2aC2}>
                                         <MidDoubleTick
-                                            fill={COLORS.Light.colorThirteen}
+                                            fill={userDevotional?.readIds.includes(devotionalList[0]?.uid)
+                                                ? COLORS.Light.colorThirteen
+                                                : COLORS.Light.hashHomeBackGroundL3}
+                                            // fill={COLORS.Light.colorThirteen}
                                             // stroke={COLORS.Light.colorThirteen}
+
                                         />
                                     </TouchableOpacity>
                                 </View>
                                 <Text style={styles.v2r2t}>
-                                    The Apostles went everywhere to share their faith in Christ.
-                                    They did not go to hide themselves for fear of suffering or
-                                    persecution. They utilized every opport...
+                                    {devotionalList[0]?.text || `The Apostles went everywhere to share their faith in Christ.
+                                        They did not go to hide themselves for fear of suffering or
+                                        persecution. They utilized every opport...`}
                                 </Text>
                             </View>
                         </View>
@@ -374,6 +401,8 @@ const styles = StyleSheet.create({
     v2r2aC2: {
         alignItems: "center",
         justifyContent: "center",
+        marginBottom: 35,
+        // borderWidth: 1
     },
 
     v2r2t1: {

@@ -80,7 +80,7 @@ export const signUpCall = createAsyncThunk<
         }
 
         // debug.log("fruitful", CipherUtils.decryptAesGCM_NoPadding(signUpRequest.password))
-        const accessToken = state.user.userData?.token || "";
+        const accessToken = "";
         return await UserService.signUp(accessToken, signUpRequest)
             .then((res) => {
                 debug.api_success("signUp", res);

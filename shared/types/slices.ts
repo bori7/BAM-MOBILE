@@ -78,7 +78,7 @@ export interface NoteProps {
 
 export interface DevotionalItemProps {
     uid: string;
-    image: ImageSourcePropType;
+    image: { uri: string };
     date: string;
     title: string;
     text: string;

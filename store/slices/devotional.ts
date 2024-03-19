@@ -8,9 +8,10 @@ import {
 import {testDevotional, testSelectedDevotional} from "../../constants/values";
 import {formatNoteDate} from "../../shared/helper";
 import {signUpCall} from "../apiThunks/user";
-import {fetchAllDevotionalCall, fetchUserDevotionalCall} from "../apiThunks/devotional";
+import {fetchAllDevotionalCall, fetchUserDevotionalCall, updateUserDevotionalCall} from "../apiThunks/devotional";
 import {fetchAllVodCall} from "../apiThunks/vod";
 import {ImageSourcePropType} from "react-native";
+import {FetchUserDevotionalPayloadType} from "../../services/userdevotional/type";
 
 const initialDevotionalState: InitialDevotionalStateType = {
     devotionalData: {
@@ -91,6 +92,17 @@ export const devotionalSlice = createSlice({
             state.devotionalMessage = action.payload.devotionalMessage;
         },
 
+        updateUserDevotionalState: (
+            state,
+            action: PayloadAction<string[]>
+        ) => {
+            state.devotionalData.userDevotional = {
+                ...state.devotionalData.userDevotional as FetchUserDevotionalPayloadType,
+                readIds: action.payload
+            };
+        },
+
+
         clearDevotionalState: (state) => {
             state.devotionalLoading = false;
             state.devotionalError = null;
@@ -156,6 +168,31 @@ export const devotionalSlice = createSlice({
             state.devotionalError = null;
             state.devotionalMessage = `Successfully fetched user devotional from the server`;
             state.devotionalData.userDevotional = payload.payload
+
+        })
+        builder.addCase(updateUserDevotionalCall.pending, state => {
+            state.devotionalLoading = true
+        })
+        builder.addCase(updateUserDevotionalCall.rejected, (state, action: any) => {
+            state.devotionalLoading = false;
+            state.devotionalMessage = "";
+            state.devotionalError = {
+                code: action.payload?.response?.data?.responseCode || "89",
+                message:
+                    action.payload?.response?.data?.message ||
+                    // action.error?.message ||
+                    "Unable to update user devotional at the moment",
+            }
+
+        })
+        builder.addCase(updateUserDevotionalCall.fulfilled, (state, {payload}) => {
+            state.devotionalLoading = false;
+            state.devotionalError = null;
+            state.devotionalMessage = `Successfully fetched user devotional from the server`;
+            state.devotionalData.userDevotional = {
+                ...state.devotionalData.userDevotional as FetchUserDevotionalPayloadType,
+                id: payload.payload.userDevotionalId
+            }
 
         })
     }
