@@ -1,12 +1,12 @@
 import {
     Image,
     ImageBackground, ImageURISource,
-    ScrollView,
+    ScrollView, Share,
     StatusBar,
     StyleSheet,
     TouchableOpacity,
 } from "react-native";
-
+import * as Clipboard from 'expo-clipboard';
 import React, {useEffect, useState} from "react";
 import {Text, View} from "../../../components/Themed";
 import {COLORS, IMAGES, SIZES} from "../../../constants/Colors";
@@ -28,7 +28,7 @@ import {
     getPartOfDay,
 } from "../../../shared/helper";
 import {GeneralVerseOfTheDayType} from "../../../shared/types/slices";
-import {updateUserDevotionalCall} from "../../../store/apiThunks/devotional";
+import {fetchDevotionalByIdCall, updateUserDevotionalCall} from "../../../store/apiThunks/devotional";
 import {devotionalActions} from "../../../store/slices/devotional";
 
 // type NavigationProps = MainProps<MainRoutes.HomeScreen>;
@@ -43,7 +43,6 @@ const Home: React.FC<NavigationProps> = ({navigation, route}) => {
     const [hideOptions, setHideOptions] = useState<boolean>(false);
     const [currVOD, setCurrVod] = useState<GeneralVerseOfTheDayType>();
 
-    const options = [{name: "Copy"}, {name: "Pray"}];
 
     const screenNotificationState = useSelector(
         (state: RootState) => state.screenNotification
@@ -63,30 +62,69 @@ const Home: React.FC<NavigationProps> = ({navigation, route}) => {
         setCurrVod(generalVerseOfTheDayList[0] || null);
     }, []);
 
-    useFocusEffect(() => {
-        if (screenLoading) {
-            setTimeout(async () => {
-
-                const newReadIds = [...userDevotional?.readIds || [], devotionalList[0]?.uid]
-                await dispatch(updateUserDevotionalCall({
-                    updateUserDevotionalRequest: {
-                        userId: userData?.id as string,
-                        readIds: newReadIds
-                    }
-                })).unwrap()
-                    .then((res) => {
-                        dispatch(devotionalActions.updateUserDevotionalState(
-                            newReadIds
-                        ))
-                    })
+    const clickDevotional = async () => {
+        dispatch(
+            screenNotificationActions.updateScreenLoadingFunc({
+                screenLoading: true,
+            })
+        );
+        const newReadIds = [...userDevotional?.readIds || [], devotionalList[0]?.uid]
+        await dispatch(updateUserDevotionalCall({
+            updateUserDevotionalRequest: {
+                userId: userData?.id as string,
+                readIds: newReadIds
+            }
+        })).unwrap()
+            .then((res) => {
+                dispatch(devotionalActions.updateUserDevotionalState(
+                    newReadIds
+                ))
+            })
+        await dispatch(fetchDevotionalByIdCall(
+            {
+                fetchDevotionalByIdRequest: {
+                    devotionalId: devotionalList[0]?.uid || ""
+                }
+            }
+        )).unwrap().then(() => {
+            navigation?.navigate(RootRoutes.Devotional, {
+                screen: DevotionalRoutes.ContentDevotional,
+            });
+        }).catch((err) => {
+        }).finally(() => {
                 dispatch(screenNotificationActions.updateScreenLoading(false));
-                navigation?.navigate(RootRoutes.Devotional, {
-                    screen: DevotionalRoutes.ContentDevotional,
-                });
-            }, 2000);
+        })
+    }
 
+    const shareData = async (val: string) => {
+        try {
+            await Share.share({
+                title: "Verse of the day",
+                message: val,
+
+            }, {
+                dialogTitle: "BAM: Verse of the day",
+                tintColor: COLORS.Light.colorOne
+            });
+        } catch (error) {
+            debug.error("error while sharing", error);
         }
-    });
+    };
+
+    const copyToClipboard = async (val: string) => {
+        await Clipboard.setString(val);
+        // setCopiedText('Text copied to clipboard!');
+    };
+
+    const options = [{
+        name: "Copy", func: (val: string) => {
+            copyToClipboard(val).then(r => debug.log("r", r))
+        }
+    }, {
+        name: "Pray", func: () => {
+        }
+    }];
+
 
     return (
         <View style={styles.main}>
@@ -127,7 +165,11 @@ const Home: React.FC<NavigationProps> = ({navigation, route}) => {
                             <View style={styles.v1r}>
                                 <Text style={styles.v1rt1}>{currVOD?.verse}</Text>
                                 <View style={styles.v1rb}>
-                                    <TouchableOpacity style={styles.v1rbt1}>
+                                    <TouchableOpacity style={styles.v1rbt1} onPress={() => {
+                                        shareData(
+                                            currVOD?.text || ""
+                                        )
+                                    }}>
                                         <Entypo name="share" size={24} color={COLORS.Light.gray}/>
                                     </TouchableOpacity>
                                     <TouchableOpacity
@@ -168,6 +210,7 @@ const Home: React.FC<NavigationProps> = ({navigation, route}) => {
                                                     key={idx}
                                                     style={styles.optionBody}
                                                     onPress={() => {
+                                                        option.func(currVOD?.text || "");
                                                         setHideOptions(!hideOptions);
                                                     }}
                                                 >
@@ -184,11 +227,7 @@ const Home: React.FC<NavigationProps> = ({navigation, route}) => {
                             <TouchableOpacity
                                 style={styles.v2r1}
                                 onPress={() => {
-                                    dispatch(
-                                        screenNotificationActions.updateScreenLoadingFunc({
-                                            screenLoading: true,
-                                        })
-                                    );
+                                    clickDevotional()
                                 }}
                             >
                                 <Image

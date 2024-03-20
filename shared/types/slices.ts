@@ -100,7 +100,7 @@ export interface DevotionalDataType {
 
 export interface SelectedDevotionalDataType {
     uid: string;
-    image: ImageSourcePropType;
+    image: { uri: string };
     date: string;
     title: string;
     ticked: boolean;

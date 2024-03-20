@@ -8,7 +8,12 @@ import {
 import {testDevotional, testSelectedDevotional} from "../../constants/values";
 import {formatNoteDate} from "../../shared/helper";
 import {signUpCall} from "../apiThunks/user";
-import {fetchAllDevotionalCall, fetchUserDevotionalCall, updateUserDevotionalCall} from "../apiThunks/devotional";
+import {
+    fetchAllDevotionalCall,
+    fetchDevotionalByIdCall,
+    fetchUserDevotionalCall,
+    updateUserDevotionalCall
+} from "../apiThunks/devotional";
 import {fetchAllVodCall} from "../apiThunks/vod";
 import {ImageSourcePropType} from "react-native";
 import {FetchUserDevotionalPayloadType} from "../../services/userdevotional/type";
@@ -96,12 +101,15 @@ export const devotionalSlice = createSlice({
             state,
             action: PayloadAction<string[]>
         ) => {
+            const readIdsSet = new Set(action.payload)
             state.devotionalData.userDevotional = {
                 ...state.devotionalData.userDevotional as FetchUserDevotionalPayloadType,
-                readIds: action.payload
+                readIds: [...readIdsSet]
             };
         },
-
+        clearDevotionalError: (state) => {
+            state.devotionalError = null;
+        },
 
         clearDevotionalState: (state) => {
             state.devotionalLoading = false;
@@ -193,6 +201,43 @@ export const devotionalSlice = createSlice({
                 ...state.devotionalData.userDevotional as FetchUserDevotionalPayloadType,
                 id: payload.payload.userDevotionalId
             }
+
+        })
+        builder.addCase(fetchDevotionalByIdCall.pending, state => {
+            state.devotionalLoading = true
+        })
+        builder.addCase(fetchDevotionalByIdCall.rejected, (state, action: any) => {
+            state.devotionalLoading = false;
+            state.devotionalMessage = "";
+            state.devotionalError = {
+                code: action.payload?.response?.data?.responseCode || "89",
+                message:
+                    action.payload?.response?.data?.message ||
+                    // action.error?.message ||
+                    "Unable to fetch the selected devotional at the moment",
+            }
+
+        })
+        builder.addCase(fetchDevotionalByIdCall.fulfilled, (state, {payload}) => {
+            state.devotionalLoading = false;
+            state.devotionalError = null;
+            state.devotionalMessage = `Successfully fetched the selected devotional from the server`;
+            state.selectedDevotionalData = {
+                ...payload.payload.devotional,
+                uid: payload.payload.devotional.id,
+                ticked: true,
+                image: {
+                    uri: payload.payload.devotional.image
+                },
+                subMessages: payload.payload.devotional?.subMessages?.map(sub => {
+                    return {
+                        title: sub.title,
+                        message: sub.message
+                    }
+                }) || []
+
+            }
+
 
         })
     }

@@ -94,13 +94,13 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.Light.modalOverlay,
   },
   modalView: {
-    margin: 20,
+    margin: 10,
     backgroundColor: COLORS.Light.background,
     borderRadius: 20,
     padding: 35,
-    // alignItems: "center",
-    // justifyContent: "center",
-    width: "85%",
+    alignItems: "center",
+    justifyContent: "center",
+    width: "90%",
     // height: "23%",
     // shadowColor: "#000",
     shadowOffset: {
@@ -110,14 +110,18 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 3.84,
     elevation: 5,
+    // borderWidth:1
   },
   modalR1: {
     flexDirection: "row",
     justifyContent: "space-between",
     marginBottom: "10%",
+    // borderWidth:1
   },
   modalR1C1: {
-    width: "40%",
+    width: "53%",
+    // borderWidth:1,
+    // marginRight: 10,
   },
   modalR1C1ta: {
     marginVertical: 10,
@@ -125,11 +129,14 @@ const styles = StyleSheet.create({
     fontSize: SIZES.sizeSixC,
     fontWeight: "500",
     // marginRight: 10,
+    // borderWidth:1
   },
   modalR1C1r: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
+    // borderWidth:1,
+    marginRight: 10,
   },
   modalR1C1tb: {
     // color: COLORS.Light.deeperGreyColor,
@@ -142,6 +149,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     paddingHorizontal: 6,
+    // width:"50%",
+    borderWidth:1
   },
   modalR2C1: {
     borderWidth: 1,
@@ -152,6 +161,7 @@ const styles = StyleSheet.create({
     minWidth: "38%",
     alignItems: "center",
     justifyContent: "center",
+    // borderWidth:1
   },
   modalR2C2t1: {
     color: COLORS.Light.deeperGreyColor,

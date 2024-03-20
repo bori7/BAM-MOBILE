@@ -8,6 +8,7 @@ import {CustomLoadingModal} from "./CustomLoadingModal";
 import {screenNotificationActions} from "../../store/slices/notification";
 import {SafeAreaView} from "react-native-safe-area-context";
 import {userActions} from "../../store/slices/user";
+import {devotionalActions} from "../../store/slices/devotional";
 
 type props = {
     child: any;
@@ -59,12 +60,16 @@ export default function Wrapper({child}: props) {
     const generalState = useSelector((state: RootState) => state.general);
     const {generalLoading} = generalState;
 
+    const devotionalState = useSelector((state: RootState) => state.devotional);
+    const {devotionalLoading, devotionalError} = devotionalState;
+
 
     const screenNotificationState = useSelector(
         (state: RootState) => state.screenNotification
     );
     const {screenLoading, screenFunction, notificationData} =
         screenNotificationState;
+
 
     useEffect(() => {
         if (notificationData !== null) {
@@ -84,10 +89,16 @@ export default function Wrapper({child}: props) {
             });
         }
 
+        if (devotionalError !== null) {
+            Toaster("error", devotionalError?.message, () => {
+                dispatch(devotionalActions.clearDevotionalError())
+            });
+        }
+
         // if (planMessage) {
         //   Toaster("success", planMessage, () => {});
         // }
-    }, [notificationData, userError, userMessage]);
+    }, [notificationData, userError, userMessage,devotionalError]);
 
     useEffect(() => {
     }, []);

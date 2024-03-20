@@ -21,7 +21,7 @@ import {
     DevotionalRoutes,
 } from "../../../shared/const/routerDevotional";
 import {screenNotificationActions} from "../../../store/slices/notification";
-import {updateUserDevotionalCall} from "../../../store/apiThunks/devotional";
+import {fetchDevotionalByIdCall, updateUserDevotionalCall} from "../../../store/apiThunks/devotional";
 import {devotionalActions} from "../../../store/slices/devotional";
 
 // type NavigationProps = MainProps<MainRoutes.HomeScreen>;
@@ -51,29 +51,64 @@ const MainDevotional: React.FC<NavigationProps> = ({navigation, route}) => {
         setDevotionals(devotionalList || []);
     });
 
-    useFocusEffect(() => {
-        if (screenLoading) {
-            setTimeout(async () => {
+    // useFocusEffect(() => {
+    //     if (screenLoading) {
+    //         setTimeout(async () => {
+    //
+    //             const newReadIds = [...userDevotional?.readIds || [], devotionalList[0]?.uid]
+    //             await dispatch(updateUserDevotionalCall({
+    //                 updateUserDevotionalRequest: {
+    //                     userId: userData?.id as string,
+    //                     readIds: newReadIds
+    //                 }
+    //             })).unwrap()
+    //                 .then((res) => {
+    //                     dispatch(devotionalActions.updateUserDevotionalState(
+    //                         newReadIds
+    //                     ))
+    //                 })
+    //             dispatch(screenNotificationActions.updateScreenLoading(false));
+    //             navigation?.navigate(RootRoutes.Devotional, {
+    //                 screen: DevotionalRoutes.ContentDevotional,
+    //             });
+    //         }, 2000);
+    //     }
+    // });
 
-                const newReadIds = [...userDevotional?.readIds || [], devotionalList[0]?.uid]
-                await dispatch(updateUserDevotionalCall({
-                    updateUserDevotionalRequest: {
-                        userId: userData?.id as string,
-                        readIds: newReadIds
-                    }
-                })).unwrap()
-                    .then((res) => {
-                        dispatch(devotionalActions.updateUserDevotionalState(
-                            newReadIds
-                        ))
-                    })
-                dispatch(screenNotificationActions.updateScreenLoading(false));
-                navigation?.navigate(RootRoutes.Devotional, {
-                    screen: DevotionalRoutes.ContentDevotional,
-                });
-            }, 2000);
-        }
-    });
+    const clickDevotional = async (devotion: DevotionalItemProps) => {
+        dispatch(
+            screenNotificationActions.updateScreenLoadingFunc({
+                screenLoading: true,
+            })
+        );
+        const newReadIds = [...userDevotional?.readIds || [], devotion?.uid]
+        await dispatch(updateUserDevotionalCall({
+            updateUserDevotionalRequest: {
+                userId: userData?.id as string,
+                readIds: newReadIds
+            }
+        })).unwrap()
+            .then((res) => {
+                dispatch(devotionalActions.updateUserDevotionalState(
+                    newReadIds
+                ))
+            })
+        await dispatch(fetchDevotionalByIdCall(
+            {
+                fetchDevotionalByIdRequest: {
+                    devotionalId: devotion?.uid || ""
+                }
+            }
+        )).unwrap().then(() => {
+            navigation?.navigate(RootRoutes.Devotional, {
+                screen: DevotionalRoutes.ContentDevotional,
+            });
+        }).catch((err) => {
+        }).finally(() => {
+            dispatch(screenNotificationActions.updateScreenLoading(false));
+        })
+    }
+
 
     return (
         <View style={styles.main}>
@@ -117,11 +152,12 @@ const MainDevotional: React.FC<NavigationProps> = ({navigation, route}) => {
                             <TouchableOpacity
                                 style={styles.v2r1}
                                 onPress={() => {
-                                    dispatch(
-                                        screenNotificationActions.updateScreenLoadingFunc({
-                                            screenLoading: true,
-                                        })
-                                    );
+                                    clickDevotional(devotionals[0])
+                                    // dispatch(
+                                    //     screenNotificationActions.updateScreenLoadingFunc({
+                                    //         screenLoading: true,
+                                    //     })
+                                    // );
                                 }}
                             >
                                 {/*<Image*/}
@@ -170,11 +206,12 @@ const MainDevotional: React.FC<NavigationProps> = ({navigation, route}) => {
                                 <TouchableOpacity
                                     style={styles.v2r1}
                                     onPress={() => {
-                                        dispatch(
-                                            screenNotificationActions.updateScreenLoadingFunc({
-                                                screenLoading: true,
-                                            })
-                                        );
+                                        clickDevotional(devo)
+                                        // dispatch(
+                                        //     screenNotificationActions.updateScreenLoadingFunc({
+                                        //         screenLoading: true,
+                                        //     })
+                                        // );
                                     }}
                                 >
                                     <Image

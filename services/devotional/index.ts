@@ -34,10 +34,18 @@ export class DevotionalService {
         token: string | undefined,
         request: FetchDevotionalByIdType
     ): Promise<GenericResponseType<FetchDevotionalByParamPayloadType>> => {
-        const param = Object.keys(request);
+        // const param = Object.keys(request);
+        const param = ["{id}"];
         const paramValue = Object.values(request);
+
+
+        let url = FETCH_DEVOTIONAL_BY_ID_URL;
+        param.forEach((p, idx) => {
+            url = url.replace(p, paramValue[idx])
+        })
+
         return await getByWithPathParam(
-            FETCH_DEVOTIONAL_BY_ID_URL,
+            url,
             token,
             param,
             paramValue

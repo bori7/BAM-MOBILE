@@ -167,6 +167,10 @@ export const getBy = async <T>(
     const headers = {
         Authorization: `Bearer ${token}`,
     };
+    if (!token) {
+        // @ts-ignore
+        delete headers.Authorization;
+    }
     debug.log("paramValue :: ", paramValue);
     if (typeof param === "object") {
         url = `${url}?${param[0]}=${paramValue[0]}`;
@@ -199,11 +203,17 @@ export const getByWithPathParam = async <T>(
     const headers = {
         Authorization: `Bearer ${token}`,
     };
+    if (!token) {
+        // @ts-ignore
+        delete headers.Authorization;
+    }
 
-    url = `${url}/${paramValue}`;
+    // url = `${url}/${paramValue}`;
+
+    debug.log("url :: ", url);
     try {
         const response = await apiGetFor(url, headers);
-        debug.log("url :: ", url);
+
         debug.log("Response from get call :: ", response.data);
         return response.data;
     } catch (error) {
