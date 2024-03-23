@@ -9,6 +9,7 @@ import {screenNotificationActions} from "../../store/slices/notification";
 import {SafeAreaView} from "react-native-safe-area-context";
 import {userActions} from "../../store/slices/user";
 import {devotionalActions} from "../../store/slices/devotional";
+import {notesActions} from "../../store/slices/notes";
 
 type props = {
     child: any;
@@ -57,6 +58,10 @@ export default function Wrapper({child}: props) {
     const userState = useSelector((state: RootState) => state.user);
     const {userError, userMessage, userLoading} = userState;
 
+    const noteState = useSelector((state: RootState) => state.notes);
+    const {notesError, notesMessage, notesLoading} = noteState;
+
+
     const generalState = useSelector((state: RootState) => state.general);
     const {generalLoading} = generalState;
 
@@ -89,6 +94,12 @@ export default function Wrapper({child}: props) {
             });
         }
 
+        if (notesError !== null) {
+            Toaster("error", notesError?.message, () => {
+                dispatch(notesActions.clearNotesError())
+            });
+        }
+
         if (devotionalError !== null) {
             Toaster("error", devotionalError?.message, () => {
                 dispatch(devotionalActions.clearDevotionalError())
@@ -98,7 +109,7 @@ export default function Wrapper({child}: props) {
         // if (planMessage) {
         //   Toaster("success", planMessage, () => {});
         // }
-    }, [notificationData, userError, userMessage,devotionalError]);
+    }, [notificationData, userError, userMessage, devotionalError, notesError]);
 
     useEffect(() => {
     }, []);
@@ -113,7 +124,7 @@ export default function Wrapper({child}: props) {
                 >
                     <View style={{height: "100%", width: "100%"}}>{child}</View>
                     <CustomLoadingModal
-                        visible={screenLoading || userLoading || generalLoading}
+                        visible={screenLoading || userLoading || generalLoading || notesLoading}
                         closeModal={() => {
                             dispatch(
                                 screenNotificationActions.updateScreenLoadingFunc({

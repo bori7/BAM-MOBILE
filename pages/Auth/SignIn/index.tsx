@@ -31,6 +31,7 @@ import {signInCall, signUpCall} from "../../../store/apiThunks/user";
 import {fetchAllVodCall} from "../../../store/apiThunks/vod";
 import {userActions} from "../../../store/slices/user";
 import {fetchAllDevotionalCall, fetchUserDevotionalCall} from "../../../store/apiThunks/devotional";
+import {fetchNoteByUserIdCall} from "../../../store/apiThunks/note";
 
 // type NavigationProps = CompositeScreenProps<
 //   RootScreenProps<RootRoutes.Main>,
@@ -124,12 +125,14 @@ const SignIn: React.FC<NavigationProps> = ({navigation, route}) => {
                     {fetchAllVodRequest: null}
                 )).unwrap()
                 await dispatch(fetchAllDevotionalCall({fetchAllDevotionalRequest: null})).unwrap()
-                await dispatch(fetchUserDevotionalCall({fetchUserDevotionalRequest: null}))
-                    .unwrap()
-                    // .catch((err) => {
-                    //     debug.error("err from fetchUserDevotionalCall in SignIn Screen", err)
-                    // })
-
+                await dispatch(fetchUserDevotionalCall({fetchUserDevotionalRequest: null})).unwrap()
+                // .catch((err) => {
+                //     debug.error("err from fetchUserDevotionalCall in SignIn Screen", err)
+                // })
+                await dispatch(fetchNoteByUserIdCall({fetchNoteByIdRequest: null})).unwrap()
+                    .catch((err) => {
+                        debug.log("err from  fetchNoteByUserIdCall unwrap", err)
+                    })
                 navigation?.dispatch(resetAction);
             }).catch((err) => {
                 debug.error("err", err)

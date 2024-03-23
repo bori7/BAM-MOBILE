@@ -150,17 +150,20 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     paddingHorizontal: 6,
     // width:"50%",
-    borderWidth:1
+    // borderWidth:1
+
   },
   modalR2C1: {
     borderWidth: 1,
-    // paddingHorizontal: 26,
+    paddingHorizontal: 26,
     paddingVertical: 10,
     borderRadius: 30,
     borderColor: COLORS.Light.tickGray,
     minWidth: "38%",
     alignItems: "center",
     justifyContent: "center",
+    marginHorizontal:20
+
     // borderWidth:1
   },
   modalR2C2t1: {
@@ -178,6 +181,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     backgroundColor: COLORS.Light.colorOne,
+    marginHorizontal:10
   },
   modalR2C2t2: {
     color: COLORS.Light.background,

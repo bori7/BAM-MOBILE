@@ -1,5 +1,5 @@
 export interface CreateNoteRequestType {
-  userId: string;
+  userId?: string;
   title: string;
   text: string;
   time: string;
@@ -23,4 +23,8 @@ export interface CreateNotePayloadType {
 
 export interface FetchNoteByIdType {
   noteId?: string
+}
+
+export interface FetchNoteByUserIdType {
+  userId?: string
 }

@@ -23,6 +23,7 @@ export const DELETE_PRAYER_URL = `${BASE_URL}/prayer/delete`;
 // #######################################NOTE############################################################
 export const CREATE_NOTE_URL = `${BASE_URL}/note`;
 export const FETCH_NOTE_BY_ID_URL = `${BASE_URL}/note/{id}`;
+export const FETCH_NOTE_BY_USER_ID_URL = `${BASE_URL}/note/{userId}`;
 export const UPDATE_NOTE_URL = `${BASE_URL}/note/update`;
 export const DELETE_NOTE_URL = `${BASE_URL}/note/delete`;
 // #######################################VOD############################################################

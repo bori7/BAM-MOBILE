@@ -22,6 +22,9 @@ import {
 import { OptionsPopUp } from "../../Main/Home/OptionsPopUp";
 import FilterModal from "./FilterModal";
 import { screenNotificationActions } from "../../../store/slices/notification";
+import {fetchDevotionalByIdCall, updateUserDevotionalCall} from "../../../store/apiThunks/devotional";
+import {devotionalActions} from "../../../store/slices/devotional";
+import {RootRoutes} from "../../../shared/const/routerRoot";
 
 type NavigationProps = DevotionalProps<DevotionalRoutes.FilterDevotional>;
 
@@ -39,12 +42,17 @@ const FilterDevotional: React.FC<NavigationProps> = ({ navigation, route }) => {
   };
 
   const devotionalState = useSelector((state: RootState) => state.devotional);
-  const { devotionalData } = devotionalState;
+  const {devotionalData: {devotionalList, userDevotional}} = devotionalState;
+
 
   const screenNotificationState = useSelector(
     (state: RootState) => state.screenNotification
   );
   const { screenLoading } = screenNotificationState;
+
+  const userState = useSelector((state: RootState) => state.user);
+  const {userData} = userState;
+
 
   const options = [
     { name: "Devotional Info" },
@@ -74,16 +82,51 @@ const FilterDevotional: React.FC<NavigationProps> = ({ navigation, route }) => {
   };
 
   useFocusEffect(() => {
-    setDevotionals(devotionalData?.devotionalList || []);
+    setDevotionals(devotionalList || []);
   });
 
-  useFocusEffect(() => {
-    if (screenLoading)
-      setTimeout(async () => {
-        await dispatch(screenNotificationActions.updateScreenLoading(false));
-        navigation?.navigate(DevotionalRoutes.ContentDevotional);
-      }, 2000);
-  });
+  // useFocusEffect(() => {
+  //   if (screenLoading)
+  //     setTimeout(async () => {
+  //       await dispatch(screenNotificationActions.updateScreenLoading(false));
+  //       navigation?.navigate(DevotionalRoutes.ContentDevotional);
+  //     }, 2000);
+  // });
+
+  const clickDevotional = async (devotion: DevotionalItemProps) => {
+    dispatch(
+        screenNotificationActions.updateScreenLoadingFunc({
+          screenLoading: true,
+        })
+    );
+    const newReadIds = [...userDevotional?.readIds || [], devotion?.uid]
+    await dispatch(updateUserDevotionalCall({
+      updateUserDevotionalRequest: {
+        userId: userData?.id as string,
+        readIds: newReadIds
+      }
+    })).unwrap()
+        .then((res) => {
+          dispatch(devotionalActions.updateUserDevotionalState(
+              newReadIds
+          ))
+        })
+    await dispatch(fetchDevotionalByIdCall(
+        {
+          fetchDevotionalByIdRequest: {
+            devotionalId: devotion?.uid || ""
+          }
+        }
+    )).unwrap().then(() => {
+      navigation?.navigate(RootRoutes.Devotional, {
+        screen: DevotionalRoutes.ContentDevotional,
+      });
+    }).catch((err) => {
+    }).finally(() => {
+      dispatch(screenNotificationActions.updateScreenLoading(false));
+    })
+  }
+
 
   return (
     <View style={styles.main}>
@@ -169,18 +212,26 @@ const FilterDevotional: React.FC<NavigationProps> = ({ navigation, route }) => {
                 <TouchableOpacity
                   style={styles.v2r1}
                   onPress={() => {
-                    dispatch(
-                      screenNotificationActions.updateScreenLoadingFunc({
-                        screenLoading: true,
-                      })
-                    );
-                  }}
+                    clickDevotional(devo)
+                    // dispatch(
+                    //   screenNotificationActions.updateScreenLoadingFunc({
+                    //     screenLoading: true,
+                    //   })
+                    // );
+                  }
+                }
                 >
+                  {/*<Image*/}
+                  {/*  source={devo.image}*/}
+                  {/*  style={styles.v2r1Image}*/}
+                  {/*  borderTopLeftRadius={25}*/}
+                  {/*  borderTopRightRadius={25}*/}
+                  {/*/>*/}
                   <Image
-                    source={devo.image}
-                    style={styles.v2r1Image}
-                    borderTopLeftRadius={25}
-                    borderTopRightRadius={25}
+                      source={devo?.image?.uri ? devo.image : IMAGES.devotionalSample1}
+                      style={styles.v2r1Image}
+                      borderTopLeftRadius={25}
+                      borderTopRightRadius={25}
                   />
                 </TouchableOpacity>
                 <View style={styles.v2r2}>
@@ -191,11 +242,14 @@ const FilterDevotional: React.FC<NavigationProps> = ({ navigation, route }) => {
                     </View>
                     <TouchableOpacity style={styles.v2r2aC2}>
                       <MidDoubleTick
-                        fill={
-                          devo.ticked
-                            ? COLORS.Light.colorThirteen
-                            : COLORS.Light.tickGray
-                        }
+                          fill={userDevotional?.readIds.includes(devo.uid)
+                              ? COLORS.Light.colorThirteen
+                              : COLORS.Light.hashHomeBackGroundL3}
+                        // fill={
+                        //   devo.ticked
+                        //     ? COLORS.Light.colorThirteen
+                        //     : COLORS.Light.tickGray
+                        // }
                       />
                     </TouchableOpacity>
                   </View>
@@ -391,6 +445,7 @@ const styles = StyleSheet.create({
   v2r2aC2: {
     alignItems: "center",
     justifyContent: "center",
+    marginBottom: 35,
   },
 
   v2r2t1: {

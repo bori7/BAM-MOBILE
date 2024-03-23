@@ -3,7 +3,7 @@ import {createAsyncThunk} from "@reduxjs/toolkit";
 import {
     InitBAMThunkApiConfig,
     InitCreateNoteThunkArg, InitDeleteNoteThunkArg,
-    InitFetchAllNoteThunkArg, InitFetchNoteByIdThunkArg,
+    InitFetchAllNoteThunkArg, InitFetchNoteByIdThunkArg, InitFetchNoteByUserIdThunkArg,
     InitUpdateNoteThunkArg
 } from "../../shared/types/thunkArgs";
 import {CreateNotePayloadType, CreateNoteRequestType} from "../../services/note/type";
@@ -23,7 +23,12 @@ export const createNoteCall = createAsyncThunk<
         const state = getState();
 
         const accessToken = state.user.userData?.token || "";
-        return await NoteService.createNote(accessToken, createNoteRequest)
+        return await NoteService.createNote(accessToken,
+            {
+                ...createNoteRequest,
+                userId: state.user.userData?.id || ""
+            }
+        )
             .then((res) => {
                 debug.api_success("createNote", res);
 
@@ -47,10 +52,12 @@ export const updateNoteCall = createAsyncThunk<
         const state = getState();
 
         const accessToken = state.user.userData?.token || "";
-        return await NoteService.updateNote(accessToken, updateNoteRequest)
+        return await NoteService.updateNote(accessToken, {
+            ...updateNoteRequest,
+            userId: state.user.userData?.id || ""
+        })
             .then((res) => {
                 debug.api_success("updateNote", res);
-
                 return res;
             })
             .catch((err) => {
@@ -60,36 +67,36 @@ export const updateNoteCall = createAsyncThunk<
     }
 );
 
-export const fetchAllNotesCall = createAsyncThunk<
-    GenericResponseType<CreateNoteRequestType>,
-    InitFetchAllNoteThunkArg,
-    InitBAMThunkApiConfig
->(
-    "note/fetchAll",
-    async ({fetchAllNoteRequest}, {rejectWithValue, getState, dispatch}) => {
-        let ipAddress = await getDeviceIpAddress();
-        const state = getState();
-
-        const accessToken = state.user.userData?.token || "";
-        return await NoteService.fetchNote(accessToken, fetchAllNoteRequest)
-            .then((res) => {
-                debug.api_success("fetchAllNote", res);
-
-                return res;
-            })
-            .catch((err) => {
-                debug.api_error("fetchAllNoteError", err);
-                return rejectWithValue(err);
-            });
-    }
-);
+// export const fetchAllNotesCall = createAsyncThunk<
+//     GenericResponseType<CreateNoteRequestType[]>,
+//     InitFetchAllNoteThunkArg,
+//     InitBAMThunkApiConfig
+// >(
+//     "note/fetchAll",
+//     async ({fetchAllNoteRequest}, {rejectWithValue, getState, dispatch}) => {
+//         let ipAddress = await getDeviceIpAddress();
+//         const state = getState();
+//
+//         const accessToken = state.user.userData?.token || "";
+//         return await NoteService.fetchNote(accessToken, fetchAllNoteRequest)
+//             .then((res) => {
+//                 debug.api_success("fetchAllNote", res);
+//
+//                 return res;
+//             })
+//             .catch((err) => {
+//                 debug.api_error("fetchAllNoteError", err);
+//                 return rejectWithValue(err);
+//             });
+//     }
+// );
 
 export const fetchNoteByUserIdCall = createAsyncThunk<
-    GenericResponseType<CreateNoteRequestType>,
-    InitFetchNoteByIdThunkArg,
+    GenericResponseType<CreateNoteRequestType[]>,
+    InitFetchNoteByUserIdThunkArg,
     InitBAMThunkApiConfig
 >(
-    "note/fetchnotebyid",
+    "note/fetchnotebyuserid",
     async (
         {fetchNoteByIdRequest},
         {rejectWithValue, getState, dispatch}
@@ -98,13 +105,12 @@ export const fetchNoteByUserIdCall = createAsyncThunk<
         const state = getState();
         const accessToken = state.user.userData?.token || "";
 
-        return await NoteService.fetchNote(
+        return await NoteService.fetchUserNotes(
             accessToken,
-            fetchNoteByIdRequest
+            {userId: state.user.userData?.id || ""}
         )
             .then((res) => {
                 debug.api_success("fetchNoteByUserId", res);
-
                 return res;
             })
             .catch((err) => {
@@ -125,7 +131,10 @@ export const deleteNoteCall = createAsyncThunk<
         const state = getState();
         const accessToken = state.user.userData?.token || "";
 
-        return await NoteService.deleteNote(accessToken, deleteNoteByIdRequest)
+        return await NoteService.deleteNote(accessToken, {
+            ...deleteNoteByIdRequest,
+            userId: state.user.userData?.id || ""
+        })
             .then((res) => {
                 debug.api_success("deleteNote", res);
 

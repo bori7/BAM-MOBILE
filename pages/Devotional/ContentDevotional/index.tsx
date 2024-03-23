@@ -89,6 +89,7 @@ const ContentDevotional: React.FC<NavigationProps> = ({
     };
 
 
+
     return (
         <View style={styles.main}>
             <StatusBar barStyle="dark-content"/>

@@ -1,4 +1,4 @@
-import {CreateNoteRequestType, FetchNoteByIdType} from "../../services/note/type";
+import {CreateNoteRequestType, FetchNoteByIdType, FetchNoteByUserIdType} from "../../services/note/type";
 import {StateSchema} from "../../store/config";
 import {CallbackGetRequestType, CallbackPostRequestType} from "../../services/payments/callback/type";
 import {InitiatePaystackRequestType} from "../../services/payments/paystack/type";
@@ -107,6 +107,10 @@ export type InitFetchUserDevotionalThunkArg = {
 
 export type InitFetchNoteByIdThunkArg = {
     fetchNoteByIdRequest: FetchNoteByIdType;
+}
+
+export type InitFetchNoteByUserIdThunkArg = {
+    fetchNoteByIdRequest: FetchNoteByUserIdType | null;
 }
 
 export type InitFetchDevotionalByIdThunkArg = {
