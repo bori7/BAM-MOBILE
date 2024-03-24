@@ -142,6 +142,7 @@ const NotesEdit: React.FC<NavigationProps> = ({navigation, route}) => {
             debug.error("err from edit note", err)
         })
     }
+
     const shareData = async (val: string) => {
         try {
             await Share.share({

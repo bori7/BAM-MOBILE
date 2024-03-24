@@ -1,5 +1,5 @@
 export interface CreatePrayerRequestType {
-    userId: string;
+    userId?: string;
     title: string;
     text: string;
     time: string;
@@ -20,5 +20,6 @@ export interface CreatePrayerPayloadType {
 }
 
 export interface FetchPrayerByIdType {
-    prayerId?: string
+    prayerId?: string;
+    userId?: string
 }

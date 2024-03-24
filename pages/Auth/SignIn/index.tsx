@@ -32,6 +32,7 @@ import {fetchAllVodCall} from "../../../store/apiThunks/vod";
 import {userActions} from "../../../store/slices/user";
 import {fetchAllDevotionalCall, fetchUserDevotionalCall} from "../../../store/apiThunks/devotional";
 import {fetchNoteByUserIdCall} from "../../../store/apiThunks/note";
+import {fetchPrayerByUserIdCall} from "../../../store/apiThunks/prayer";
 
 // type NavigationProps = CompositeScreenProps<
 //   RootScreenProps<RootRoutes.Main>,
@@ -133,6 +134,11 @@ const SignIn: React.FC<NavigationProps> = ({navigation, route}) => {
                     .catch((err) => {
                         debug.log("err from  fetchNoteByUserIdCall unwrap", err)
                     })
+                await dispatch(fetchPrayerByUserIdCall({fetchPrayerByIdRequest: null})).unwrap()
+                    .catch((err) => {
+                        debug.log("err from fetchPrayerByUserIdCall unwrap", err)
+                    })
+
                 navigation?.dispatch(resetAction);
             }).catch((err) => {
                 debug.error("err", err)

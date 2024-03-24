@@ -444,6 +444,8 @@ const styles = StyleSheet.create({
   },
   r8: {
     marginTop: 20,
+    width: "100%",
+    // borderWidth:1
   },
   // r3: {
   //   marginVertical: "35%",
@@ -467,6 +469,7 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.Light.hashBackGroundL2,
     marginBottom: 30,
     marginTop: 20,
+    // borderWidth:1
   },
   r3t1: {
     color: COLORS.Light.colorFour,

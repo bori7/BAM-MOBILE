@@ -24,7 +24,10 @@ export const createPrayerCall = createAsyncThunk<
         const state = getState();
 
         const accessToken = state.user.userData?.token || "";
-        return await PrayerService.createPrayer(accessToken, createPrayerRequest)
+        return await PrayerService.createPrayer(accessToken, {
+            ...createPrayerRequest,
+            userId: state.user.userData?.id || ""
+        })
             .then((res) => {
                 debug.api_success("createPrayer", res);
 
@@ -37,12 +40,12 @@ export const createPrayerCall = createAsyncThunk<
     }
 );
 
-export const fetchPrayerByIdCall = createAsyncThunk<
-    GenericResponseType<CreatePrayerRequestType>,
+export const fetchPrayerByUserIdCall = createAsyncThunk<
+    GenericResponseType<CreatePrayerRequestType[]>,
     InitFetchPrayerByIdThunkArg,
     InitBAMThunkApiConfig
 >(
-    "prayer/fetchbyid",
+    "prayer/fetchbyuserid",
     async (
         {fetchPrayerByIdRequest},
         {rejectWithValue, getState, dispatch}
@@ -51,17 +54,20 @@ export const fetchPrayerByIdCall = createAsyncThunk<
         const state = getState();
         const accessToken = state.user.userData?.token || "";
 
-        return await PrayerService.fetchPrayer(
+        return await PrayerService.fetchPrayers(
             accessToken,
-            fetchPrayerByIdRequest
+            {
+                ...fetchPrayerByIdRequest,
+                userId: state.user.userData?.id || ""
+            }
         )
             .then((res) => {
-                debug.api_success("fetchPrayerById", res);
+                debug.api_success("fetchPrayerByUserId", res);
 
                 return res;
             })
             .catch((err) => {
-                debug.api_error("fetchPrayerById Error", err);
+                debug.api_error("fetchPrayerByUserId Error", err);
                 return rejectWithValue(err);
             });
     }
@@ -79,7 +85,10 @@ export const updatePrayerCall = createAsyncThunk<
         const state = getState();
 
         const accessToken = state.user.userData?.token || "";
-        return await PrayerService.updatePrayer(accessToken, updatePrayerRequest)
+        return await PrayerService.updatePrayer(accessToken, {
+            ...updatePrayerRequest,
+            userId: state.user.userData?.id || ""
+        })
             .then((res) => {
                 debug.api_success("updatePrayer", res);
 
@@ -103,7 +112,10 @@ export const deletePrayerCall = createAsyncThunk<
         const state = getState();
         const accessToken = state.user.userData?.token || "";
 
-        return await PrayerService.deletePrayer(accessToken, deletePrayerByIdRequest)
+        return await PrayerService.deletePrayer(accessToken, {
+            ...deletePrayerByIdRequest,
+            userId: state.user.userData?.id || ""
+        })
             .then((res) => {
                 debug.api_success("deletePrayer", res);
 

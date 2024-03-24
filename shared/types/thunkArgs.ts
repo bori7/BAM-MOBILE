@@ -123,7 +123,7 @@ export type InitFetchUserDevotionalByIdThunkArg = {
 
 
 export type InitFetchPrayerByIdThunkArg = {
-    fetchPrayerByIdRequest: FetchPrayerByIdType;
+    fetchPrayerByIdRequest: FetchPrayerByIdType | null;
 }
 
 

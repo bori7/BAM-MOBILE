@@ -17,7 +17,7 @@ export const UPDATE_USER_DEVOTIONAL_URL = `${BASE_URL}/user-devotional/update`;
 export const DELETE_USER_DEVOTIONAL_URL = `${BASE_URL}/user-devotional/delete`;
 // #######################################PRAYER############################################################
 export const CREATE_PRAYER_URL = `${BASE_URL}/prayer`;
-export const FETCH_PRAYER_BY_ID_URL = `${BASE_URL}/prayer/{id}`;
+export const FETCH_PRAYER_BY_ID_URL = `${BASE_URL}/prayer/{userId}`;
 export const UPDATE_PRAYER_URL = `${BASE_URL}/prayer/update`;
 export const DELETE_PRAYER_URL = `${BASE_URL}/prayer/delete`;
 // #######################################NOTE############################################################

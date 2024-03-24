@@ -65,6 +65,10 @@ export const putCall = async <R, T>(
         ...extraHeaders,
         Authorization: `Bearer ${token}`,
     };
+    if (!token) {
+        // @ts-ignore
+        delete headers.Authorization;
+    }
     try {
         const response = await apiPut(url, headers, request);
         debug.log("url :: ", url);
@@ -100,6 +104,10 @@ export const deleteCall = async <R, T>(
         ...extraHeaders,
         Authorization: `Bearer ${token}`,
     };
+    if (!token) {
+        // @ts-ignore
+        delete headers.Authorization;
+    }
     try {
         const response = await apiDelete(url, headers, request);
         debug.log("url :: ", url);

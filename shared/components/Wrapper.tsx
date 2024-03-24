@@ -10,6 +10,7 @@ import {SafeAreaView} from "react-native-safe-area-context";
 import {userActions} from "../../store/slices/user";
 import {devotionalActions} from "../../store/slices/devotional";
 import {notesActions} from "../../store/slices/notes";
+import {prayersActions} from "../../store/slices/prayer";
 
 type props = {
     child: any;
@@ -61,13 +62,14 @@ export default function Wrapper({child}: props) {
     const noteState = useSelector((state: RootState) => state.notes);
     const {notesError, notesMessage, notesLoading} = noteState;
 
+    const prayerState = useSelector((state: RootState) => state.prayer);
+    const {prayersError, prayersMessage, prayersLoading} = prayerState;
 
     const generalState = useSelector((state: RootState) => state.general);
     const {generalLoading} = generalState;
 
     const devotionalState = useSelector((state: RootState) => state.devotional);
     const {devotionalLoading, devotionalError} = devotionalState;
-
 
     const screenNotificationState = useSelector(
         (state: RootState) => state.screenNotification
@@ -100,6 +102,12 @@ export default function Wrapper({child}: props) {
             });
         }
 
+        if (prayersError !== null) {
+            Toaster("error", prayersError?.message, () => {
+                dispatch(prayersActions.clearPrayersError())
+            });
+        }
+
         if (devotionalError !== null) {
             Toaster("error", devotionalError?.message, () => {
                 dispatch(devotionalActions.clearDevotionalError())
@@ -109,7 +117,7 @@ export default function Wrapper({child}: props) {
         // if (planMessage) {
         //   Toaster("success", planMessage, () => {});
         // }
-    }, [notificationData, userError, userMessage, devotionalError, notesError]);
+    }, [notificationData, userError, userMessage, devotionalError, notesError, prayersError]);
 
     useEffect(() => {
     }, []);
