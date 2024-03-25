@@ -42,7 +42,7 @@ export interface SignInPayloadType {
 
   verified: boolean;
   deleted: boolean;
-
+  image?: string;
   roles: RoleType[];
 }
 

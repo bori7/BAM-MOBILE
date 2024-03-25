@@ -3,7 +3,7 @@ import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {apiPost} from "../../hooks/apiHooks";
 import {secureSave} from "../../shared/helper";
 import {InitialUserStateType, UserDataType} from "../../shared/types/slices";
-import {signInCall, signInGoogleCall, signUpCall, signUpGoogleCall} from "../apiThunks/user";
+import {signInCall, signInGoogleCall, signUpCall, signUpGoogleCall, updateUserCall} from "../apiThunks/user";
 
 const initialUserState: InitialUserStateType = {
     userData: {
@@ -86,7 +86,13 @@ export const userSlice = createSlice({
             state.userMessage = `Welcome ${payload.payload.firstName || payload.payload.username} !!!`
             state.userData = {
                 ...state.userData,
-                ...payload.payload
+                ...payload.payload,
+                email_address: payload.payload.emailAddress,
+                first_name:payload.payload.firstName,
+                last_name:payload.payload.lastName,
+                username:payload.payload.username,
+                fullname:payload.payload.fullName,
+                phone_number:payload.payload.phoneNumber,
             };
         })
         builder.addCase(signInCall.rejected, (state, action: any) => {
@@ -94,12 +100,37 @@ export const userSlice = createSlice({
             state.userMessage = "";
             state.userData = null;
             state.userError = {
-                code: action.payload?.response?.data?.responseCode || "88",
+                code: action.payload?.response?.data?.responseCode || "87",
                 message:
                     action.payload?.response?.data?.message ||
                     // action.error?.message ||
                     "Unable to sign you in at the moment",
             }
+        })
+        builder.addCase(updateUserCall.pending, state => {
+            state.userLoading = true;
+
+        })
+        builder.addCase(updateUserCall.rejected, (state, action: any) => {
+            state.userLoading = false;
+            state.userMessage = "";
+            state.userData = null;
+            state.userError = {
+                code: action.payload?.response?.data?.responseCode || "88",
+                message:
+                    action.payload?.response?.data?.message ||
+                    // action.error?.message ||
+                    "Unable to update your info at the moment",
+            }
+        })
+        builder.addCase(updateUserCall.fulfilled, (state, {payload}) => {
+            state.userLoading = false;
+            state.userError = null;
+            state.userMessage = `Updated your info successfully  🎉` // "Profile was updated successfully 🎉",
+            state.userData = {
+                ...state.userData,
+                ...payload.payload
+            };
         })
     }
 });

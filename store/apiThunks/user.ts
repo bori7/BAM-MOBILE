@@ -152,6 +152,11 @@ export const updateUserCall = createAsyncThunk<
         let ipAddress = await getDeviceIpAddress();
         const state = getState();
 
+        signUpRequest = {
+            ...signUpRequest,
+            // password: await  CipherUtils.encrypt(signUpRequest.password) || "",
+            deviceId: `${Device.modelName}_${Device.osVersion}`
+        }
         const accessToken = state.user.userData?.token || "";
         return await UserService.updateUser(accessToken, signUpRequest)
             .then((res) => {
