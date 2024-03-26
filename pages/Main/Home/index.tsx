@@ -30,6 +30,7 @@ import {
 import {GeneralVerseOfTheDayType} from "../../../shared/types/slices";
 import {fetchDevotionalByIdCall, updateUserDevotionalCall} from "../../../store/apiThunks/devotional";
 import {devotionalActions} from "../../../store/slices/devotional";
+import {MainProfileSVG} from "../../../shared/components/SVGS";
 
 // type NavigationProps = MainProps<MainRoutes.HomeScreen>;
 
@@ -53,7 +54,7 @@ const Home: React.FC<NavigationProps> = ({navigation, route}) => {
     const {generalVerseOfTheDayList} = generalState;
 
     const userState = useSelector((state: RootState) => state.user);
-    const {userData} = userState;
+    const {userData, userImageBase64} = userState;
 
     const devotionalState = useSelector((state: RootState) => state.devotional);
     const {devotionalData: {devotionalList, userDevotional}} = devotionalState;
@@ -92,7 +93,7 @@ const Home: React.FC<NavigationProps> = ({navigation, route}) => {
             });
         }).catch((err) => {
         }).finally(() => {
-                dispatch(screenNotificationActions.updateScreenLoading(false));
+            dispatch(screenNotificationActions.updateScreenLoading(false));
         })
     }
 
@@ -141,7 +142,14 @@ const Home: React.FC<NavigationProps> = ({navigation, route}) => {
                             </Text>
                         </View>
                         <TouchableOpacity style={styles.headerC2}>
-                            <UserIcon width={35} height={35}/>
+                            {(userData?.image || userImageBase64) ? (
+                                <Image
+                                    source={{uri: userData?.image || userImageBase64}}
+                                    style={styles.facecapture}
+                                />
+                            ) : (
+                                <UserIcon width={35} height={35}/>
+                            )}
                         </TouchableOpacity>
                     </View>
                 </View>
@@ -543,5 +551,10 @@ const styles = StyleSheet.create({
     optionText: {
         fontSize: SIZES.sizeSeven,
         // fontWeight: "600",
+    },
+    facecapture: {
+        height: 35,
+        width: 35,
+        borderRadius: 60,
     },
 });

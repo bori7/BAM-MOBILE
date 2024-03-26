@@ -43,12 +43,12 @@ type NavigationProps = CompositeScreenProps<
 
 const MoreMain: React.FC<NavigationProps> = ({ navigation, route }) => {
   const userState = useSelector((state: RootState) => state.user);
-  const { userImageBase64 } = userState;
+  const { userData,userImageBase64 } = userState;
 
   const moreContent: MoreContentType[] = [
     {
-      icon: userImageBase64 ? (
-        <Image source={{ uri: userImageBase64 }} style={styles.facecapture} />
+      icon: (userData?.image || userImageBase64) ? (
+        <Image source={{ uri:  userData?.image || userImageBase64 }} style={styles.facecapture} />
       ) : (
         <MoreProfileSVG />
       ),

@@ -21,7 +21,7 @@ import CameraButton from "./CameraButton";
 import SelectImageModal from "./SelectImageModal";
 import {userActions} from "../../../store/slices/user";
 import {screenNotificationActions} from "../../../store/slices/notification";
-import {updateUserCall} from "../../../store/apiThunks/user";
+import {updateUserCall, updateUserImageCall} from "../../../store/apiThunks/user";
 
 type NavigationProps = CompositeScreenProps<
     MoreProps<MoreRoutes.EditProfile>,
@@ -145,9 +145,9 @@ const EditProfile: React.FC<NavigationProps> = ({navigation, route}) => {
                                     setShowModal(!showModal);
                                 }}
                             >
-                                {userImageBase64 ? (
+                                {(userData?.image || userImageBase64) ? (
                                     <Image
-                                        source={{uri: userImageBase64}}
+                                        source={{uri: userData?.image || userImageBase64}}
                                         style={styles.facecapture}
                                     />
                                 ) : (
@@ -171,7 +171,16 @@ const EditProfile: React.FC<NavigationProps> = ({navigation, route}) => {
                                     setShowModal(!showModal);
                                 }}
                                 onChooseImage={(base64: string): void => {
-                                    dispatch(userActions.updateImageBase64(base64));
+                                    dispatch(updateUserImageCall({
+                                        updateUserImageRequest: {
+                                            imageBase64: base64
+                                        }
+                                    })).unwrap()
+                                        .then((res) => {
+                                            // debug.log("res", res)
+                                            dispatch(userActions.updateImageBase64(base64));
+                                        })
+
                                     // setImageBase64(base64);
                                 }}
                             />

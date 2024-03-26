@@ -3,7 +3,14 @@ import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {apiPost} from "../../hooks/apiHooks";
 import {secureSave} from "../../shared/helper";
 import {InitialUserStateType, UserDataType} from "../../shared/types/slices";
-import {signInCall, signInGoogleCall, signUpCall, signUpGoogleCall, updateUserCall} from "../apiThunks/user";
+import {
+    signInCall,
+    signInGoogleCall,
+    signUpCall,
+    signUpGoogleCall,
+    updateUserCall,
+    updateUserImageCall
+} from "../apiThunks/user";
 
 const initialUserState: InitialUserStateType = {
     userData: {
@@ -127,6 +134,30 @@ export const userSlice = createSlice({
             state.userLoading = false;
             state.userError = null;
             state.userMessage = `Updated your info successfully  🎉` // "Profile was updated successfully 🎉",
+            state.userData = {
+                ...state.userData,
+                ...payload.payload
+            };
+        })
+        builder.addCase(updateUserImageCall.pending, state => {
+            state.userLoading = true;
+        })
+        builder.addCase(updateUserImageCall.rejected, (state, action: any) => {
+            state.userLoading = false;
+            state.userMessage = "";
+            state.userData = null;
+            state.userError = {
+                code: action.payload?.response?.data?.responseCode || "88",
+                message:
+                    action.payload?.response?.data?.message ||
+                    // action.error?.message ||
+                    "Unable to update your image at the moment",
+            }
+        })
+        builder.addCase(updateUserImageCall.fulfilled, (state, {payload}) => {
+            state.userLoading = false;
+            state.userError = null;
+            state.userMessage = `Updated your image successfully  🎉` // "Profile was updated successfully 🎉",
             state.userData = {
                 ...state.userData,
                 ...payload.payload

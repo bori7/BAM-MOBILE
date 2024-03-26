@@ -33,8 +33,8 @@ export interface UserDataType {
     isBibleAppUserKey?: string;
     deviceId?: string;
     image?: string;
-    verified: boolean;
-    deleted: boolean;
+    verified?: boolean;
+    deleted?: boolean;
 }
 
 export interface InitialScreenNotificationStateType {

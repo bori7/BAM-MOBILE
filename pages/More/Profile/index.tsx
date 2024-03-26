@@ -161,9 +161,9 @@ const Profile: React.FC<NavigationProps> = ({ navigation, route }) => {
                 </TouchableOpacity>
               </View>
               <View style={styles.r7b}>
-                {userImageBase64 ? (
+                {( userData?.image || userImageBase64) ? (
                   <Image
-                    source={{ uri: userImageBase64 }}
+                    source={{ uri:  userData?.image || userImageBase64 }}
                     style={styles.facecapture}
                   />
                 ) : (

@@ -3,10 +3,10 @@ import {GenericResponseType} from "../../services/type";
 import {
     InitBAMThunkApiConfig,
     InitSignInGoogleThunkArg, InitSignInThunkArg,
-    InitSignUpGoogleThunkArg, InitSignUpThunkArg
+    InitSignUpGoogleThunkArg, InitSignUpThunkArg, InitUpdateUserImageThunkArg
 } from "../../shared/types/thunkArgs";
 import {getDeviceIpAddress} from "../../shared/helper";
-import {SignInPayloadType, SignUpPayloadType} from "../../services/user/type";
+import {SignInPayloadType, SignUpPayloadType, UpdateUserImagePayloadType} from "../../services/user/type";
 import {UserService} from "../../services/user";
 import * as Device from 'expo-device';
 import {CipherUtils} from "../../shared/lib/cipher";
@@ -60,7 +60,6 @@ export const signInGoogleCall = createAsyncThunk<
             });
     }
 );
-
 
 
 export const signUpCall = createAsyncThunk<
@@ -166,6 +165,37 @@ export const updateUserCall = createAsyncThunk<
             })
             .catch((err) => {
                 debug.api_error("updateUser Error", err);
+                return rejectWithValue(err);
+            });
+    }
+);
+
+
+export const updateUserImageCall = createAsyncThunk<
+    GenericResponseType<UpdateUserImagePayloadType>,
+    InitUpdateUserImageThunkArg,
+    InitBAMThunkApiConfig
+>(
+    "user/updateimage",
+    async ({updateUserImageRequest}, {rejectWithValue, getState, dispatch}) => {
+        let ipAddress = await getDeviceIpAddress();
+        const state = getState();
+
+        updateUserImageRequest = {
+            ...updateUserImageRequest,
+            userId: state.user.userData?.id || ""
+            // password: await  CipherUtils.encrypt(signUpRequest.password) || "",
+            // deviceId: `${Device.modelName}_${Device.osVersion}`
+        }
+        const accessToken = state.user.userData?.token || "";
+        return await UserService.updateUserImage(accessToken, updateUserImageRequest)
+            .then((res) => {
+                debug.api_success("updateUserImage", res);
+
+                return res;
+            })
+            .catch((err) => {
+                debug.api_error("updateUserImage Error", err);
                 return rejectWithValue(err);
             });
     }
