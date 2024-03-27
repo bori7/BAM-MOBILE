@@ -4,7 +4,7 @@ import {postCall, putCall} from "../index";
 import {
     GOOGLE_SIGN_IN_URL,
     GOOGLE_SIGN_UP_URL,
-    USER_DELETE_URL, USER_IMAGE_UPDATE_URL,
+    USER_DELETE_URL, USER_IMAGE_UPDATE_URL, USER_PASSWORD_UPDATE_URL,
     USER_SIGN_IN_URL,
     USER_SIGN_UP_URL, USER_UPDATE_URL
 } from "../../constants/url";
@@ -14,7 +14,11 @@ import {
     SignInPayloadType,
     SignInRequestType,
     SignUpPayloadType,
-    SignUpRequestType, UpdateUserImagePayloadType, UpdateUserImageRequestType
+    SignUpRequestType,
+    UpdateUserImagePayloadType,
+    UpdateUserImageRequestType,
+    UpdateUserPasswordPayloadType,
+    UpdateUserPasswordRequestType
 } from "./type";
 
 export class UserService {
@@ -73,5 +77,13 @@ export class UserService {
         extraHeaders?: AxiosRequestHeaders | undefined | {}
     ): Promise<GenericResponseType<UpdateUserImagePayloadType>> => {
         return await putCall(USER_IMAGE_UPDATE_URL, token, extraHeaders, request);
+    };
+
+    static updateUserPassword = async (
+        token: string | undefined,
+        request: UpdateUserPasswordRequestType,
+        extraHeaders?: AxiosRequestHeaders | undefined | {}
+    ): Promise<GenericResponseType<UpdateUserPasswordPayloadType>> => {
+        return await putCall(USER_PASSWORD_UPDATE_URL, token, extraHeaders, request);
     };
 }

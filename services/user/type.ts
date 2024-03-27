@@ -64,3 +64,15 @@ export interface UpdateUserImagePayloadType {
     userId: string;
     image: string;
 }
+
+
+export interface UpdateUserPasswordRequestType {
+    userId?: string;
+    newPassword: string;
+    oldPassword: string;
+}
+
+
+export interface UpdateUserPasswordPayloadType {
+    userId: string;
+}

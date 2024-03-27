@@ -49,6 +49,7 @@ export const USER_SIGN_UP_URL = `${BASE_URL}/user/sign-up`;
 export const USER_SIGN_IN_URL = `${BASE_URL}/user/sign-in`;
 export const USER_UPDATE_URL = `${BASE_URL}/user/update-user`;
 export const USER_IMAGE_UPDATE_URL = `${BASE_URL}/user/update-user-image`;
+export const USER_PASSWORD_UPDATE_URL = `${BASE_URL}/user/update-user-password`;
 export const USER_DELETE_URL = `${BASE_URL}/user/delete-user`;
 // #######################################PAYMENT############################################################
 export const PAYSTACK_INITIATE_URL = `${PAYMENT_BASE_URL}/paystack`;

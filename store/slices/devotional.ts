@@ -115,7 +115,11 @@ export const devotionalSlice = createSlice({
             state.devotionalLoading = false;
             state.devotionalError = null;
             state.devotionalMessage = "";
-            // state.devotionalData = null;
+            state.devotionalData = {
+                devotionalList: [],
+                userDevotional: null
+            };
+            state.selectedDevotionalData = null
         },
     },
     extraReducers: builder => {

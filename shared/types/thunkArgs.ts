@@ -18,7 +18,7 @@ import {
     GoogleSignInRequestType,
     GoogleSignUpRequestType,
     SignInRequestType,
-    SignUpRequestType, UpdateUserImageRequestType
+    SignUpRequestType, UpdateUserImageRequestType, UpdateUserPasswordRequestType
 } from "../../services/user/type";
 import {CreateVODRequestType} from "../../services/vod/type";
 
@@ -34,6 +34,10 @@ export type InitSignUpThunkArg = {
 
 export type InitUpdateUserImageThunkArg = {
     updateUserImageRequest: UpdateUserImageRequestType;
+}
+
+export type InitUpdateUserPasswordThunkArg = {
+    updateUserPasswordRequest: UpdateUserPasswordRequestType;
 }
 
 export type InitSignInGoogleThunkArg = {

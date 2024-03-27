@@ -3,10 +3,15 @@ import {GenericResponseType} from "../../services/type";
 import {
     InitBAMThunkApiConfig,
     InitSignInGoogleThunkArg, InitSignInThunkArg,
-    InitSignUpGoogleThunkArg, InitSignUpThunkArg, InitUpdateUserImageThunkArg
+    InitSignUpGoogleThunkArg, InitSignUpThunkArg, InitUpdateUserImageThunkArg, InitUpdateUserPasswordThunkArg
 } from "../../shared/types/thunkArgs";
 import {getDeviceIpAddress} from "../../shared/helper";
-import {SignInPayloadType, SignUpPayloadType, UpdateUserImagePayloadType} from "../../services/user/type";
+import {
+    SignInPayloadType,
+    SignUpPayloadType,
+    UpdateUserImagePayloadType,
+    UpdateUserPasswordPayloadType
+} from "../../services/user/type";
 import {UserService} from "../../services/user";
 import * as Device from 'expo-device';
 import {CipherUtils} from "../../shared/lib/cipher";
@@ -196,6 +201,36 @@ export const updateUserImageCall = createAsyncThunk<
             })
             .catch((err) => {
                 debug.api_error("updateUserImage Error", err);
+                return rejectWithValue(err);
+            });
+    }
+);
+
+export const updateUserPasswordCall = createAsyncThunk<
+    GenericResponseType<UpdateUserPasswordPayloadType>,
+    InitUpdateUserPasswordThunkArg,
+    InitBAMThunkApiConfig
+>(
+    "user/updatepassword",
+    async ({updateUserPasswordRequest}, {rejectWithValue, getState, dispatch}) => {
+        let ipAddress = await getDeviceIpAddress();
+        const state = getState();
+
+        updateUserPasswordRequest = {
+            ...updateUserPasswordRequest,
+            userId: state.user.userData?.id || ""
+            // password: await  CipherUtils.encrypt(signUpRequest.password) || "",
+            // deviceId: `${Device.modelName}_${Device.osVersion}`
+        }
+        const accessToken = state.user.userData?.token || "";
+        return await UserService.updateUserPassword(accessToken, updateUserPasswordRequest)
+            .then((res) => {
+                debug.api_success("updateUserPassword", res);
+
+                return res;
+            })
+            .catch((err) => {
+                debug.api_error("updateUserPassword Error", err);
                 return rejectWithValue(err);
             });
     }

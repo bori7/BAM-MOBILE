@@ -74,7 +74,9 @@ export const prayersSlice = createSlice({
             state.prayersLoading = false;
             state.prayersError = null;
             state.prayersMessage = "";
-            state.prayersData = null;
+            state.prayersData = {
+                prayersList: []
+            };
         },
 
         clearPrayersError: (state) => {

@@ -9,7 +9,7 @@ import {
     signUpCall,
     signUpGoogleCall,
     updateUserCall,
-    updateUserImageCall
+    updateUserImageCall, updateUserPasswordCall
 } from "../apiThunks/user";
 
 const initialUserState: InitialUserStateType = {
@@ -163,6 +163,31 @@ export const userSlice = createSlice({
                 ...payload.payload
             };
         })
+        builder.addCase(updateUserPasswordCall.pending, state => {
+            state.userLoading = true;
+        })
+        builder.addCase(updateUserPasswordCall.rejected, (state, action: any) => {
+            state.userLoading = false;
+            state.userMessage = "";
+            state.userData = null;
+            state.userError = {
+                code: action.payload?.response?.data?.responseCode || "88",
+                message:
+                    action.payload?.response?.data?.message ||
+                    // action.error?.message ||
+                    "Unable to update your password at the moment",
+            }
+        })
+        builder.addCase(updateUserPasswordCall.fulfilled, (state, {payload}) => {
+            state.userLoading = false;
+            state.userError = null;
+            state.userMessage = `Updated your password successfully 👍` // "Profile was updated successfully 🎉",
+            state.userData = {
+                ...state.userData,
+                ...payload.payload
+            };
+        })
+        //
     }
 });
 

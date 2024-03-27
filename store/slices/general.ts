@@ -44,6 +44,7 @@ export const generalSlice = createSlice({
             state.generalError = null;
             state.generalMessage = "";
             state.generalData = null;
+            state.generalVerseOfTheDayList = [];
         },
         updateEmailNotificationsForm: (
             state,
