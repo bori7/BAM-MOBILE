@@ -129,13 +129,14 @@ export const devotionalSlice = createSlice({
         builder.addCase(fetchAllDevotionalCall.rejected, (state, action: any) => {
             state.devotionalLoading = false;
             state.devotionalMessage = "";
-            state.devotionalError = {
-                code: action.payload?.response?.data?.responseCode || "89",
-                message:
-                    action.payload?.response?.data?.message ||
-                    // action.error?.message ||
-                    "Unable to fetch devotionals at the moment",
-            }
+            state.devotionalError = null;
+            // state.devotionalError = {
+            //     code: action.payload?.response?.data?.responseCode || "89",
+            //     message:
+            //         action.payload?.response?.data?.message ||
+            //         // action.error?.message ||
+            //         "Unable to fetch devotionals at the moment",
+            // }
 
         })
         builder.addCase(fetchAllDevotionalCall.fulfilled, (state, {payload}) => {
@@ -166,13 +167,14 @@ export const devotionalSlice = createSlice({
         builder.addCase(fetchUserDevotionalCall.rejected, (state, action: any) => {
             state.devotionalLoading = false;
             state.devotionalMessage = "";
-            state.devotionalError = {
-                code: action.payload?.response?.data?.responseCode || "89",
-                message:
-                    action.payload?.response?.data?.message ||
-                    // action.error?.message ||
-                    "Unable to fetch user devotional at the moment",
-            }
+            state.devotionalError = null;
+            // state.devotionalError = {
+            //     code: action.payload?.response?.data?.responseCode || "89",
+            //     message:
+            //         action.payload?.response?.data?.message ||
+            //         // action.error?.message ||
+            //         "Unable to fetch user devotional at the moment",
+            // }
 
         })
         builder.addCase(fetchUserDevotionalCall.fulfilled, (state, {payload}) => {

@@ -88,13 +88,14 @@ export const notesSlice = createSlice({
         builder.addCase(fetchNoteByUserIdCall.rejected, (state, action: any) => {
             state.notesLoading = false;
             state.notesMessage = "";
-            state.notesError = {
-                code: action.payload?.response?.data?.responseCode || "89",
-                message:
-                    action.payload?.response?.data?.message ||
-                    // action.error?.message ||
-                    "Unable to fetch notes at the moment",
-            }
+            state.notesError = null;
+            // state.notesError = {
+            //     code: action.payload?.response?.data?.responseCode || "89",
+            //     message:
+            //         action.payload?.response?.data?.message ||
+            //         // action.error?.message ||
+            //         "Unable to fetch notes at the moment",
+            // }
             state.notesData = {
                 ...state.notesData,
                 notesList: []

@@ -15,10 +15,11 @@ import {
     FetchUserDevotionalByIdType
 } from "../../services/userdevotional/type";
 import {
+    GenerateVerificationCodeRequestType,
     GoogleSignInRequestType,
-    GoogleSignUpRequestType,
+    GoogleSignUpRequestType, ResetUserPasswordRequestType,
     SignInRequestType,
-    SignUpRequestType, UpdateUserImageRequestType, UpdateUserPasswordRequestType
+    SignUpRequestType, UpdateUserImageRequestType, UpdateUserPasswordRequestType, VerifyVerificationCodeRequestType
 } from "../../services/user/type";
 import {CreateVODRequestType} from "../../services/vod/type";
 
@@ -38,6 +39,18 @@ export type InitUpdateUserImageThunkArg = {
 
 export type InitUpdateUserPasswordThunkArg = {
     updateUserPasswordRequest: UpdateUserPasswordRequestType;
+}
+
+export type InitResetUserPasswordThunkArg = {
+    resetUserPasswordRequest: ResetUserPasswordRequestType;
+}
+
+export type InitGenerateVerificationCodeThunkArg = {
+    generateVerificationCodeRequest: GenerateVerificationCodeRequestType;
+}
+
+export type InitVerifyVerificationCodeThunkArg = {
+    verifyVerificationCodeRequest: VerifyVerificationCodeRequestType;
 }
 
 export type InitSignInGoogleThunkArg = {

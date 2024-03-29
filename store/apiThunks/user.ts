@@ -2,15 +2,22 @@ import {createAsyncThunk} from "@reduxjs/toolkit";
 import {GenericResponseType} from "../../services/type";
 import {
     InitBAMThunkApiConfig,
-    InitSignInGoogleThunkArg, InitSignInThunkArg,
-    InitSignUpGoogleThunkArg, InitSignUpThunkArg, InitUpdateUserImageThunkArg, InitUpdateUserPasswordThunkArg
+    InitGenerateVerificationCodeThunkArg, InitResetUserPasswordThunkArg,
+    InitSignInGoogleThunkArg,
+    InitSignInThunkArg,
+    InitSignUpGoogleThunkArg,
+    InitSignUpThunkArg,
+    InitUpdateUserImageThunkArg,
+    InitUpdateUserPasswordThunkArg,
+    InitVerifyVerificationCodeThunkArg
 } from "../../shared/types/thunkArgs";
 import {getDeviceIpAddress} from "../../shared/helper";
 import {
+    GenerateVerificationCodePayloadType, ResetUserPasswordPayloadType,
     SignInPayloadType,
     SignUpPayloadType,
     UpdateUserImagePayloadType,
-    UpdateUserPasswordPayloadType
+    UpdateUserPasswordPayloadType, VerifyVerificationCodePayloadType
 } from "../../services/user/type";
 import {UserService} from "../../services/user";
 import * as Device from 'expo-device';
@@ -231,6 +238,98 @@ export const updateUserPasswordCall = createAsyncThunk<
             })
             .catch((err) => {
                 debug.api_error("updateUserPassword Error", err);
+                return rejectWithValue(err);
+            });
+    }
+);
+
+export const resetUserPasswordCall = createAsyncThunk<
+    GenericResponseType<ResetUserPasswordPayloadType>,
+    InitResetUserPasswordThunkArg,
+    InitBAMThunkApiConfig
+>(
+    "user/resetpassword",
+    async ({resetUserPasswordRequest}, {rejectWithValue, getState, dispatch}) => {
+        let ipAddress = await getDeviceIpAddress();
+        const state = getState();
+
+        resetUserPasswordRequest = {
+            ...resetUserPasswordRequest,
+            userId: state.user.userData?.id || ""
+            // password: await  CipherUtils.encrypt(signUpRequest.password) || "",
+            // deviceId: `${Device.modelName}_${Device.osVersion}`
+        }
+        const accessToken = state.user.userData?.token || "";
+        return await UserService.resetUserPassword(accessToken, resetUserPasswordRequest)
+            .then((res) => {
+                debug.api_success("resetUserPassword", res);
+
+                return res;
+            })
+            .catch((err) => {
+                debug.api_error("resetUserPassword Error", err);
+                return rejectWithValue(err);
+            });
+    }
+);
+
+export const generateVerificationCodeCall = createAsyncThunk<
+    GenericResponseType<GenerateVerificationCodePayloadType>,
+    InitGenerateVerificationCodeThunkArg,
+    InitBAMThunkApiConfig
+>(
+    "user/generateverificationcode",
+    async ({generateVerificationCodeRequest}, {rejectWithValue, getState, dispatch}) => {
+        let ipAddress = await getDeviceIpAddress();
+        const state = getState();
+
+        generateVerificationCodeRequest = {
+            ...generateVerificationCodeRequest,
+            // userId: state.user.userData?.id || ""
+            // password: await  CipherUtils.encrypt(signUpRequest.password) || "",
+            deviceId: `${Device.modelName}_${Device.osVersion}`
+        }
+        const accessToken = state.user.userData?.token || "";
+        return await UserService.generateVerificationCode(accessToken, generateVerificationCodeRequest)
+            .then((res) => {
+                debug.api_success("generateVerificationCode", res);
+
+                return res;
+            })
+            .catch((err) => {
+                debug.api_error("generateVerificationCode Error", err);
+                return rejectWithValue(err);
+            });
+    }
+);
+
+
+
+export const verificationVerificationCodeCall = createAsyncThunk<
+    GenericResponseType<VerifyVerificationCodePayloadType>,
+    InitVerifyVerificationCodeThunkArg,
+    InitBAMThunkApiConfig
+>(
+    "user/verificationverificationcode",
+    async ({verifyVerificationCodeRequest}, {rejectWithValue, getState, dispatch}) => {
+        let ipAddress = await getDeviceIpAddress();
+        const state = getState();
+
+        verifyVerificationCodeRequest = {
+            ...verifyVerificationCodeRequest,
+            emailAddress: state.user.userData?.email_address || "",
+            // password: await  CipherUtils.encrypt(signUpRequest.password) || "",
+            deviceId: `${Device.modelName}_${Device.osVersion}`
+        }
+        const accessToken = state.user.userData?.token || "";
+        return await UserService.verificationVerificationCode(accessToken, verifyVerificationCodeRequest)
+            .then((res) => {
+                debug.api_success("verificationVerificationCode", res);
+
+                return res;
+            })
+            .catch((err) => {
+                debug.api_error("verificationVerificationCode Error", err);
                 return rejectWithValue(err);
             });
     }

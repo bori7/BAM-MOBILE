@@ -46,6 +46,25 @@ export interface SignInPayloadType {
     roles: RoleType[];
 }
 
+export interface GenerateVerificationCodeRequestType {
+    deviceId?: string;
+    emailAddress: string;
+}
+
+export interface GenerateVerificationCodePayloadType {
+    userId: string;
+}
+
+export interface VerifyVerificationCodeRequestType {
+    deviceId?: string;
+    emailAddress?: string;
+    code:string;
+}
+
+export interface VerifyVerificationCodePayloadType {
+    token: string;
+}
+
 export interface GoogleSignUpRequestType {
     deviceId: string;
     idToken: string;
@@ -74,5 +93,14 @@ export interface UpdateUserPasswordRequestType {
 
 
 export interface UpdateUserPasswordPayloadType {
+    userId: string;
+}
+
+export interface ResetUserPasswordRequestType {
+    userId?: string;
+    newPassword: string;
+}
+
+export interface ResetUserPasswordPayloadType {
     userId: string;
 }

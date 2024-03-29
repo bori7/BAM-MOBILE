@@ -4,13 +4,21 @@ import {postCall, putCall} from "../index";
 import {
     GOOGLE_SIGN_IN_URL,
     GOOGLE_SIGN_UP_URL,
-    USER_DELETE_URL, USER_IMAGE_UPDATE_URL, USER_PASSWORD_UPDATE_URL,
+    USER_DELETE_URL,
+    USER_GENERATE_VERIFICATION_CODE_URL,
+    USER_IMAGE_UPDATE_URL,
+    USER_PASSWORD_RESET_URL,
+    USER_PASSWORD_UPDATE_URL,
     USER_SIGN_IN_URL,
-    USER_SIGN_UP_URL, USER_UPDATE_URL
+    USER_SIGN_UP_URL,
+    USER_UPDATE_URL,
+    USER_VERIFY_VERIFICATION_CODE_URL
 } from "../../constants/url";
 import {
+    GenerateVerificationCodePayloadType,
+    GenerateVerificationCodeRequestType,
     GoogleSignInRequestType,
-    GoogleSignUpRequestType,
+    GoogleSignUpRequestType, ResetUserPasswordPayloadType, ResetUserPasswordRequestType,
     SignInPayloadType,
     SignInRequestType,
     SignUpPayloadType,
@@ -18,7 +26,7 @@ import {
     UpdateUserImagePayloadType,
     UpdateUserImageRequestType,
     UpdateUserPasswordPayloadType,
-    UpdateUserPasswordRequestType
+    UpdateUserPasswordRequestType, VerifyVerificationCodePayloadType, VerifyVerificationCodeRequestType
 } from "./type";
 
 export class UserService {
@@ -86,4 +94,28 @@ export class UserService {
     ): Promise<GenericResponseType<UpdateUserPasswordPayloadType>> => {
         return await putCall(USER_PASSWORD_UPDATE_URL, token, extraHeaders, request);
     };
+
+    static resetUserPassword = async (
+        token: string | undefined,
+        request: ResetUserPasswordRequestType,
+        extraHeaders?: AxiosRequestHeaders | undefined | {}
+    ): Promise<GenericResponseType<ResetUserPasswordPayloadType>> => {
+        return await putCall(USER_PASSWORD_RESET_URL, token, extraHeaders, request);
+    };
+
+    static async generateVerificationCode(
+        token: string | undefined,
+        request: GenerateVerificationCodeRequestType,
+        extraHeaders?: AxiosRequestHeaders | undefined | {}
+    ): Promise<GenericResponseType<GenerateVerificationCodePayloadType>> {
+        return await postCall(USER_GENERATE_VERIFICATION_CODE_URL, token, extraHeaders, request);
+    }
+
+    static async verificationVerificationCode(
+        token: string | undefined,
+        request: VerifyVerificationCodeRequestType,
+        extraHeaders?: AxiosRequestHeaders | undefined | {}
+    ): Promise<GenericResponseType<VerifyVerificationCodePayloadType>> {
+        return await postCall(USER_VERIFY_VERIFICATION_CODE_URL, token, extraHeaders, request);
+    }
 }

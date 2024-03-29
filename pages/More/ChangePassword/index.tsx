@@ -241,6 +241,8 @@ const ChangePassword: React.FC<NavigationProps> = ({navigation, route}) => {
                                     />
                                 }
                             />
+                            {(!validation?.data?.oldP.isValid && error) &&
+                                <Text style={styles.error}>{"Invalid Password"}</Text>}
                         </View>
 
                         <View style={styles.r3}>
@@ -302,6 +304,8 @@ const ChangePassword: React.FC<NavigationProps> = ({navigation, route}) => {
                                     />
                                 }
                             />
+                            {(!validation?.data?.newP.isValid && error) &&
+                                <Text style={styles.error}>{"Invalid Password"}</Text>}
                         </View>
 
                         <View style={styles.r8}>
@@ -614,6 +618,13 @@ const styles = StyleSheet.create({
         fontSize: SIZES.sizeSix,
         fontWeight: "500",
         textAlign: "center",
+    },
+    error: {
+        color: COLORS.Light.colorFourteenC,
+        fontSize: SIZES.sizeSix,
+        fontWeight: "500",
+        // textAlign: "center",
+        marginLeft: 5
     },
     // inputContent: {
     //   fontSize: SIZES.sizeSeven,

@@ -50,7 +50,10 @@ export const USER_SIGN_IN_URL = `${BASE_URL}/user/sign-in`;
 export const USER_UPDATE_URL = `${BASE_URL}/user/update-user`;
 export const USER_IMAGE_UPDATE_URL = `${BASE_URL}/user/update-user-image`;
 export const USER_PASSWORD_UPDATE_URL = `${BASE_URL}/user/update-user-password`;
+export const USER_PASSWORD_RESET_URL = `${BASE_URL}/user/reset-user-password`;
 export const USER_DELETE_URL = `${BASE_URL}/user/delete-user`;
+export const USER_GENERATE_VERIFICATION_CODE_URL = `${BASE_URL}/user/generate-verification-code`;
+export const USER_VERIFY_VERIFICATION_CODE_URL = `${BASE_URL}/user/verify-verification-code`;
 // #######################################PAYMENT############################################################
 export const PAYSTACK_INITIATE_URL = `${PAYMENT_BASE_URL}/paystack`;
 export const PAYSTACK_VERIFY_URL = `${PAYMENT_BASE_URL}/paystack/{paymentref}`;

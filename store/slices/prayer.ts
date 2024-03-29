@@ -90,13 +90,14 @@ export const prayersSlice = createSlice({
         builder.addCase(fetchPrayerByUserIdCall.rejected, (state, action: any) => {
             state.prayersLoading = false;
             state.prayersMessage = "";
-            state.prayersError = {
-                code: action.payload?.response?.data?.responseCode || "89",
-                message:
-                    action.payload?.response?.data?.message ||
-                    // action.error?.message ||
-                    "Unable to fetch notes at the moment",
-            }
+            state.prayersError = null;
+            // state.prayersError = {
+            //     code: action.payload?.response?.data?.responseCode || "89",
+            //     message:
+            //         action.payload?.response?.data?.message ||
+            //         // action.error?.message ||
+            //         "Unable to fetch notes at the moment",
+            // }
             state.prayersData = {
                 ...state.prayersData,
                 prayersList: []
