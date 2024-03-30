@@ -201,9 +201,15 @@ export const fetchLiveSubscriptionCall = createAsyncThunk<
         let ipAddress = await getDeviceIpAddress();
         const state = getState();
 
+        fetchLiveSubscriptionRequest = {
+            ...fetchLiveSubscriptionRequest,
+            userId: state.user.userData?.id || ""
+        }
+
         const accessToken = state.user.userData?.token || "";
         return await SubscriptionService.fetchLiveSubscription(
             accessToken,
+            fetchLiveSubscriptionRequest
         )
             .then((res) => {
                 debug.api_success("fetchLiveSubscription", res);

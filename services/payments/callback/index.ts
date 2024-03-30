@@ -24,8 +24,11 @@ export class CallbackService {
     ): Promise<GenericResponseType<CallbackGetResponsePayload>> => {
         const param = Object.keys(request);
         const paramValue = Object.values(request);
+        let url = CALLBACK_GET_URL.replace("{trxref}", request.trxref);
+        url = url.replace("{ref}", request.reference);
+        token = "";
         return await getByWithPathParam(
-            CALLBACK_GET_URL,
+            url,
             token,
             param,
             paramValue

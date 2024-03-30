@@ -12,6 +12,7 @@ import {
 import {NotificationsFormType} from "../../pages/More/EmailNotifications";
 import {signInCall, signUpCall} from "../apiThunks/user";
 import {fetchAllVodCall} from "../apiThunks/vod";
+import {initiatePaymentCall} from "../apiThunks/payment";
 
 const initialGeneralState: InitialGeneralStateType = {
     generalData: null,
@@ -100,6 +101,33 @@ export const generalSlice = createSlice({
             });
             debug.log("vodList", vodList)
             state.generalVerseOfTheDayList = vodList
+        })
+
+        builder.addCase(initiatePaymentCall.pending, state => {
+            state.generalLoading = true
+        })
+        builder.addCase(initiatePaymentCall.rejected, (state, action: any) => {
+            state.generalLoading = false;
+            state.generalMessage = "";
+            state.generalError = {
+                code: action.payload?.response?.data?.responseCode || "89",
+                message:
+                    action.payload?.response?.data?.message ||
+                    // action.error?.message ||
+                    "Unable to initiate payment at the moment",
+            }
+
+        })
+        builder.addCase(initiatePaymentCall.fulfilled, (state, {payload}) => {
+            state.generalLoading = false;
+            state.generalError = null;
+            state.generalMessage = `Successfully initiated payment`;
+            state.generalData = {
+                paymentReference: payload.payload.data.reference,
+                paymentAccessCode: payload.payload.data.access_code,
+                paymentWebUrl: payload.payload.data.authorization_url,
+            }
+
         })
     }
 });

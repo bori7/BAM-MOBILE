@@ -18,7 +18,7 @@ export interface CallbackGetResponsePayload {
     amount: string;
     currency: string;
     userId: string;
-    status: "PENDING" | string;
+    status: "PENDING" | "SUCCESS" | string;
     message: string;
     channel: "bank" | string;
     fees: string;
@@ -28,4 +28,6 @@ export interface CallbackGetResponsePayload {
     createdAt: string;
     access_code: string;
     createdDate: string;
+    subscriptionStatus: string;
+    subscriptionType: string;
 }

@@ -44,8 +44,8 @@ const ContentDevotional: React.FC<NavigationProps> = ({
                                                           route,
                                                       }) => {
     const dispatch = useDispatch<AppDispatch>();
-    const [hideModal, setHideModal] = useState<boolean>(false);
-    const [hideSubscription, setHideSubscription] = useState<boolean>(false);
+    const [showModal, setShowModal] = useState<boolean>(false);
+    const [showSubscription, setShowSubscription] = useState<boolean>(false);
     const [modalType, setModalType] = useState<"speaker" | "text" | "notes">();
     const [selectedDevotional, setSelectedDevotionals] =
         useState<SelectedDevotionalDataType | null>();
@@ -65,15 +65,24 @@ const ContentDevotional: React.FC<NavigationProps> = ({
         setSelectedDevotionals(selectedDevotionalData);
     });
 
-    useFocusEffect(() => {
+    useEffect(() => {
+        setShowModal(false);
         setTimeout(() => {
-            setHideModal(false);
-            setHideSubscription(userData?.hasSubscribed || false);
-            // setHideSubscription(false);
-        }, 3000);
-    });
 
-    const shareData = async (val: string) => {
+            setShowSubscription(!userData?.hasSubscribed);
+            // setHideSubscription(false);
+        }, 5000);
+    },[]);
+
+    // useFocusEffect(() => {
+    //     setTimeout(() => {
+    //         setShowModal(false);
+    //         setShowSubscription(!userData?.hasSubscribed);
+    //         // setHideSubscription(false);
+    //     }, 5000);
+    // });
+    const
+        shareData = async (val: string) => {
         try {
             await Share.share({
                 title: "Devotional",
@@ -116,7 +125,7 @@ const ContentDevotional: React.FC<NavigationProps> = ({
                                 style={styles.h1r1}
                                 onPress={() => {
                                     setModalType("speaker");
-                                    setHideModal(true);
+                                    setShowModal(true);
                                 }}
                             >
                                 <SpeakerSVG/>
@@ -125,7 +134,7 @@ const ContentDevotional: React.FC<NavigationProps> = ({
                                 style={styles.h1r2}
                                 onPress={() => {
                                     setModalType("text");
-                                    setHideModal(true);
+                                    setShowModal(true);
                                 }}
                             >
                                 <Text style={styles.h1r2t}>Aa</Text>
@@ -134,7 +143,7 @@ const ContentDevotional: React.FC<NavigationProps> = ({
                                 style={styles.h1r3}
                                 onPress={() => {
                                     setModalType("notes");
-                                    setHideModal(true);
+                                    setShowModal(true);
                                 }}
                             >
                                 <NotePadSVG/>
@@ -199,9 +208,9 @@ const ContentDevotional: React.FC<NavigationProps> = ({
                 </View>
             </View>
             <ControlModal2
-                visible={hideModal}
+                visible={showModal}
                 closeModal={() => {
-                    setHideModal(false);
+                    setShowModal(false);
                 }}
                 children={
                     <>
@@ -214,7 +223,7 @@ const ContentDevotional: React.FC<NavigationProps> = ({
                                     `New Note ${new Date().toISOString()}`
                                 }
                                 setModalVisible={() => {
-                                    setHideModal(false);
+                                    setShowModal(false);
                                 }}
                             />
                         )}
@@ -222,13 +231,13 @@ const ContentDevotional: React.FC<NavigationProps> = ({
                 }
             />
             <SubscriptionModal
-                visible={hideSubscription}
+                visible={showSubscription}
                 closeModal={() => {
-                    setHideSubscription(false);
+                    setShowSubscription(false);
                     navigation?.goBack();
                 }}
                 handleUpgrade={() => {
-                    setHideSubscription(false);
+                    setShowSubscription(false);
                     navigation?.navigate(RootRoutes.More, {
                         screen: MoreRoutes.SubscriptionMain,
                     });

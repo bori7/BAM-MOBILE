@@ -61,7 +61,7 @@ export const PAYSTACK_VERIFY_URL = `${PAYMENT_BASE_URL}/paystack/{paymentref}`;
 export const GIVING_FETCH_ALL_URL = `${PAYMENT_BASE_URL}/giving/all/{userId}`;
 export const GIVING_FETCH_URL = `${PAYMENT_BASE_URL}/giving/{giving_ref}`;
 // #######################################SUBSCRIPTION############################################################
-export const SUBSCRIPTION_FETCH_URL = `${PAYMENT_BASE_URL}/subscription/{subscriptionId}`;
+export const SUBSCRIPTION_FETCH_URL = `${PAYMENT_BASE_URL}/subscription/{userId}`;
 // #######################################PAYMENT_CALLBACK############################################################
 export const CALLBACK_POST_URL = `${PAYMENT_BASE_URL}/paystack/callback`;
 export const CALLBACK_GET_URL = `${PAYMENT_BASE_URL}/paystack/callback?trxref={trxref}&reference={ref}`;

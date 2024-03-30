@@ -11,6 +11,7 @@ import {userActions} from "../../store/slices/user";
 import {devotionalActions} from "../../store/slices/devotional";
 import {notesActions} from "../../store/slices/notes";
 import {prayersActions} from "../../store/slices/prayer";
+import {moreActions} from "../../store/slices/more";
 
 type props = {
     child: any;
@@ -71,6 +72,10 @@ export default function Wrapper({child}: props) {
     const devotionalState = useSelector((state: RootState) => state.devotional);
     const {devotionalLoading, devotionalError} = devotionalState;
 
+    const moreState = useSelector((state: RootState) => state.more);
+    const {moreError, moreMessage, moreLoading} = moreState;
+
+
     const screenNotificationState = useSelector(
         (state: RootState) => state.screenNotification
     );
@@ -114,10 +119,14 @@ export default function Wrapper({child}: props) {
             });
         }
 
-        // if (planMessage) {
-        //   Toaster("success", planMessage, () => {});
-        // }
-    }, [notificationData, userError, userMessage, devotionalError, notesError, prayersError]);
+        if (moreError !== null) {
+            Toaster("error", moreError?.message, () => {
+                dispatch(moreActions.clearMoreError())
+            });
+        }
+
+
+    }, [notificationData, userError, userMessage, devotionalError, notesError, prayersError, moreError]);
 
     useEffect(() => {
     }, []);
@@ -142,7 +151,9 @@ export default function Wrapper({child}: props) {
                                 })
                             );
                         }}
-                        onDismissFunc={screenFunction}
+                        onDismissFunc={() => {
+                            screenFunction?.()
+                        }}
                         onShowFunc={() => {
                         }}
                     />

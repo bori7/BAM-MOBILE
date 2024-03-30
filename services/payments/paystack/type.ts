@@ -1,10 +1,10 @@
 export interface InitiatePaystackRequestType {
     email: string;
     amount: string;
-    currency: "NGN" | "USD";
+    currency: "NGN" | "USD" | string;
     reference: string;
     userId: string;
-    subscriptionType: "ANNUALLY" | "QUARTERLY" | "MONTHLY";
+    subscriptionType: "ANNUALLY" | "QUARTERLY" | "MONTHLY" | string;
 }
 
 export interface InitiatePaystackPayloadType {

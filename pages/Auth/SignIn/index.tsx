@@ -33,6 +33,7 @@ import {userActions} from "../../../store/slices/user";
 import {fetchAllDevotionalCall, fetchUserDevotionalCall} from "../../../store/apiThunks/devotional";
 import {fetchNoteByUserIdCall} from "../../../store/apiThunks/note";
 import {fetchPrayerByUserIdCall} from "../../../store/apiThunks/prayer";
+import {fetchLiveSubscriptionCall} from "../../../store/apiThunks/payment";
 
 // type NavigationProps = CompositeScreenProps<
 //   RootScreenProps<RootRoutes.Main>,
@@ -122,6 +123,9 @@ const SignIn: React.FC<NavigationProps> = ({navigation, route}) => {
         )).unwrap()
             .then(async (res) => {
                 debug.log("res", res)
+                await dispatch(fetchLiveSubscriptionCall({
+                    fetchLiveSubscriptionRequest: {}
+                }))
                 await dispatch(fetchAllVodCall(
                     {fetchAllVodRequest: null}
                 )).unwrap()

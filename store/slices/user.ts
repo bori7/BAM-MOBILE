@@ -12,6 +12,7 @@ import {
     updateUserCall,
     updateUserImageCall, updateUserPasswordCall, verificationVerificationCodeCall
 } from "../apiThunks/user";
+import {fetchLiveSubscriptionCall} from "../apiThunks/payment";
 
 const initialUserState: InitialUserStateType = {
     userData: {
@@ -267,6 +268,34 @@ export const userSlice = createSlice({
             }
         })
 
+
+        builder.addCase(fetchLiveSubscriptionCall.pending, state => {
+            // state.userLoading = true;
+
+        })
+
+        builder.addCase(fetchLiveSubscriptionCall.fulfilled, (state, {payload}) => {
+            // state.userLoading = false;
+            state.userError = null;
+            // state.userMessage = ``;
+            state.userData = {
+                ...state.userData,
+                hasSubscribed: "ACTIVE" === payload.payload.subscriptionStatus
+                // token: payload.payload.token,
+            };
+        })
+        builder.addCase(fetchLiveSubscriptionCall.rejected, (state, action: any) => {
+            // state.userLoading = false;
+            // state.userMessage = "";
+            // state.userData = null;
+            state.userError = {
+                code: action.payload?.response?.data?.responseCode || "87",
+                message:
+                    action.payload?.response?.data?.message ||
+                    // action.error?.message ||
+                    "Unable to fetch live subscription at the moment",
+            }
+        })
 
     }
 });

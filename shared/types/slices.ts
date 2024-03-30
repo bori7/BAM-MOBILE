@@ -146,7 +146,7 @@ export interface ActiveSubscriptionDataType {
 
 export type SubscriptionType = "Annually" | "Quarterly" | "Monthly";
 export type StatusType = "Active" | "Suspended" | "Pending";
-export type PaymentMethodType = "Account" | "Card" | "Transfer";
+export type PaymentMethodType = "Account" | "Card" | "Transfer" | "Bank";
 export type GivingPaymentMethodType = "D" | "T" | "C" | "A";
 
 export interface GivingTransactionDataType {
@@ -193,6 +193,9 @@ export interface InitialGeneralStateType {
 }
 
 export interface GeneralDataType {
+    paymentWebUrl: string;
+    paymentAccessCode: string;
+    paymentReference: string;
 }
 
 export interface NotificationsFormSliceType {

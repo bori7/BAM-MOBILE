@@ -22,6 +22,7 @@ import {
     SignUpRequestType, UpdateUserImageRequestType, UpdateUserPasswordRequestType, VerifyVerificationCodeRequestType
 } from "../../services/user/type";
 import {CreateVODRequestType} from "../../services/vod/type";
+import {SubscriptionFetchRequestType} from "../../services/payments/subscription/type";
 
 export type InitBAMThunkApiConfig = { state: StateSchema };
 
@@ -200,5 +201,5 @@ export type InitVerifyPaymentThunkArg = {
 }
 
 export type InitFetchLiveSubscriptionThunkArg = {
-    fetchLiveSubscriptionRequest: null;
+    fetchLiveSubscriptionRequest: SubscriptionFetchRequestType;
 }
