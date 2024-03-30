@@ -39,6 +39,7 @@ export interface DevotionalType {
     time: string;
     image: string;
     dateTime: string | null;
+    datetime: string;
     bibleVerse: string;
     keyText: string;
     keyVerse: string;

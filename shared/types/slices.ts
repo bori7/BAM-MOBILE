@@ -87,6 +87,7 @@ export interface DevotionalItemProps {
     title: string;
     text: string;
     ticked: boolean;
+    datetime: string;
 }
 
 export interface InitialDevotionalStateType {

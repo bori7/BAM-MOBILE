@@ -155,6 +155,7 @@ export const devotionalSlice = createSlice({
                     title: devo.title,
                     text: devo.text,
                     ticked: false,
+                    datetime: devo.updatedAt
                 }
             });
             debug.log("devotionalList", devotionalList)

@@ -159,6 +159,25 @@ export const getDaysElapsed = (): number => {
     return daysElapsed
 }
 
+export const diffBetweenTwoDates = (fro: string, to: string) => {
+    const startDate = new Date(fro);
+    const endDate = new Date(to);
+
+    const diff = endDate.getTime() - startDate.getTime();
+
+    return diff;
+}
+
+
+export const equalityBetweenTwoDates = (fro: string, to: string) => {
+    const startDate = new Date(fro);
+    const endDate = new Date(to);
+
+    const diff = endDate.getTime() - startDate.getTime();
+
+    return diff > 0
+}
+
 export const isLeapYear = (year: number) => {
     return (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0;
 }
