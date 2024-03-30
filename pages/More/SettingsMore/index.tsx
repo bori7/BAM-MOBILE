@@ -126,29 +126,31 @@ const SettingsMore: React.FC<NavigationProps> = ({navigation, route}) => {
                             >
                                 <Text style={styles.innerTimeText}>Change Password</Text>
                             </TouchableOpacity>
-                            <TouchableOpacity
-                                style={styles.innerTimeTextC}
-                                onPress={() => {
-                                    navigation?.navigate(MoreRoutes.Notifications);
-                                }}
-                            >
-                                <Text style={styles.innerTimeText}>Notifications</Text>
-                            </TouchableOpacity>
+                            {/*          TODO: MVP2*/}
+                            {/*<TouchableOpacity*/}
+                            {/*    style={styles.innerTimeTextC}*/}
+                            {/*    onPress={() => {*/}
+                            {/*        navigation?.navigate(MoreRoutes.Notifications);*/}
+                            {/*    }}*/}
+                            {/*>*/}
+                            {/*    <Text style={styles.innerTimeText}>Notifications</Text>*/}
+                            {/*</TouchableOpacity>*/}
                         </View>
-                        <Text style={styles.timeText}>PREFERENCES</Text>
-                        <View style={styles.innerTimeTexts}>
-                            <TouchableOpacity
-                                style={styles.innerTimeTextC}
-                                onPress={() => {
-                                    navigation?.navigate(MoreRoutes.DarkMode);
-                                }}
-                            >
-                                <Text style={styles.innerTimeText}>Dark Mode</Text>
-                            </TouchableOpacity>
-                            {/* <TouchableOpacity style={styles.innerTimeTextC}>
-                <Text style={styles.innerTimeText}>Font Size</Text>
-              </TouchableOpacity> */}
-                        </View>
+                        {/*          TODO: MVP2*/}
+                        {/*          <Text style={styles.timeText}>PREFERENCES</Text>*/}
+                        {/*          <View style={styles.innerTimeTexts}>*/}
+                        {/*              <TouchableOpacity*/}
+                        {/*                  style={styles.innerTimeTextC}*/}
+                        {/*                  onPress={() => {*/}
+                        {/*                      navigation?.navigate(MoreRoutes.DarkMode);*/}
+                        {/*                  }}*/}
+                        {/*              >*/}
+                        {/*                  <Text style={styles.innerTimeText}>Dark Mode</Text>*/}
+                        {/*              </TouchableOpacity>*/}
+                        {/*              /!* <TouchableOpacity style={styles.innerTimeTextC}>*/}
+                        {/*  <Text style={styles.innerTimeText}>Font Size</Text>*/}
+                        {/*</TouchableOpacity> *!/*/}
+                        {/*          </View>*/}
                     </ScrollView>
                 </View>
             </View>

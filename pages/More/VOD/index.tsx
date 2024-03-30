@@ -120,22 +120,23 @@ const VOD: React.FC<NavigationProps> = ({navigation, route}) => {
                             <View style={styles.v1rb}>
                                 {!allowEdit && (
                                     <>
-                                        <TouchableOpacity
-                                            style={styles.v1rbt2}
-                                            onPress={() => {
-                                                // setHideOptions(!hideOptions);
-                                                navigation?.navigate(RootRoutes.More, {
-                                                    screen: MoreRoutes.PushNotifications,
-                                                    params: undefined,
-                                                });
-                                            }}
-                                        >
-                                            <Ionicons
-                                                name="settings-outline"
-                                                size={28}
-                                                color={COLORS.Light.colorFour}
-                                            />
-                                        </TouchableOpacity>
+                                        {/*          TODO: MVP2*/}
+                                        {/*<TouchableOpacity*/}
+                                        {/*    style={styles.v1rbt2}*/}
+                                        {/*    onPress={() => {*/}
+                                        {/*        // setHideOptions(!hideOptions);*/}
+                                        {/*        navigation?.navigate(RootRoutes.More, {*/}
+                                        {/*            screen: MoreRoutes.PushNotifications,*/}
+                                        {/*            params: undefined,*/}
+                                        {/*        });*/}
+                                        {/*    }}*/}
+                                        {/*>*/}
+                                        {/*    <Ionicons*/}
+                                        {/*        name="settings-outline"*/}
+                                        {/*        size={28}*/}
+                                        {/*        color={COLORS.Light.colorFour}*/}
+                                        {/*    />*/}
+                                        {/*</TouchableOpacity>*/}
                                     </>
                                 )}
                             </View>

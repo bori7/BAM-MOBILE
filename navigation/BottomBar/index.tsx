@@ -66,18 +66,18 @@ const TAB_OPTIONS: TabOptions = {
     component: NotesMain as React.FC,
   },
 
-  Search: {
-    label: "Search",
-
-    icon: ({ color }: { color: string }) => {
-      return (
-        <>
-          <SearchIcon stroke={color} />
-        </>
-      );
-    },
-    component: SearchMain as React.FC,
-  },
+  // Search: {
+  //   label: "Search",
+  //
+  //   icon: ({ color }: { color: string }) => {
+  //     return (
+  //       <>
+  //         <SearchIcon stroke={color} />
+  //       </>
+  //     );
+  //   },
+  //   component: SearchMain as React.FC,
+  // },
   More: {
     label: "More",
     icon: ({ color }: { color: string }) => {

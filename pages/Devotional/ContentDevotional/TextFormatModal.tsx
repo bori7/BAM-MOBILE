@@ -25,28 +25,29 @@ const TextFormatModal = () => {
           <Text style={styles.r1bt}>A</Text>
         </TouchableOpacity>
       </View>
-      <View style={styles.r2}>
-        <View style={styles.r2a}>
-          <Text style={styles.r2at1}>
-            <Ionicons name="moon" size={26} color={COLORS.Light.colorFour} />
-          </Text>
-          <Text style={styles.r2at2}>Dark Mode</Text>
-        </View>
+      {/*TODO: MVP2*/}
+      {/*<View style={styles.r2}>*/}
+      {/*  <View style={styles.r2a}>*/}
+      {/*    <Text style={styles.r2at1}>*/}
+      {/*      <Ionicons name="moon" size={26} color={COLORS.Light.colorFour} />*/}
+      {/*    </Text>*/}
+      {/*    <Text style={styles.r2at2}>Dark Mode</Text>*/}
+      {/*  </View>*/}
 
-        <Switch
-          trackColor={{
-            true: COLORS.Light.colorOne,
-            false: COLORS.Light.tickGray,
-          }}
-          thumbColor={COLORS.Light.background}
-          style={styles.r2b}
-          onValueChange={() => {
-            setTicked(!ticked);
-          }}
-          value={ticked}
-          ios_backgroundColor={COLORS.Light.tickGray}
-        />
-      </View>
+      {/*  <Switch*/}
+      {/*    trackColor={{*/}
+      {/*      true: COLORS.Light.colorOne,*/}
+      {/*      false: COLORS.Light.tickGray,*/}
+      {/*    }}*/}
+      {/*    thumbColor={COLORS.Light.background}*/}
+      {/*    style={styles.r2b}*/}
+      {/*    onValueChange={() => {*/}
+      {/*      setTicked(!ticked);*/}
+      {/*    }}*/}
+      {/*    value={ticked}*/}
+      {/*    ios_backgroundColor={COLORS.Light.tickGray}*/}
+      {/*  />*/}
+      {/*</View>*/}
     </View>
   );
 };

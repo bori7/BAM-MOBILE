@@ -87,40 +87,41 @@ const SettingsDevotional: React.FC<NavigationProps> = ({
               <Text style={styles.fr1r4}>Start Date: Jan 1, 2023</Text>
               <Text style={styles.fr1r5}>End Date: Dec 31, 2023</Text>
             </View>
-            <View style={styles.fr2}>
-              <Text style={styles.fr2r1}>Set Reminder</Text>
-              <View style={styles.fr2r2}>
-                <View style={styles.fr2r2C}>
-                  <Text style={styles.fr2r2t1}>{selectedTime}</Text>
-                  <TouchableOpacity style={styles.fr2r2t2}>
-                    {/* <AntDesign
-                      name="caretdown"
-                      size={18}
-                      color={COLORS.Light.colorFour}
-                    /> */}
-                    <ClockModal
-                      pickSelectedTime={function (time: string): void {
-                        setSelectedTime(time);
-                      }}
-                    />
-                  </TouchableOpacity>
-                </View>
+            {/*          TODO: MVP2*/}
+            {/*<View style={styles.fr2}>*/}
+            {/*  <Text style={styles.fr2r1}>Set Reminder</Text>*/}
+            {/*  <View style={styles.fr2r2}>*/}
+            {/*    <View style={styles.fr2r2C}>*/}
+            {/*      <Text style={styles.fr2r2t1}>{selectedTime}</Text>*/}
+            {/*      <TouchableOpacity style={styles.fr2r2t2}>*/}
+            {/*        /!* <AntDesign*/}
+            {/*          name="caretdown"*/}
+            {/*          size={18}*/}
+            {/*          color={COLORS.Light.colorFour}*/}
+            {/*        /> *!/*/}
+            {/*        <ClockModal*/}
+            {/*          pickSelectedTime={function (time: string): void {*/}
+            {/*            setSelectedTime(time);*/}
+            {/*          }}*/}
+            {/*        />*/}
+            {/*      </TouchableOpacity>*/}
+            {/*    </View>*/}
 
-                <Switch
-                  trackColor={{
-                    true: COLORS.Light.colorOne,
-                    false: COLORS.Light.tickGray,
-                  }}
-                  thumbColor={COLORS.Light.background}
-                  style={styles.fr2r2t3}
-                  onValueChange={() => {
-                    setTicked(!ticked);
-                  }}
-                  value={ticked}
-                  ios_backgroundColor={COLORS.Light.tickGray}
-                />
-              </View>
-            </View>
+            {/*    <Switch*/}
+            {/*      trackColor={{*/}
+            {/*        true: COLORS.Light.colorOne,*/}
+            {/*        false: COLORS.Light.tickGray,*/}
+            {/*      }}*/}
+            {/*      thumbColor={COLORS.Light.background}*/}
+            {/*      style={styles.fr2r2t3}*/}
+            {/*      onValueChange={() => {*/}
+            {/*        setTicked(!ticked);*/}
+            {/*      }}*/}
+            {/*      value={ticked}*/}
+            {/*      ios_backgroundColor={COLORS.Light.tickGray}*/}
+            {/*    />*/}
+            {/*  </View>*/}
+            {/*</View>*/}
             <View style={styles.fr3}>
               <Text style={styles.fr3t1}>Language</Text>
               <Text style={styles.fr3t2}>English</Text>

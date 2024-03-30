@@ -311,26 +311,27 @@ const SignIn: React.FC<NavigationProps> = ({navigation, route}) => {
                                 // disabled={!proceed}
                             />
                         </View>
-                        <View style={styles.r9}>
-                            <Text style={styles.r9t1}>or sign in with</Text>
-                        </View>
-                        <View style={styles.r10}>
-                            <TouchableOpacity style={styles.r10t1}>
-                                <Image
-                                    source={IMAGES.googleLogo}
-                                    // style={styles.r2t}
-                                />
-                            </TouchableOpacity>
-                            <TouchableOpacity style={styles.r10t1}>
-                                <AppleLogo/>
-                            </TouchableOpacity>
-                            <TouchableOpacity style={styles.r10t1}>
-                                <Image
-                                    source={IMAGES.facebookLogo}
-                                    // style={styles.r2t}
-                                />
-                            </TouchableOpacity>
-                        </View>
+                        {/*          TODO: MVP2*/}
+                        {/*<View style={styles.r9}>*/}
+                        {/*    <Text style={styles.r9t1}>or sign in with</Text>*/}
+                        {/*</View>*/}
+                        {/*<View style={styles.r10}>*/}
+                        {/*    <TouchableOpacity style={styles.r10t1}>*/}
+                        {/*        <Image*/}
+                        {/*            source={IMAGES.googleLogo}*/}
+                        {/*            // style={styles.r2t}*/}
+                        {/*        />*/}
+                        {/*    </TouchableOpacity>*/}
+                        {/*    <TouchableOpacity style={styles.r10t1}>*/}
+                        {/*        <AppleLogo/>*/}
+                        {/*    </TouchableOpacity>*/}
+                        {/*    <TouchableOpacity style={styles.r10t1}>*/}
+                        {/*        <Image*/}
+                        {/*            source={IMAGES.facebookLogo}*/}
+                        {/*            // style={styles.r2t}*/}
+                        {/*        />*/}
+                        {/*    </TouchableOpacity>*/}
+                        {/*</View>*/}
                         <View style={styles.r7}>
                             <Text style={styles.r7t1}>Don’t have an account? </Text>
                             <TouchableOpacity
