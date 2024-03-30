@@ -83,9 +83,14 @@ export const fetchAllGivingCall = createAsyncThunk<
         let ipAddress = await getDeviceIpAddress();
         const state = getState();
 
+        fetchAllGivingRequest = {
+            ...fetchAllGivingRequest,
+            userId: state.user.userData?.id || ""
+        }
         const accessToken = state.user.userData?.token || "";
         return await GivingService.fetchAllGiving(
             accessToken,
+            fetchAllGivingRequest
         )
             .then((res) => {
                 debug.api_success("fetchAllGiving", res);
@@ -112,9 +117,13 @@ export const fetchGivingCall = createAsyncThunk<
         let ipAddress = await getDeviceIpAddress();
         const state = getState();
 
+        fetchGivingRequest = {
+            ...fetchGivingRequest,
+        }
         const accessToken = state.user.userData?.token || "";
         return await GivingService.fetchGiving(
             accessToken,
+            fetchGivingRequest
         )
             .then((res) => {
                 debug.api_success("fetchGiving", res);

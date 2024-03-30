@@ -115,3 +115,8 @@ export interface VerifyPaystackRequestType {
         subaccount: object | {};
     };
 }
+
+export interface FetchGivingRequestType {
+    reference?: string;
+    userId?: string;
+}

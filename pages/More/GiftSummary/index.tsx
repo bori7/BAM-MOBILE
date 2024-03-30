@@ -126,6 +126,8 @@ const GiftSummary: React.FC<NavigationProps> = ({ navigation, route }) => {
                   {selectedGivingTransaction?.paymentMethod === "A" &&
                     "Account"}
                   {selectedGivingTransaction?.paymentMethod === "D" && "Debit"}
+                  {selectedGivingTransaction?.paymentMethod === "B" &&
+                      "Bank"}
                 </Text>
               </View>
               <View style={styles.r3a}>
@@ -152,7 +154,7 @@ const GiftSummary: React.FC<NavigationProps> = ({ navigation, route }) => {
               </View>
               <View style={styles.r3a}>
                 <Text style={styles.r3at1}>Reference</Text>
-                <Text style={styles.r3at2}>
+                <Text style={styles.r3at2} numberOfLines={3} >
                   {selectedGivingTransaction?.reference}
                 </Text>
               </View>
@@ -318,10 +320,14 @@ const styles = StyleSheet.create({
     color: COLORS.Light.deeperGreyColor,
     fontWeight: "400",
     fontSize: SIZES.sizeSixB,
+    width:"50%"
   },
   r3at2: {
     // backgroundColor: COLORS.Light.hashBackGroundL2,
     fontWeight: "400",
     fontSize: SIZES.sizeSixC,
+    flexShrink:1,
+    // textAlign:"right",
+
   },
 });

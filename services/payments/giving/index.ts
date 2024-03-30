@@ -1,6 +1,6 @@
 import {AxiosRequestHeaders} from "axios";
 import {GenericResponseType} from "../../type";
-import {VerifyPaystackRequestType} from "../paystack/type";
+import {FetchGivingRequestType, VerifyPaystackRequestType} from "../paystack/type";
 import {getByWithPathParam, getFor} from "../../index";
 import {
     FETCH_NOTE_BY_ID_URL,
@@ -15,15 +15,19 @@ export class GivingService {
 
     static async fetchAllGiving(
         token: string | undefined,
+        request: FetchGivingRequestType,
         extraHeaders?: AxiosRequestHeaders | undefined | {}
     ): Promise<GenericResponseType<FetchGivingPayloadType[]>> {
-        return await getFor(GIVING_FETCH_ALL_URL, token);
+        const url = GIVING_FETCH_ALL_URL.replace("{userId}", request.userId || "")
+        return await getFor(url, token);
     }
 
     static async fetchGiving(
         token: string | undefined,
+        request: FetchGivingRequestType,
         extraHeaders?: AxiosRequestHeaders | undefined | {}
     ): Promise<GenericResponseType<FetchGivingPayloadType>> {
-        return await getFor(GIVING_FETCH_URL, token);
+        const url = GIVING_FETCH_URL.replace("{giving_ref}", request.reference || "")
+        return await getFor(url, token);
     }
 }

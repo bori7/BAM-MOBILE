@@ -147,7 +147,7 @@ export interface ActiveSubscriptionDataType {
 export type SubscriptionType = "Annually" | "Quarterly" | "Monthly";
 export type StatusType = "Active" | "Suspended" | "Pending";
 export type PaymentMethodType = "Account" | "Card" | "Transfer" | "Bank";
-export type GivingPaymentMethodType = "D" | "T" | "C" | "A";
+export type GivingPaymentMethodType = "D" | "T" | "C" | "A" | "B";
 
 export interface GivingTransactionDataType {
     uid?: string;

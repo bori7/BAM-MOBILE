@@ -15,6 +15,7 @@ import {ActivityIndicator} from "react-native-paper";
 import WebView from "react-native-webview";
 import {useSelector} from "react-redux";
 import {RootState} from "../../store";
+import {CONSTANT_URL_CONTEXT} from "../../constants/props";
 // import { ActivityIndicator } from "react-native-paper";
 
 type ICustomPaymentProps = {
@@ -48,7 +49,7 @@ export const CustomPaymentModal = (
 
     const defaultWebUrl = "https://checkout.paystack.com/b7r6ulepnufdy1i";
 
-    const CONSTANT_URL_CONTEXT = "paystack/callback";
+    // const CONSTANT_URL_CONTEXT = "paystack/callback";
     const refreshWebView = () => {
         webViewRef?.current?.reload();
     };

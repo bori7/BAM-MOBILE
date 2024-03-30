@@ -141,7 +141,7 @@ export default function Wrapper({child}: props) {
                 >
                     <View style={{height: "100%", width: "100%"}}>{child}</View>
                     <CustomLoadingModal
-                        visible={screenLoading || userLoading || generalLoading || notesLoading}
+                        visible={screenLoading || userLoading || generalLoading || notesLoading || moreLoading}
                         closeModal={() => {
                             dispatch(
                                 screenNotificationActions.updateScreenLoadingFunc({

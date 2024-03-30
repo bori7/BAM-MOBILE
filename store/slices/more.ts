@@ -1,6 +1,6 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {
-    ActiveSubscriptionDataType,
+    ActiveSubscriptionDataType, GivingPaymentMethodType,
     GivingTransactionDataType,
     InitialMoreStateType,
     MoreDataType, PaymentMethodType, StatusType, SubscriptionType,
@@ -15,7 +15,7 @@ import {
     formatSubscriptionDate,
     generateUUID,
 } from "../../shared/helper";
-import {fetchLiveSubscriptionCall} from "../apiThunks/payment";
+import {fetchAllGivingCall, fetchGivingCall, fetchLiveSubscriptionCall} from "../apiThunks/payment";
 import StringsFormat from "../../shared/lib/stringsFormat";
 
 const initialMoreState: InitialMoreStateType = {
@@ -71,8 +71,8 @@ export const moreSlice = createSlice({
             let numberOfDaysLeft = Math.floor(
                 (Number(nextSubscription) - Number(new Date())) / (1000 * 3600 * 24)
             );
-            debug.log("nextSubscription",nextSubscription);
-            debug.log("numberOfDaysLeft",numberOfDaysLeft);
+            debug.log("nextSubscription", nextSubscription);
+            debug.log("numberOfDaysLeft", numberOfDaysLeft);
 
             let newActiveSubscriptionData: ActiveSubscriptionDataType = {
                 subscriptionType: action.payload.subscriptionType,
@@ -174,6 +174,84 @@ export const moreSlice = createSlice({
                     "Unable to fetch live subscription at the moment",
             }
         })
+
+
+        builder.addCase(fetchAllGivingCall.pending, state => {
+        })
+        builder.addCase(fetchAllGivingCall.fulfilled, (state, {payload}) => {
+            state.moreError = null;
+            // state.userMessage = ``;
+            state.givingTransactions = payload.payload?.map((gTransaction, idx) => {
+                const datetime = new Date(gTransaction.createdDate).toISOString();
+                const time = new Date(gTransaction.createdDate)
+                    .toLocaleTimeString(undefined, timeOptions)
+                    .toLocaleUpperCase();
+                const date = formatSubscriptionDate(new Date(gTransaction.createdDate));
+                return {
+                    uid: gTransaction.id,
+                    currency: gTransaction.currency,
+                    amount: gTransaction.amount,
+                    status: gTransaction.status,
+                    date,
+                    time,
+                    datetime,
+                    paymentMethod: gTransaction?.channel?.toUpperCase()?.substring(0, 1) as GivingPaymentMethodType,
+                    reference: gTransaction.reference
+                }
+            }).reverse() || []
+
+        })
+        builder.addCase(fetchAllGivingCall.rejected, (state, action: any) => {
+            // state.userLoading = false;
+            // state.userMessage = "";
+            // state.userData = null;
+            state.moreError = {
+                code: action.payload?.response?.data?.responseCode || "87",
+                message:
+                    action.payload?.response?.data?.message ||
+                    // action.error?.message ||
+                    "Unable to fetch all givings at the moment",
+            }
+        })
+
+        builder.addCase(fetchGivingCall.pending, state => {
+            state.moreLoading = true;
+        })
+        builder.addCase(fetchGivingCall.fulfilled, (state, {payload}) => {
+            state.moreLoading = false;
+            state.moreError = null;
+            // state.userMessage = ``;
+            const datetime = new Date(payload.payload.createdDate).toISOString();
+            const time = new Date(payload.payload.createdDate)
+                .toLocaleTimeString(undefined, timeOptions)
+                .toLocaleUpperCase();
+            const date = formatSubscriptionDate(new Date(payload.payload.createdDate));
+            state.selectedGivingTransaction = {
+                uid: payload.payload.id,
+                currency: payload.payload.currency,
+                amount: payload.payload.amount,
+                status: payload.payload.status,
+                date,
+                time,
+                datetime,
+                paymentMethod: payload.payload?.channel?.toUpperCase()?.substring(0, 1) as GivingPaymentMethodType,
+                reference: payload.payload?.reference
+            }
+        })
+        builder.addCase(fetchGivingCall.rejected, (state, action: any) => {
+            state.moreLoading = false;
+            // state.userMessage = "";
+            // state.userData = null;
+            state.moreError = {
+                code: action.payload?.response?.data?.responseCode || "87",
+                message:
+                    action.payload?.response?.data?.message ||
+                    // action.error?.message ||
+                    "Unable to fetch this detail at the moment",
+            }
+        })
+
+
     }
 });
 

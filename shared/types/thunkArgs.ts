@@ -1,7 +1,7 @@
 import {CreateNoteRequestType, FetchNoteByIdType, FetchNoteByUserIdType} from "../../services/note/type";
 import {StateSchema} from "../../store/config";
 import {CallbackGetRequestType, CallbackPostRequestType} from "../../services/payments/callback/type";
-import {InitiatePaystackRequestType} from "../../services/payments/paystack/type";
+import {FetchGivingRequestType, InitiatePaystackRequestType} from "../../services/payments/paystack/type";
 import {CreateNotificationsRequestType, FetchNotificationByIdType} from "../../services/notifications/type";
 import {CreatePrayerRequestType, FetchPrayerByIdType} from "../../services/prayer/type";
 import {
@@ -185,11 +185,11 @@ export type InitPaystaclkGetThunkArg = {
 }
 
 export type InitFetchAllGivingThunkArg = {
-    fetchAllGivingRequest: null;
+    fetchAllGivingRequest: FetchGivingRequestType;
 }
 
 export type InitFetchGivingThunkArg = {
-    fetchGivingRequest: null;
+    fetchGivingRequest: FetchGivingRequestType;
 }
 
 export type InitInitiatePaymentThunkArg = {
