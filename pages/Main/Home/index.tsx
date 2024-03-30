@@ -31,6 +31,9 @@ import {GeneralVerseOfTheDayType} from "../../../shared/types/slices";
 import {fetchDevotionalByIdCall, updateUserDevotionalCall} from "../../../store/apiThunks/devotional";
 import {devotionalActions} from "../../../store/slices/devotional";
 import {MainProfileSVG} from "../../../shared/components/SVGS";
+import {MoreRoutes} from "../../../shared/const/routerMore";
+import {createPrayerCall} from "../../../store/apiThunks/prayer";
+import {prayersActions} from "../../../store/slices/prayer";
 
 // type NavigationProps = MainProps<MainRoutes.HomeScreen>;
 
@@ -58,6 +61,9 @@ const Home: React.FC<NavigationProps> = ({navigation, route}) => {
 
     const devotionalState = useSelector((state: RootState) => state.devotional);
     const {devotionalData: {devotionalList, userDevotional}} = devotionalState;
+
+    const prayersState = useSelector((state: RootState) => state.prayer);
+    const {prayersData} = prayersState;
 
     useEffect(() => {
         setCurrVod(generalVerseOfTheDayList[0] || null);
@@ -117,12 +123,64 @@ const Home: React.FC<NavigationProps> = ({navigation, route}) => {
         // setCopiedText('Text copied to clipboard!');
     };
 
+    const handlePray = async () => {
+        await dispatch(createPrayerCall(
+            {
+                createPrayerRequest: {
+                    // id: "",
+                    title: currVOD?.verse || "",
+                    text: currVOD?.text || "",
+                    dateTime: "",
+                    date: "",
+                    time: "",
+                    answered: false,
+                }
+            }
+        )).unwrap()
+            .then((res) => {
+                dispatch(
+                    prayersActions.updateOrAddPrayer({
+                        uid: res.payload.prayerId,
+                        title: currVOD?.verse || "",
+                        text: currVOD?.text || "",
+                        datetime: "",
+                        date: "",
+                        time: "",
+                        answered: false,
+                    })
+                );
+                navigation.navigate(RootRoutes.More, {
+                    screen: MoreRoutes.PrayerEdit,
+                    params: {
+                        prayerId: res.payload.prayerId,
+                    },
+                });
+            }).catch((err) => {
+                debug.error("err in save/add prayer button", err)
+            })
+
+    };
+
+
     const options = [{
         name: "Copy", func: (val: string) => {
             copyToClipboard(val).then(r => debug.log("r", r))
         }
     }, {
-        name: "Pray", func: () => {
+        name: "Pray", func: async () => {
+
+            const existingPrayer = prayersData?.prayersList?.filter((p, idx_) => p.title === currVOD?.verse) || [];
+
+            if (existingPrayer.length === 0) {
+                await handlePray();
+            } else {
+                navigation.navigate(RootRoutes.More, {
+                    screen: MoreRoutes.PrayerEdit,
+                    params: {
+                        prayerId: existingPrayer[0].uid,
+                    },
+                });
+            }
         }
     }];
 
@@ -141,7 +199,15 @@ const Home: React.FC<NavigationProps> = ({navigation, route}) => {
                                 {formatNoteDate(new Date())}
                             </Text>
                         </View>
-                        <TouchableOpacity style={styles.headerC2}>
+                        <TouchableOpacity
+                            style={styles.headerC2}
+                            onPress={() => {
+                                navigation?.navigate(RootRoutes.More, {
+                                    screen: MoreRoutes.Profile,
+                                    params: undefined,
+                                });
+                            }}
+                        >
                             {(userData?.image || userImageBase64) ? (
                                 <Image
                                     source={{uri: userData?.image || userImageBase64}}
@@ -276,14 +342,30 @@ const Home: React.FC<NavigationProps> = ({navigation, route}) => {
                         <View style={styles.v3}>
                             <View style={styles.v3a}>
                                 <Text style={styles.v3at1}>Personal Prayers</Text>
-                                <TouchableOpacity style={styles.v3at2}>
+                                <TouchableOpacity
+                                    style={styles.v3at2}
+                                    onPress={() => {
+                                        navigation?.navigate(RootRoutes.More, {
+                                            screen: MoreRoutes.Prayer,
+                                            params: undefined,
+                                        });
+                                    }}
+                                >
                                     <SolidPray width={30} height={30}/>
                                 </TouchableOpacity>
                             </View>
                             <Text style={styles.v3b}>
                                 Pray without ceasing. God wants to hear from you
                             </Text>
-                            <TouchableOpacity style={styles.v3c}>
+                            <TouchableOpacity
+                                style={styles.v3c}
+                                onPress={() => {
+                                    navigation?.navigate(RootRoutes.More, {
+                                        screen: MoreRoutes.Prayer,
+                                        params: undefined,
+                                    });
+                                }}
+                            >
                                 <Text style={styles.v3ct}>Pray Now</Text>
                             </TouchableOpacity>
                         </View>

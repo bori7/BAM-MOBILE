@@ -22,7 +22,7 @@ import {
 } from "../../../shared/const/routerDevotional";
 import ClockModal from "./ClockModal";
 import { timeOptions } from "../../../constants/values";
-import { convertTo12HourFormat } from "../../../shared/helper";
+import {convertTo12HourFormat, getDaysElapsed, getDaysInYear, getPercentUsedInYear} from "../../../shared/helper";
 
 type NavigationProps = DevotionalProps<DevotionalRoutes.SettingsDevotional>;
 
@@ -79,13 +79,13 @@ const SettingsDevotional: React.FC<NavigationProps> = ({
           >
             <View style={styles.fr1}>
               <Text style={styles.fr1r1}>Daily Living Devotional</Text>
-              <Text style={styles.fr1r2}>Day 265 of 365 (23.4%)</Text>
+              <Text style={styles.fr1r2}>{`Day ${getDaysElapsed()} of ${getDaysInYear(new Date().getFullYear())} (${getPercentUsedInYear()}%)`}</Text>
               <View style={styles.fr1r3}></View>
               <TouchableOpacity style={styles.progressA}>
-                <View style={[styles.progressB, { width: `${23.4}%` }]}></View>
+                <View style={[styles.progressB, { width: `${getPercentUsedInYear()}%` }]}></View>
               </TouchableOpacity>
-              <Text style={styles.fr1r4}>Start Date: Jan 1, 2023</Text>
-              <Text style={styles.fr1r5}>End Date: Dec 31, 2023</Text>
+              <Text style={styles.fr1r4}>{`Start Date: Jan 1, ${new Date().getFullYear()}`}</Text>
+              <Text style={styles.fr1r5}>{`End Date: Dec 31, ${new Date().getFullYear()}`}</Text>
             </View>
             {/*          TODO: MVP2*/}
             {/*<View style={styles.fr2}>*/}

@@ -11,7 +11,7 @@ import {Entypo, Feather, Ionicons} from "@expo/vector-icons";
 import {NotesProps, NotesRoutes} from "../../../shared/const/routerNotes";
 import {CompositeScreenProps, useFocusEffect} from "@react-navigation/native";
 import {RootRoutes, RootScreenProps} from "../../../shared/const/routerRoot";
-import {NoteProps} from "../../../shared/types/slices";
+import {GeneralVerseOfTheDayType, NoteProps} from "../../../shared/types/slices";
 import {AppDispatch, RootState} from "../../../store";
 import {useDispatch, useSelector} from "react-redux";
 import {OptionsPopUp} from "../../Main/Home/OptionsPopUp";
@@ -19,6 +19,9 @@ import {TextInput} from "react-native-paper";
 import {notesActions} from "../../../store/slices/notes";
 import * as Clipboard from "expo-clipboard";
 import {deleteNoteCall, updateNoteCall} from "../../../store/apiThunks/note";
+import {MoreRoutes} from "../../../shared/const/routerMore";
+import {createPrayerCall} from "../../../store/apiThunks/prayer";
+import {prayersActions} from "../../../store/slices/prayer";
 
 // type NavigationProps = NotesProps<NotesRoutes.NotesSearch>;
 
@@ -40,6 +43,11 @@ const NotesEdit: React.FC<NavigationProps> = ({navigation, route}) => {
 
     const notesState = useSelector((state: RootState) => state.notes);
     const {notesData} = notesState;
+
+
+    const prayersState = useSelector((state: RootState) => state.prayer);
+    const {prayersData} = prayersState;
+
 
     const options = [
         {
@@ -84,11 +92,67 @@ const NotesEdit: React.FC<NavigationProps> = ({navigation, route}) => {
         );
     };
 
-    const onClickOption = (type: string) => {
+    const handlePray = async () => {
+        await dispatch(createPrayerCall(
+            {
+                createPrayerRequest: {
+                    // id: "",
+                    title: noteTitle,
+                    text: noteText,
+                    dateTime: "",
+                    date: "",
+                    time: "",
+                    answered: false,
+                }
+            }
+        )).unwrap()
+            .then((res) => {
+                dispatch(
+                    prayersActions.updateOrAddPrayer({
+                        uid: res.payload.prayerId,
+                        title: noteTitle,
+                        text: noteText,
+                        datetime: "",
+                        date: "",
+                        time: "",
+                        answered: false,
+                    })
+                );
+                navigation.navigate(RootRoutes.More, {
+                    screen: MoreRoutes.PrayerEdit,
+                    params: {
+                        prayerId: res.payload.prayerId,
+                    },
+                });
+            }).catch((err) => {
+                debug.error("err in save/add prayer button", err)
+            })
+
+    };
+
+    const prayClick = async () => {
+        const existingPrayer = prayersData?.prayersList?.
+        filter((p, idx_) => p.title === noteTitle) || [];
+
+        if (existingPrayer.length === 0) {
+            await handlePray();
+        } else {
+            navigation.navigate(RootRoutes.More, {
+                screen: MoreRoutes.PrayerEdit,
+                params: {
+                    prayerId: existingPrayer[0].uid,
+                },
+            });
+        }
+    }
+
+    const onClickOption = async (type: string) => {
         switch (type) {
             case "Copy":
-                copyToClipboard(noteText)
+                await copyToClipboard(noteText)
+                break;
             case "Pray":
+                await prayClick()
                 break;
             case "Save":
             case "Edit":

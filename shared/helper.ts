@@ -149,6 +149,35 @@ export const computeEstimatedMonthlyInvestment = (
     return ans;
 };
 
+export const getDaysElapsed = (): number => {
+    const currentDate: Date = new Date();
+    const startOfYear: Date = new Date(currentDate.getFullYear(), 0, 0);
+    const diff: number = currentDate.getTime() - startOfYear.getTime();
+    const oneDay: number = 1000 * 60 * 60 * 24;
+    const daysElapsed: number = Math.floor(diff / oneDay);
+
+    return daysElapsed
+}
+
+export const isLeapYear = (year: number) => {
+    return (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0;
+}
+
+export const getDaysInYear = (year: number = new Date().getFullYear()): number => {
+    const startDate = new Date(year, 0, 0); // January 0th (December 31st of the previous year)
+    const endDate = new Date(year + 1, 0, 0); // January 0th of the next year
+
+    const diff = endDate.getTime() - startDate.getTime();
+    const oneDay = 1000 * 60 * 60 * 24; // milliseconds in a day
+
+    return Math.floor(diff / oneDay);
+}
+
+export const getPercentUsedInYear = (): string => {
+    return Number(getDaysElapsed() / getDaysInYear() * 100).toFixed(2)
+}
+
+
 export async function secureSave(key: string, value: any) {
     console.log("Value: ", value);
     if (typeof value !== "string") {
@@ -247,11 +276,11 @@ export const validateObject = (
             result.isValid = Boolean(result.isValid * isValid); // Discrete multiplication
             result.data = {
                 ...result.data,
-                [key]: { value, isValid },
+                [key]: {value, isValid},
             };
             return result;
         },
-        { isValid: true, data: {} },
+        {isValid: true, data: {}},
     );
 };
 

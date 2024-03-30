@@ -20,13 +20,15 @@ import {FetchUserDevotionalPayloadType} from "../../services/userdevotional/type
 
 const initialDevotionalState: InitialDevotionalStateType = {
     devotionalData: {
-        devotionalList: testDevotional || [],
+        // devotionalList: testDevotional || [],
+        devotionalList: [],
         userDevotional: null
     },
     devotionalLoading: false,
     devotionalError: null,
     devotionalMessage: "",
-    selectedDevotionalData: testSelectedDevotional || null,
+    selectedDevotionalData: null,
+    // selectedDevotionalData: testSelectedDevotional || null,
 };
 
 export const devotionalSlice = createSlice({

@@ -13,7 +13,8 @@ import {CreateNoteRequestType} from "../../services/note/type";
 
 const initialNotesState: InitialNotesStateType = {
     notesData: {
-        notesList: testNotes || [],
+        notesList:  [],
+        // notesList: testNotes || [],
     },
     notesLoading: false,
     notesError: null,

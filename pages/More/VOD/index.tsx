@@ -22,6 +22,8 @@ import {notesActions} from "../../../store/slices/notes";
 import {MoreProps, MoreRoutes} from "../../../shared/const/routerMore";
 import {MainRoutes} from "../../../shared/const/routerMain";
 import * as Clipboard from "expo-clipboard";
+import {createPrayerCall} from "../../../store/apiThunks/prayer";
+import {prayersActions} from "../../../store/slices/prayer";
 
 // type NavigationProps = NotesProps<NotesRoutes.NotesSearch>;
 
@@ -43,18 +45,77 @@ const VOD: React.FC<NavigationProps> = ({navigation, route}) => {
     const generalState = useSelector((state: RootState) => state.general);
     const {generalVerseOfTheDayList} = generalState;
 
+    const prayersState = useSelector((state: RootState) => state.prayer);
+    const {prayersData} = prayersState;
+
+
     const options = [{name: "Copy"}, {name: "Pray"}];
 
     const getVODList = (): void => {
         setFetchedVODList(generalVerseOfTheDayList);
     };
 
-    const onClickOption = (type: string, message: string = "") => {
+    const handlePray = async (vodx: GeneralVerseOfTheDayType) => {
+        await dispatch(createPrayerCall(
+            {
+                createPrayerRequest: {
+                    // id: "",
+                    title: vodx?.verse || "",
+                    text: vodx?.text || "",
+                    dateTime: "",
+                    date: "",
+                    time: "",
+                    answered: false,
+                }
+            }
+        )).unwrap()
+            .then((res) => {
+                dispatch(
+                    prayersActions.updateOrAddPrayer({
+                        uid: res.payload.prayerId,
+                        title: vodx?.verse || "",
+                        text: vodx?.text || "",
+                        datetime: "",
+                        date: "",
+                        time: "",
+                        answered: false,
+                    })
+                );
+                navigation.navigate(RootRoutes.More, {
+                    screen: MoreRoutes.PrayerEdit,
+                    params: {
+                        prayerId: res.payload.prayerId,
+                    },
+                });
+            }).catch((err) => {
+                debug.error("err in save/add prayer button", err)
+            })
+
+    };
+
+    const prayClick = async (vodx: GeneralVerseOfTheDayType) => {
+        const existingPrayer = prayersData?.prayersList?.
+        filter((p, idx_) => p.title === vodx?.verse) || [];
+
+        if (existingPrayer.length === 0) {
+            await handlePray(vodx);
+        } else {
+            navigation.navigate(RootRoutes.More, {
+                screen: MoreRoutes.PrayerEdit,
+                params: {
+                    prayerId: existingPrayer[0].uid,
+                },
+            });
+        }
+    }
+
+    const onClickOption = (type: string, vodx: GeneralVerseOfTheDayType) => {
         switch (type) {
             case "Copy":
-                copyToClipboard(message)
+                copyToClipboard(vodx.text)
                 break;
             case "Pray":
+                prayClick(vodx)
                 break;
             default:
                 break;
@@ -167,10 +228,11 @@ const VOD: React.FC<NavigationProps> = ({navigation, route}) => {
                                 <View style={styles.v1r}>
                                     <Text style={styles.v1rt1}>{vod.date}</Text>
                                     <View style={styles.v1rb}>
-                                        <TouchableOpacity style={styles.v1rbt1}
-                                                          onPress={() => {
-                                                              shareData(vod.text)
-                                                          }}
+                                        <TouchableOpacity
+                                            style={styles.v1rbt1}
+                                            onPress={() => {
+                                                shareData(vod.text)
+                                            }}
                                         >
                                             <Entypo
                                                 name="share"
@@ -213,7 +275,7 @@ const VOD: React.FC<NavigationProps> = ({navigation, route}) => {
                                                         style={styles.optionBody}
                                                         onPress={() => {
                                                             setHideOptions(!hideOptions);
-                                                            onClickOption(option.name, vod.text);
+                                                            onClickOption(option.name, vod);
                                                         }}
                                                     >
                                                         <Text style={styles.optionText}>{option.name}</Text>

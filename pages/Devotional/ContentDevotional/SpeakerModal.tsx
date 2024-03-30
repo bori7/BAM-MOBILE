@@ -15,6 +15,7 @@ import { Feather, FontAwesome5 } from "@expo/vector-icons";
 import { ProgressBarButton } from "../../../shared/components/ProgressBarButton";
 import { Back10SVG, Front10SVG } from "../../../shared/components/SVGS";
 import { OptionsPopUp } from "../../Main/Home/OptionsPopUp";
+import {getDaysElapsed} from "../../../shared/helper";
 
 type ISpeedProps = "0.75x" | "1x" | "1.25x" | "1.5x" | "2x";
 type IVoiceProps = "Male" | "Female";
@@ -67,8 +68,8 @@ const SpeakerModal = () => {
     <>
       <View style={styles.modalHeader}>
         <View style={styles.lid} />
-        <Text style={styles.modalHeaderText}>Daily Living Devotional 2023</Text>
-        <Text style={styles.modalHeaderText1}>Day 265</Text>
+        <Text style={styles.modalHeaderText}>{`Daily Living Devotional ${new Date().getFullYear()}`}</Text>
+        <Text style={styles.modalHeaderText1}>{`Day ${getDaysElapsed()}`}</Text>
       </View>
 
       <View style={styles.progressMain}>

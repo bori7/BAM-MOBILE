@@ -31,11 +31,11 @@ const AddPrayer: React.FC<NavigationProps> = ({navigation, route}) => {
         const [prayerText, setPrayerText] = useState<string>("");
         const [hideStatusBar, setHideStatusBar] = useState<boolean>(false);
 
-        const addPrayer = () => {
+        const addPrayer = async () => {
             if (!prayerTitle || !prayerText) {
                 return;
             }
-            dispatch(createPrayerCall(
+            await dispatch(createPrayerCall(
                 {
                     createPrayerRequest: {
                         // id: "",

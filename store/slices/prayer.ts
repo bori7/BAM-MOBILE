@@ -11,7 +11,8 @@ import {createNoteCall, deleteNoteCall, fetchNoteByUserIdCall, updateNoteCall} f
 
 const initialPrayersState: InitialPrayersStateType = {
     prayersData: {
-        prayersList: testPrayers || [],
+        prayersList:  [],
+        // prayersList: testPrayers || [],
     },
     prayersLoading: false,
     prayersError: null,

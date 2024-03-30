@@ -21,18 +21,20 @@ import StringsFormat from "../../shared/lib/stringsFormat";
 const initialMoreState: InitialMoreStateType = {
     moreData: {},
     moreLoading: false,
-    activeSubscriptionData: {
-        subscriptionType: "Annually",
-        dateNextSubscription: "",
-        numberOfDaysLeft: "",
-        status: "Suspended",
-        amountPaid: "",
-        paymentMethod: "Card",
-        dateOfSubscription: new Date(),
-    },
+    activeSubscriptionData: null,
+    // activeSubscriptionData: {
+    //     subscriptionType: "Annually",
+    //     dateNextSubscription: "",
+    //     numberOfDaysLeft: "",
+    //     status: "Suspended",
+    //     amountPaid: "",
+    //     paymentMethod: "Card",
+    //     dateOfSubscription: new Date(),
+    // },
     moreError: null,
     moreMessage: "",
-    givingTransactions: testGivingTransactions || [],
+    givingTransactions:  [],
+    // givingTransactions: testGivingTransactions || [],
     selectedGivingTransaction: null,
 };
 
