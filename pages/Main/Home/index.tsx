@@ -101,6 +101,7 @@ const Home: React.FC<NavigationProps> = ({navigation, route}) => {
         }).finally(() => {
             dispatch(screenNotificationActions.updateScreenLoading(false));
         })
+        dispatch(screenNotificationActions.updateScreenLoading(false));
     }
 
     const shareData = async (val: string) => {

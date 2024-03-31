@@ -129,9 +129,10 @@ const FilterDevotional: React.FC<NavigationProps> = ({navigation, route}) => {
                 }
             }
         )).unwrap().then(() => {
-            navigation?.navigate(RootRoutes.Devotional, {
-                screen: DevotionalRoutes.ContentDevotional,
-            });
+            // navigation?.navigate(RootRoutes.Devotional, {
+            //     screen: DevotionalRoutes.ContentDevotional,
+            // });
+            navigation?.navigate(DevotionalRoutes.ContentDevotional);
         }).catch((err) => {
         }).finally(() => {
             dispatch(screenNotificationActions.updateScreenLoading(false));

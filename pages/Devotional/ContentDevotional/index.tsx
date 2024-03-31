@@ -264,6 +264,7 @@ const ContentDevotional: React.FC<NavigationProps> =
                         setShowSubscription(false);
                         navigation?.navigate(RootRoutes.More, {
                             screen: MoreRoutes.SubscriptionMain,
+                            params: undefined
                         });
                     }}
                 />
@@ -474,7 +475,7 @@ const styles = StyleSheet.create({
     r1t2: {
         marginLeft: "10%",
         color: COLORS.Light.colorFour,
-        // fontSize: SIZES.sizeEightB,
+        fontSize: SIZES.sizeEightB,
         fontWeight: "600",
         textAlign: "center",
     },
