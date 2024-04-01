@@ -2,7 +2,7 @@ import React, {useCallback, useEffect, useState} from "react";
 import {Text, View} from "@components/Themed";
 import {
     Platform,
-    ScrollView,
+    ScrollView, Share,
     StatusBar,
     StyleSheet,
     TouchableOpacity,
@@ -15,8 +15,16 @@ import {useSelector} from "react-redux";
 import {RootState} from "@store/index";
 import {GeneralVerseOfTheDayType} from "@shared/types/slices";
 import * as Speech from "expo-speech";
+import {RootRoutes, RootScreenProps} from "@shared/const/routerRoot";
+import {DevotionalProps, DevotionalRoutes} from "@shared/const/routerDevotional";
+import {CompositeScreenProps} from "@react-navigation/native";
 
-type NavigationProps = MainProps<MainRoutes.VerseOfTheDay>;
+// type NavigationProps = MainProps<MainRoutes.MainRoutes>;
+
+type NavigationProps = CompositeScreenProps<
+    MainProps<MainRoutes.VerseOfTheDay>,
+    RootScreenProps<RootRoutes.Main>
+>;
 
 const VerseOfTheDay: React.FC<NavigationProps> = ({navigation, route}) => {
     const [currVOD, setCurrVod] = useState<GeneralVerseOfTheDayType>();
@@ -147,6 +155,20 @@ const VerseOfTheDay: React.FC<NavigationProps> = ({navigation, route}) => {
         setCurrVod(generalVerseOfTheDayList[vodId] || null);
     }, []);
 
+    const shareData = async (val: string) => {
+        try {
+            await Share.share({
+                title: "General Verse of the Day",
+                message: val,
+
+            }, {
+                dialogTitle: "BAM: General VOD",
+                tintColor: COLORS.Light.colorOne
+            });
+        } catch (error) {
+            debug.error("error while sharing", error);
+        }
+    };
 
     return (
         <View style={styles.main}>
@@ -194,6 +216,9 @@ const VerseOfTheDay: React.FC<NavigationProps> = ({navigation, route}) => {
                                 title={"Go to devotional"}
                                 onPressFunction={() => {
                                     // navigation?.navigate(AuthRoutes.SignUp);
+                                    navigation?.navigate(RootRoutes.Devotional, {
+                                        screen: DevotionalRoutes.MainDevotional,
+                                    });
                                 }}
                                 err={false}
                                 btnStyle={styles.r8t1}
@@ -220,7 +245,12 @@ const VerseOfTheDay: React.FC<NavigationProps> = ({navigation, route}) => {
                                 />
                             </Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.floatingContent3}>
+                        <TouchableOpacity
+                            style={styles.floatingContent3}
+                            onPress={() => {
+                                shareData(currVOD?.text || "")
+                            }}
+                        >
                             <Text style={styles.fc3t}>
                                 <Entypo name="share" size={30} color={COLORS.Light.colorOne}/>
                             </Text>
