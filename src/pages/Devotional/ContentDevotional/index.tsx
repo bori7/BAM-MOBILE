@@ -120,8 +120,8 @@ const ContentDevotional: React.FC<NavigationProps> =
 
                     Speech.speak(words[wordCount], {
                         voice: voice === "Male" ?
-                            "com.apple.speech.synthesis.voice.Albert" :
-                            "com.apple.speech.synthesis.voice.Samantha",
+                            (Platform.OS === "ios" ? "com.apple.speech.synthesis.voice.Albert" : "en-us-x-iom-local") :
+                            (Platform.OS === "ios" ? "com.apple.speech.synthesis.voice.Samantha" : "en-us-x-iog-local"),
                         pitch: 1.0,
                         rate: Number(speed),
                         onDone: () => {
@@ -184,7 +184,7 @@ const ContentDevotional: React.FC<NavigationProps> =
             setTotalWordCount(wordSplit.length);
             Speech.getAvailableVoicesAsync().then((res) => {
                 const englishVoices = res.filter((voice, _) => voice.language === "en-US")
-                // debug.log("res from text to speech", englishVoices)
+                debug.log("res from text to speech", englishVoices)
             })
             // debug.log("totalwordCount", wordSplit.length)
             // debug.log("words", wordSplit)
@@ -319,7 +319,7 @@ const ContentDevotional: React.FC<NavigationProps> =
                             >
                                 <Text style={styles.fc2t}>
                                     <FontAwesome5
-                                        name={!play ? "play" : "pause"}
+                                        name={!play ? "play" : (Platform.OS === "ios" ? "pause" : "stop")}
                                         size={28}
                                         color={COLORS.Light.background}
                                     />

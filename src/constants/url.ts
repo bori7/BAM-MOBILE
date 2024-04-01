@@ -1,5 +1,9 @@
-export const BASE_IP = "http://localhost:9082";
-export const PAYMENT_BASE_IP = "http://localhost:9084";
+
+// export const BASE_HOST = "http://localhost";
+export const BASE_HOST = "http://10.0.2.2";
+export const PAYMENT_BASE_HOST = "http://10.0.2.2";
+export const BASE_IP = `${BASE_HOST}:9082`;
+export const PAYMENT_BASE_IP = `${PAYMENT_BASE_HOST}:9084`;
 export const BASE_URL = `${BASE_IP}/bible-app-mobile`;
 export const PAYMENT_BASE_URL = `${PAYMENT_BASE_IP}/bible-app-mobile-finance`;
 

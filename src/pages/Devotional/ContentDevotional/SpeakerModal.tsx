@@ -1,6 +1,6 @@
 import {
     Image,
-    Modal,
+    Modal, Platform,
     ScrollView,
     StatusBar,
     StyleSheet,
@@ -121,7 +121,7 @@ const SpeakerModal = ({handleSpeed, handleVoice, play, togglePlay}: ISpeakerModa
                     >
                         <Text style={styles.fc2t}>
                             <FontAwesome5
-                                name={!play ? "play" : "pause"}
+                                name={!play ? "play" : (Platform.OS === "ios" ? "pause" : "stop")}
                                 size={28}
                                 color={COLORS.Light.background}
                             />

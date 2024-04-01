@@ -41,7 +41,7 @@ export default function App() {
 
   return (
     <ToastProvider
-      offsetTop={10}
+      offsetTop={20}
       swipeEnabled
       renderToast={(toast) => <CustomToast toast={toast} />}
     >
