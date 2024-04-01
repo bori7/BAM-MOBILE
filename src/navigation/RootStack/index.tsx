@@ -1,6 +1,6 @@
 import { createStackNavigator } from "@react-navigation/stack";
 import React from "react";
-import { RootParamList, RootRoutes } from "../../shared/const/routerRoot";
+import { RootParamList, RootRoutes } from "@shared/const/routerRoot";
 import AuthStack from "../AuthStack";
 import MainStack from "../MainStack";
 import DevotionalStack from "../DevotionalStack";

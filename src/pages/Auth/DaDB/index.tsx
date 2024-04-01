@@ -7,12 +7,12 @@ import {
 } from "react-native";
 
 import React from "react";
-import { Text, View } from "../../../components/Themed";
-import { AuthProps, AuthRoutes } from "../../../shared/const/routerAuth";
-import { COLORS, IMAGES, SIZES } from "../../../constants/Colors";
+import { Text, View } from "@components/Themed";
+import { AuthProps, AuthRoutes } from "@shared/const/routerAuth";
+import { COLORS, IMAGES, SIZES } from "@constants/Colors";
 import { MainButton } from "../../../components";
 import { useDispatch } from "react-redux";
-import { screenNotificationActions } from "../../../store/slices/notification";
+import { screenNotificationActions } from "@store/slices/notification";
 
 type NavigationProps = AuthProps<AuthRoutes.DaDB>;
 

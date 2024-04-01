@@ -6,7 +6,7 @@ import {
   ActivityIndicator,
 } from "react-native";
 import { COLORS } from "../constants/Colors";
-import { MainButtonContainer } from "../types";
+import { MainButtonContainer } from "../../types";
 
 const MainButton: React.FC<MainButtonContainer> = ({
   title = "",

@@ -3,15 +3,25 @@
   "extends": "@tsconfig/react-native/tsconfig.json",
   "compilerOptions": {
     "strict": true,
-    "jsx": "react"
-    // "baseUrl": ".",
-    // "paths": {
-    //   "@screens/*": ["screens/*"],
-    //   "@services/*": ["services/*"],
-    //   "@pages/*": ["pages/*"],
-    //   "@shared/*": ["shared/*"],
-    //   "@navigation/*": ["navigation/*"],
-    //   "@components/*": ["components/*"]
-    // }
+    "esModuleInterop": true,
+    "jsx": "react",
+    "noImplicitAny": true,
+    "useUnknownInCatchVariables": false,
+    "removeComments": true,
+    "declaration": true,
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    "baseUrl": ".",
+    "paths": {
+      "@components/*": ["src/components/*"],
+      "@pages/*": ["src/pages/*"],
+      "@constants/*": ["src/constants/*"],
+      "@hooks/*": ["src/hooks/*"],
+      "@navigation/*": ["src/navigation/*"],
+      "@shared/*": ["src/shared/*"],
+      "@store/*": ["src/store/*"],
+      "@services/*": ["src/services/*"]
+    },
+    "types": ["node"]
   }
 }

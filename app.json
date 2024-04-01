@@ -4,25 +4,25 @@
     "slug": "bible-app",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./shared/assets/images/png/Logo-Daily-Answer.png",
+    "icon": "./src/shared/assets/images/png/Logo-Daily-Answer.png",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "splash": {
-      "image": "./shared/assets/images/png/bam-splash-screen.png",
+      "image": "./src/shared/assets/images/png/bam-splash-screen.png",
       "resizeMode": "cover",
       "backgroundColor": "#ffffff"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": ["**/*","./src/shared/assets/fonts/*"],
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.boriios.bamobile"
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./shared/assets/images/png/Logo-Daily-Answer.png",
+        "foregroundImage": "./src/shared/assets/images/png/Logo-Daily-Answer.png",
         "backgroundColor": "#ffffff"
       },
       "package": "com.boriios.bamobile",
@@ -32,7 +32,7 @@
       ]
     },
     "web": {
-      "favicon": "./shared/assets/images/jpeg/png/Logo-Daily-Answer.png"
+      "favicon": "./src/shared/assets/images/jpeg/png/Logo-Daily-Answer.png"
     },
     "extra": {
       "eas": {

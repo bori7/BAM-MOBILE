@@ -5,7 +5,7 @@ import { AntDesign, Entypo, SimpleLineIcons } from "@expo/vector-icons";
 
 import { Button, Menu } from "react-native-paper";
 import { COLORS, COUNTRIES } from "../constants/Colors";
-import { CountryPickerContainer } from "../types";
+import { CountryPickerContainer } from "../../types";
 
 const CountryPicker: React.FC<CountryPickerContainer> = ({
   handleChosenCountry,

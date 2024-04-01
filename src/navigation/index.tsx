@@ -11,7 +11,7 @@ import {
 import * as React from "react";
 import { ColorSchemeName } from "react-native";
 import LinkingConfiguration from "./LinkingConfiguration";
-import { navigationRef } from "../shared/components/InactivityWrapper";
+import { navigationRef } from "@shared/components/InactivityWrapper";
 import RootStack from "./RootStack";
 
 export default function Navigation({
@@ -23,8 +23,8 @@ export default function Navigation({
     <NavigationContainer
       ref={navigationRef}
       linking={LinkingConfiguration}
-      // theme={colorScheme === "dark" ? DarkTheme : DefaultTheme}
-      theme={DefaultTheme}
+      theme={colorScheme === "dark" ? DarkTheme : DefaultTheme}
+      // theme={DefaultTheme}
     >
       <RootStack />
     </NavigationContainer>

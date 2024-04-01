@@ -20,6 +20,7 @@ import ValidateData from "../../../shared/lib/validateData";
 import {validateObject} from "../../../shared/helper";
 import {userActions} from "../../../store/slices/user";
 import {generateVerificationCodeCall} from "../../../store/apiThunks/user";
+import {CancelIconSVG} from "@shared/components/SVGS";
 
 type NavigationProps = AuthProps<AuthRoutes.ForgotPassword>;
 
@@ -126,7 +127,12 @@ const ForgotPassword: React.FC<NavigationProps> = ({navigation, route}) => {
                                     navigation?.navigate(AuthRoutes.SignIn);
                                 }}
                             >
-                                <CancelIcon width={30} height={30}/>
+                                <CancelIconSVG
+                                    width={30} height={30}
+                                    color={COLORS.Light.background}
+                                    stroke={COLORS.Light.colorFour}
+                                />
+                                {/*<CancelIcon width={30} height={30}/>*/}
                             </TouchableOpacity>
                         </View>
                         <View style={styles.r2}>

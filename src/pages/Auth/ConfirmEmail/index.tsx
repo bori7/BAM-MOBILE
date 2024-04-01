@@ -16,7 +16,7 @@ import CancelIcon from "../../../shared/assets/images/svg/iconoir_cancel.svg";
 import {TextInput} from "react-native-paper";
 import {useDispatch, useSelector} from "react-redux";
 import {AppDispatch, RootState} from "../../../store";
-import {SendMailImageSVG} from "../../../shared/components/SVGS";
+import {CancelIconSVG, SendMailImageSVG} from "../../../shared/components/SVGS";
 import {ConfirmationCode} from "../../../shared/components/ConfirmationCode";
 import {generateVerificationCodeCall, verificationVerificationCodeCall} from "../../../store/apiThunks/user";
 
@@ -81,7 +81,12 @@ const ConfirmEmail: React.FC<NavigationProps> = ({navigation, route}) => {
                                     navigation?.navigate(AuthRoutes.SignIn);
                                 }}
                             >
-                                <CancelIcon width={30} height={30}/>
+                                <CancelIconSVG
+                                    width={30} height={30}
+                                    color={COLORS.Light.background}
+                                    stroke={COLORS.Light.colorFour}
+                                />
+                                {/*<CancelIcon width={30} height={30}/>*/}
                             </TouchableOpacity>
                         </View>
                         <View style={styles.r2}>

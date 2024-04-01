@@ -8,16 +8,13 @@ import {
 } from "react-native";
 
 import React, { useEffect, useState } from "react";
-import { Text, View } from "../../../components/Themed";
-import { AuthProps, AuthRoutes } from "../../../shared/const/routerAuth";
-import { COLORS, IMAGES, SIZES } from "../../../constants/Colors";
+import { Text, View } from "@components/Themed";
+import { COLORS, IMAGES, SIZES } from "@constants/Colors";
 import { MainButton } from "../../../components";
-import CancelIcon from "../../../shared/assets/images/svg/iconoir_cancel.svg";
-import { TextInput } from "react-native-paper";
-import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "../../../store";
-import { SuccessSVG } from "../../../shared/components/SVGS";
-import { MainProps, MainRoutes } from "../../../shared/const/routerMain";
+import { useDispatch } from "react-redux";
+import { AppDispatch, RootState } from "@store/index";
+import { SuccessSVG } from "@shared/components/SVGS";
+import { MainProps, MainRoutes } from "@shared/const/routerMain";
 
 type NavigationProps = MainProps<MainRoutes.Success>;
 

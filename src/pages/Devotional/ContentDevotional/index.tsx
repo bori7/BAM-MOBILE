@@ -1,37 +1,37 @@
 import {
-    Image,
+    Image, Platform,
     ScrollView, Share,
     StatusBar,
     StyleSheet,
     TouchableOpacity,
 } from "react-native";
 
-import React, {useEffect, useState} from "react";
-import {Text, View} from "../../../components/Themed";
-import {COLORS, IMAGES, SIZES} from "../../../constants/Colors";
+import React, {useCallback, useEffect, useState} from "react";
+import {Text, View} from "@components/Themed";
+import {COLORS, IMAGES, SIZES} from "@constants/Colors";
 import {useDispatch, useSelector} from "react-redux";
-import {AppDispatch, RootState} from "../../../store";
+import {AppDispatch, RootState} from "@store/index";
 import {Entypo, Feather, FontAwesome5, Ionicons} from "@expo/vector-icons";
 import {CompositeScreenProps, useFocusEffect} from "@react-navigation/native";
 import {
     DevotionalItemProps,
     SelectedDevotionalDataType,
-} from "../../../shared/types/slices";
+} from "@shared/types/slices";
 import {
     DevotionalProps,
     DevotionalRoutes,
-} from "../../../shared/const/routerDevotional";
-import {NotePadSVG, SpeakerSVG} from "../../../shared/components/SVGS";
+} from "@shared/const/routerDevotional";
+import {NotePadSVG, SpeakerSVG} from "@shared/components/SVGS";
 import ControlModal from "./ControlModal";
 import SpeakerModal from "./SpeakerModal";
 import TextFormatModal from "./TextFormatModal";
 import NotesModal from "./NotesModal";
 import ControlModal2 from "./ControlModal2";
 import SubscriptionModal from "./SubscriptionModal";
-import {RootRoutes, RootScreenProps} from "../../../shared/const/routerRoot";
-import {NotesRoutes} from "../../../shared/const/routerNotes";
-import {MoreRoutes} from "../../../shared/const/routerMore";
-import {getDaysElapsed} from "../../../shared/helper";
+import {RootRoutes, RootScreenProps} from "@shared/const/routerRoot";
+import {MoreRoutes} from "@shared/const/routerMore";
+import {getDaysElapsed} from "@shared/helper";
+import * as Speech from 'expo-speech';
 
 // type NavigationProps = DevotionalProps<DevotionalRoutes.ContentDevotional>;
 
@@ -54,9 +54,98 @@ const ContentDevotional: React.FC<NavigationProps> =
         const [play, setPlay] = useState<boolean>(false);
 
         const [fontIncrement, setFontIncrement] = useState<number>(0);
-        const togglePlay = () => {
-            setPlay(!play);
+
+        const [words, setWords] = useState<string[]>([]);
+        const [wordCount, setWordCount] = useState<number>(0);
+        const [totalWordCount, setTotalWordCount] = useState<number>(0);
+        debug.log("wordCountout", wordCount)
+
+        const togglePlay = async () => {
+            setWordCount(wordCount + 1)
+            const isSpeaking = await Speech.isSpeakingAsync();
+            if (isSpeaking) {
+                if (Platform.OS === "ios") {
+                    if (!play) {
+                        debug.log("Trying to resume speech")
+                        await Speech.resume()
+                        debug.log("Speech resumed")
+                        setPlay(true);
+                    } else {
+                        debug.log("Trying to pause speech")
+                        await Speech.pause()
+                        debug.log("Speech paused")
+                        setPlay(false);
+                    }
+                } else {
+                    if (!play) {
+                        debug.log("Trying to start speech")
+                        speak(wordCount)
+                        debug.log("Speech started")
+                        setPlay(true);
+                    } else {
+                        debug.log("Trying to stop speech")
+                        await Speech.stop()
+                        debug.log("Speech stopped")
+                        setPlay(false);
+                    }
+                }
+
+            } else {
+                setPlay(true);
+                speak(wordCount)
+            }
         };
+
+        const handleWordCount = () =>{
+            setWordCount(wordCount + 1)
+        }
+        const speak =
+            useCallback(
+            async (wc: number) => {
+                // debug.log("words", words)
+                debug.log("wc", wc)
+                debug.log("wordCount", wordCount)
+                debug.log("totalWordCount", totalWordCount)
+
+                if (totalWordCount === 0 || wc >= totalWordCount) {
+                    await Speech.stop()
+                    debug.log("Done reading the text")
+                    setPlay(false);
+                    setWordCount(0)
+                    return;
+                }
+                handleWordCount()
+                Speech.speak(words[wordCount], {
+                    voice: "com.apple.speech.synthesis.voice.Albert",
+                    pitch: 1.0,
+                    rate: 1.0,
+                    onDone: () => {
+                        // const wc = wordCount + 1
+                        // setWordCount(wc + 1)
+                        // debug.log("Done reading the word", wc)
+                        debug.log("Done reading the word", words[wc]);
+                        speak(wc + 1)
+                    },
+                    onError: (err) => {
+                        debug.log("err while speaking", err)
+                    },
+                    onStart: () => {
+                        debug.log("Started speaking")
+                    },
+                    onStopped: () => {
+                        debug.log("Stopped speaking")
+                    },
+                    // onPause: () => {
+                    //     debug.log("Paused speaking")
+                    // },
+                    // onResume: () => {
+                    //     debug.log("Resume speaking")
+                    // },
+                    language: "en-US"
+                });
+
+            }
+        , [wordCount, words,])
 
         const devotionalState = useSelector((state: RootState) => state.devotional);
         const {selectedDevotionalData} = devotionalState;
@@ -71,11 +160,31 @@ const ContentDevotional: React.FC<NavigationProps> =
         useEffect(() => {
             setShowModal(false);
             setTimeout(() => {
-
                 setShowSubscription(!userData?.hasSubscribed);
                 // setHideSubscription(false);
             }, 5000);
         }, []);
+
+        useEffect(() => {
+            if (!selectedDevotional) {
+                return;
+            }
+            const thingToSay = selectedDevotional?.message
+            debug.log("speaking", thingToSay)
+            if (thingToSay?.trim() === '') {
+                return;
+            }
+            const wordSplit = thingToSay?.split(' ') || [];
+            setWords(wordSplit)
+            setTotalWordCount(wordSplit.length);
+            Speech.getAvailableVoicesAsync().then((res) => {
+                const englishVoices = res.filter((voice, _) => voice.language === "en-US")
+                // debug.log("res from text to speech", englishVoices)
+            })
+            // debug.log("totalwordCount", wordSplit.length)
+            // debug.log("words", wordSplit)
+            // debug.log("wordCount", wordCount)
+        }, [selectedDevotional]);
 
         // useFocusEffect(() => {
         //     setTimeout(() => {

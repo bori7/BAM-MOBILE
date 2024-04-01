@@ -22,6 +22,7 @@ import {signUpCall} from "../../../store/apiThunks/user";
 import {validateObject} from "../../../shared/helper";
 import ValidateData from "../../../shared/lib/validateData";
 import {createUserDevotionalCall} from "../../../store/apiThunks/devotional";
+import {CancelIconSVG} from "@shared/components/SVGS";
 
 type NavigationProps = AuthProps<AuthRoutes.SignUp>;
 
@@ -163,7 +164,12 @@ const SignUp: React.FC<NavigationProps> = ({navigation, route}) => {
                                     navigation?.navigate(AuthRoutes.DaDBSwiper);
                                 }}
                             >
-                                <CancelIcon width={30} height={30}/>
+                                <CancelIconSVG
+                                    width={30} height={30}
+                                    color={COLORS.Light.background}
+                                    stroke={COLORS.Light.colorFour}
+                                />
+                                {/*<CancelIcon width={30} height={30}/>*/}
                             </TouchableOpacity>
                             <Text style={styles.r1t2}>Create Account</Text>
                         </View>

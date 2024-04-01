@@ -7,11 +7,11 @@ import {
 } from "react-native";
 
 import React from "react";
-import { Text, View } from "../../../components/Themed";
-import { AuthProps, AuthRoutes } from "../../../shared/const/routerAuth";
-import { COLORS, IMAGES, SIZES } from "../../../constants/Colors";
+import { Text, View } from "@components/Themed";
+import { AuthProps, AuthRoutes } from "@shared/const/routerAuth";
+import { COLORS, IMAGES, SIZES } from "@constants/Colors";
 import { MainButton } from "../../../components";
-import GFALogo from "../../../shared/assets/images/svg/gfa.svg";
+import GFALogo from "@shared/assets/images/svg/gfa.svg";
 
 type NavigationProps = AuthProps<AuthRoutes.GFA>;
 
