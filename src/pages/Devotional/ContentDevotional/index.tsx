@@ -23,7 +23,7 @@ import {
 } from "@shared/const/routerDevotional";
 import {NotePadSVG, SpeakerSVG} from "@shared/components/SVGS";
 import ControlModal from "./ControlModal";
-import SpeakerModal from "./SpeakerModal";
+import SpeakerModal, {ISpeedProps, IVoiceProps} from "./SpeakerModal";
 import TextFormatModal from "./TextFormatModal";
 import NotesModal from "./NotesModal";
 import ControlModal2 from "./ControlModal2";
@@ -54,6 +54,9 @@ const ContentDevotional: React.FC<NavigationProps> =
         const [play, setPlay] = useState<boolean>(false);
 
         const [fontIncrement, setFontIncrement] = useState<number>(0);
+        const [speed, setSpeed] = useState<ISpeedProps>("1.0");
+        const [voice, setVoice] = useState<IVoiceProps>("Male");
+
 
         const [words, setWords] = useState<string[]>([]);
         const [wordCount, setWordCount] = useState<number>(0);
@@ -96,56 +99,58 @@ const ContentDevotional: React.FC<NavigationProps> =
             }
         };
 
-        const handleWordCount = () =>{
+        const handleWordCount = () => {
             setWordCount(wordCount + 1)
         }
         const speak =
             useCallback(
-            async (wc: number) => {
-                // debug.log("words", words)
-                debug.log("wc", wc)
-                debug.log("wordCount", wordCount)
-                debug.log("totalWordCount", totalWordCount)
+                async (wc: number) => {
+                    // debug.log("words", words)
+                    debug.log("wc", wc)
+                    debug.log("wordCount", wordCount)
+                    debug.log("totalWordCount", totalWordCount)
 
-                if (totalWordCount === 0 || wc >= totalWordCount) {
-                    await Speech.stop()
-                    debug.log("Done reading the text")
-                    setPlay(false);
-                    setWordCount(0)
-                    return;
+                    if (totalWordCount === 0 || wc >= totalWordCount) {
+                        await Speech.stop()
+                        debug.log("Done reading the text")
+                        setPlay(false);
+                        setWordCount(0)
+                        return;
+                    }
+
+                    Speech.speak(words[wordCount], {
+                        voice: voice === "Male" ?
+                            "com.apple.speech.synthesis.voice.Albert" :
+                            "com.apple.speech.synthesis.voice.Samantha",
+                        pitch: 1.0,
+                        rate: Number(speed),
+                        onDone: () => {
+                            // const wc = wordCount + 1
+                            // setWordCount(wc + 1)
+                            // debug.log("Done reading the word", wc)
+                            debug.log("Done reading the word", words[wc]);
+                            speak(wc + 1)
+                        },
+                        onError: (err) => {
+                            debug.log("err while speaking", err)
+                        },
+                        onStart: () => {
+                            debug.log("Started speaking")
+                        },
+                        onStopped: () => {
+                            debug.log("Stopped speaking")
+                        },
+                        // onPause: () => {
+                        //     debug.log("Paused speaking")
+                        // },
+                        // onResume: () => {
+                        //     debug.log("Resume speaking")
+                        // },
+                        language: "en-US"
+                    });
+                    handleWordCount()
                 }
-                handleWordCount()
-                Speech.speak(words[wordCount], {
-                    voice: "com.apple.speech.synthesis.voice.Albert",
-                    pitch: 1.0,
-                    rate: 1.0,
-                    onDone: () => {
-                        // const wc = wordCount + 1
-                        // setWordCount(wc + 1)
-                        // debug.log("Done reading the word", wc)
-                        debug.log("Done reading the word", words[wc]);
-                        speak(wc + 1)
-                    },
-                    onError: (err) => {
-                        debug.log("err while speaking", err)
-                    },
-                    onStart: () => {
-                        debug.log("Started speaking")
-                    },
-                    onStopped: () => {
-                        debug.log("Stopped speaking")
-                    },
-                    // onPause: () => {
-                    //     debug.log("Paused speaking")
-                    // },
-                    // onResume: () => {
-                    //     debug.log("Resume speaking")
-                    // },
-                    language: "en-US"
-                });
-
-            }
-        , [wordCount, words,])
+                , [words,])
 
         const devotionalState = useSelector((state: RootState) => state.devotional);
         const {selectedDevotionalData} = devotionalState;
@@ -337,7 +342,20 @@ const ContentDevotional: React.FC<NavigationProps> =
                     }}
                     children={
                         <>
-                            {modalType === "speaker" && <SpeakerModal/>}
+                            {modalType === "speaker" &&
+                                <SpeakerModal
+                                    handleSpeed={(val: ISpeedProps) => {
+                                        debug.log("speed val:", val)
+                                        setSpeed(val)
+                                    }}
+                                    handleVoice={(val: IVoiceProps) => {
+                                        debug.log("voice val:", val)
+                                        setVoice(val)
+                                    }}
+                                    play={play}
+                                    togglePlay={togglePlay}
+                                />
+                            }
                             {modalType === "text" &&
                                 <TextFormatModal
                                     increaseTextSize={() => {
