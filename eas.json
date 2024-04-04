@@ -7,7 +7,6 @@
       "ios": {
         "simulator": true
       }
-
     },
     "preview2": {
       "android": {
@@ -16,6 +15,9 @@
     },
     "preview3": {
       "developmentClient": true
+    },
+    "preview4": {
+      "distribution": "internal"
     },
     "production": {}
   }

@@ -16,7 +16,7 @@ import CancelIcon from "@shared/assets/images/svg/iconoir_cancel.svg";
 import {TextInput} from "react-native-paper";
 import AppleLogo from "../../../shared/assets/images/svg/Apple.svg";
 import {useDispatch, useSelector} from "react-redux";
-import {screenNotificationActions} from "../../../store/slices/notification";
+import {screenNotificationActions} from "@store/slices/notification";
 import {AppDispatch, RootState} from "@store/index";
 import {
     CommonActions,
@@ -82,7 +82,7 @@ const SignIn: React.FC<NavigationProps> = ({navigation, route}) => {
     // });
 
     const SCHEME = {
-        user: (user: string) => user?.length > 4,
+        user: (user: string) => user?.length >= 4,
         password: (password: string) => ValidateData.special(password),
     };
 
