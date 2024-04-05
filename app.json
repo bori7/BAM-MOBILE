@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "bible-app",
-    "slug": "bible-app",
+    "name": "bibleapp",
+    "slug": "bibleapp",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./src/shared/assets/images/png/Logo-Daily-Answer.png",
@@ -15,17 +15,20 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": ["**/*","./src/shared/assets/fonts/*"],
+    "assetBundlePatterns": [
+      "**/*",
+      "./src/shared/assets/fonts/*"
+    ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.boriios.bamobile"
+      "bundleIdentifier": "com.bibleapp.bamobile"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./src/shared/assets/images/png/Logo-Daily-Answer.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.boriios.bamobile",
+      "package": "com.bibleapp.bamobile",
       "permissions": [
         "android.permission.CAMERA",
         "android.permission.RECORD_AUDIO"
@@ -36,7 +39,7 @@
     },
     "extra": {
       "eas": {
-        "projectId": "96f6d30b-853f-45a7-bdc1-9d9267717811"
+        "projectId": "8713cd88-7ea3-4092-984f-158560f8d089"
       }
     },
     "plugins": [
