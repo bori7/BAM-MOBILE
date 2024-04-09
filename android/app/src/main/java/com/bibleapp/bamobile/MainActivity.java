@@ -26,7 +26,8 @@ public class MainActivity extends ReactActivity {
    */
   @Override
   protected String getMainComponentName() {
-    return "bibleapp";
+//     return "bibleapp";
+     return "main";
   }
 
   /**

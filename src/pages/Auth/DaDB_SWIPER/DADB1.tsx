@@ -7,17 +7,15 @@ import {
 } from "react-native";
 
 import React from "react";
-import { Text, View } from "../../../components/Themed";
+import { Text, View } from "@components/Themed";
 import { MainButton } from "../../../components";
-import { IMAGES, COLORS, SIZES } from "../../../constants/Colors";
-import navigation from "../../../navigation";
-import { AuthRoutes } from "../../../shared/const/routerAuth";
+import { IMAGES, COLORS, SIZES } from "@constants/Colors";
 
 type IProps = {
   onSkip: () => void;
   onGetStarted: () => void;
 };
-const DADB1 = ({ onSkip, onGetStarted }: IProps) => {
+export const DADB1 = ({ onSkip, onGetStarted }: IProps) => {
   return (
     <View style={styles.main}>
       <StatusBar barStyle="light-content" />
@@ -73,7 +71,7 @@ const DADB1 = ({ onSkip, onGetStarted }: IProps) => {
   );
 };
 
-export default DADB1;
+
 
 const styles = StyleSheet.create({
   main: {

@@ -38,7 +38,8 @@ public class MainApplication extends Application implements ReactApplication {
 
       @Override
       protected String getJSMainModuleName() {
-        return ".expo/.virtual-metro-entry";
+//         return ".expo/.virtual-metro-entry";
+        return "index";
       }
 
       @Override

@@ -29,7 +29,8 @@ import CarbonDocumnet from "../assets/images/svg/carbon-document.svg";
 import BaselineShare from "../assets/images/svg/icon-baseline-share.svg";
 import EmailLight from "../assets/images/svg/icon-email-light.svg";
 import UiPadlock from "../assets/images/svg/uil-padlock.svg";
-import {COLORS} from "../../constants/Colors";
+import DASBLogo from "../assets/images/svg/dasb.svg";
+import {COLORS} from "@constants/Colors";
 
 export const CarbonDocumnetSVG = () => {
     return (
@@ -300,5 +301,23 @@ export const CancelIconSVG =
         );
     };
 
+export const DASBLogoSVG =
+    ({
+         height = 25,
+         width = 25,
+         color = COLORS.Light.gray,
+         stroke = COLORS.Light.background
+     }) => {
+        return (
+            <>
+                <DASBLogo
+                    height={height}
+                    width={width}
+                    fill={color}
+                    stroke={stroke}
+                />
+            </>
+        );
+    };
 
 const styles = StyleSheet.create({});

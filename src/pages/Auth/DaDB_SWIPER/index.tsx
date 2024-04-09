@@ -2,12 +2,12 @@ import { Image, StatusBar, StyleSheet, TouchableOpacity } from "react-native";
 
 import React, { useRef } from "react";
 import Swiper from "react-native-swiper";
-import { Text, View } from "../../../components/Themed";
-import { AuthProps, AuthRoutes } from "../../../shared/const/routerAuth";
-import { COLORS, IMAGES, SIZES } from "../../../constants/Colors";
-import DADB1 from "./DADB1";
-import DASB1 from "./DASB1";
-import GFA1 from "./GFA1";
+import { Text, View } from "@components/Themed";
+import { AuthProps, AuthRoutes } from "@shared/const/routerAuth";
+import { COLORS, IMAGES, SIZES } from "@constants/Colors";
+import {DADB1} from "./DADB1";
+import {DASB1} from "./DASB1";
+import {GFA1} from "./GFA1";
 
 type NavigationProps = AuthProps<AuthRoutes.DaDBSwiper>;
 

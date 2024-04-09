@@ -7,18 +7,18 @@ import {
 } from "react-native";
 
 import React from "react";
-import { Text, View } from "../../../components/Themed";
-import { AuthProps, AuthRoutes } from "../../../shared/const/routerAuth";
-import { COLORS, IMAGES, SIZES } from "../../../constants/Colors";
+import { Text, View } from "@components/Themed";
+import { COLORS, IMAGES, SIZES } from "@constants/Colors";
 import { MainButton } from "../../../components";
-import DASBLogo from "../../../shared/assets/images/svg/dasb.svg";
+// import DASBLogo from "../../../shared/assets/images/svg/dasb.svg";
+import {DASBLogoSVG} from "@shared/components/SVGS";
 
 type IProps = {
   onSkip: () => void;
   onContinue: () => void;
 };
 
-const DASB1 = ({ onSkip, onContinue }: IProps) => {
+export const DASB1 = ({ onSkip, onContinue }: IProps) => {
   return (
     <View style={styles.main}>
       <StatusBar barStyle="light-content" />
@@ -35,7 +35,7 @@ const DASB1 = ({ onSkip, onContinue }: IProps) => {
             </TouchableOpacity>
           </View>
           <View style={styles.r2}>
-            <DASBLogo width={80} height={80} />
+            <DASBLogoSVG width={80} height={80} />
           </View>
           <View style={styles.r3}>
             <Text style={styles.r3t}>
@@ -74,7 +74,7 @@ const DASB1 = ({ onSkip, onContinue }: IProps) => {
   );
 };
 
-export default DASB1;
+
 
 const styles = StyleSheet.create({
   main: {
