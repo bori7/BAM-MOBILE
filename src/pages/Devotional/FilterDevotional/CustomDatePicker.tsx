@@ -62,6 +62,7 @@ const CustomDatePicker = ({ pickSelectedDate }: IProps) => {
       <IonCalendarOutline
         width={24}
         height={24}
+        fill = {COLORS.Light.background}
         onPress={() => {
           Platform.OS === "android"
             ? showDatePickerAndroid()

@@ -1,9 +1,9 @@
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Platform, StyleSheet } from "react-native";
-import { COLORS, SIZES } from "../../constants/Colors";
-import { TabOptions } from "../../shared/const/routerBottomBar";
-import { View, Text } from "../../components/Themed";
+import { COLORS, SIZES } from "@constants/Colors";
+import { TabOptions } from "@shared/const/routerBottomBar";
+import { View, Text } from "@components/Themed";
 import { Octicons } from "@expo/vector-icons";
 import HomeIcon from "../../shared/assets/images/svg/home_icon.svg";
 import DevotionalIcon from "../../shared/assets/images/svg/devotional_icon.svg";
@@ -59,7 +59,7 @@ const TAB_OPTIONS: TabOptions = {
     icon: ({ color }: { color: string }) => {
       return (
         <>
-          <NotesIcon stroke={color} strokeWidth={2} />
+          <NotesIcon stroke={color} strokeWidth={2} fill={COLORS.Light.background} />
         </>
       );
     },

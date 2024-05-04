@@ -8,10 +8,10 @@ import {
 } from "react-native";
 
 import React, {useEffect, useState} from "react";
-import {Text, View} from "../../../components/Themed";
-import {COLORS, IMAGES, SIZES} from "../../../constants/Colors";
+import {Text, View} from "@components/Themed";
+import {COLORS, IMAGES, SIZES} from "@constants/Colors";
 import CustomDatePicker from "./CustomDatePicker";
-import {formatDate} from "../../../shared/helper";
+import {formatDate} from "@shared/helper";
 
 type Iprops = {
     isModalVisible: boolean;
