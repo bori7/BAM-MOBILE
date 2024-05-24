@@ -7,7 +7,7 @@ import {
     FETCH_NOTE_BY_ID_URL, FETCH_NOTE_BY_USER_ID_URL,
     UPDATE_NOTE_URL,
 
-} from "../../constants/url";
+} from "@constants/url";
 import {CreateNotePayloadType, CreateNoteRequestType, FetchNoteByIdType, FetchNoteByUserIdType} from "./type";
 
 export class NoteService {

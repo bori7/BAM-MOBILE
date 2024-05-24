@@ -194,7 +194,7 @@ const VerseOfTheDay: React.FC<NavigationProps> = ({navigation, route}) => {
                                         color={COLORS.Light.colorFour}
                                     />
                                 </TouchableOpacity>
-                                <Text style={styles.r1t2}>Verse of the day</Text>
+                                <Text style={styles.r1t2}>Memory Verse</Text>
                             </View>
                         </View>
                     </View>

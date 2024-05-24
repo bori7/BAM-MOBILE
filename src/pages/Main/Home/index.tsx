@@ -8,32 +8,32 @@ import {
 } from "react-native";
 import * as Clipboard from 'expo-clipboard';
 import React, {useEffect, useState} from "react";
-import {Text, View} from "../../../components/Themed";
-import {COLORS, IMAGES, SIZES} from "../../../constants/Colors";
+import {Text, View} from "@components/Themed";
+import {COLORS, IMAGES, SIZES} from "@constants/Colors";
 import {useDispatch, useSelector} from "react-redux";
-import {AppDispatch, RootState} from "../../../store";
+import {AppDispatch, RootState} from "@store/index";
 import UserIcon from "../../../shared/assets/images/svg/solar_user_icon.svg";
 import {Entypo, Feather, SimpleLineIcons} from "@expo/vector-icons";
 import MidDoubleTick from "../../../shared/assets/images/svg/mdi_check_all.svg";
 import SolidPray from "../../../shared/assets/images/svg/fa_solid_pray.svg";
 import {OptionsPopUp} from "./OptionsPopUp";
-import {MainProps, MainRoutes} from "../../../shared/const/routerMain";
-import {screenNotificationActions} from "../../../store/slices/notification";
+import {MainProps, MainRoutes} from "@shared/const/routerMain";
+import {screenNotificationActions} from "@store/slices/notification";
 import {CompositeScreenProps, useFocusEffect} from "@react-navigation/native";
-import {RootRoutes, RootScreenProps} from "../../../shared/const/routerRoot";
-import {DevotionalRoutes} from "../../../shared/const/routerDevotional";
+import {RootRoutes, RootScreenProps} from "@shared/const/routerRoot";
+import {DevotionalRoutes} from "@shared/const/routerDevotional";
 import {
     formatNoteDate,
     getDayOfTheWeek,
     getPartOfDay,
-} from "../../../shared/helper";
-import {GeneralVerseOfTheDayType} from "../../../shared/types/slices";
-import {fetchDevotionalByIdCall, updateUserDevotionalCall} from "../../../store/apiThunks/devotional";
-import {devotionalActions} from "../../../store/slices/devotional";
-import {MainProfileSVG} from "../../../shared/components/SVGS";
-import {MoreRoutes} from "../../../shared/const/routerMore";
-import {createPrayerCall} from "../../../store/apiThunks/prayer";
-import {prayersActions} from "../../../store/slices/prayer";
+} from "@shared/helper";
+import {GeneralVerseOfTheDayType} from "@shared/types/slices";
+import {fetchDevotionalByIdCall, updateUserDevotionalCall} from "@store/apiThunks/devotional";
+import {devotionalActions} from "@store/slices/devotional";
+import {MainProfileSVG} from "@shared/components/SVGS";
+import {MoreRoutes} from "@shared/const/routerMore";
+import {createPrayerCall} from "@store/apiThunks/prayer";
+import {prayersActions} from "@store/slices/prayer";
 
 // type NavigationProps = MainProps<MainRoutes.HomeScreen>;
 
@@ -107,7 +107,7 @@ const Home: React.FC<NavigationProps> = ({navigation, route}) => {
     const shareData = async (val: string) => {
         try {
             await Share.share({
-                title: "Verse of the day",
+                title: "Memory Verse",
                 message: val,
 
             }, {
@@ -227,7 +227,7 @@ const Home: React.FC<NavigationProps> = ({navigation, route}) => {
                         style={styles.scroll}
                     >
                         <View style={styles.v1}>
-                            <Text style={styles.v1t1}>Verse of the Day</Text>
+                            <Text style={styles.v1t1}>Memory Verse</Text>
                             <TouchableOpacity
                                 onPress={() => {
                                     navigation?.navigate(MainRoutes.VerseOfTheDay, {
@@ -342,7 +342,7 @@ const Home: React.FC<NavigationProps> = ({navigation, route}) => {
                         </View>
                         <View style={styles.v3}>
                             <View style={styles.v3a}>
-                                <Text style={styles.v3at1}>Personal Prayers</Text>
+                                <Text style={styles.v3at1}>Prayer</Text>
                                 <TouchableOpacity
                                     style={styles.v3at2}
                                     onPress={() => {

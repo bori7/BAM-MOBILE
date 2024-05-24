@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "bible-app-mobile",
-    "slug": "bible-app-mobile",
+    "name": "The Daily Answer",
+    "slug": "The-Daily-Answer",
     "version": "1.1.0",
     "orientation": "portrait",
     "icon": "./src/shared/assets/images/png/Logo-Daily-Answer.png",
@@ -39,7 +39,7 @@
     },
     "extra": {
       "eas": {
-        "projectId": "8713cd88-7ea3-4092-984f-158560f8d089"
+        "projectId": "51b856be-256f-4672-b9c2-bef53b3286e5"
       }
     },
     "plugins": [

@@ -43,7 +43,7 @@ export const GFA1 = ({onSkip, onSignUp, onSignIn}: IProps) => {
                     <View style={styles.r4}>
                         <Text style={styles.r4t}>
                             A Devotional App for Everyone. Connecting People of All
-                            Backgrounds to God's Love.
+                            Background to God's Love.
                         </Text>
                     </View>
                     {/* <View style={styles.r5}>
@@ -157,7 +157,7 @@ const styles = StyleSheet.create({
     },
     r6: {
         marginBottom: 10,
-        marginTop: "5%",
+        marginTop: "10%",
         backgroundColor: "transparent",
         paddingVertical: 5,
         width: "80%",

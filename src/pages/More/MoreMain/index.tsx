@@ -7,12 +7,12 @@ import {
 } from "react-native";
 
 import React, { ReactNode, useEffect, useState } from "react";
-import { Text, View } from "../../../components/Themed";
-import { COLORS, IMAGES, SIZES } from "../../../constants/Colors";
+import { Text, View } from "@components/Themed";
+import { COLORS, IMAGES, SIZES } from "@constants/Colors";
 import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "../../../store";
+import { AppDispatch, RootState } from "@store/index";
 import { AntDesign, Entypo, Ionicons } from "@expo/vector-icons";
-import { MoreProps, MoreRoutes } from "../../../shared/const/routerMore";
+import { MoreProps, MoreRoutes } from "@shared/const/routerMore";
 import {
   CalendarHeartSVG,
   HandsPrayingSVG,
@@ -23,11 +23,11 @@ import {
   MoreProfileSVG,
   MoreSettingSVG,
   MoreSupportSVG,
-} from "../../../shared/components/SVGS";
+} from "@shared/components/SVGS";
 import { CompositeScreenProps } from "@react-navigation/native";
-import { RootScreenProps, RootRoutes } from "../../../shared/const/routerRoot";
-import { NotesRoutes } from "../../../shared/const/routerNotes";
-import { DevotionalRoutes } from "../../../shared/const/routerDevotional";
+import { RootScreenProps, RootRoutes } from "@shared/const/routerRoot";
+import { NotesRoutes } from "@shared/const/routerNotes";
+import { DevotionalRoutes } from "@shared/const/routerDevotional";
 
 export type MoreContentType = {
   icon: ReactNode;
@@ -74,7 +74,7 @@ const MoreMain: React.FC<NavigationProps> = ({ navigation, route }) => {
     },
     {
       icon: <CalendarHeartSVG />,
-      name: "Verse of the day",
+      name: "Memory Verse",
       onPressFunc: () => {
         navigation?.navigate(RootRoutes.More, {
           screen: MoreRoutes.VOD,

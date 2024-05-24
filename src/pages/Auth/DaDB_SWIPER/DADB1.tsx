@@ -35,12 +35,16 @@ export const DADB1 = ({ onSkip, onGetStarted }: IProps) => {
             <Image source={IMAGES.logoDailyAnswer} style={styles.r2t} />
           </View>
           <View style={styles.r3}>
-            <Text style={styles.r3t}>Daily Answer Devotional Bible</Text>
+            <Text style={styles.r3t}>The Daily Answer Devotional</Text>
           </View>
           <View style={styles.r4}>
             <Text style={styles.r4t}>
-              Welcome to Daily Answer Devotion Bible. Start your day with
-              devotion and seek God's presence.
+              Welcome to The Daily Answer Devotional
+            </Text>
+          </View>
+          <View style={styles.r4}>
+            <Text style={styles.r4t}>
+              An Easy Way to Study, Memorize and Apply the Word of God
             </Text>
           </View>
           {/* <View style={styles.r5}>
@@ -145,7 +149,7 @@ const styles = StyleSheet.create({
   },
   r6: {
     marginBottom: 10,
-    marginTop: "5%",
+    marginTop: "25%",
     backgroundColor: "transparent",
     paddingVertical: 5,
     width: "80%",
@@ -159,8 +163,8 @@ const styles = StyleSheet.create({
     fontWeight: "500",
   },
   r2t: {
-    width: 100,
-    height: 100,
+    width: 200,
+    height: 200,
   },
   r3t: {
     color: COLORS.Light.colorEight,

@@ -7,7 +7,7 @@ import {
     TouchableOpacity,
 } from "react-native";
 
-import React, {useEffect, useState} from "react";
+import React, {useCallback, useEffect, useState} from "react";
 import {Text, View} from "@components/Themed";
 import {AuthProps, AuthRoutes} from "@shared/const/routerAuth";
 import {COLORS, IMAGES, SIZES} from "@constants/Colors";
@@ -35,6 +35,7 @@ import {fetchNoteByUserIdCall} from "@store/apiThunks/note";
 import {fetchPrayerByUserIdCall} from "@store/apiThunks/prayer";
 import {fetchLiveSubscriptionCall} from "@store/apiThunks/payment";
 import {CancelIconSVG} from "@shared/components/SVGS";
+import biometrics from "@shared/lib/biometrics";
 
 // type NavigationProps = CompositeScreenProps<
 //   RootScreenProps<RootRoutes.Main>,
@@ -80,6 +81,11 @@ const SignIn: React.FC<NavigationProps> = ({navigation, route}) => {
     //             navigation?.dispatch(resetAction);
     //         }, 2000);
     // });
+
+    const setBiometricData = async () => {
+
+        await biometrics.setDataBiometricUser(fullName, password);
+    };
 
     const SCHEME = {
         user: (user: string) => user?.length >= 4,
@@ -145,6 +151,7 @@ const SignIn: React.FC<NavigationProps> = ({navigation, route}) => {
                     })
 
                 navigation?.dispatch(resetAction);
+                setBiometricData();
             }).catch((err) => {
                 debug.error("err", err)
             }).finally(() => {
@@ -155,6 +162,22 @@ const SignIn: React.FC<NavigationProps> = ({navigation, route}) => {
     const filledFields = () => {
         return !!password && !!fullName
     }
+
+    const checkBiometrics = useCallback(async () => {
+        try {
+            const data = await biometrics.getPassword("");
+            setFullName(data?.username || "");
+            setPassword(data?.password || "");
+        } catch (e) {
+            debug.error('e in checkBiometrics', e);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    useEffect(() => {
+        checkBiometrics();
+
+    }, []);
 
     useEffect(() => {
         setErrorCount(errorCount + 1)

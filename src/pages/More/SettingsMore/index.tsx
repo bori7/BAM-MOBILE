@@ -1,30 +1,31 @@
 import React, {useEffect, useState} from "react";
-import {Text, View} from "../../../components/Themed";
+import {Text, View} from "@components/Themed";
 import {
     ScrollView,
     StatusBar,
     StyleSheet,
     TouchableOpacity,
 } from "react-native";
-import {COLORS, SIZES} from "../../../constants/Colors";
+import {COLORS, SIZES} from "@constants/Colors";
 import {Entypo, Feather, Ionicons} from "@expo/vector-icons";
 import {
     CommonActions,
     CompositeScreenProps,
     useFocusEffect,
 } from "@react-navigation/native";
-import {RootRoutes, RootScreenProps} from "../../../shared/const/routerRoot";
-import {AppDispatch, RootState} from "../../../store";
+import {RootRoutes, RootScreenProps} from "@shared/const/routerRoot";
+import {AppDispatch, RootState} from "@store/index";
 import {useDispatch, useSelector} from "react-redux";
-import {MoreProps, MoreRoutes} from "../../../shared/const/routerMore";
-import {AuthRoutes} from "../../../shared/const/routerAuth";
-import {devotionalActions} from "../../../store/slices/devotional";
-import {generalActions} from "../../../store/slices/general";
-import {moreActions} from "../../../store/slices/more";
-import {notesActions} from "../../../store/slices/notes";
-import {screenNotificationActions} from "../../../store/slices/notification";
-import {prayersActions} from "../../../store/slices/prayer";
-import {userActions} from "../../../store/slices/user";
+import {MoreProps, MoreRoutes} from "@shared/const/routerMore";
+import {AuthRoutes} from "@shared/const/routerAuth";
+import {devotionalActions} from "@store/slices/devotional";
+import {generalActions} from "@store/slices/general";
+import {moreActions} from "@store/slices/more";
+import {notesActions} from "@store/slices/notes";
+import {screenNotificationActions} from "@store/slices/notification";
+import {prayersActions} from "@store/slices/prayer";
+import {userActions} from "@store/slices/user";
+import biometrics from "@shared/lib/biometrics";
 
 // type NavigationProps = NotesProps<NotesRoutes.NotesSearch>;
 
@@ -84,7 +85,8 @@ const SettingsMore: React.FC<NavigationProps> = ({navigation, route}) => {
 
                             <TouchableOpacity
                                 style={styles.v3c}
-                                onPress={() => {
+                                onPress={async () => {
+                                    await biometrics.clearBiometricUser();
                                     dispatch(devotionalActions.clearDevotionalState())
                                     dispatch(generalActions.clearGeneralState())
                                     dispatch(moreActions.clearMoreState())

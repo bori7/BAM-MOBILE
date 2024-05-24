@@ -1,5 +1,16 @@
 import {AxiosRequestHeaders} from "axios";
 import {apiCallInit} from "../shared/helper";
+import {navigationRef} from "@shared/components/InactivityWrapper";
+import {navigateReset} from "@shared/lib/navigate";
+import {RootRoutes} from "@shared/const/routerRoot";
+import {devotionalActions} from "@store/slices/devotional";
+import {generalActions} from "@store/slices/general";
+import {moreActions} from "@store/slices/more";
+import {notesActions} from "@store/slices/notes";
+import {screenNotificationActions} from "@store/slices/notification";
+import {prayersActions} from "@store/slices/prayer";
+import {userActions} from "@store/slices/user";
+import {store} from "@store/index";
 
 export const apiPost = async (
     url: string,
@@ -12,6 +23,12 @@ export const apiPost = async (
         .then((res) => {
             const newRes = {...res};
             return newRes;
+        })
+        .catch((err) => {
+            if (err.toJSON().status === 401) {
+                resetAuthAfter401()
+            }
+            throw err;
         });
 };
 
@@ -52,7 +69,15 @@ export const apiPut = async (
         .then((res) => {
             const newRes = {...res};
             return newRes;
-        });
+        })
+        .catch((err) => {
+            if (err.toJSON().status === 401) {
+                resetAuthAfter401()
+            }
+            throw err;
+        })
+
+
 };
 
 export const putCall = async <R, T>(
@@ -91,6 +116,12 @@ export const apiDelete = async (
         .then((res) => {
             const newRes = {...res};
             return newRes;
+        })
+        .catch((err) => {
+            if (err.toJSON().status === 401) {
+                resetAuthAfter401()
+            }
+            throw err;
         });
 };
 
@@ -130,7 +161,13 @@ export const apiGetBy = (
         .then((res) => {
             const newRes = {...res};
             return newRes;
-        });
+        })  .catch((err) => {
+        if (err.toJSON().status === 401) {
+            resetAuthAfter401()
+        }
+        throw err;
+    })
+;
 
 export const apiGetFor = (
     url: any,
@@ -141,6 +178,12 @@ export const apiGetFor = (
         .then((res) => {
             const newRes = {...res};
             return newRes;
+        })
+        .catch((err) => {
+            if (err.toJSON().status === 401) {
+                resetAuthAfter401()
+            }
+            throw err;
         });
 
 export const getFor = async <T>(
@@ -229,3 +272,16 @@ export const getByWithPathParam = async <T>(
         throw error;
     }
 };
+
+const resetAuthAfter401 = () => {
+    // store.dispatch(devotionalActions.clearDevotionalState())
+    // store.dispatch(generalActions.clearGeneralState())
+    // store.dispatch(moreActions.clearMoreState())
+    // store.dispatch(notesActions.clearNotesState())
+    // store.dispatch(screenNotificationActions.clearNotificationState())
+    // store.dispatch(screenNotificationActions.clearScreenNotificationState())
+    // store.dispatch(screenNotificationActions.clearScreenState())
+    // store.dispatch(prayersActions.clearPrayersState())
+    // store.dispatch(userActions.clearUserState())
+    navigateReset(RootRoutes.Auth);
+}

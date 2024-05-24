@@ -1,7 +1,7 @@
 import { StyleProp, StyleSheet, ViewStyle } from "react-native";
 import React from "react";
-import { Text, View } from "../../../components/Themed";
-import { COLORS } from "../../../constants/Colors";
+import { Text, View } from "@components/Themed";
+import { COLORS } from "@constants/Colors";
 
 export const OptionsPopUp = ({
   text,

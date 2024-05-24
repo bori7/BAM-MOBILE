@@ -7,22 +7,22 @@ import {
 } from "react-native";
 
 import React, {useEffect, useState} from "react";
-import {Text, View} from "../../../components/Themed";
-import {COLORS, IMAGES, SIZES} from "../../../constants/Colors";
+import {Text, View} from "@components/Themed";
+import {COLORS, IMAGES, SIZES} from "@constants/Colors";
 import {useDispatch, useSelector} from "react-redux";
-import {AppDispatch, RootState} from "../../../store";
+import {AppDispatch, RootState} from "@store/index";
 import {AntDesign, Feather} from "@expo/vector-icons";
 import MidDoubleTick from "../../../shared/assets/images/svg/mdi_check_all.svg";
 import {CompositeScreenProps, useFocusEffect} from "@react-navigation/native";
-import {DevotionalItemProps} from "../../../shared/types/slices";
-import {RootScreenProps, RootRoutes} from "../../../shared/const/routerRoot";
+import {DevotionalItemProps} from "@shared/types/slices";
+import {RootScreenProps, RootRoutes} from "@shared/const/routerRoot";
 import {
     DevotionalProps,
     DevotionalRoutes,
-} from "../../../shared/const/routerDevotional";
-import {screenNotificationActions} from "../../../store/slices/notification";
-import {fetchDevotionalByIdCall, updateUserDevotionalCall} from "../../../store/apiThunks/devotional";
-import {devotionalActions} from "../../../store/slices/devotional";
+} from "@shared/const/routerDevotional";
+import {screenNotificationActions} from "@store/slices/notification";
+import {fetchDevotionalByIdCall, updateUserDevotionalCall} from "@store/apiThunks/devotional";
+import {devotionalActions} from "@store/slices/devotional";
 
 // type NavigationProps = MainProps<MainRoutes.HomeScreen>;
 
@@ -124,7 +124,8 @@ const MainDevotional: React.FC<NavigationProps> = ({navigation, route}) => {
                         <TouchableOpacity
                             style={styles.headerC2}
                             onPress={() => {
-                                navigation?.navigate(RootRoutes.Devotional, {
+                                navigation?.navigate(
+                                    RootRoutes.Devotional, {
                                     screen: DevotionalRoutes.FilterDevotional,
                                 });
                             }}
@@ -142,10 +143,10 @@ const MainDevotional: React.FC<NavigationProps> = ({navigation, route}) => {
                         <View style={styles.contentHeaderC}>
                             <Text style={styles.ft1}>Today’s Devotional</Text>
                             <TouchableOpacity style={styles.contentHeaderC2}>
-                                <Text style={styles.contentHeaderC2t1}>See all</Text>
-                                <Text style={styles.contentHeaderC2t2}>
-                                    <AntDesign name="right" size={16} color={COLORS.Light.gray}/>
-                                </Text>
+                                {/*<Text style={styles.contentHeaderC2t1}>See all</Text>*/}
+                                {/*<Text style={styles.contentHeaderC2t2}>*/}
+                                {/*    <AntDesign name="right" size={16} color={COLORS.Light.gray}/>*/}
+                                {/*</Text>*/}
                             </TouchableOpacity>
                         </View>
                         <View style={styles.v2}>
@@ -288,10 +289,11 @@ const styles = StyleSheet.create({
         alignItems: "center",
     },
     headerC1t1: {
-        fontSize: SIZES.sizeNineB,
+        fontSize: SIZES.sizeTen,
         fontWeight: "600",
         marginLeft: 20,
-        marginTop: 10,
+        marginTop: "10%",
+        // borderWidth: 1,
     },
     headerC1t2: {
         fontSize: SIZES.sizeFiveC,
@@ -301,6 +303,7 @@ const styles = StyleSheet.create({
     headerC2: {
         alignItems: "center",
         justifyContent: "center",
+        marginTop: "8%",
     },
     bodyContainer: {
         // borderWidth: 1,
@@ -526,6 +529,9 @@ const styles = StyleSheet.create({
     r2t: {
         width: 65,
         height: 65,
+        // borderWidth: 1,
+        marginTop: "15%",
+        borderColor: COLORS.Light.colorOne,
     },
     contentHeaderC: {
         backgroundColor: "transparent",

@@ -7,10 +7,10 @@ import {
 } from "react-native";
 
 import React, {ReactNode, useEffect, useLayoutEffect, useState} from "react";
-import {Text, View} from "../../../components/Themed";
-import {COLORS, IMAGES, SIZES} from "../../../constants/Colors";
+import {Text, View} from "@components/Themed";
+import {COLORS, IMAGES, SIZES} from "@constants/Colors";
 import {useDispatch, useSelector} from "react-redux";
-import {AppDispatch, RootState} from "../../../store";
+import {AppDispatch, RootState} from "@store/index";
 import {
     AntDesign,
     Entypo,
@@ -18,19 +18,19 @@ import {
     MaterialCommunityIcons,
     MaterialIcons,
 } from "@expo/vector-icons";
-import {MoreProps, MoreRoutes} from "../../../shared/const/routerMore";
-import {MdiNairaSVG} from "../../../shared/components/SVGS";
+import {MoreProps, MoreRoutes} from "@shared/const/routerMore";
+import {MdiNairaSVG} from "@shared/components/SVGS";
 import {MainButton} from "../../../components";
-import {screenNotificationActions} from "../../../store/slices/notification";
+import {screenNotificationActions} from "@store/slices/notification";
 import {CompositeScreenProps} from "@react-navigation/native";
-import {RootRoutes, RootScreenProps} from "../../../shared/const/routerRoot";
-import {MainRoutes} from "../../../shared/const/routerMain";
-import {moreActions} from "../../../store/slices/more";
-import {PaymentMethodType, StatusType, SubscriptionType} from "../../../shared/types/slices";
-import {userActions} from "../../../store/slices/user";
-import {initiatePaymentCall, paystackGetCall} from "../../../store/apiThunks/payment";
+import {RootRoutes, RootScreenProps} from "@shared/const/routerRoot";
+import {MainRoutes} from "@shared/const/routerMain";
+import {moreActions} from "@store/slices/more";
+import {PaymentMethodType, StatusType, SubscriptionType} from "@shared/types/slices";
+import {userActions} from "@store/slices/user";
+import {initiatePaymentCall, paystackGetCall} from "@store/apiThunks/payment";
 import {nanoid} from "@reduxjs/toolkit";
-import {CustomPaymentModal} from "../../../shared/components/CustomPaymentModal";
+import {CustomPaymentModal} from "@shared/components/CustomPaymentModal";
 import StringsFormat from "../../../shared/lib/stringsFormat";
 
 type ISubscriptionType = {
@@ -271,7 +271,7 @@ const SubscriptionMain: React.FC<NavigationProps> = ({navigation, route}) => {
                     >
                         <Image source={IMAGES.logoDailyAnswer} style={styles.rmt}/>
                         <Text style={styles.r1t}>
-                            Subscribe to get full access to all devotional contents on Daily
+                            Subscribe to get full access to all devotional contents on The Daily
                             Answer.
                         </Text>
                         {merits?.map((merit, idx) => (
@@ -332,7 +332,7 @@ const SubscriptionMain: React.FC<NavigationProps> = ({navigation, route}) => {
                                 title={"Subscribe"}
                                 onPressFunction={() => {
                                     // navigation?.navigate(AuthRoutes.SignUp);
-                                    handleSubscribe()
+                                      handleSubscribe()
                                     // dispatch(
                                     //     screenNotificationActions.updateScreenLoadingFunc({
                                     //         screenLoading: true,
@@ -462,12 +462,12 @@ const styles = StyleSheet.create({
         paddingBottom: "10%",
     },
     rmt: {
-        width: 65,
-        height: 65,
+        width: 120,
+        height: 120,
         alignSelf: "flex-start",
     },
     r1t: {
-        marginTop: "13%",
+        marginTop: "3%",
         marginBottom: "6%",
         color: COLORS.Light.colorFour,
         fontSize: SIZES.sizeEightA,

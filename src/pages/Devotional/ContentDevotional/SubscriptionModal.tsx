@@ -6,8 +6,8 @@ import {
 } from "react-native";
 
 import React, { ReactElement } from "react";
-import { Text, View } from "../../../components/Themed";
-import { COLORS, IMAGES, SIZES } from "../../../constants/Colors";
+import { Text, View } from "@components/Themed";
+import { COLORS, IMAGES, SIZES } from "@constants/Colors";
 import Modal from "react-native-modal";
 import Layout from "../../../constants/Layout";
 import { LinearGradient } from "expo-linear-gradient";
@@ -53,7 +53,7 @@ const SubscriptionModal = ({
             Subscribe to get full access to all devotional contents.
           </Text>
           <Text style={styles.t2}>
-            This devotional is available to Daily Answer Subscribers only.
+            This devotional is available to The Daily Answer Subscribers only.
             Upgrade to instantly unlock this devotional.
           </Text>
           <View style={styles.r4}>

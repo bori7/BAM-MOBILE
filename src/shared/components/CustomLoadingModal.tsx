@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, View } from "../../components/Themed";
+import { Text, View } from "@components/Themed";
 import {
   Image,
   Modal,
@@ -9,7 +9,7 @@ import {
   // ActivityIndicator,
 } from "react-native";
 import { Feather } from "@expo/vector-icons";
-import { COLORS, IMAGES, SIZES } from "../../constants/Colors";
+import { COLORS, IMAGES, SIZES } from "@constants/Colors";
 import { ActivityIndicator } from "react-native-paper";
 // import { ActivityIndicator } from "react-native-paper";
 
@@ -116,11 +116,11 @@ const styles = StyleSheet.create({
     left: "35%",
   },
   r2t: {
-    width: 50,
-    height: 50,
+    width: 85,
+    height: 85,
     position: "absolute",
-    top: "31%",
-    left: "33%",
+    top: "25%",
+    left: "25%",
   },
   loader: {
     height: 150,

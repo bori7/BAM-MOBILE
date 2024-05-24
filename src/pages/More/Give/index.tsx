@@ -7,39 +7,39 @@ import {
 } from "react-native";
 
 import React, {ReactNode, useEffect, useState} from "react";
-import {Text, View} from "../../../components/Themed";
-import {COLORS, IMAGES, SIZES} from "../../../constants/Colors";
+import {Text, View} from "@components/Themed";
+import {COLORS, IMAGES, SIZES} from "@constants/Colors";
 import {useDispatch, useSelector} from "react-redux";
-import {AppDispatch, RootState} from "../../../store";
+import {AppDispatch, RootState} from "@store/index";
 import {
     Entypo,
     Feather,
     Ionicons,
     MaterialCommunityIcons,
 } from "@expo/vector-icons";
-import {MoreProps, MoreRoutes} from "../../../shared/const/routerMore";
+import {MoreProps, MoreRoutes} from "@shared/const/routerMore";
 import {CompositeScreenProps} from "@react-navigation/native";
-import {RootRoutes, RootScreenProps} from "../../../shared/const/routerRoot";
+import {RootRoutes, RootScreenProps} from "@shared/const/routerRoot";
 import {TextInput} from "react-native-paper";
 import DropDownInput from "../../../components/DropDownInput";
 import {
     CardAddSVG,
     MdiBankSVG,
     MdiNairaSVG,
-} from "../../../shared/components/SVGS";
+} from "@shared/components/SVGS";
 import {MainButton} from "../../../components";
-import {screenNotificationActions} from "../../../store/slices/notification";
-import {MainRoutes} from "../../../shared/const/routerMain";
-import {moreActions} from "../../../store/slices/more";
+import {screenNotificationActions} from "@store/slices/notification";
+import {MainRoutes} from "@shared/const/routerMain";
+import {moreActions} from "@store/slices/more";
 import ControlModal2 from "../../Devotional/ContentDevotional/ControlModal2";
 import PaymentMethodModal, {PaymentChannelType} from "./PaymentMethodModal";
 import {OptionsPopUp} from "../../Main/Home/OptionsPopUp";
-import {GivingPaymentMethodType, PaymentMethodType, StatusType, SubscriptionType} from "../../../shared/types/slices";
-import {initiatePaymentCall, paystackGetCall} from "../../../store/apiThunks/payment";
+import {GivingPaymentMethodType, PaymentMethodType, StatusType, SubscriptionType} from "@shared/types/slices";
+import {initiatePaymentCall, paystackGetCall} from "@store/apiThunks/payment";
 import {nanoid} from "@reduxjs/toolkit";
-import {CustomPaymentModal} from "../../../shared/components/CustomPaymentModal";
+import {CustomPaymentModal} from "@shared/components/CustomPaymentModal";
 import StringsFormat from "../../../shared/lib/stringsFormat";
-import {userActions} from "../../../store/slices/user";
+import {userActions} from "@store/slices/user";
 
 type NavigationProps = CompositeScreenProps<
     MoreProps<MoreRoutes.Give>,

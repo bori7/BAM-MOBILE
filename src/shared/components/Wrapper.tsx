@@ -3,15 +3,15 @@ import {KeyboardAvoidingView, Platform, View} from "react-native";
 import {useDispatch, useSelector} from "react-redux";
 import {useToast} from "react-native-toast-notifications";
 import {RootState, AppDispatch} from "../../store";
-import {COLORS, SIZES} from "../../constants/Colors";
+import {COLORS, SIZES} from "@constants/Colors";
 import {CustomLoadingModal} from "./CustomLoadingModal";
-import {screenNotificationActions} from "../../store/slices/notification";
+import {screenNotificationActions} from "@store/slices/notification";
 import {SafeAreaView} from "react-native-safe-area-context";
-import {userActions} from "../../store/slices/user";
-import {devotionalActions} from "../../store/slices/devotional";
-import {notesActions} from "../../store/slices/notes";
-import {prayersActions} from "../../store/slices/prayer";
-import {moreActions} from "../../store/slices/more";
+import {userActions} from "@store/slices/user";
+import {devotionalActions} from "@store/slices/devotional";
+import {notesActions} from "@store/slices/notes";
+import {prayersActions} from "@store/slices/prayer";
+import {moreActions} from "@store/slices/more";
 
 type props = {
     child: any;
