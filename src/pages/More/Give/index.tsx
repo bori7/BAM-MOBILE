@@ -56,7 +56,7 @@ const Give: React.FC<NavigationProps> = ({navigation, route}) => {
         useState<GivingPaymentMethodType>("C");
     // const [allowEmailError, setAllowEmailError] = useState<boolean>(false);
     const [hideCurrency, setHideCurrency] = useState<boolean>(false);
-    const [selectedCurrencyIndex, setSelectedCurrencyIndex] = useState<number>(0);
+    const [selectedCurrencyIndex, setSelectedCurrencyIndex] = useState<number>(3);
 
     const [cancelled, setCancelled] = useState<boolean>(false);
     const [callbackCount, setCallbackCount] = useState<number>(0);
@@ -75,13 +75,13 @@ const Give: React.FC<NavigationProps> = ({navigation, route}) => {
         {
             icon: <CardAddSVG/>,
             title: "Debit Card",
-            desc: "Give using your bank card",
+            desc: "Donate using your bank card",
             type: "C",
         },
         {
             icon: <MdiBankSVG/>,
             title: "Bank Transfer",
-            desc: `Give using ${currencies[selectedCurrencyIndex].substring(
+            desc: `Donate using ${currencies[selectedCurrencyIndex].substring(
                 0,
                 3
             )} bank transfer`,
@@ -290,7 +290,7 @@ const Give: React.FC<NavigationProps> = ({navigation, route}) => {
                                     color={COLORS.Light.colorFour}
                                 />
                             </TouchableOpacity>
-                            <Text style={styles.r1t2}>Give</Text>
+                            <Text style={styles.r1t2}>Donation</Text>
                         </View>
                         <TouchableOpacity
                             style={styles.v1rbt2}

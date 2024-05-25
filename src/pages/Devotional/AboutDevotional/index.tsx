@@ -163,7 +163,7 @@ const AboutDevotional: React.FC<NavigationProps> = ({navigation, route}) => {
                                 // title={"Give Now"}
                                 title={
                                     <View style={styles.r4BtnTextContainer}>
-                                        <Text style={styles.r4BtnText}>{"Give Now"}</Text>
+                                        <Text style={styles.r4BtnText}>{"Donate Now"}</Text>
                                         <Feather
                                             name="arrow-right"
                                             size={24}

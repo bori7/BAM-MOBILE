@@ -6,8 +6,8 @@ import {
 } from "react-native";
 
 import React, { ReactElement } from "react";
-import { Text, View } from "../../../components/Themed";
-import { COLORS, IMAGES, SIZES } from "../../../constants/Colors";
+import { Text, View } from "@components/Themed";
+import { COLORS, IMAGES, SIZES } from "@constants/Colors";
 import Modal from "react-native-modal";
 import Layout from "../../../constants/Layout";
 
@@ -33,6 +33,7 @@ const ControlModal2 = ({ visible, closeModal, children }: IProps) => {
       deviceWidth={Layout.window.width}
       deviceHeight={Layout.window.height}
       avoidKeyboard={true}
+     // backdropOpacity={}
     >
       <KeyboardAvoidingView
         behavior={Platform.OS === "android" ? "padding" : "height"} // You can use "height" or "position" as well
@@ -77,6 +78,7 @@ const styles = StyleSheet.create({
     padding: 20,
     // alignItems: "center",
     // width: "100%",
+    maxHeight: '90%',
   },
   modalOverlay: {
     flex: 1,

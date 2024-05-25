@@ -229,7 +229,7 @@ const GivingHistory: React.FC<NavigationProps> = ({navigation, route}) => {
 
                                 <View style={styles.r4}>
                                     <MainButton
-                                        title={"Give Now"}
+                                        title={"Donate Now"}
                                         onPressFunction={() => {
                                             navigation.pop(1);
                                             navigation?.replace(MoreRoutes.Give);

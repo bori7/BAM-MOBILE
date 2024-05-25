@@ -9,16 +9,16 @@ import {
 } from "react-native";
 
 import React, { useEffect, useState } from "react";
-import { Text, View } from "../../../components/Themed";
-import { COLORS, IMAGES, SIZES } from "../../../constants/Colors";
+import { Text, View } from "@components/Themed";
+import { COLORS, IMAGES, SIZES } from "@constants/Colors";
 import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "../../../store";
+import { AppDispatch, RootState } from "@store/index";
 import { AntDesign, Ionicons } from "@expo/vector-icons";
 
-import { timeOptions } from "../../../constants/values";
-import { convertTo12HourFormat } from "../../../shared/helper";
-import { MoreProps, MoreRoutes } from "../../../shared/const/routerMore";
-import { generalActions } from "../../../store/slices/general";
+import { timeOptions } from "@constants/values";
+import { convertTo12HourFormat } from "@shared/helper";
+import { MoreProps, MoreRoutes } from "@shared/const/routerMore";
+import { generalActions } from "@store/slices/general";
 import EmailClockModal from "../EmailNotifications/EmailClockModal";
 
 export type NotificationsFormType = {

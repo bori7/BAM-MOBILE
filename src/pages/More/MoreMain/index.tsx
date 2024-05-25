@@ -105,7 +105,7 @@ const MoreMain: React.FC<NavigationProps> = ({ navigation, route }) => {
     },
     {
       icon: <MoreGivingSVG />,
-      name: "Giving",
+      name: "Donation",
       onPressFunc: () => {
         navigation?.navigate(RootRoutes.More, {
           screen: MoreRoutes.Give,

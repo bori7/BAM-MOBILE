@@ -1,23 +1,23 @@
 import React, { useEffect, useState } from "react";
-import { Text, View } from "../../../components/Themed";
+import { Text, View } from "@components/Themed";
 import {
   ScrollView,
   StatusBar,
   StyleSheet,
   TouchableOpacity,
 } from "react-native";
-import { COLORS, SIZES } from "../../../constants/Colors";
+import { COLORS, SIZES } from "@constants/Colors";
 import { AntDesign, Entypo, Feather, Ionicons } from "@expo/vector-icons";
-import { NotesProps, NotesRoutes } from "../../../shared/const/routerNotes";
+import { NotesProps, NotesRoutes } from "@shared/const/routerNotes";
 import { CompositeScreenProps, useFocusEffect } from "@react-navigation/native";
-import { RootRoutes, RootScreenProps } from "../../../shared/const/routerRoot";
-import { NoteProps, PrayerProps } from "../../../shared/types/slices";
-import { AppDispatch, RootState } from "../../../store";
+import { RootRoutes, RootScreenProps } from "@shared/const/routerRoot";
+import { NoteProps, PrayerProps } from "@shared/types/slices";
+import { AppDispatch, RootState } from "@store/index";
 import { useDispatch, useSelector } from "react-redux";
 import { OptionsPopUp } from "../../Main/Home/OptionsPopUp";
 import { TextInput } from "react-native-paper";
-import { notesActions } from "../../../store/slices/notes";
-import { MoreProps, MoreRoutes } from "../../../shared/const/routerMore";
+import { notesActions } from "@store/slices/notes";
+import { MoreProps, MoreRoutes } from "@shared/const/routerMore";
 import PrayerListView from "./PrayerListView";
 import AnsweredList from "./AnsweredList";
 

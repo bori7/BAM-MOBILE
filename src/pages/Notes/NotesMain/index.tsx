@@ -6,16 +6,16 @@ import {
 } from "react-native";
 
 import React, { useEffect, useState } from "react";
-import { Text, View } from "../../../components/Themed";
+import { Text, View } from "@components/Themed";
 import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "../../../store";
-import { NotesProps, NotesRoutes } from "../../../shared/const/routerNotes";
-import { COLORS, SIZES } from "../../../constants/Colors";
-import { AntDesign, Feather } from "@expo/vector-icons";
+import { AppDispatch, RootState } from "@store/index";
+import { NotesProps, NotesRoutes } from "@shared/const/routerNotes";
+import { COLORS, SIZES } from "@constants/Colors";
+import {AntDesign, Feather, Ionicons} from "@expo/vector-icons";
 import { CompositeScreenProps, useFocusEffect } from "@react-navigation/native";
-import { RootScreenProps, RootRoutes } from "../../../shared/const/routerRoot";
-import { NoteProps } from "../../../shared/types/slices";
-import { notesActions } from "../../../store/slices/notes";
+import { RootScreenProps, RootRoutes } from "@shared/const/routerRoot";
+import { NoteProps } from "@shared/types/slices";
+import { notesActions } from "@store/slices/notes";
 
 // type NavigationProps = NotesProps<NotesRoutes.NotesMain>;
 
@@ -50,6 +50,19 @@ const NotesMain: React.FC<NavigationProps> = ({ navigation, route }) => {
       <View style={styles.container}>
         <View style={styles.subContainer}>
           <View style={styles.r1}>
+            <TouchableOpacity
+                style={styles.headerRC1}
+                onPress={() => {
+                  navigation?.goBack();
+                }}
+            >
+              <Ionicons
+                  // name="arrow-back-sharp"
+                  name="home"
+                  size={25}
+                  color={COLORS.Light.colorFour}
+              />
+            </TouchableOpacity>
             <TouchableOpacity style={styles.r1t1}>
               <Text style={styles.r1t2}>Notes</Text>
             </TouchableOpacity>
@@ -243,5 +256,8 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     textAlign: "center",
     // marginLeft: "8%",
+  },
+  headerRC1: {
+    // marginRight: "1%",
   },
 });

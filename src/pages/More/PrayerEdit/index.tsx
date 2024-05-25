@@ -310,7 +310,7 @@ const PrayerEdit: React.FC<NavigationProps> = ({navigation, route}) => {
                                 </View>
                             )}
                             <Text style={styles.titleRef}>
-                                Daily Answer Devotional, {fetchedPrayer?.date}
+                                The Daily Answer Devotional, {fetchedPrayer?.date}
                             </Text>
                         </TouchableOpacity>
                         {!allowEdit && (

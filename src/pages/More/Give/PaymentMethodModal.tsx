@@ -9,12 +9,12 @@ import {
 } from "react-native";
 
 import React, { ReactElement, useEffect, useState } from "react";
-import { Text, View } from "../../../components/Themed";
-import { COLORS, IMAGES, SIZES } from "../../../constants/Colors";
+import { Text, View } from "@components/Themed";
+import { COLORS, IMAGES, SIZES } from "@constants/Colors";
 import { Feather, Ionicons, MaterialIcons } from "@expo/vector-icons";
 import { MainButton } from "../../../components";
-import { CardAddSVG, MdiBankSVG } from "../../../shared/components/SVGS";
-import { GivingPaymentMethodType } from "../../../shared/types/slices";
+import { CardAddSVG, MdiBankSVG } from "@shared/components/SVGS";
+import { GivingPaymentMethodType } from "@shared/types/slices";
 
 export type PaymentChannelType = {
   icon: React.ReactNode;
@@ -43,13 +43,13 @@ const PaymentMethodModal = ({
     {
       icon: <CardAddSVG />,
       title: "Debit Card",
-      desc: "Give using your bank card",
+      desc: "Donate using your bank card",
       type: "C",
     },
     {
       icon: <MdiBankSVG />,
       title: "Bank Transfer",
-      desc: `Give using ${currency} bank transfer`,
+      desc: `Donate using ${currency} bank transfer`,
       type: "T",
     },
   ];

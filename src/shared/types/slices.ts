@@ -208,3 +208,8 @@ export interface GeneralVerseOfTheDayType {
     text: string;
     date: string;
 }
+
+export interface TermsOfServiceType {
+    subtitle: string;
+    text: string;
+}

@@ -32,6 +32,8 @@ import {initiatePaymentCall, paystackGetCall} from "@store/apiThunks/payment";
 import {nanoid} from "@reduxjs/toolkit";
 import {CustomPaymentModal} from "@shared/components/CustomPaymentModal";
 import StringsFormat from "../../../shared/lib/stringsFormat";
+import ControlModal2 from "@pages/Devotional/ContentDevotional/ControlModal2";
+import SupportContentModal from "@pages/More/Support/SupportContentModal";
 
 type ISubscriptionType = {
     period: SubscriptionType;
@@ -65,6 +67,10 @@ const SubscriptionMain: React.FC<NavigationProps> = ({navigation, route}) => {
 
     const [callbackCount, setCallbackCount] = useState<number>(0);
 
+    const [content, setContent] = useState<number>(1);
+
+    const [hideModal, setHideModal] = useState<boolean>(false);
+
 
     const merits = [
         "Support quality writing",
@@ -73,9 +79,9 @@ const SubscriptionMain: React.FC<NavigationProps> = ({navigation, route}) => {
     ];
 
     const subcriptions: ISubscriptionType[] = [
-        {period: "Annually", price: "18,000.00/year", amount: "18000", currency: "NGN"},
-        {period: "Quarterly", price: "6,000.00/year", amount: "6000", currency: "NGN"},
-        {period: "Monthly", price: "1,500.00/year", amount: "1500", currency: "NGN"},
+        {period: "Annually", price: "180.00/year", amount: "180", currency: "NGN"},
+        {period: "Quarterly", price: "60.00/quater", amount: "60", currency: "NGN"},
+        {period: "Monthly", price: "15.00/month", amount: "15", currency: "NGN"},
     ];
 
 
@@ -309,7 +315,14 @@ const SubscriptionMain: React.FC<NavigationProps> = ({navigation, route}) => {
                                     <Text style={styles.r3c1t1}>{subscription.period}</Text>
 
                                     <Text style={styles.r3c1t2}>
-                                        <MdiNairaSVG/>
+                                        {/*<MdiNairaSVG/>*/}
+
+                                        <MaterialCommunityIcons
+                                            // name={`currency-${subscription.currency.toLowerCase()}`}
+                                            name={`currency-usd`}
+                                            size={20}
+                                            color={COLORS.Light.colorFour}
+                                        />
                                         {subscription.price}
                                     </Text>
                                 </View>
@@ -332,7 +345,7 @@ const SubscriptionMain: React.FC<NavigationProps> = ({navigation, route}) => {
                                 title={"Subscribe"}
                                 onPressFunction={() => {
                                     // navigation?.navigate(AuthRoutes.SignUp);
-                                      handleSubscribe()
+                                    handleSubscribe()
                                     // dispatch(
                                     //     screenNotificationActions.updateScreenLoadingFunc({
                                     //         screenLoading: true,
@@ -345,17 +358,31 @@ const SubscriptionMain: React.FC<NavigationProps> = ({navigation, route}) => {
                             />
                         </View>
 
-                        <TouchableOpacity style={styles.r56}>
+                        <TouchableOpacity
+                            style={styles.r56}
+                            onPress={() => {
+                                setHideModal(true);
+                                setContent(3)
+                            }}
+
+                        >
                             <Text style={styles.r5t}>Terms of Service</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.r56}>
+                        <TouchableOpacity
+                            style={styles.r56}
+                            onPress={() => {
+                                setHideModal(true);
+                                setContent(4)
+                            }}
+
+                        >
                             <Text style={styles.r6t}>Privacy Policy</Text>
                         </TouchableOpacity>
                         <Text style={styles.r7t}>
                             By clicking “Subscribe”, you agree to our Membership Terms of
                             Service. Your payment method will, based on your selection, be
-                            charged on a recurring basis N1,500.00 monthly, N6,000.00 or
-                            N18,000.00 yearly (prices are subject change).
+                            charged on a recurring basis $15.00 monthly, $60.00 or
+                            $180.00 yearly (prices are subject change).
                         </Text>
                         <Text style={styles.r8t}>
                             Your Daily Answer membership will be billed in your local
@@ -366,9 +393,21 @@ const SubscriptionMain: React.FC<NavigationProps> = ({navigation, route}) => {
                     </ScrollView>
                 </View>
             </View>
+            <ControlModal2
+                visible={hideModal}
+                closeModal={() => {
+                    setHideModal(false);
+                }}
+                children={
+                    <>
+                        <SupportContentModal
+                            content={content}
+                        />
+                    </>
+                }
+            />
         </View>
-    )
-        ;
+    );
 };
 
 export default SubscriptionMain;

@@ -36,11 +36,11 @@ const DaBD: React.FC<NavigationProps> = ({ navigation }) => {
             <Image source={IMAGES.logoDailyAnswer} style={styles.r2t} />
           </View>
           <View style={styles.r3}>
-            <Text style={styles.r3t}>Daily Answer Devotional Bible</Text>
+            <Text style={styles.r3t}>The Daily Answer Devotional Bible</Text>
           </View>
           <View style={styles.r4}>
             <Text style={styles.r4t}>
-              Welcome to Daily Answer Devotion Bible. Start your day with
+              Welcome to The Daily Answer Devotion Bible. Start your day with
               devotion and seek God's presence.
             </Text>
           </View>
