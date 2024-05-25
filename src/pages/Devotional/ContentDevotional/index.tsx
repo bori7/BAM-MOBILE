@@ -22,7 +22,7 @@ import {
     DevotionalRoutes,
 } from "@shared/const/routerDevotional";
 import {NotePadSVG, SpeakerSVG} from "@shared/components/SVGS";
-import ControlModal from "./ControlModal";
+// import ControlModal from "./ControlModal";
 import SpeakerModal, {ISpeedProps, IVoiceProps} from "./SpeakerModal";
 import TextFormatModal from "./TextFormatModal";
 import NotesModal from "./NotesModal";
@@ -31,7 +31,8 @@ import SubscriptionModal from "./SubscriptionModal";
 import {RootRoutes, RootScreenProps} from "@shared/const/routerRoot";
 import {MoreRoutes} from "@shared/const/routerMore";
 import {getDaysElapsed} from "@shared/helper";
-import * as Speech from 'expo-speech';
+// import * as Speech from 'expo-speech';
+import Tts from 'react-native-tts';
 
 // type NavigationProps = DevotionalProps<DevotionalRoutes.ContentDevotional>;
 
@@ -54,28 +55,64 @@ const ContentDevotional: React.FC<NavigationProps> =
         const [play, setPlay] = useState<boolean>(false);
 
         const [fontIncrement, setFontIncrement] = useState<number>(0);
-        const [speed, setSpeed] = useState<ISpeedProps>("1.0");
+        const [speed, setSpeed] = useState<ISpeedProps>("0.75");
         const [voice, setVoice] = useState<IVoiceProps>("Male");
 
 
         const [words, setWords] = useState<string[]>([]);
         const [wordCount, setWordCount] = useState<number>(0);
         const [totalWordCount, setTotalWordCount] = useState<number>(0);
+
+        const [isSpeaking, setIsSpeaking] = useState(false);
+
+
+        useEffect(() => {
+            // Event listener for TTS start
+            Tts.addEventListener('tts-start', (event) => {
+                setIsSpeaking(true)
+                debug.log("listener started", event)
+            });
+            // Event listener for TTS progress
+            Tts.addEventListener('tts-progress', (event) => {
+                setIsSpeaking(true)
+                debug.log("listener in progress", event)
+            });
+            // Event listener for TTS finish
+            Tts.addEventListener('tts-finish', (event) => {
+                setIsSpeaking(false)
+                debug.log("listener finished", event)
+            });
+            // Event listener for TTS cancel
+            Tts.addEventListener('tts-cancel', (event) => {
+                setIsSpeaking(false)
+                debug.log("listener cancelled", event)
+            });
+
+            // Cleanup event listeners on component unmount
+            return () => {
+                Tts.removeEventListener('tts-start', () => setIsSpeaking(true));
+                // Tts.removeEventListener('tts-progress', () => setIsSpeaking(true));
+                Tts.removeEventListener('tts-finish', () => setIsSpeaking(false));
+                Tts.removeEventListener('tts-cancel', () => setIsSpeaking(false));
+            };
+        }, []);
+
+
         debug.log("wordCountout", wordCount)
 
         const togglePlay = async () => {
             setWordCount(wordCount + 1)
-            const isSpeaking = await Speech.isSpeakingAsync();
+            // const isSpeaking = await Speech.isSpeakingAsync();
             if (isSpeaking) {
                 if (Platform.OS === "ios") {
                     if (!play) {
                         debug.log("Trying to resume speech")
-                        await Speech.resume()
+                        await Tts.resume()
                         debug.log("Speech resumed")
                         setPlay(true);
                     } else {
                         debug.log("Trying to pause speech")
-                        await Speech.pause()
+                        await Tts.pause()
                         debug.log("Speech paused")
                         setPlay(false);
                     }
@@ -87,7 +124,7 @@ const ContentDevotional: React.FC<NavigationProps> =
                         setPlay(true);
                     } else {
                         debug.log("Trying to stop speech")
-                        await Speech.stop()
+                        await Tts.stop()
                         debug.log("Speech stopped")
                         setPlay(false);
                     }
@@ -110,43 +147,53 @@ const ContentDevotional: React.FC<NavigationProps> =
                     debug.log("wordCount", wordCount)
                     debug.log("totalWordCount", totalWordCount)
 
-                    if (totalWordCount === 0 || wc >= totalWordCount) {
-                        await Speech.stop()
-                        debug.log("Done reading the text")
-                        setPlay(false);
-                        setWordCount(0)
-                        return;
-                    }
+                    // if (totalWordCount === 0 || wc >= totalWordCount) {
+                    //     await Tts.stop()
+                    //     debug.log("Done reading the text")
+                    //     setPlay(false);
+                    //     setWordCount(0)
+                    //     return;
+                    // }
 
-                    Speech.speak(words[wordCount], {
-                        voice: voice === "Male" ?
+                    Tts.speak(selectedDevotional?.message || "", {
+                        iosVoiceId: voice === "Male" ?
                             (Platform.OS === "ios" ? "com.apple.speech.synthesis.voice.Albert" : "en-us-x-iom-local") :
-                            (Platform.OS === "ios" ? "com.apple.speech.synthesis.voice.Samantha" : "en-us-x-iog-local"),
-                        pitch: 1.0,
+                            (Platform.OS === "ios" ? "com.apple.speech.synthesis.voice.Kathy" : "en-us-x-iog-local"),
+                        // 'com.apple.ttsbundle.Moira-compact',
                         rate: Number(speed),
-                        onDone: () => {
-                            // const wc = wordCount + 1
-                            // setWordCount(wc + 1)
-                            // debug.log("Done reading the word", wc)
-                            debug.log("Done reading the word", words[wc]);
-                            speak(wc + 1)
-                        },
-                        onError: (err) => {
-                            debug.log("err while speaking", err)
-                        },
-                        onStart: () => {
-                            debug.log("Started speaking")
-                        },
-                        onStopped: () => {
-                            debug.log("Stopped speaking")
-                        },
+                        androidParams: {
+                            KEY_PARAM_PAN: -1,
+                            KEY_PARAM_VOLUME: 0.5,
+                            KEY_PARAM_STREAM: 'STREAM_MUSIC',
+                        }
+                        // voice: voice === "Male" ?
+                        //     (Platform.OS === "ios" ? "com.apple.speech.synthesis.voice.Albert" : "en-us-x-iom-local") :
+                        //     (Platform.OS === "ios" ? "com.apple.speech.synthesis.voice.Samantha" : "en-us-x-iog-local"),
+                        // pitch: 1.0,
+                        // onDone: () => {
+                        //     // const wc = wordCount + 1
+                        //     // setWordCount(wc + 1)
+                        //     // debug.log("Done reading the word", wc)
+                        //     debug.log("Done reading the word", words[wc]);
+                        //     speak(wc + 1)
+                        // },
+                        // onError: (err) => {
+                        //     debug.log("err while speaking", err)
+                        // },
+                        // onStart: () => {
+                        //     debug.log("Started speaking")
+                        // },
+                        // onStopped: () => {
+                        //     debug.log("Stopped speaking")
+                        // },
                         // onPause: () => {
                         //     debug.log("Paused speaking")
                         // },
                         // onResume: () => {
                         //     debug.log("Resume speaking")
                         // },
-                        language: "en-US"
+                        // language: "en-US"
+
                     });
                     handleWordCount()
                 }
@@ -182,10 +229,14 @@ const ContentDevotional: React.FC<NavigationProps> =
             const wordSplit = thingToSay?.split(' ') || [];
             setWords(wordSplit)
             setTotalWordCount(wordSplit.length);
-            Speech.getAvailableVoicesAsync().then((res) => {
+            Tts.voices().then(res => {
+                debug.log("voices", res)
                 const englishVoices = res.filter((voice, _) => voice.language === "en-US")
                 debug.log("res from text to speech", englishVoices)
-            })
+            });
+            // Tts.getAvailableVoicesAsync().then((res) => {
+            //
+            // })
             // debug.log("totalwordCount", wordSplit.length)
             // debug.log("words", wordSplit)
             // debug.log("wordCount", wordCount)
