@@ -86,7 +86,7 @@ export default class StringsFormat {
     return result;
   }
 
-  //YAUHENI -> Yauheni
+
   static formatName(name: string) {
     if (!name) {
       return null;
@@ -94,7 +94,7 @@ export default class StringsFormat {
     return name.replace(
       /^(.)(.*)$/,
       (_, firstLetter, restOfName) =>
-        firstLetter.toUpperCase() + restOfName.toLowerCase()
+        firstLetter?.toUpperCase() + restOfName?.toLowerCase()
     );
   }
 

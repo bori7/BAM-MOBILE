@@ -1,33 +1,40 @@
 import {AxiosRequestHeaders} from "axios";
-import {apiCallInit} from "../shared/helper";
-import {navigationRef} from "@shared/components/InactivityWrapper";
+import {apiCallInit, TEXT_PLAIN} from "@shared/helper";
 import {navigateReset} from "@shared/lib/navigate";
 import {RootRoutes} from "@shared/const/routerRoot";
-import {devotionalActions} from "@store/slices/devotional";
-import {generalActions} from "@store/slices/general";
-import {moreActions} from "@store/slices/more";
-import {notesActions} from "@store/slices/notes";
-import {screenNotificationActions} from "@store/slices/notification";
-import {prayersActions} from "@store/slices/prayer";
-import {userActions} from "@store/slices/user";
-import {store} from "@store/index";
+import {CipherUtils} from "@shared/lib/cipher";
+import {ENCRYPTED, GENERAL_SYM_KEY, PRIVATE_KEY, PUBLIC_KEY} from "@constants/props";
+
 
 export const apiPost = async (
     url: string,
     headers: any,
     requestPayload: any
 ) => {
-    debug.log("request", requestPayload)
+    debug.log("raw request", requestPayload)
+    let oneTimeKey = "";
+    if (ENCRYPTED) {
+        requestPayload = CipherUtils.encryptionMessage(requestPayload, PUBLIC_KEY as string)
+        debug.log("request after encryption", requestPayload)
+        oneTimeKey = requestPayload.key
+        requestPayload = requestPayload.message
+    }
     return await apiCallInit(headers)
         .post(url, requestPayload)
         .then((res) => {
-            const newRes = {...res};
+            let newRes = {...res};
+            debug.log("raw response body", newRes)
+            if (ENCRYPTED) {
+                const body = newRes.data;
+                debug.log("encrypted response body", body)
+                const decryptedBody = CipherUtils.decryptAes(body, oneTimeKey as string)
+                debug.log("decrypted response Body", decryptedBody)
+                newRes.data = JSON.parse(decryptedBody)
+            }
             return newRes;
         })
         .catch((err) => {
-            if (err.toJSON().status === 401) {
-                resetAuthAfter401()
-            }
+            debug.api_error("error from apiPost", JSON.stringify(err));
             throw err;
         });
 };
@@ -64,16 +71,30 @@ export const apiPut = async (
     requestPayload: any
 ) => {
     debug.log("request", requestPayload)
+    debug.log("raw request", requestPayload)
+    let oneTimeKey = "";
+    if (ENCRYPTED) {
+        requestPayload = CipherUtils.encryptionMessage(requestPayload, PUBLIC_KEY as string)
+        debug.log("request after encryption", requestPayload)
+        oneTimeKey = requestPayload.key
+        requestPayload = requestPayload.message
+    }
+
     return await apiCallInit(headers)
         .put(url, requestPayload)
         .then((res) => {
             const newRes = {...res};
+            if (ENCRYPTED) {
+                const body = newRes.data;
+                debug.log("encrypted response body", body)
+                const decryptedBody = CipherUtils.decryptAes(body, oneTimeKey as string)
+                debug.log("decrypted response Body", decryptedBody)
+                newRes.data = JSON.parse(decryptedBody)
+            }
             return newRes;
         })
         .catch((err) => {
-            if (err.toJSON().status === 401) {
-                resetAuthAfter401()
-            }
+
             throw err;
         })
 
@@ -110,17 +131,29 @@ export const apiDelete = async (
     headers: any,
     requestPayload: any
 ) => {
-    debug.log("request", requestPayload)
+    debug.log("raw request", requestPayload)
+    let oneTimeKey = "";
+    if (ENCRYPTED) {
+        requestPayload = CipherUtils.encryptionMessage(requestPayload, PUBLIC_KEY as string)
+        debug.log("request after encryption", requestPayload)
+        oneTimeKey = requestPayload.key
+        requestPayload = requestPayload.message
+    }
     return await apiCallInit(headers)
         .delete(url, requestPayload)
         .then((res) => {
             const newRes = {...res};
+            if (ENCRYPTED) {
+                const body = newRes.data;
+                debug.log("encrypted response body", body)
+                const decryptedBody = CipherUtils.decryptAes(body, oneTimeKey as string)
+                debug.log("decrypted response Body", decryptedBody)
+                newRes.data = JSON.parse(decryptedBody)
+            }
             return newRes;
         })
         .catch((err) => {
-            if (err.toJSON().status === 401) {
-                resetAuthAfter401()
-            }
+
             throw err;
         });
 };
@@ -150,41 +183,58 @@ export const deleteCall = async <R, T>(
     }
 };
 
-export const apiGetBy = (
-    url: any,
-    headers: AxiosRequestHeaders | undefined | {},
-    param: any,
-    paramValue: any
-) =>
-    apiCallInit(headers)
-        .get(`${url}?${param}=${paramValue}`)
-        .then((res) => {
-            const newRes = {...res};
-            return newRes;
-        })  .catch((err) => {
-        if (err.toJSON().status === 401) {
-            resetAuthAfter401()
-        }
-        throw err;
-    })
+export const apiGetBy = async (
+        url: any,
+        headers: AxiosRequestHeaders | undefined | {},
+        param: any,
+        paramValue: any
+    ) => {
+
+        return await apiCallInit(headers)
+            .get(`${url}?${param}=${paramValue}`)
+            .then((res) => {
+                const newRes = {...res};
+                if (ENCRYPTED) {
+                    const body = newRes.data;
+                    debug.log("encrypted response body", body)
+                    const decryptedBody = CipherUtils.decryptAes(body, GENERAL_SYM_KEY as string)
+                    debug.log("decrypted response Body", decryptedBody)
+                    newRes.data = JSON.parse(decryptedBody)
+                }
+                return newRes;
+            }).catch((err) => {
+                debug.log("err response body", JSON.stringify(err))
+
+                throw err;
+            })
+    }
 ;
 
-export const apiGetFor = (
+export const apiGetFor = async (
     url: any,
     headers: AxiosRequestHeaders | undefined | {}
-) =>
-    apiCallInit(headers)
+) => {
+
+    return await apiCallInit(headers)
         .get(`${url}`)
         .then((res) => {
             const newRes = {...res};
+            debug.log("raw response body", newRes)
+            if (ENCRYPTED) {
+                const body = newRes.data;
+                debug.log("encrypted response body", body)
+                const decryptedBody = CipherUtils.decryptAes(body, GENERAL_SYM_KEY as string)
+                debug.log("decrypted response Body", decryptedBody)
+                newRes.data = JSON.parse(decryptedBody)
+            }
             return newRes;
         })
         .catch((err) => {
-            if (err.toJSON().status === 401) {
-                resetAuthAfter401()
-            }
+            debug.log("err response body", JSON.stringify(err))
+
             throw err;
-        });
+        })
+};
 
 export const getFor = async <T>(
     url: string,
@@ -273,7 +323,8 @@ export const getByWithPathParam = async <T>(
     }
 };
 
-const resetAuthAfter401 = () => {
+export const resetAuthAfter401 = () => {
+    debug.api_error("redirecting back to sign in screeen")
     // store.dispatch(devotionalActions.clearDevotionalState())
     // store.dispatch(generalActions.clearGeneralState())
     // store.dispatch(moreActions.clearMoreState())

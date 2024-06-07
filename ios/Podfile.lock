@@ -428,6 +428,8 @@ PODS:
     - React-Core
   - react-native-encrypted-storage (4.0.3):
     - React-Core
+  - react-native-rsa-native (2.0.5):
+    - React
   - react-native-safe-area-context (4.6.3):
     - RCT-Folly
     - RCTRequired
@@ -647,6 +649,7 @@ DEPENDENCIES:
   - React-logger (from `../node_modules/react-native/ReactCommon/logger`)
   - react-native-biometrics (from `../node_modules/react-native-biometrics`)
   - react-native-encrypted-storage (from `../node_modules/react-native-encrypted-storage`)
+  - react-native-rsa-native (from `../node_modules/react-native-rsa-native`)
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
   - react-native-splash-screen (from `../node_modules/react-native-splash-screen`)
   - react-native-webview (from `../node_modules/react-native-webview`)
@@ -785,6 +788,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-biometrics"
   react-native-encrypted-storage:
     :path: "../node_modules/react-native-encrypted-storage"
+  react-native-rsa-native:
+    :path: "../node_modules/react-native-rsa-native"
   react-native-safe-area-context:
     :path: "../node_modules/react-native-safe-area-context"
   react-native-splash-screen:
@@ -896,6 +901,7 @@ SPEC CHECKSUMS:
   React-logger: d4010de0b0564e63637ad08373bc73b5d919974b
   react-native-biometrics: 352e5a794bfffc46a0c86725ea7dc62deb085bdc
   react-native-encrypted-storage: db300a3f2f0aba1e818417c1c0a6be549038deb7
+  react-native-rsa-native: 12132eb627797529fdb1f0d22fd0f8f9678df64a
   react-native-safe-area-context: 36cc67648134e89465663b8172336a19eeda493d
   react-native-splash-screen: 4312f786b13a81b5169ef346d76d33bc0c6dc457
   react-native-webview: b8ec89966713985111a14d6e4bf98d8b54bced0d

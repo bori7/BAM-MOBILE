@@ -1,5 +1,5 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
-import {GenericResponseType} from "../../services/type";
+import {GenericResponseType} from "@services/type";
 import {
     InitBAMThunkApiConfig,
     InitGenerateVerificationCodeThunkArg, InitResetUserPasswordThunkArg,
@@ -10,19 +10,17 @@ import {
     InitUpdateUserImageThunkArg,
     InitUpdateUserPasswordThunkArg,
     InitVerifyVerificationCodeThunkArg
-} from "../../shared/types/thunkArgs";
-import {getDeviceIpAddress} from "../../shared/helper";
+} from "@shared/types/thunkArgs";
+import {getDeviceIpAddress} from "@shared/helper";
 import {
     GenerateVerificationCodePayloadType, ResetUserPasswordPayloadType,
     SignInPayloadType,
     SignUpPayloadType,
     UpdateUserImagePayloadType,
     UpdateUserPasswordPayloadType, VerifyVerificationCodePayloadType
-} from "../../services/user/type";
-import {UserService} from "../../services/user";
+} from "@services/user/type";
+import {UserService} from "@services/user";
 import * as Device from 'expo-device';
-import {CipherUtils} from "../../shared/lib/cipher";
-import {AES_SECRET_KEY} from "../../constants/props";
 
 
 export const signUpGoogleCall = createAsyncThunk<

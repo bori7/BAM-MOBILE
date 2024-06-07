@@ -12,7 +12,7 @@ import {
     FETCH_ALL_DEVOTIONAL_URL,
     FETCH_DEVOTIONAL_BY_ID_URL,
     FETCH_DEVOTIONAL_BY_TITLE_URL, UPDATE_DEVOTIONAL_URL
-} from "../../constants/url";
+} from "@constants/url";
 
 export class DevotionalService {
     static async createDevotional(

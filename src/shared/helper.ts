@@ -1,21 +1,98 @@
 import axios from "axios";
 import * as SecureStore from "expo-secure-store";
 import {getIpAddressAsync} from 'expo-network';
+import {ENCRYPTED, GENERAL_SYM_KEY, PUBLIC_KEY} from "@constants/props";
+import {CipherUtils} from "@shared/lib/cipher";
+import {resetAuthAfter401} from "@services/index";
 
-export const apiCallInit = (otherHeaders: any) =>
-    axios.create({
+export const TEXT_PLAIN = 'text/plain';
+export const APPLICATION_JSON = 'application/json';
+
+
+export const apiCallInit = (otherHeaders: any) => {
+    const axiosInstance = axios.create({
         baseURL: "",
         headers: {
-            "Content-Type": "application/json",
+            // "Content-Type": APPLICATION_JSON,
+            'Cache-Control': 'no-cache',
+            'Pragma': 'no-cache',
+            'Expires': '0',
+            "Content-Type": ENCRYPTED ? TEXT_PLAIN : APPLICATION_JSON,
             ...otherHeaders,
         },
         // timeout: 5000,
-        timeoutErrorMessage: "Bible App API timed out",
+        timeoutErrorMessage: "Daily Answer API timed out",
     });
+
+    let oneTimeKey = "";
+
+    axiosInstance.interceptors.request.use(
+        (config) => {
+            debug.log('Request CONFIG:', config);
+
+            debug.log("RAW request data", config.data);
+
+
+            config.headers['Content-Type'] = ENCRYPTED ? TEXT_PLAIN : APPLICATION_JSON;
+
+            if (config.method === "get" || config.method === "GET") {
+                debug.log("config.headers['Content-Type']", config.headers['Content-Type'])
+                config.headers['Accept'] = ENCRYPTED ? TEXT_PLAIN : APPLICATION_JSON;
+                oneTimeKey = GENERAL_SYM_KEY;
+            }
+
+            debug.log("request data config method", config.method)
+            // if (ENCRYPTED && config.method !== "GET") {
+            //     config.data = CipherUtils.encryptionMessage(config.data, PUBLIC_KEY as string)
+            //     debug.log("request data after encryption", config.data)
+            //     oneTimeKey = config.data.key
+            //     config.data = config.data.message
+            //
+            // }
+            debug.log("request data config", config.data)
+            return config;
+        },
+        (error) => {
+            debug.error('Raw Error Reject:', error);
+            return Promise.reject(error);
+        }
+    );
+
+    axiosInstance.interceptors.response.use(
+        (response) => {
+            // debug.log("oneTimeKey", oneTimeKey)
+            debug.log('Raw Response:', JSON.stringify(response));
+
+            // let newRes = {...response};
+            // debug.log("raw response body", newRes)
+            // if (ENCRYPTED && response.config.method !== "GET") {
+            //     const body = response.data;
+            //     debug.log("encrypted response body", body)
+            //     const decryptedBody = CipherUtils.decryptAes(body, oneTimeKey as string)
+            //     debug.log("decrypted response Body", decryptedBody)
+            //     response.data = JSON.parse(decryptedBody)
+            // }
+
+            return response;
+        },
+        (error) => {
+            debug.error('Raw Error response:', error);
+            debug.api_error("error from api", JSON.stringify(error));
+
+            if (error?.toJSON()?.status === 401) {
+                resetAuthAfter401()
+            }
+            return Promise.reject(error);
+        }
+    );
+
+    return axiosInstance;
+}
+
 
 export const formatDate = (date: Date) => {
     const day = date.getDate().toString().padStart(2, "0");
-    // console.log(day);
+    // debug.log(day);
     // const month = monthName[date.getMonth()];
 
     const month = monthNumber[date.getMonth()];
@@ -29,11 +106,11 @@ export const formatDatePlanDetails = (date: String | undefined) => {
     if (!date) {
         return date;
     }
-    console.log(date);
-    date = date.substring(0, 10);
-    const day = date.substring(8);
-    const m: any = date.substring(5, 7);
-    const y = date.substring(0, 4);
+    debug.log("date", date);
+    date = date?.substring(0, 10);
+    const day = date?.substring(8);
+    const m: any = date?.substring(5, 7);
+    const y = date?.substring(0, 4);
 
     const month = monthName[+m];
 
@@ -85,7 +162,7 @@ export const formatSubscriptionDate = (date: Date) => {
     const month = monthName[date.getMonth()];
     const year = date.getFullYear();
 
-    return `${month.substring(0, 3)} ${day}, ${year}`;
+    return `${month?.substring(0, 3)} ${day}, ${year}`;
 };
 export const convertTo12HourFormat = (timeStr: string) => {
     const [hour, minute, second] = timeStr.split(":");
@@ -144,8 +221,7 @@ export const computeEstimatedMonthlyInvestment = (
         new Date(date || new Date()).getFullYear() + 2 - new Date().getFullYear();
     ans = Math.floor(parseFloat(amount || "0.00") / (yearDiff * 12));
 
-    console.log(ans, amount, yearDiff);
-
+    debug.log("computeEstimatedMonthlyInvestment", ans + "::" + amount + "::" + yearDiff);
     return ans;
 };
 
@@ -198,11 +274,11 @@ export const getPercentUsedInYear = (): string => {
 
 
 export async function secureSave(key: string, value: any) {
-    console.log("Value: ", value);
+    debug.log("Value: ", value);
     if (typeof value !== "string") {
         value = JSON.stringify(value);
     }
-    // console.log('Value1: ', value);
+    // debug.log('Value1: ', value);
     await SecureStore.setItemAsync(key, value);
 }
 
@@ -216,9 +292,9 @@ export async function secureGet(key: string, funcTodo: Function) {
     if (funcTodo != null) {
         funcTodo(result);
     } else if (result) {
-        // console.log(`🔐 Here's your value 🔐 \n${result}`);
+        // debug.log(`🔐 Here's your value 🔐 \n${result}`);
     } else {
-        // console.log('No values stored under that key.');
+        // debug.log('No values stored under that key.');
     }
 }
 
@@ -226,12 +302,12 @@ export async function getStuffFromSecureStore(key: string) {
     // const result =
     try {
         return await SecureStore.getItemAsync(key).then((token) => {
-            // console.log(`🔐 Here's your value 🔐 \n${token}`);
-            // console.log('this is the token from SecureGet', key, token);
+            // debug.log(`🔐 Here's your value 🔐 \n${token}`);
+            // debug.log('this is the token from SecureGet', key, token);
             return token;
         });
     } catch (error) {
-        // console.log('Errors in getTokenFromSecureStore', error);
+        // debug.log('Errors in getTokenFromSecureStore', error);
         return null;
     }
 
@@ -263,7 +339,7 @@ export const getDeviceIpAddress = async () => {
         const deviceIpAddress = await getIpAddressAsync();
         return deviceIpAddress;
     } catch (error) {
-        console.log('Error getting device IP address:', error);
+        debug.log('Error getting device IP address:', error);
         return null;
     }
 };

@@ -153,7 +153,7 @@ const SignIn: React.FC<NavigationProps> = ({navigation, route}) => {
                 navigation?.dispatch(resetAction);
                 setBiometricData();
             }).catch((err) => {
-                debug.error("err", err)
+                debug.error("err while  signing in", err)
             }).finally(() => {
                 dispatch(userActions.stopUserLoading())
             })

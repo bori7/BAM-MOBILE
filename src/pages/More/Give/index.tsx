@@ -81,7 +81,7 @@ const Give: React.FC<NavigationProps> = ({navigation, route}) => {
         {
             icon: <MdiBankSVG/>,
             title: "Bank Transfer",
-            desc: `Donate using ${currencies[selectedCurrencyIndex].substring(
+            desc: `Donate using ${currencies[selectedCurrencyIndex]?.substring(
                 0,
                 3
             )} bank transfer`,
@@ -150,7 +150,7 @@ const Give: React.FC<NavigationProps> = ({navigation, route}) => {
 
                         dispatch(
                             moreActions.addGivingTransaction({
-                                currency: currencies[selectedCurrencyIndex].substring(0, 3),
+                                currency: currencies[selectedCurrencyIndex]?.substring(0, 3),
                                 amount: res?.payload?.amount || amountF,
                                 paymentMethod: StringsFormat.formatName(res?.payload?.channel)?.substring(0, 1) as GivingPaymentMethodType
                                     || paymentMethod ||
@@ -186,7 +186,7 @@ const Give: React.FC<NavigationProps> = ({navigation, route}) => {
 
                 dispatch(
                     moreActions.addGivingTransaction({
-                        currency: currencies[selectedCurrencyIndex].substring(0, 3),
+                        currency: currencies[selectedCurrencyIndex]?.substring(0, 3),
                         amount: res?.payload?.amount || amountF,
                         paymentMethod: StringsFormat.formatName(res?.payload?.channel)?.substring(0, 1) as GivingPaymentMethodType
                             || paymentMethod ||
@@ -365,7 +365,7 @@ const Give: React.FC<NavigationProps> = ({navigation, route}) => {
                                         ? COLORS.Light.colorOne
                                         : COLORS.Light.colorTwentySix
                                 }
-                                value={currencies[selectedCurrencyIndex].substring(0, 3)}
+                                value={currencies[selectedCurrencyIndex]?.substring(0, 3)}
                                 onChangeText={(val) => {
                                     setCurrency(val);
                                 }}
@@ -424,8 +424,8 @@ const Give: React.FC<NavigationProps> = ({navigation, route}) => {
                                             // <MdiNairaSVG color={COLORS.Light.colorFive} />
                                             <MaterialCommunityIcons
                                                 name={`currency-${currencies[selectedCurrencyIndex]
-                                                    .substring(0, 3)
-                                                    .toLowerCase()}`}
+                                                    ?.substring(0, 3)
+                                                    ?.toLowerCase()}`}
                                                 size={24}
                                                 color={
                                                     amount
@@ -500,7 +500,7 @@ const Give: React.FC<NavigationProps> = ({navigation, route}) => {
                                 // );
                             }}
                             amount={`${amountF}`}
-                            currency={`${currencies[selectedCurrencyIndex].substring(0, 3)}`}
+                            currency={`${currencies[selectedCurrencyIndex]?.substring(0, 3)}`}
                             paymentMethod={paymentMethod}
                             handlePaymentMethod={(val: GivingPaymentMethodType): void => {
                                 setPaymentMethod(val);

@@ -71,7 +71,7 @@ export default class ValidateData {
     }
 
     const expiryYear = splitDate[1];
-    const currentYear = new Date().getFullYear().toString().substring(2, 4);
+    const currentYear = new Date().getFullYear().toString()?.substring(2, 4);
     if (currentYear > expiryYear) {
       return 'Expiry year cannot be in the past, error';
     }
