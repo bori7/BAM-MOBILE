@@ -3,7 +3,7 @@ import {apiCallInit, TEXT_PLAIN} from "@shared/helper";
 import {navigateReset} from "@shared/lib/navigate";
 import {RootRoutes} from "@shared/const/routerRoot";
 import {CipherUtils} from "@shared/lib/cipher";
-import {ENCRYPTED, GENERAL_SYM_KEY, PRIVATE_KEY, PUBLIC_KEY} from "@constants/props";
+import {ENCRYPTED, GENERAL_SYM_KEY, PUBLIC_KEY} from "@constants/props";
 
 
 export const apiPost = async (

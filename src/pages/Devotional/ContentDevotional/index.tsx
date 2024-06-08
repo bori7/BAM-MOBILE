@@ -67,41 +67,43 @@ const ContentDevotional: React.FC<NavigationProps> =
 
 
         useEffect(() => {
-            // Event listener for TTS start
             Tts.addEventListener('tts-start', (event) => {
                 setIsSpeaking(true)
+                debug.log("Speech started")
                 debug.log("listener started", event)
             });
-            // Event listener for TTS progress
+
             Tts.addEventListener('tts-progress', (event) => {
-                setIsSpeaking(true)
+                // setIsSpeaking(true)
                 debug.log("listener in progress", event)
             });
-            // Event listener for TTS finish
+
             Tts.addEventListener('tts-finish', (event) => {
                 setIsSpeaking(false)
+                setPlay(false)
+                Tts.stop()
                 debug.log("listener finished", event)
             });
-            // Event listener for TTS cancel
+
             Tts.addEventListener('tts-cancel', (event) => {
                 setIsSpeaking(false)
+                setPlay(false)
+                Tts.stop()
                 debug.log("listener cancelled", event)
             });
 
-            // Cleanup event listeners on component unmount
             return () => {
-                Tts.removeEventListener('tts-start', () => setIsSpeaking(true));
-                // Tts.removeEventListener('tts-progress', () => setIsSpeaking(true));
-                Tts.removeEventListener('tts-finish', () => setIsSpeaking(false));
-                Tts.removeEventListener('tts-cancel', () => setIsSpeaking(false));
+                // Tts?.removeEventListener('tts-start', () => setIsSpeaking(false));
+                // Tts?.removeEventListener('tts-finish', () => setIsSpeaking(false));
+                // Tts?.removeEventListener('tts-cancel', () => setIsSpeaking(false));
+                Tts.stop()
             };
         }, []);
 
 
-        debug.log("wordCountout", wordCount)
-
         const togglePlay = async () => {
-            setWordCount(wordCount + 1)
+            // debug.log("wordCount", wordCount)
+            // setWordCount(wordCount + 1)
             // const isSpeaking = await Speech.isSpeakingAsync();
             if (isSpeaking) {
                 if (Platform.OS === "ios") {
@@ -119,85 +121,49 @@ const ContentDevotional: React.FC<NavigationProps> =
                 } else {
                     if (!play) {
                         debug.log("Trying to start speech")
-                        speak(wordCount)
-                        debug.log("Speech started")
                         setPlay(true);
+                        await speak(wordCount)
                     } else {
                         debug.log("Trying to stop speech")
                         await Tts.stop()
                         debug.log("Speech stopped")
                         setPlay(false);
+
+                        // debug.log("Trying to pause speech");
+                        // await Tts.pause();
+                        // debug.log("Speech paused");
+                        // setPlay(false);
                     }
                 }
 
             } else {
                 setPlay(true);
-                speak(wordCount)
+                await speak(wordCount)
             }
         };
 
         const handleWordCount = () => {
-            setWordCount(wordCount + 1)
+            // setWordCount(wordCount + 1)
+            // debug.log("wordCurrent ", words[wordCount])
+
         }
+
         const speak =
             useCallback(
                 async (wc: number) => {
-                    // debug.log("words", words)
-                    debug.log("wc", wc)
-                    debug.log("wordCount", wordCount)
-                    debug.log("totalWordCount", totalWordCount)
-
-                    // if (totalWordCount === 0 || wc >= totalWordCount) {
-                    //     await Tts.stop()
-                    //     debug.log("Done reading the text")
-                    //     setPlay(false);
-                    //     setWordCount(0)
-                    //     return;
-                    // }
-
                     Tts.speak(selectedDevotional?.message || "", {
                         iosVoiceId: voice === "Male" ?
-                            (Platform.OS === "ios" ? "com.apple.speech.synthesis.voice.Albert" : "en-us-x-iom-local") :
-                            (Platform.OS === "ios" ? "com.apple.speech.synthesis.voice.Kathy" : "en-us-x-iog-local"),
-                        // 'com.apple.ttsbundle.Moira-compact',
-                        rate: Number(speed),
+                            "com.apple.speech.synthesis.voice.Fred" :
+                            "com.apple.speech.synthesis.voice.Kathy",
+                        rate: Number(speed) * 0.3,
                         androidParams: {
                             KEY_PARAM_PAN: -1,
                             KEY_PARAM_VOLUME: 0.5,
                             KEY_PARAM_STREAM: 'STREAM_MUSIC',
                         }
-                        // voice: voice === "Male" ?
-                        //     (Platform.OS === "ios" ? "com.apple.speech.synthesis.voice.Albert" : "en-us-x-iom-local") :
-                        //     (Platform.OS === "ios" ? "com.apple.speech.synthesis.voice.Samantha" : "en-us-x-iog-local"),
-                        // pitch: 1.0,
-                        // onDone: () => {
-                        //     // const wc = wordCount + 1
-                        //     // setWordCount(wc + 1)
-                        //     // debug.log("Done reading the word", wc)
-                        //     debug.log("Done reading the word", words[wc]);
-                        //     speak(wc + 1)
-                        // },
-                        // onError: (err) => {
-                        //     debug.log("err while speaking", err)
-                        // },
-                        // onStart: () => {
-                        //     debug.log("Started speaking")
-                        // },
-                        // onStopped: () => {
-                        //     debug.log("Stopped speaking")
-                        // },
-                        // onPause: () => {
-                        //     debug.log("Paused speaking")
-                        // },
-                        // onResume: () => {
-                        //     debug.log("Resume speaking")
-                        // },
-                        // language: "en-US"
-
                     });
-                    handleWordCount()
                 }
-                , [words,])
+                , [selectedDevotional?.message, voice, speed])
 
         const devotionalState = useSelector((state: RootState) => state.devotional);
         const {selectedDevotionalData} = devotionalState;
@@ -222,7 +188,7 @@ const ContentDevotional: React.FC<NavigationProps> =
                 return;
             }
             const thingToSay = selectedDevotional?.message
-            debug.log("speaking", thingToSay)
+            debug.log("thingToSay", thingToSay)
             if (thingToSay?.trim() === '') {
                 return;
             }
@@ -230,17 +196,35 @@ const ContentDevotional: React.FC<NavigationProps> =
             setWords(wordSplit)
             setTotalWordCount(wordSplit.length);
             Tts.voices().then(res => {
-                debug.log("voices", res)
+                // debug.log("voices", res)
                 const englishVoices = res.filter((voice, _) => voice.language === "en-US")
                 debug.log("res from text to speech", englishVoices)
             });
-            // Tts.getAvailableVoicesAsync().then((res) => {
-            //
-            // })
-            // debug.log("totalwordCount", wordSplit.length)
-            // debug.log("words", wordSplit)
-            // debug.log("wordCount", wordCount)
+
+
         }, [selectedDevotional]);
+
+        useEffect(() => {
+
+            if (Platform.OS === "android") {
+                //male:  en-us-x-tpd-network en-us-x-iol-network en-us-x-iom-network
+                //  en-us-x-tpd-local en-us-x-iol-local en-us-x-tpc-local
+
+                //female: en-us-x-tpf-local  en-us-x-sfg-local en-us-x-iob-local en-US-language
+                // en-us-x-tpf-network en-us-x-sfg-network en-us-x-iob-network en-us-x-iog-network en-us-x-tpc-network
+
+                const voiceName: string = voice === "Male" ? "en-us-x-iom-network" : "en-us-x-iog-network"
+                Tts.setDefaultRate(Number(speed) * 0.3, false);
+                Tts.voices().then(voices => {
+                    // Filter voices to find the desired one
+                    const selectedVoice = voices.find(voice => voice.language === 'en-US'
+                        && voice.name.includes(voiceName));
+                    if (selectedVoice) {
+                        Tts.setDefaultVoice(selectedVoice.id);
+                    }
+                });
+            }
+        }, [voice,speed])
 
         // useFocusEffect(() => {
         //     setTimeout(() => {
@@ -249,21 +233,20 @@ const ContentDevotional: React.FC<NavigationProps> =
         //         // setHideSubscription(false);
         //     }, 5000);
         // });
-        const
-            shareData = async (val: string) => {
-                try {
-                    await Share.share({
-                        title: "Devotional",
-                        message: val,
+        const shareData = async (val: string) => {
+            try {
+                await Share.share({
+                    title: "Devotional",
+                    message: val,
 
-                    }, {
-                        dialogTitle: "BAM: Devotional",
-                        tintColor: COLORS.Light.colorOne
-                    });
-                } catch (error) {
-                    debug.error("error while sharing", error);
-                }
-            };
+                }, {
+                    dialogTitle: "BAM: Devotional",
+                    tintColor: COLORS.Light.colorOne
+                });
+            } catch (error) {
+                debug.error("error while sharing", error);
+            }
+        };
 
 
         return (
@@ -359,7 +342,8 @@ const ContentDevotional: React.FC<NavigationProps> =
                         </ScrollView>
                         <View style={styles.floatingContainer}>
                             <TouchableOpacity style={styles.floatingContent1}>
-                                <Text style={styles.fc1t}>{`Daily Living Devotional ${new Date().getFullYear()}`}</Text>
+                                <Text
+                                    style={styles.fc1t}>{`The Daily Answer Devotional ${new Date().getFullYear()}`}</Text>
                                 <Text style={styles.fc3t}>{`Day ${getDaysElapsed()}`}</Text>
                             </TouchableOpacity>
                             <TouchableOpacity
@@ -368,11 +352,12 @@ const ContentDevotional: React.FC<NavigationProps> =
                                     togglePlay();
                                 }}
                             >
-                                <Text style={styles.fc2t}>
+                                <Text style={[styles.fc2t, play && {marginLeft: "1%"}]}>
                                     <FontAwesome5
                                         name={!play ? "play" : (Platform.OS === "ios" ? "pause" : "stop")}
                                         size={28}
                                         color={COLORS.Light.background}
+                                        // style={styles.fc2t}
                                     />
                                 </Text>
                             </TouchableOpacity>
@@ -398,10 +383,12 @@ const ContentDevotional: React.FC<NavigationProps> =
                                     handleSpeed={(val: ISpeedProps) => {
                                         debug.log("speed val:", val)
                                         setSpeed(val)
+                                        Tts.stop()
                                     }}
                                     handleVoice={(val: IVoiceProps) => {
                                         debug.log("voice val:", val)
                                         setVoice(val)
+                                        Tts.stop()
                                     }}
                                     play={play}
                                     togglePlay={togglePlay}

@@ -1,14 +1,14 @@
 import {ScrollView, StyleSheet, TouchableOpacity} from "react-native";
 
 import React, {useState} from "react";
-import {Text, View} from "../../../components/Themed";
-import {COLORS, IMAGES, SIZES} from "../../../constants/Colors";
-import {notesActions} from "../../../store/slices/notes";
-import {AppDispatch} from "../../../store";
+import {Text, View} from "@components/Themed";
+import {COLORS, IMAGES, SIZES} from "@constants/Colors";
+import {notesActions} from "@store/slices/notes";
+import {AppDispatch} from "@store/index";
 import {useDispatch} from "react-redux";
 import {TextInput} from "react-native-paper";
-import {screenNotificationActions} from "../../../store/slices/notification";
-import {createNoteCall} from "../../../store/apiThunks/note";
+import {screenNotificationActions} from "@store/slices/notification";
+import {createNoteCall} from "@store/apiThunks/note";
 
 type Iprops = {
     noteTitle: string;

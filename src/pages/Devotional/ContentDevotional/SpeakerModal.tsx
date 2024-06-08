@@ -9,13 +9,13 @@ import {
 } from "react-native";
 
 import React, {ReactElement, useEffect, useState} from "react";
-import {Text, View} from "../../../components/Themed";
-import {COLORS, IMAGES, SIZES} from "../../../constants/Colors";
+import {Text, View} from "@components/Themed";
+import {COLORS, IMAGES, SIZES} from "@constants/Colors";
 import {Feather, FontAwesome5} from "@expo/vector-icons";
-import {ProgressBarButton} from "../../../shared/components/ProgressBarButton";
-import {Back10SVG, Front10SVG} from "../../../shared/components/SVGS";
+import {ProgressBarButton} from "@shared/components/ProgressBarButton";
+import {Back10SVG, Front10SVG} from "@shared/components/SVGS";
 import {OptionsPopUp} from "../../Main/Home/OptionsPopUp";
-import {getDaysElapsed} from "../../../shared/helper";
+import {getDaysElapsed} from "@shared/helper";
 
 export type ISpeedProps = "0.75" | "1.0" | "1.25" | "1.5" | "2";
 export type IVoiceProps = "Male" | "Female";
@@ -76,7 +76,7 @@ const SpeakerModal = ({handleSpeed, handleVoice, play, togglePlay}: ISpeakerModa
         <>
             <View style={styles.modalHeader}>
                 <View style={styles.lid}/>
-                <Text style={styles.modalHeaderText}>{`Daily Living Devotional ${new Date().getFullYear()}`}</Text>
+                <Text style={styles.modalHeaderText}>{`The Daily Answer Devotional ${new Date().getFullYear()}`}</Text>
                 <Text style={styles.modalHeaderText1}>{`Day ${getDaysElapsed()}`}</Text>
             </View>
             {/*TODO MVP2*/}
@@ -119,7 +119,7 @@ const SpeakerModal = ({handleSpeed, handleVoice, play, togglePlay}: ISpeakerModa
                             togglePlay();
                         }}
                     >
-                        <Text style={styles.fc2t}>
+                        <Text style={[styles.fc2t, play && {marginLeft: "1%"}]}>
                             <FontAwesome5
                                 name={!play ? "play" : (Platform.OS === "ios" ? "pause" : "stop")}
                                 size={28}
