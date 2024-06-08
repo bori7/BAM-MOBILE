@@ -157,6 +157,7 @@ const NewPassword: React.FC<NavigationProps> = ({navigation, route}) => {
                         <View style={styles.r3}>
                             <Text style={styles.r3t1}>New Password</Text>
                             <TextInput
+                                textColor={COLORS.Light.colorFour}
                                 mode="outlined"
                                 // label={"Full Name"}
                                 placeholder={"new password"}
@@ -202,6 +203,7 @@ const NewPassword: React.FC<NavigationProps> = ({navigation, route}) => {
                             <Text style={styles.r3t1}>Confirm Password</Text>
                             <TextInput
                                 mode="outlined"
+                                textColor={COLORS.Light.colorFour}
                                 // label={"Full Name"}
                                 placeholder={"confirm password"}
                                 placeholderTextColor={COLORS.Light.greyText}

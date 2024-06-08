@@ -1,22 +1,23 @@
 import React, {useEffect, useState} from "react";
-import {Text, View} from "../../../components/Themed";
+import {Text, View} from "@components/Themed";
 import {
     ScrollView,
     StatusBar,
     StyleSheet,
     TouchableOpacity,
 } from "react-native";
-import {COLORS, SIZES} from "../../../constants/Colors";
+import {COLORS, SIZES} from "@constants/Colors";
 import {Entypo, Feather, Ionicons} from "@expo/vector-icons";
-import {NotesProps, NotesRoutes} from "../../../shared/const/routerNotes";
+import {NotesProps, NotesRoutes} from "@shared/const/routerNotes";
 import {CompositeScreenProps, useFocusEffect} from "@react-navigation/native";
-import {RootRoutes, RootScreenProps} from "../../../shared/const/routerRoot";
-import {AppDispatch, RootState} from "../../../store";
+import {RootRoutes, RootScreenProps} from "@shared/const/routerRoot";
+import {AppDispatch, RootState} from "@store/index";
 import {useDispatch, useSelector} from "react-redux";
 import {TextInput} from "react-native-paper";
-import {notesActions} from "../../../store/slices/notes";
-import {timeOptions} from "../../../constants/values";
-import {createNoteCall} from "../../../store/apiThunks/note";
+import {notesActions} from "@store/slices/notes";
+import {timeOptions} from "@constants/values";
+import {createNoteCall} from "@store/apiThunks/note";
+import {screenNotificationActions} from "@store/slices/notification";
 
 // type NavigationProps = NotesProps<NotesRoutes.NotesSearch>;
 
@@ -33,6 +34,12 @@ const NotesCreate: React.FC<NavigationProps> = ({navigation, route}) => {
 
     const addNote = () => {
         if (!noteTitle || !noteText) {
+            dispatch(
+                screenNotificationActions.updateNotificationData({
+                    duration: 4000,
+                    message: "Title or Text is empty!!!",
+                })
+            );
             return;
         }
         dispatch(createNoteCall(
@@ -127,6 +134,7 @@ const NotesCreate: React.FC<NavigationProps> = ({navigation, route}) => {
                             <View style={styles.headerRC2t2Title}>
                                 <TextInput
                                     mode="outlined"
+                                    textColor={COLORS.Light.colorFour}
                                     placeholder={"Title"}
                                     placeholderTextColor={COLORS.Light.greyText}
                                     textContentType="none"
@@ -155,6 +163,7 @@ const NotesCreate: React.FC<NavigationProps> = ({navigation, route}) => {
                         <View style={styles.headerRC2t2}>
                             <TextInput
                                 mode="outlined"
+                                textColor={COLORS.Light.colorFour}
                                 placeholder={"What would you like to write?"}
                                 placeholderTextColor={COLORS.Light.greyText}
                                 textContentType="none"
@@ -298,7 +307,7 @@ const styles = StyleSheet.create({
         color: COLORS.Light.colorFour,
         width: "100%",
         backgroundColor: "transparent",
-        fontStyle:"italic"
+        fontStyle: "italic"
     },
     headerRC2t3: {
         // marginRight: "5%",

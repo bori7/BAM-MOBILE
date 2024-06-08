@@ -8,20 +8,20 @@ import {
 } from "react-native";
 
 import React, {useEffect, useState} from "react";
-import {Text, View} from "../../../components/Themed";
-import {AuthProps, AuthRoutes} from "../../../shared/const/routerAuth";
-import {COLORS, IMAGES, SIZES} from "../../../constants/Colors";
+import {Text, View} from "@components/Themed";
+import {AuthProps, AuthRoutes} from "@shared/const/routerAuth";
+import {COLORS, IMAGES, SIZES} from "@constants/Colors";
 import {MainButton} from "../../../components";
 import CancelIcon from "../../../shared/assets/images/svg/iconoir_cancel.svg";
 import {TextInput} from "react-native-paper";
 import AppleLogo from "../../../shared/assets/images/svg/Apple.svg";
 import {useDispatch, useSelector} from "react-redux";
-import {screenNotificationActions} from "../../../store/slices/notification";
-import {AppDispatch, RootState} from "../../../store";
-import {signUpCall} from "../../../store/apiThunks/user";
-import {validateObject} from "../../../shared/helper";
+import {screenNotificationActions} from "@store/slices/notification";
+import {AppDispatch, RootState} from "@store/index";
+import {signUpCall} from "@store/apiThunks/user";
+import {validateObject} from "@shared/helper";
 import ValidateData from "../../../shared/lib/validateData";
-import {createUserDevotionalCall} from "../../../store/apiThunks/devotional";
+import {createUserDevotionalCall} from "@store/apiThunks/devotional";
 import {CancelIconSVG} from "@shared/components/SVGS";
 
 type NavigationProps = AuthProps<AuthRoutes.SignUp>;
@@ -177,6 +177,7 @@ const SignUp: React.FC<NavigationProps> = ({navigation, route}) => {
                             <Text style={styles.r3t1}>Full Name</Text>
                             <TextInput
                                 mode="outlined"
+                                textColor={COLORS.Light.colorFour}
                                 // label={"Full Name"}
                                 placeholder={"Enter full name"}
                                 placeholderTextColor={COLORS.Light.greyText}
@@ -216,6 +217,7 @@ const SignUp: React.FC<NavigationProps> = ({navigation, route}) => {
                             <Text style={styles.r3t1}>Choose a username</Text>
                             <TextInput
                                 mode="outlined"
+                                textColor={COLORS.Light.colorFour}
                                 // label={"Full Name"}
                                 placeholder={"e.g mark_kelvin"}
                                 placeholderTextColor={COLORS.Light.greyText}
@@ -256,6 +258,7 @@ const SignUp: React.FC<NavigationProps> = ({navigation, route}) => {
                             <Text style={styles.r3t1}>Email Address</Text>
                             <TextInput
                                 mode="outlined"
+                                textColor={COLORS.Light.colorFour}
                                 // label={"Full Name"}
                                 placeholder={"Enter your email"}
                                 placeholderTextColor={COLORS.Light.greyText}
@@ -295,6 +298,7 @@ const SignUp: React.FC<NavigationProps> = ({navigation, route}) => {
                             <Text style={styles.r3t1}>Password</Text>
                             <TextInput
                                 mode="outlined"
+                                textColor={COLORS.Light.colorFour}
                                 // label={"Full Name"}
                                 placeholder={"password"}
                                 placeholderTextColor={COLORS.Light.greyText}
@@ -337,6 +341,7 @@ const SignUp: React.FC<NavigationProps> = ({navigation, route}) => {
                             {
                                 (!validation?.data?.password.isValid && error) &&
                                 <Text style={styles.error}>{"Invalid Password"}</Text>}
+                            <Text style={styles.info}>{"Password must contain special characters: [@#!$?]"}</Text>
 
                         </View>
 
@@ -533,5 +538,13 @@ const styles = StyleSheet.create({
         fontWeight: "500",
         // textAlign: "center",
         marginLeft: 5
+    },
+    info: {
+        color: COLORS.Light.colorThree,
+        fontSize: SIZES.sizeFiveB,
+        fontWeight: "300",
+        // textAlign: "center",
+        marginLeft: 5,
+        fontStyle: 'italic',
     },
 });

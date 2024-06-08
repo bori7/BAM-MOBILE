@@ -1,27 +1,27 @@
 import React, {useEffect, useState} from "react";
-import {Text, View} from "../../../components/Themed";
+import {Text, View} from "@components/Themed";
 import {
     ScrollView, Share,
     StatusBar,
     StyleSheet,
     TouchableOpacity,
 } from "react-native";
-import {COLORS, SIZES} from "../../../constants/Colors";
+import {COLORS, SIZES} from "@constants/Colors";
 import {Entypo, Feather, Ionicons} from "@expo/vector-icons";
-import {NotesProps, NotesRoutes} from "../../../shared/const/routerNotes";
+import {NotesProps, NotesRoutes} from "@shared/const/routerNotes";
 import {CompositeScreenProps, useFocusEffect} from "@react-navigation/native";
-import {RootRoutes, RootScreenProps} from "../../../shared/const/routerRoot";
-import {GeneralVerseOfTheDayType, NoteProps} from "../../../shared/types/slices";
-import {AppDispatch, RootState} from "../../../store";
+import {RootRoutes, RootScreenProps} from "@shared/const/routerRoot";
+import {GeneralVerseOfTheDayType, NoteProps} from "@shared/types/slices";
+import {AppDispatch, RootState} from "@store/index";
 import {useDispatch, useSelector} from "react-redux";
 import {OptionsPopUp} from "../../Main/Home/OptionsPopUp";
 import {TextInput} from "react-native-paper";
-import {notesActions} from "../../../store/slices/notes";
+import {notesActions} from "@store/slices/notes";
 import * as Clipboard from "expo-clipboard";
-import {deleteNoteCall, updateNoteCall} from "../../../store/apiThunks/note";
-import {MoreRoutes} from "../../../shared/const/routerMore";
-import {createPrayerCall} from "../../../store/apiThunks/prayer";
-import {prayersActions} from "../../../store/slices/prayer";
+import {deleteNoteCall, updateNoteCall} from "@store/apiThunks/note";
+import {MoreRoutes} from "@shared/const/routerMore";
+import {createPrayerCall} from "@store/apiThunks/prayer";
+import {prayersActions} from "@store/slices/prayer";
 
 // type NavigationProps = NotesProps<NotesRoutes.NotesSearch>;
 
@@ -356,6 +356,8 @@ const NotesEdit: React.FC<NavigationProps> = ({navigation, route}) => {
                             {allowEdit && (
                                 <View style={styles.headerRC2t2Title}>
                                     <TextInput
+                                        textColor={COLORS.Light.colorFour}
+
                                         mode="outlined"
                                         // placeholder={"Search"}
                                         placeholderTextColor={COLORS.Light.colorFour}
@@ -392,6 +394,7 @@ const NotesEdit: React.FC<NavigationProps> = ({navigation, route}) => {
                             <View style={styles.headerRC2t2}>
                                 <TextInput
                                     mode="outlined"
+                                    textColor={COLORS.Light.colorFour}
                                     // placeholder={"Search"}
                                     placeholderTextColor={COLORS.Light.colorFour}
                                     textContentType="none"
@@ -544,6 +547,7 @@ const styles = StyleSheet.create({
         color: COLORS.Light.colorFour,
         width: "100%",
         backgroundColor: "transparent",
+        // caretColor: COLORS.Light.colorFour,
         // fontSize: SIZES.sizeEight,
         // fontWeight: "400",
         // borderWidth: 1,

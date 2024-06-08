@@ -224,6 +224,7 @@ const SignIn: React.FC<NavigationProps> = ({navigation, route}) => {
                             <Text style={styles.r3t1}>Username/Email</Text>
                             <TextInput
                                 mode="outlined"
+                                textColor={COLORS.Light.colorFour}
                                 // label={"Full Name"}
                                 placeholder={"Enter username/email"}
                                 placeholderTextColor={COLORS.Light.greyText}
@@ -261,6 +262,7 @@ const SignIn: React.FC<NavigationProps> = ({navigation, route}) => {
                             <Text style={styles.r3t1}>Password</Text>
                             <TextInput
                                 mode="outlined"
+                                textColor={COLORS.Light.colorFour}
                                 // label={"Full Name"}
                                 placeholder={"password"}
                                 placeholderTextColor={COLORS.Light.greyText}

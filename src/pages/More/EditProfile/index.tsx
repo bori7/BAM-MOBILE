@@ -7,21 +7,21 @@ import {
 } from "react-native";
 
 import React, {ReactNode, useEffect, useState} from "react";
-import {Text, View} from "../../../components/Themed";
-import {COLORS, IMAGES, SIZES} from "../../../constants/Colors";
+import {Text, View} from "@components/Themed";
+import {COLORS, IMAGES, SIZES} from "@constants/Colors";
 import {useDispatch, useSelector} from "react-redux";
-import {AppDispatch, RootState} from "../../../store";
+import {AppDispatch, RootState} from "@store/index";
 import {Ionicons} from "@expo/vector-icons";
-import {MoreProps, MoreRoutes} from "../../../shared/const/routerMore";
+import {MoreProps, MoreRoutes} from "@shared/const/routerMore";
 import {CompositeScreenProps, useFocusEffect} from "@react-navigation/native";
-import {RootRoutes, RootScreenProps} from "../../../shared/const/routerRoot";
+import {RootRoutes, RootScreenProps} from "@shared/const/routerRoot";
 import {TextInput} from "react-native-paper";
-import {MainProfileSVG} from "../../../shared/components/SVGS";
+import {MainProfileSVG} from "@shared/components/SVGS";
 import CameraButton from "./CameraButton";
 import SelectImageModal from "./SelectImageModal";
-import {userActions} from "../../../store/slices/user";
-import {screenNotificationActions} from "../../../store/slices/notification";
-import {updateUserCall, updateUserImageCall} from "../../../store/apiThunks/user";
+import {userActions} from "@store/slices/user";
+import {screenNotificationActions} from "@store/slices/notification";
+import {updateUserCall, updateUserImageCall} from "@store/apiThunks/user";
 
 type NavigationProps = CompositeScreenProps<
     MoreProps<MoreRoutes.EditProfile>,
@@ -195,6 +195,7 @@ const EditProfile: React.FC<NavigationProps> = ({navigation, route}) => {
                                 <Text style={styles.r3t1}>Full name</Text>
                                 <TextInput
                                     mode="outlined"
+                                    textColor={COLORS.Light.colorFour}
                                     // label={"Full Name"}
                                     placeholder={"Enter fullname"}
                                     placeholderTextColor={COLORS.Light.greyText}
@@ -230,6 +231,7 @@ const EditProfile: React.FC<NavigationProps> = ({navigation, route}) => {
                                 <Text style={styles.r3t1}>Username</Text>
                                 <TextInput
                                     mode="outlined"
+                                    textColor={COLORS.Light.colorFour}
                                     // label={"Full Name"}
                                     placeholder={"Enter username"}
                                     placeholderTextColor={COLORS.Light.greyText}
@@ -265,6 +267,7 @@ const EditProfile: React.FC<NavigationProps> = ({navigation, route}) => {
                                 <Text style={styles.r3t1}>Bio</Text>
                                 <TextInput
                                     mode="outlined"
+                                    textColor={COLORS.Light.colorFour}
                                     // label={"Full Name"}
                                     placeholder={"Add your bio"}
                                     placeholderTextColor={COLORS.Light.greyText}
@@ -301,6 +304,7 @@ const EditProfile: React.FC<NavigationProps> = ({navigation, route}) => {
                                 <Text style={styles.r3t1}>Location</Text>
                                 <TextInput
                                     mode="outlined"
+                                    textColor={COLORS.Light.colorFour}
                                     // label={"Full Name"}
                                     placeholder={"Add your location"}
                                     placeholderTextColor={COLORS.Light.greyText}

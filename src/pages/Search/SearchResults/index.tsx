@@ -104,6 +104,7 @@ const SearchResults: React.FC<NavigationProps> = ({ navigation, route }) => {
                 <View style={styles.headerRC2t2}>
                   <TextInput
                     mode="outlined"
+                    textColor={COLORS.Light.colorFour}
                     placeholder={"Search"}
                     placeholderTextColor={COLORS.Light.colorFour}
                     textContentType="none"

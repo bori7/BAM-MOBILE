@@ -346,6 +346,7 @@ const Give: React.FC<NavigationProps> = ({navigation, route}) => {
                             <Text style={styles.r3t1}>Select currency</Text>
                             <TextInput
                                 mode="outlined"
+                                textColor={COLORS.Light.colorFour}
                                 placeholder={"NGN"}
                                 placeholderTextColor={COLORS.Light.greyText}
                                 style={{...styles.inputContent}}
@@ -402,6 +403,7 @@ const Give: React.FC<NavigationProps> = ({navigation, route}) => {
                             <Text style={styles.r3t1}>Amount</Text>
                             <TextInput
                                 mode="outlined"
+                                textColor={COLORS.Light.colorFour}
                                 placeholder={"0.00"}
                                 placeholderTextColor={COLORS.Light.greyText}
                                 // textContentType=""

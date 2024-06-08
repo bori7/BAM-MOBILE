@@ -55,7 +55,7 @@ const ContentDevotional: React.FC<NavigationProps> =
         const [play, setPlay] = useState<boolean>(false);
 
         const [fontIncrement, setFontIncrement] = useState<number>(0);
-        const [speed, setSpeed] = useState<ISpeedProps>("0.75");
+        const [speed, setSpeed] = useState<ISpeedProps>("1.25");
         const [voice, setVoice] = useState<IVoiceProps>("Male");
 
 
@@ -66,6 +66,23 @@ const ContentDevotional: React.FC<NavigationProps> =
         const [isSpeaking, setIsSpeaking] = useState(false);
         const [iosSelectedVoiceId, setIosSelectedVoiceId] = useState<string>("com.apple.speech.synthesis.voice.Fred");
 
+        const devotionalState = useSelector((state: RootState) => state.devotional);
+        const {selectedDevotionalData} = devotionalState;
+
+        const userState = useSelector((state: RootState) => state.user);
+        const {userData} = userState;
+
+        useFocusEffect(() => {
+            setSelectedDevotionals(selectedDevotionalData);
+        });
+
+        // useFocusEffect(() => {
+        //     setTimeout(() => {
+        //         setShowModal(false);
+        //         setShowSubscription(!userData?.hasSubscribed);
+        //         // setHideSubscription(false);
+        //     }, 5000);
+        // });
 
         useEffect(() => {
             Tts.addEventListener('tts-start', (event) => {
@@ -101,64 +118,6 @@ const ContentDevotional: React.FC<NavigationProps> =
             };
         }, []);
 
-
-        const togglePlay = async () => {
-            // debug.log("wordCount", wordCount)
-            // setWordCount(wordCount + 1)
-            // const isSpeaking = await Speech.isSpeakingAsync();
-            if (isSpeaking) {
-                if (Platform.OS === "ios") {
-                    if (!play) {
-                        debug.log("Trying to resume speech")
-                        await Tts.resume()
-                        debug.log("Speech resumed")
-                        setPlay(true);
-                    } else {
-                        debug.log("Trying to pause speech")
-                        await Tts.pause()
-                        debug.log("Speech paused")
-                        setPlay(false);
-                    }
-                } else {
-                    if (!play) {
-                        debug.log("Trying to start speech")
-                        setPlay(true);
-                        await speak(wordCount)
-                    } else {
-                        debug.log("Trying to stop speech")
-                        await Tts.stop()
-                        debug.log("Speech stopped")
-                        setPlay(false);
-
-                        // debug.log("Trying to pause speech");
-                        // await Tts.pause();
-                        // debug.log("Speech paused");
-                        // setPlay(false);
-                    }
-                }
-
-            } else {
-                setPlay(true);
-                await speak(wordCount)
-            }
-        };
-
-        const handleWordCount = () => {
-            // setWordCount(wordCount + 1)
-            // debug.log("wordCurrent ", words[wordCount])
-
-        }
-
-
-        const devotionalState = useSelector((state: RootState) => state.devotional);
-        const {selectedDevotionalData} = devotionalState;
-
-        const userState = useSelector((state: RootState) => state.user);
-        const {userData} = userState;
-
-        useFocusEffect(() => {
-            setSelectedDevotionals(selectedDevotionalData);
-        });
 
         useEffect(() => {
             setShowModal(false);
@@ -206,12 +165,12 @@ const ContentDevotional: React.FC<NavigationProps> =
                 // "com.apple.voice.compact.en-AU.Karen",
 
                 const voiceName: string = voice === "Male" ?
-                    "Daniel" : "Karen"
+                    "daniel" : "karen"
                 // Tts.setDefaultRate(Number(speed) * 0.3, false);
                 Tts.voices().then(voices => {
-
                     const selectedVoice = voices.find(voice =>
-                        voice.id.includes(voiceName));
+                        voice.id.toLowerCase().includes(voiceName));
+                    debug.log("selectedVoice", selectedVoice)
                     if (selectedVoice) {
                         setIosSelectedVoiceId(selectedVoice.id)
                         Tts.setDefaultVoice(selectedVoice.id);
@@ -234,7 +193,7 @@ const ContentDevotional: React.FC<NavigationProps> =
                 //female: en-us-x-tpf-local  en-us-x-sfg-local en-us-x-iob-local en-US-language
                 // en-us-x-tpf-network en-us-x-sfg-network en-us-x-iob-network en-us-x-iog-network en-us-x-tpc-network
 
-                const voiceName: string = voice === "Male" ? "en-us-x-iom-network" : "en-us-x-iog-network"
+                const voiceName: string = voice === "Male" ? "en-us-x-iol-network" : "en-us-x-sfg-local"
                 Tts.setDefaultRate(Number(speed) * 0.3, false);
                 Tts.voices().then(voices => {
                     const selectedVoice = voices.find(voice => voice.language === 'en-US'
@@ -256,20 +215,59 @@ const ContentDevotional: React.FC<NavigationProps> =
                         rate: Number(speed) * 0.3,
                         androidParams: {
                             KEY_PARAM_PAN: -1,
-                            KEY_PARAM_VOLUME: 0.5,
+                            KEY_PARAM_VOLUME: 0.8,
                             KEY_PARAM_STREAM: 'STREAM_MUSIC',
                         }
                     });
-                }
-                , [selectedDevotional?.message, voice, speed])
+                }, [selectedDevotional?.message, voice, speed, iosSelectedVoiceId])
 
-        // useFocusEffect(() => {
-        //     setTimeout(() => {
-        //         setShowModal(false);
-        //         setShowSubscription(!userData?.hasSubscribed);
-        //         // setHideSubscription(false);
-        //     }, 5000);
-        // });
+        const togglePlay = async () => {
+            // debug.log("wordCount", wordCount)
+            // setWordCount(wordCount + 1)
+            // const isSpeaking = await Speech.isSpeakingAsync();
+            if (isSpeaking) {
+                if (Platform.OS === "ios") {
+                    if (!play) {
+                        debug.log("Trying to resume speech")
+                        await Tts.resume()
+                        debug.log("Speech resumed")
+                        setPlay(true);
+                    } else {
+                        debug.log("Trying to pause speech")
+                        await Tts.pause()
+                        debug.log("Speech paused")
+                        setPlay(false);
+                    }
+                } else {
+                    if (!play) {
+                        debug.log("Trying to start speech")
+                        setPlay(true);
+                        await speak(wordCount)
+                    } else {
+                        debug.log("Trying to stop speech")
+                        await Tts.stop()
+                        debug.log("Speech stopped")
+                        setPlay(false);
+
+                        // debug.log("Trying to pause speech");
+                        // await Tts.pause();
+                        // debug.log("Speech paused");
+                        // setPlay(false);
+                    }
+                }
+
+            } else {
+                setPlay(true);
+                await speak(wordCount)
+            }
+        };
+
+        const handleWordCount = () => {
+            // setWordCount(wordCount + 1)
+            // debug.log("wordCurrent ", words[wordCount])
+        }
+
+
         const shareData = async (val: string) => {
             try {
                 await Share.share({

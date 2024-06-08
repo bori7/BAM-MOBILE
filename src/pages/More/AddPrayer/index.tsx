@@ -1,22 +1,23 @@
 import React, {useEffect, useState} from "react";
-import {Text, View} from "../../../components/Themed";
+import {Text, View} from "@components/Themed";
 import {
     ScrollView,
     StatusBar,
     StyleSheet,
     TouchableOpacity,
 } from "react-native";
-import {COLORS, SIZES} from "../../../constants/Colors";
+import {COLORS, SIZES} from "@constants/Colors";
 import {Entypo, Feather, Ionicons} from "@expo/vector-icons";
 import {CompositeScreenProps, useFocusEffect} from "@react-navigation/native";
-import {RootRoutes, RootScreenProps} from "../../../shared/const/routerRoot";
-import {AppDispatch, RootState} from "../../../store";
+import {RootRoutes, RootScreenProps} from "@shared/const/routerRoot";
+import {AppDispatch, RootState} from "@store/index";
 import {useDispatch, useSelector} from "react-redux";
 import {TextInput} from "react-native-paper";
-import {timeOptions} from "../../../constants/values";
-import {MoreProps, MoreRoutes} from "../../../shared/const/routerMore";
-import {prayersActions} from "../../../store/slices/prayer";
-import {createPrayerCall} from "../../../store/apiThunks/prayer";
+import {timeOptions} from "@constants/values";
+import {MoreProps, MoreRoutes} from "@shared/const/routerMore";
+import {prayersActions} from "@store/slices/prayer";
+import {createPrayerCall} from "@store/apiThunks/prayer";
+import {screenNotificationActions} from "@store/slices/notification";
 
 // type NavigationProps = PrayersProps<PrayersRoutes.PrayersSearch>;
 
@@ -33,6 +34,12 @@ const AddPrayer: React.FC<NavigationProps> = ({navigation, route}) => {
 
         const addPrayer = async () => {
             if (!prayerTitle || !prayerText) {
+                dispatch(
+                    screenNotificationActions.updateNotificationData({
+                        duration: 4000,
+                        message: "Title or Text is empty!!!",
+                    })
+                );
                 return;
             }
             await dispatch(createPrayerCall(
@@ -62,8 +69,8 @@ const AddPrayer: React.FC<NavigationProps> = ({navigation, route}) => {
                     );
                     navigation?.goBack();
                 }).catch((err) => {
-                debug.error("err in save/addd prayer button", err)
-            })
+                    debug.error("err in save/addd prayer button", err)
+                })
 
         };
 
@@ -129,6 +136,7 @@ const AddPrayer: React.FC<NavigationProps> = ({navigation, route}) => {
                                 <View style={styles.headerRC2t2Title}>
                                     <TextInput
                                         mode="outlined"
+                                        textColor={COLORS.Light.colorFour}
                                         placeholder={"Title"}
                                         placeholderTextColor={COLORS.Light.greyText}
                                         textContentType="none"
@@ -157,6 +165,7 @@ const AddPrayer: React.FC<NavigationProps> = ({navigation, route}) => {
                             <View style={styles.headerRC2t2}>
                                 <TextInput
                                     mode="outlined"
+                                    textColor={COLORS.Light.colorFour}
                                     placeholder={"What would you like to pray about?"}
                                     placeholderTextColor={COLORS.Light.greyText}
                                     textContentType="none"

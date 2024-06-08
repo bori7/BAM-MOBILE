@@ -186,6 +186,7 @@ const ChangePassword: React.FC<NavigationProps> = ({navigation, route}) => {
                             <Text style={styles.r3t1}>Current Password</Text>
                             <TextInput
                                 mode="outlined"
+                                textColor={COLORS.Light.colorFour}
                                 // label={"Full Name"}
                                 placeholder={"Current Password"}
                                 placeholderTextColor={COLORS.Light.greyText}
@@ -249,6 +250,7 @@ const ChangePassword: React.FC<NavigationProps> = ({navigation, route}) => {
                             <Text style={styles.r3t1}>New Password</Text>
                             <TextInput
                                 mode="outlined"
+                                textColor={COLORS.Light.colorFour}
                                 // label={"Full Name"}
                                 placeholder={"New Password"}
                                 placeholderTextColor={COLORS.Light.greyText}

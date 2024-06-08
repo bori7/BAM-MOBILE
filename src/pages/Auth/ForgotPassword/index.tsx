@@ -146,6 +146,7 @@ const ForgotPassword: React.FC<NavigationProps> = ({navigation, route}) => {
                             <Text style={styles.r3t1}>Email</Text>
                             <TextInput
                                 mode="outlined"
+                                textColor={COLORS.Light.colorFour}
                                 // label={"Full Name"}
                                 placeholder={"Enter email"}
                                 placeholderTextColor={COLORS.Light.greyText}

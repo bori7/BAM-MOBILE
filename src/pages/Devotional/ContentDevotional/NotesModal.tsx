@@ -77,6 +77,7 @@ const NotesModal = ({setModalVisible, noteTitle}: Iprops) => {
                     <View style={styles.headerRC2t2}>
                         <TextInput
                             mode="outlined"
+                            textColor={COLORS.Light.colorFour}
                             placeholder={"What would you like to write?"}
                             placeholderTextColor={COLORS.Light.greyText}
                             textContentType="none"

@@ -40,101 +40,106 @@ const VerseOfTheDay: React.FC<NavigationProps> = ({navigation, route}) => {
     const [totalWordCount, setTotalWordCount] = useState<number>(0);
 
     const [isSpeaking, setIsSpeaking] = useState(false);
+    const [iosSelectedVoiceId, setIosSelectedVoiceId] = useState<string>("com.apple.speech.synthesis.voice.Fred");
 
     useEffect(() => {
-        // Event listener for TTS start
-        Tts.addEventListener('tts-start', () => {
+        Tts.addEventListener('tts-start', (event) => {
             setIsSpeaking(true)
-            debug.log("listener", "speech started")
-        });
-        // Event listener for TTS finish
-        Tts.addEventListener('tts-finish', () => {
-            setIsSpeaking(false)
-            debug.log("listener", "speech finished")
-        });
-        // Event listener for TTS cancel
-        Tts.addEventListener('tts-cancel', () => {
-            setIsSpeaking(false)
-            debug.log("listener", "speech canceled")
+            debug.log("Speech started")
+            debug.log("listener started", event)
         });
 
-        // Cleanup event listeners on component unmount
+        Tts.addEventListener('tts-progress', (event) => {
+            // setIsSpeaking(true)
+            debug.log("listener in progress", event)
+        });
+
+        Tts.addEventListener('tts-finish', (event) => {
+            setIsSpeaking(false)
+            setPlay(false)
+            Tts.stop()
+            debug.log("listener finished", event)
+        });
+
+        Tts.addEventListener('tts-cancel', (event) => {
+            setIsSpeaking(false)
+            setPlay(false)
+            Tts.stop()
+            debug.log("listener cancelled", event)
+        });
+
         return () => {
-            Tts.removeEventListener('tts-start', () => setIsSpeaking(true));
-            Tts.removeEventListener('tts-finish', () => setIsSpeaking(false));
-            Tts.removeEventListener('tts-cancel', () => setIsSpeaking(false));
+            // Tts?.removeEventListener('tts-start', () => setIsSpeaking(false));
+            // Tts?.removeEventListener('tts-finish', () => setIsSpeaking(false));
+            // Tts?.removeEventListener('tts-cancel', () => setIsSpeaking(false));
+            Tts.stop()
         };
     }, []);
 
+    // const handleWordCount = () => {
+    //     setWordCount(wordCount + 1)
+    // }
 
-    debug.log("wordCountout", wordCount)
+    useEffect(() => {
 
+        if (Platform.OS === "ios") {
+            const voiceName: string = "daniel"
+            // Tts.setDefaultRate(Number(speed) * 0.3, false);
+            Tts.voices().then(voices => {
+                const selectedVoice = voices.find(voice =>
+                    voice.id.toLowerCase().includes(voiceName));
+                debug.log("selectedVoice", selectedVoice)
+                if (selectedVoice) {
+                    setIosSelectedVoiceId(selectedVoice.id)
+                    Tts.setDefaultVoice(selectedVoice.id);
+                } else {
+                    setIosSelectedVoiceId("com.apple.speech.synthesis.voice.Fred")
+                    Tts.setDefaultVoice("com.apple.speech.synthesis.voice.Fred"
+                    );
+                }
+            });
+        }
 
-    const handleWordCount = () => {
-        setWordCount(wordCount + 1)
-    }
+        if (Platform.OS === "android") {
+
+            Tts.setDefaultRate(Number(1.25) * 0.3, false);
+            Tts.voices().then(voices => {
+                const selectedVoice = voices.find(voice => voice.language === 'en-US'
+                    && voice.name.includes("en-us-x-iol-network"));
+                if (selectedVoice) {
+                    Tts.setDefaultVoice(selectedVoice.id);
+                }
+            });
+        }
+
+    }, [])
+
 
     const speak =
         useCallback(
             async (wc: number) => {
-                // debug.log("words", words)
-                debug.log("wc", wc)
-                debug.log("wordCount", wordCount)
-                debug.log("totalWordCount", totalWordCount)
-
-                // if (totalWordCount === 0 || wc >= totalWordCount) {
-                //     await Tts.stop()
-                //     debug.log("Done reading the text")
-                //     setPlay(false);
-                //     setWordCount(0)
-                //     return;
-                // }
-
                 Tts.speak(currVOD?.text || "", {
                     iosVoiceId:
                     // voice === "Male" ?
-                        (Platform.OS === "ios" ? "com.apple.speech.synthesis.voice.Albert" : "en-us-x-iom-local")
+                        "com.apple.speech.synthesis.voice.Albert"
                     //     :
                     // (Platform.OS === "ios" ? "com.apple.speech.synthesis.voice.Kathy" : "en-us-x-iog-local")
                     ,
-                    // 'com.apple.ttsbundle.Moira-compact',
-                    rate: Number(1.0),
+                    rate: Number(1.25) * 0.3,
                     androidParams: {
                         KEY_PARAM_PAN: -1,
-                        KEY_PARAM_VOLUME: 0.5,
+                        KEY_PARAM_VOLUME: 0.8,
                         KEY_PARAM_STREAM: 'STREAM_MUSIC',
                     },
-                    // onDone: () => {
-                    //     // const wc = wordCount + 1
-                    //     // setWordCount(wc + 1)
-                    //     // debug.log("Done reading the word", wc)
-                    //     debug.log("Done reading the word", words[wc]);
-                    //     speak(wc + 1)
-                    // },
-                    // onError: (err) => {
-                    //     debug.log("err while speaking", err)
-                    // },
-                    // onStart: () => {
-                    //     debug.log("Started speaking")
-                    // },
-                    // onStopped: () => {
-                    //     debug.log("Stopped speaking")
-                    // },
-                    // onPause: () => {
-                    //     debug.log("Paused speaking")
-                    // },
-                    // onResume: () => {
-                    //     debug.log("Resume speaking")
-                    // },
-                    // language: "en-US"
+
                 });
-                handleWordCount()
+                // handleWordCount()
             }
-            , [words,])
+            , [currVOD?.text, iosSelectedVoiceId])
 
 
     const togglePlay = async () => {
-        setWordCount(wordCount + 1)
+        // setWordCount(wordCount + 1)
         // const isSpeaking = await Speech.isSpeakingAsync();
         if (isSpeaking) {
             if (Platform.OS === "ios") {
@@ -152,9 +157,8 @@ const VerseOfTheDay: React.FC<NavigationProps> = ({navigation, route}) => {
             } else {
                 if (!play) {
                     debug.log("Trying to start speech")
-                    speak(wordCount)
-                    debug.log("Speech started")
                     setPlay(true);
+                    await speak(wordCount)
                 } else {
                     debug.log("Trying to stop speech")
                     await Tts.stop()
@@ -276,7 +280,7 @@ const VerseOfTheDay: React.FC<NavigationProps> = ({navigation, route}) => {
                             }}
 
                         >
-                            <Text style={styles.fc2t}>
+                            <Text style={[styles.fc2t, play && {marginLeft: "1%"}]}>
                                 <FontAwesome5
                                     name={!play ? "play" : (Platform.OS === "ios" ? "pause" : "stop")}
                                     size={28}
@@ -287,7 +291,7 @@ const VerseOfTheDay: React.FC<NavigationProps> = ({navigation, route}) => {
                         <TouchableOpacity
                             style={styles.floatingContent3}
                             onPress={() => {
-                                shareData(currVOD?.text || "")
+                                shareData((currVOD?.text || "") + " [" + (currVOD?.verse || "")+"]")
                             }}
                         >
                             <Text style={styles.fc3t}>
