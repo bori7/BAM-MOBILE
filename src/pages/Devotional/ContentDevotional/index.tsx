@@ -64,6 +64,7 @@ const ContentDevotional: React.FC<NavigationProps> =
         const [totalWordCount, setTotalWordCount] = useState<number>(0);
 
         const [isSpeaking, setIsSpeaking] = useState(false);
+        const [iosSelectedVoiceId, setIosSelectedVoiceId] = useState<string>("com.apple.speech.synthesis.voice.Fred");
 
 
         useEffect(() => {
@@ -148,22 +149,6 @@ const ContentDevotional: React.FC<NavigationProps> =
 
         }
 
-        const speak =
-            useCallback(
-                async (wc: number) => {
-                    Tts.speak(selectedDevotional?.message || "", {
-                        iosVoiceId: voice === "Male" ?
-                            "com.apple.speech.synthesis.voice.Fred" :
-                            "com.apple.speech.synthesis.voice.Kathy",
-                        rate: Number(speed) * 0.3,
-                        androidParams: {
-                            KEY_PARAM_PAN: -1,
-                            KEY_PARAM_VOLUME: 0.5,
-                            KEY_PARAM_STREAM: 'STREAM_MUSIC',
-                        }
-                    });
-                }
-                , [selectedDevotional?.message, voice, speed])
 
         const devotionalState = useSelector((state: RootState) => state.devotional);
         const {selectedDevotionalData} = devotionalState;
@@ -195,16 +180,52 @@ const ContentDevotional: React.FC<NavigationProps> =
             const wordSplit = thingToSay?.split(' ') || [];
             setWords(wordSplit)
             setTotalWordCount(wordSplit.length);
-            Tts.voices().then(res => {
-                // debug.log("voices", res)
-                const englishVoices = res.filter((voice, _) => voice.language === "en-US")
-                debug.log("res from text to speech", englishVoices)
-            });
-
+            // Tts.voices().then(res => {
+            //     // en-IN en-ZA en-US en-GB en-AU
+            //     // debug.log("voices", res)
+            //     const englishVoices = res.filter((voice, _) => voice.language === "en-ZA")
+            //     debug.log("res from text to speech", englishVoices)
+            //     // const englishVoices = res.filter((voice, _) => voice.language.includes( "en"))
+            //     // debug.log("res from text to speech", englishVoices)
+            // });
 
         }, [selectedDevotional]);
 
         useEffect(() => {
+
+            if (Platform.OS === "ios") {
+                //male:  com.apple.voice.compact.en-GB.Daniel
+                // com.apple.voice.compact.en-IN.Rishi
+
+                //female: com.apple.voice.compact.en-AU.Karen
+                // com.apple.voice.compact.en-ZA.Tessa
+
+                // "com.apple.speech.synthesis.voice.Fred" :
+                // "com.apple.speech.synthesis.voice.Kathy",
+                // "com.apple.voice.compact.en-GB.Daniel" :
+                // "com.apple.voice.compact.en-AU.Karen",
+
+                const voiceName: string = voice === "Male" ?
+                    "Daniel" : "Karen"
+                // Tts.setDefaultRate(Number(speed) * 0.3, false);
+                Tts.voices().then(voices => {
+
+                    const selectedVoice = voices.find(voice =>
+                        voice.id.includes(voiceName));
+                    if (selectedVoice) {
+                        setIosSelectedVoiceId(selectedVoice.id)
+                        Tts.setDefaultVoice(selectedVoice.id);
+                    } else {
+                        setIosSelectedVoiceId(voice === "Male" ?
+                            "com.apple.speech.synthesis.voice.Fred" :
+                            "com.apple.speech.synthesis.voice.Kathy")
+                        Tts.setDefaultVoice(voice === "Male" ?
+                            "com.apple.speech.synthesis.voice.Fred" :
+                            "com.apple.speech.synthesis.voice.Kathy"
+                        );
+                    }
+                });
+            }
 
             if (Platform.OS === "android") {
                 //male:  en-us-x-tpd-network en-us-x-iol-network en-us-x-iom-network
@@ -216,7 +237,6 @@ const ContentDevotional: React.FC<NavigationProps> =
                 const voiceName: string = voice === "Male" ? "en-us-x-iom-network" : "en-us-x-iog-network"
                 Tts.setDefaultRate(Number(speed) * 0.3, false);
                 Tts.voices().then(voices => {
-                    // Filter voices to find the desired one
                     const selectedVoice = voices.find(voice => voice.language === 'en-US'
                         && voice.name.includes(voiceName));
                     if (selectedVoice) {
@@ -224,7 +244,24 @@ const ContentDevotional: React.FC<NavigationProps> =
                     }
                 });
             }
-        }, [voice,speed])
+
+        }, [voice, speed])
+
+
+        const speak =
+            useCallback(
+                async (wc: number) => {
+                    Tts.speak(selectedDevotional?.message || "", {
+                        iosVoiceId: iosSelectedVoiceId,
+                        rate: Number(speed) * 0.3,
+                        androidParams: {
+                            KEY_PARAM_PAN: -1,
+                            KEY_PARAM_VOLUME: 0.5,
+                            KEY_PARAM_STREAM: 'STREAM_MUSIC',
+                        }
+                    });
+                }
+                , [selectedDevotional?.message, voice, speed])
 
         // useFocusEffect(() => {
         //     setTimeout(() => {
