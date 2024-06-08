@@ -1,5 +1,6 @@
 apply plugin: "com.android.application"
 apply plugin: "com.facebook.react"
+apply from: "../../node_modules/react-native-code-push/android/codepush.gradle"
 
 def projectRoot = rootDir.getAbsoluteFile().getParentFile().getAbsolutePath()
 
@@ -90,7 +91,8 @@ android {
         versionName "1.1.0"
 
         buildConfigField("boolean", "REACT_NATIVE_UNSTABLE_USE_RUNTIME_SCHEDULER_ALWAYS", (findProperty("reactNative.unstable_useRuntimeSchedulerAlways") ?: true).toString())
-//        signingConfig signingConfigs.release
+
+//         resValue "string", "CodePushDeploymentKey", "v5whhUSIf22QPfqInc368XuIa-xwJNfbS3opk"
     }
     signingConfigs {
         debug {

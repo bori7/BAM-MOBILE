@@ -15,6 +15,7 @@ import com.facebook.soloader.SoLoader;
 
 import expo.modules.ApplicationLifecycleDispatcher;
 import expo.modules.ReactNativeHostWrapper;
+import com.microsoft.codepush.react.CodePush;
 
 import java.util.List;
 
@@ -49,6 +50,11 @@ public class MainApplication extends Application implements ReactApplication {
       @Override
       protected Boolean isHermesEnabled() {
         return BuildConfig.IS_HERMES_ENABLED;
+      }
+
+      @Override
+      protected String getJSBundleFile() {
+          return CodePush.getJSBundleFile();
       }
   });
 

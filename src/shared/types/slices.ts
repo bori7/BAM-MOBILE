@@ -1,6 +1,6 @@
 import {ImageSourcePropType} from "react-native";
-import {NotificationsFormType} from "../../pages/More/EmailNotifications";
-import {FetchUserDevotionalPayloadType} from "../../services/userdevotional/type";
+import {NotificationsFormType} from "@pages/More/EmailNotifications";
+import {FetchUserDevotionalPayloadType} from "@services/userdevotional/type";
 
 export interface InitialUserStateType {
     userData: UserDataType | null;

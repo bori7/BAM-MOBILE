@@ -9,10 +9,10 @@ import {
 import {useQuery} from "react-query";
 
 import React, {ReactNode, useEffect, useState} from "react";
-import {Text, View} from "../../../components/Themed";
-import {COLORS, IMAGES, SIZES} from "../../../constants/Colors";
+import {Text, View} from "@components/Themed";
+import {COLORS, IMAGES, SIZES} from "@constants/Colors";
 import {useDispatch, useSelector} from "react-redux";
-import {AppDispatch, RootState} from "../../../store";
+import {AppDispatch, RootState} from "@store/index";
 import {
     AntDesign,
     Entypo,
@@ -20,17 +20,17 @@ import {
     MaterialCommunityIcons,
     MaterialIcons,
 } from "@expo/vector-icons";
-import {MoreProps, MoreRoutes} from "../../../shared/const/routerMore";
-import {CancelIconSVG, MdiNairaSVG, SuccessSVG} from "../../../shared/components/SVGS";
+import {MoreProps, MoreRoutes} from "@shared/const/routerMore";
+import {CancelIconSVG, MdiNairaSVG, SuccessSVG} from "@shared/components/SVGS";
 import {MainButton} from "../../../components";
-import {screenNotificationActions} from "../../../store/slices/notification";
+import {screenNotificationActions} from "@store/slices/notification";
 import {CommonActions, CompositeScreenProps} from "@react-navigation/native";
-import {RootRoutes, RootScreenProps} from "../../../shared/const/routerRoot";
-import {MainRoutes} from "../../../shared/const/routerMain";
-import {Tabs} from "../../../shared/const/routerBottomBar";
-import {fetchLiveSubscriptionCall} from "../../../store/apiThunks/payment";
-import {GenericResponseType} from "../../../services/type";
-import {SubscriptionPayloadType} from "../../../services/payments/subscription/type";
+import {RootRoutes, RootScreenProps} from "@shared/const/routerRoot";
+import {MainRoutes} from "@shared/const/routerMain";
+import {Tabs} from "@shared/const/routerBottomBar";
+import {fetchLiveSubscriptionCall} from "@store/apiThunks/payment";
+import {GenericResponseType} from "@services/type";
+import {SubscriptionPayloadType} from "@services/payments/subscription/type";
 import {ActivityIndicator} from "react-native-paper";
 
 // type NavigationProps = MoreProps<MoreRoutes.SubscriptionMain>;

@@ -18,6 +18,8 @@
     <string>$(PRODUCT_NAME)</string>
     <key>CFBundlePackageType</key>
     <string>$(PRODUCT_BUNDLE_PACKAGE_TYPE)</string>
+    <key>CodePushDeploymentKey</key>
+    <string>g2U1fv6cXWfXKbCZ-oi28LevktD0hooY7Ayhk</string>
     <key>CFBundleShortVersionString</key>
     <string>1.1.0</string>
     <key>CFBundleSignature</key>

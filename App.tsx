@@ -14,13 +14,14 @@ import {Provider as PaperProvider} from "react-native-paper";
 import {QueryClient, QueryClientProvider} from "react-query";
 import {useFonts} from "expo-font";
 import {newConsole} from "@shared/lib/debug";
+import CodePush from 'react-native-code-push';
 
 // import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 const queryClient = new QueryClient();
 
 
-export default function App() {
+const App = ()=> {
     // const colorScheme = useColorScheme();
     const colorScheme = "light";
 
@@ -63,3 +64,15 @@ export default function App() {
   );
 }
 // }
+
+const codePushOptions = {
+    checkFrequency: CodePush.CheckFrequency.ON_APP_START,
+    mandatoryInstallMode: CodePush.InstallMode.IMMEDIATE,
+    updateDialog: {
+        appendReleaseDescription: true,
+        title: 'New update',
+    },
+};
+
+
+export default CodePush(codePushOptions)(App);

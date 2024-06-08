@@ -4,17 +4,17 @@ import {
     GivingTransactionDataType,
     InitialMoreStateType,
     MoreDataType, PaymentMethodType, StatusType, SubscriptionType,
-} from "../../shared/types/slices";
+} from "@shared/types/slices";
 import {
     dateOptions,
     testGivingTransactions,
     timeOptions,
-} from "../../constants/values";
+} from "@constants/values";
 import {
     formatNoteDate,
     formatSubscriptionDate,
     generateUUID,
-} from "../../shared/helper";
+} from "@shared/helper";
 import {fetchAllGivingCall, fetchGivingCall, fetchLiveSubscriptionCall} from "../apiThunks/payment";
 import StringsFormat from "../../shared/lib/stringsFormat";
 

@@ -80,7 +80,7 @@ const SubscriptionMain: React.FC<NavigationProps> = ({navigation, route}) => {
 
     const subcriptions: ISubscriptionType[] = [
         {period: "Annually", price: "180.00/year", amount: "180", currency: "NGN"},
-        {period: "Quarterly", price: "60.00/quater", amount: "60", currency: "NGN"},
+        {period: "Quarterly", price: "60.00/quarter", amount: "60", currency: "NGN"},
         {period: "Monthly", price: "15.00/month", amount: "15", currency: "NGN"},
     ];
 
@@ -382,7 +382,7 @@ const SubscriptionMain: React.FC<NavigationProps> = ({navigation, route}) => {
                             By clicking “Subscribe”, you agree to our Membership Terms of
                             Service. Your payment method will, based on your selection, be
                             charged on a recurring basis $15.00 monthly, $60.00 or
-                            $180.00 yearly (prices are subject change).
+                            $180.00 yearly (prices are subject to change).
                         </Text>
                         <Text style={styles.r8t}>
                             Your Daily Answer membership will be billed in your local

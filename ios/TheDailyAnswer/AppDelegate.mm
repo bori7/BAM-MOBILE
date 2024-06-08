@@ -3,10 +3,21 @@
 #import <React/RCTBundleURLProvider.h>
 #import <React/RCTLinkingManager.h>
 
+#import <CodePush/CodePush.h>
+
+#import <AppCenterReactNative.h>
+#import <AppCenterReactNativeAnalytics.h>
+#import <AppCenterReactNativeCrashes.h>
+
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+
+  [AppCenterReactNative register];
+  [AppCenterReactNativeAnalytics registerWithInitiallyEnabled:true];
+  [AppCenterReactNativeCrashes registerWithAutomaticProcessing];
+
   self.moduleName = @"main";
 
   // You can add your custom initial props in the dictionary below.
@@ -21,9 +32,20 @@
 #if DEBUG
   return [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@".expo/.virtual-metro-entry"];
 #else
-  return [[NSBundle mainBundle] URLForResource:@"main" withExtension:@"jsbundle"];
+//   return [[NSBundle mainBundle] URLForResource:@"main" withExtension:@"jsbundle"];
+ return [CodePush bundleURL];
 #endif
 }
+
+// - (NSURL *)sourceURLForBridge:(RCTBridge *)bridge
+// {
+// #if DEBUG
+//   return [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index"];
+// #else
+//   // return [[NSBundle mainBundle] URLForResource:@"main" withExtension:@"jsbundle"];
+//   return [CodePush bundleURL];
+// #endif
+// }
 
 // Linking API
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options {
