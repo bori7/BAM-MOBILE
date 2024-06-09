@@ -53,15 +53,15 @@ export const newConsole = function () {
 
   const handleConsole = (color: DebugStyle, text: string, data?: unknown) => {
     if (__DEV__) {
-      // return null;
+      return null;
       // eslint-disable-next-line no-console
-      return console.log(
-        '%c%s',
-        color,
-        finishText(color, text),
-        data ? '=> ' : '',
-        data || '',
-      );
+      // return console.log(
+      //   '%c%s',
+      //   color,
+      //   finishText(color, text),
+      //   data ? '=> ' : '',
+      //   data || '',
+      // );
     }
     // const trak =
     //   typeof data === 'object' && data !== null
