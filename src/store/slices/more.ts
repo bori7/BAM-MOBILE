@@ -11,6 +11,7 @@ import {
     timeOptions,
 } from "@constants/values";
 import {
+    fetchDateFromLocalDateTime,
     formatNoteDate,
     formatSubscriptionDate,
     generateUUID,
@@ -33,7 +34,7 @@ const initialMoreState: InitialMoreStateType = {
     // },
     moreError: null,
     moreMessage: "",
-    givingTransactions:  [],
+    givingTransactions: [],
     // givingTransactions: testGivingTransactions || [],
     selectedGivingTransaction: null,
 };
@@ -146,22 +147,23 @@ export const moreSlice = createSlice({
         builder.addCase(fetchLiveSubscriptionCall.pending, state => {
         })
         builder.addCase(fetchLiveSubscriptionCall.fulfilled, (state, {payload}) => {
+            let modDateNextSubscription: Date = fetchDateFromLocalDateTime(payload.payload.dateOfNextSubscription);
 
             let numberOfDaysLeft = Math.floor(
-                (Number(new Date(payload.payload.dateOfNextSubscription)) - Number(new Date())) / (1000 * 3600 * 24)
+                (Number(new Date(modDateNextSubscription)) - Number(new Date())) / (1000 * 3600 * 24)
             );
+
             state.moreError = null;
             // state.userMessage = ``;
             state.activeSubscriptionData = {
                 ...state.activeSubscriptionData,
                 subscriptionType: StringsFormat.formatName(payload.payload.subscriptionType) as SubscriptionType,
-                dateNextSubscription: formatSubscriptionDate(new Date(payload.payload.dateOfNextSubscription)),
+                dateNextSubscription: formatSubscriptionDate(modDateNextSubscription),
                 numberOfDaysLeft: numberOfDaysLeft,
                 status: StringsFormat.formatName(payload.payload.subscriptionStatus) as StatusType,
                 amountPaid: payload.payload.amountPaid,
                 paymentMethod: StringsFormat.formatName(payload.payload.paymentMethod) as PaymentMethodType,
-                dateOfSubscription: new Date(payload.payload.dateOfSubscription)
-
+                dateOfSubscription: new Date(fetchDateFromLocalDateTime(payload.payload.dateOfSubscription))
             };
         })
         builder.addCase(fetchLiveSubscriptionCall.rejected, (state, action: any) => {
@@ -184,11 +186,11 @@ export const moreSlice = createSlice({
             state.moreError = null;
             // state.userMessage = ``;
             state.givingTransactions = payload.payload?.map((gTransaction, idx) => {
-                const datetime = new Date(gTransaction.createdDate).toISOString();
-                const time = new Date(gTransaction.createdDate)
+                const datetime = new Date(fetchDateFromLocalDateTime(gTransaction.createdDate)).toISOString();
+                const time = new Date(fetchDateFromLocalDateTime(gTransaction.createdDate))
                     .toLocaleTimeString(undefined, timeOptions)
                     .toLocaleUpperCase();
-                const date = formatSubscriptionDate(new Date(gTransaction.createdDate));
+                const date = formatSubscriptionDate(new Date(fetchDateFromLocalDateTime(gTransaction.createdDate)));
                 return {
                     uid: gTransaction.id,
                     currency: gTransaction.currency,
@@ -223,11 +225,11 @@ export const moreSlice = createSlice({
             state.moreLoading = false;
             state.moreError = null;
             // state.userMessage = ``;
-            const datetime = new Date(payload.payload.createdDate).toISOString();
-            const time = new Date(payload.payload.createdDate)
+            const datetime = new Date(fetchDateFromLocalDateTime(payload.payload.createdDate)).toISOString();
+            const time = new Date(fetchDateFromLocalDateTime(payload.payload.createdDate))
                 .toLocaleTimeString(undefined, timeOptions)
                 .toLocaleUpperCase();
-            const date = formatSubscriptionDate(new Date(payload.payload.createdDate));
+            const date = formatSubscriptionDate((new Date(fetchDateFromLocalDateTime(payload.payload.createdDate))));
             state.selectedGivingTransaction = {
                 uid: payload.payload.id,
                 currency: payload.payload.currency,

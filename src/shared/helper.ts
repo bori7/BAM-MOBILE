@@ -164,6 +164,34 @@ export const formatSubscriptionDate = (date: Date) => {
 
     return `${month?.substring(0, 3)} ${day}, ${year}`;
 };
+
+export const fetchDateFromInstant = (date: string | number): string | number => {
+    if (ENCRYPTED) {
+        return Number(date) * 1000
+    } else {
+        return date
+    }
+
+};
+
+export const fetchDateFromLocalDateTime = (date: string | number[]) => {
+    let adjustedArray: number[] = [];
+    if (typeof date === 'object') {
+        let dateArray: number[] = date;
+        adjustedArray = [...dateArray.slice(0, 1), dateArray[1] - 1, ...dateArray.slice(2, 6), Math.floor(dateArray[6] / 1000000)];
+    }
+    let modDateNextSubscription: Date;
+    if (typeof date === 'object') {
+        // @ts-ignore
+        modDateNextSubscription = new Date(...adjustedArray);
+    } else {
+        modDateNextSubscription = new Date(date);
+    }
+
+    return modDateNextSubscription;
+};
+
+
 export const convertTo12HourFormat = (timeStr: string) => {
     const [hour, minute, second] = timeStr.split(":");
     const hh = parseInt(hour, 10);

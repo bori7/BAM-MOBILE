@@ -32,6 +32,7 @@ import {fetchLiveSubscriptionCall} from "@store/apiThunks/payment";
 import {GenericResponseType} from "@services/type";
 import {SubscriptionPayloadType} from "@services/payments/subscription/type";
 import {ActivityIndicator} from "react-native-paper";
+import {formatSubscriptionDate} from "@shared/helper";
 
 // type NavigationProps = MoreProps<MoreRoutes.SubscriptionMain>;
 
@@ -61,6 +62,10 @@ const SubscriptionSummary: React.FC<NavigationProps> = ({
     // debug.log("liveData", liveData)
     // debug.log("liveDataLoading", liveDataLoading)
     // debug.log("liveDataError", liveDataError)
+
+    // let numberOfDaysLeft = Math.floor(
+    //     (Number(new Date(liveData?.payload?.dateOfNextSubscription || "")) - Number(new Date())) / (1000 * 3600 * 24)
+    // );
 
     const resetAction = CommonActions.reset({
         index: 1,
@@ -157,19 +162,19 @@ const SubscriptionSummary: React.FC<NavigationProps> = ({
                                 <Text
                                     style={[styles.r3at2, {color: COLORS.Light.colorThirteen}]}
                                 >
-                                    {liveData?.payload?.subscriptionStatus ||activeSubscriptionData?.status || "---"}
+                                    {liveData?.payload?.subscriptionStatus || activeSubscriptionData?.status || "---"}
                                 </Text>
                             </View>
                             <View style={styles.r3a}>
                                 <Text style={styles.r3at1}>Amount paid</Text>
                                 <Text style={styles.r3at2}>
-                                    NGN {liveData?.payload?.amountPaid ||activeSubscriptionData?.amountPaid || "---"}
+                                    USD {liveData?.payload?.amountPaid || activeSubscriptionData?.amountPaid || "---"}
                                 </Text>
                             </View>
                             <View style={styles.r3a}>
                                 <Text style={styles.r3at1}>Payment method</Text>
-                                <Text style={[styles.r3at2, {textTransform:"capitalize",}]}>
-                                    {liveData?.payload?.paymentMethod ||activeSubscriptionData?.paymentMethod || "---"}
+                                <Text style={[styles.r3at2, {textTransform: "capitalize",}]}>
+                                    {liveData?.payload?.paymentMethod || activeSubscriptionData?.paymentMethod || "---"}
                                 </Text>
                             </View>
                         </View>
@@ -307,7 +312,7 @@ const styles = StyleSheet.create({
     },
     r3h1: {
         backgroundColor: COLORS.Light.hashBackGroundL2,
-        textTransform:"capitalize",
+        textTransform: "capitalize",
         fontSize: SIZES.sizeNine,
         fontWeight: "600",
     },

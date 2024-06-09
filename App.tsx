@@ -66,7 +66,8 @@ const App = ()=> {
 // }
 
 const codePushOptions = {
-    checkFrequency: CodePush.CheckFrequency.ON_APP_START,
+    // checkFrequency: CodePush.CheckFrequency.ON_APP_START,
+    checkFrequency: CodePush.CheckFrequency.MANUAL,
     mandatoryInstallMode: CodePush.InstallMode.IMMEDIATE,
     updateDialog: {
         appendReleaseDescription: true,

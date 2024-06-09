@@ -75,7 +75,7 @@ export interface NoteProps {
     uid: string;
     title: string;
     text: string;
-    datetime: string;
+    datetime: string | number;
     date: string;
     time: string;
 }
@@ -87,7 +87,7 @@ export interface DevotionalItemProps {
     title: string;
     text: string;
     ticked: boolean;
-    datetime: string;
+    datetime: string | number;
 }
 
 export interface InitialDevotionalStateType {
@@ -177,7 +177,7 @@ export interface PrayerProps {
     uid: string;
     title: string;
     text: string;
-    datetime: string;
+    datetime: string | number;
     date: string;
     time: string;
     answered: boolean;

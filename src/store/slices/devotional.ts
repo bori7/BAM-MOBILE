@@ -4,9 +4,9 @@ import {
     DevotionalDataType,
     DevotionalItemProps,
     SelectedDevotionalDataType, GeneralVerseOfTheDayType,
-} from "../../shared/types/slices";
-import {testDevotional, testSelectedDevotional} from "../../constants/values";
-import {formatNoteDate} from "../../shared/helper";
+} from "@shared/types/slices";
+import {testDevotional, testSelectedDevotional} from "@constants/values";
+import {fetchDateFromInstant, formatNoteDate} from "@shared/helper";
 import {signUpCall} from "../apiThunks/user";
 import {
     fetchAllDevotionalCall,
@@ -16,7 +16,7 @@ import {
 } from "../apiThunks/devotional";
 import {fetchAllVodCall} from "../apiThunks/vod";
 import {ImageSourcePropType} from "react-native";
-import {FetchUserDevotionalPayloadType} from "../../services/userdevotional/type";
+import {FetchUserDevotionalPayloadType} from "@services/userdevotional/type";
 
 const initialDevotionalState: InitialDevotionalStateType = {
     devotionalData: {
@@ -155,7 +155,7 @@ export const devotionalSlice = createSlice({
                     title: devo.title,
                     text: devo.text,
                     ticked: false,
-                    datetime: devo.updatedAt
+                    datetime: fetchDateFromInstant(devo.updatedAt)
                 }
             });
             debug.log("devotionalList", devotionalList)
@@ -184,7 +184,11 @@ export const devotionalSlice = createSlice({
             state.devotionalLoading = false;
             state.devotionalError = null;
             state.devotionalMessage = `Successfully fetched user devotional from the server`;
-            state.devotionalData.userDevotional = payload.payload
+            state.devotionalData.userDevotional = {
+                ...payload.payload,
+                createdAt: fetchDateFromInstant(payload.payload.createdAt),
+                updatedAt: fetchDateFromInstant(payload.payload.updatedAt),
+            }
 
         })
         builder.addCase(updateUserDevotionalCall.pending, state => {
@@ -208,7 +212,8 @@ export const devotionalSlice = createSlice({
             state.devotionalMessage = `Successfully fetched user devotional from the server`;
             state.devotionalData.userDevotional = {
                 ...state.devotionalData.userDevotional as FetchUserDevotionalPayloadType,
-                id: payload.payload.userDevotionalId
+                id: payload.payload.userDevotionalId,
+
             }
 
         })

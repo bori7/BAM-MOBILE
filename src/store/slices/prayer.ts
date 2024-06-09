@@ -3,9 +3,9 @@ import {
     InitialPrayersStateType, NoteProps,
     PrayerProps,
     PrayersDataType,
-} from "../../shared/types/slices";
-import {dateOptions, testPrayers, timeOptions} from "../../constants/values";
-import {formatNoteDate} from "../../shared/helper";
+} from "@shared/types/slices";
+import {dateOptions, testPrayers, timeOptions} from "@constants/values";
+import {fetchDateFromInstant, formatNoteDate} from "@shared/helper";
 import {createPrayerCall, deletePrayerCall, fetchPrayerByUserIdCall, updatePrayerCall} from "../apiThunks/prayer";
 import {createNoteCall, deleteNoteCall, fetchNoteByUserIdCall, updateNoteCall} from "../apiThunks/note";
 
@@ -110,11 +110,11 @@ export const prayersSlice = createSlice({
             state.prayersMessage = `Successfully fetched notes from the server`;
             const prayersList: PrayerProps[] = payload.payload?.filter((prayer, _) => !prayer.deleted).map((prayer, idx) => {
 
-                const datetime = prayer.dateTime || prayer.updatedAt || "";
-                const time = new Date(prayer.updatedAt || "")
+                const datetime = fetchDateFromInstant(prayer.dateTime || prayer.updatedAt || "");
+                const time = new Date(fetchDateFromInstant(prayer.updatedAt || ""))
                     .toLocaleTimeString(undefined, timeOptions)
                     .toLocaleUpperCase();
-                const date = formatNoteDate(new Date(prayer.updatedAt || ""));
+                const date = formatNoteDate(new Date(fetchDateFromInstant(prayer.updatedAt || "")));
 
                 return {
                     uid: prayer.id || "",

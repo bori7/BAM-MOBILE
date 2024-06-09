@@ -14,7 +14,7 @@ export interface CreateNoteRequestType {
   answered?: boolean;
   deleted?: boolean;
 
-  datetime?: string | null;
+  datetime?: string | number;
 }
 
 export interface CreateNotePayloadType {

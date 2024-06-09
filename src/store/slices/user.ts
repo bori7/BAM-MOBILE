@@ -1,8 +1,8 @@
 import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
 
-import {apiPost} from "../../hooks/apiHooks";
-import {secureSave} from "../../shared/helper";
-import {InitialUserStateType, UserDataType} from "../../shared/types/slices";
+import {apiPost} from "@hooks/apiHooks";
+import {fetchDateFromInstant, secureSave} from "@shared/helper";
+import {InitialUserStateType, UserDataType} from "@shared/types/slices";
 import {
     generateVerificationCodeCall, resetUserPasswordCall,
     signInCall,

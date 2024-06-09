@@ -4,12 +4,10 @@ import {
     InitialNotesStateType,
     NoteProps,
     NotesDataType,
-} from "../../shared/types/slices";
-import {dateOptions, testNotes, timeOptions} from "../../constants/values";
-import {formatNoteDate} from "../../shared/helper";
+} from "@shared/types/slices";
+import {dateOptions, testNotes, timeOptions} from "@constants/values";
+import {fetchDateFromInstant, formatNoteDate} from "@shared/helper";
 import {createNoteCall, deleteNoteCall, fetchNoteByUserIdCall, updateNoteCall} from "../apiThunks/note";
-import {fetchAllDevotionalCall} from "../apiThunks/devotional";
-import {CreateNoteRequestType} from "../../services/note/type";
 
 const initialNotesState: InitialNotesStateType = {
     notesData: {
@@ -109,11 +107,11 @@ export const notesSlice = createSlice({
             state.notesMessage = `Successfully fetched notes from the server`;
             const notesList: NoteProps[] = payload.payload?.filter((note,_)=>!note.deleted).map((note, idx) => {
 
-                const datetime = note.datetime || "";
-                const time = new Date(note.updatedAt || "")
+                const datetime = fetchDateFromInstant(note.datetime || "");
+                const time = new Date(fetchDateFromInstant(note.updatedAt || ""))
                     .toLocaleTimeString(undefined, timeOptions)
                     .toLocaleUpperCase();
-                const date = formatNoteDate(new Date(note.updatedAt || ""));
+                const date = formatNoteDate(new Date(fetchDateFromInstant(note.updatedAt || "")));
 
                 return {
                     uid: note.id || "",

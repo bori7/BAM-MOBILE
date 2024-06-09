@@ -9,8 +9,8 @@ export interface CreateUserDevotionalPayloadType {
 
 export interface FetchUserDevotionalPayloadType {
   id: string;
-  createdAt: string;
-  updatedAt: string;
+  createdAt: string | number;
+  updatedAt: string | number;
   userId: string;
   readIds: string[];
 }

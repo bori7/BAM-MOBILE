@@ -3,7 +3,7 @@ import {
   InitialScreenNotificationStateType,
   NotificationDataType,
   ScreenDataType,
-} from "../../shared/types/slices";
+} from "@shared/types/slices";
 
 const initialScreenNotificationState: InitialScreenNotificationStateType = {
   notificationData: null,

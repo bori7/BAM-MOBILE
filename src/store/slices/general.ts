@@ -4,12 +4,12 @@ import {
     InitialGeneralStateType,
     GeneralDataType,
     NotificationsFormSliceType, GeneralVerseOfTheDayType,
-} from "../../shared/types/slices";
+} from "@shared/types/slices";
 import {
     testNotificationsForm,
     testVerseOfTheDayList,
-} from "../../constants/values";
-import {NotificationsFormType} from "../../pages/More/EmailNotifications";
+} from "@constants/values";
+import {NotificationsFormType} from "@pages/More/EmailNotifications";
 import {signInCall, signUpCall} from "../apiThunks/user";
 import {fetchAllVodCall} from "../apiThunks/vod";
 import {initiatePaymentCall} from "../apiThunks/payment";

@@ -9,7 +9,7 @@ export interface CreatePrayerRequestType {
     createdAt?: string;
     updatedAt?: string;
 
-    dateTime?: string | null;
+    dateTime?: string | null | number;
 
     answered?: boolean;
     deleted?: boolean;
