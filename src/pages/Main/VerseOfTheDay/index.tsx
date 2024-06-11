@@ -119,9 +119,9 @@ const VerseOfTheDay: React.FC<NavigationProps> = ({navigation, route}) => {
         useCallback(
             async (wc: number) => {
                 Tts.speak(currVOD?.text || "", {
-                    iosVoiceId:
+                    iosVoiceId: iosSelectedVoiceId
                     // voice === "Male" ?
-                        "com.apple.speech.synthesis.voice.Albert"
+                    //     "com.apple.speech.synthesis.voice.Albert"
                     //     :
                     // (Platform.OS === "ios" ? "com.apple.speech.synthesis.voice.Kathy" : "en-us-x-iog-local")
                     ,
@@ -291,7 +291,7 @@ const VerseOfTheDay: React.FC<NavigationProps> = ({navigation, route}) => {
                         <TouchableOpacity
                             style={styles.floatingContent3}
                             onPress={() => {
-                                shareData((currVOD?.text || "") + " [" + (currVOD?.verse || "")+"]")
+                                shareData((currVOD?.text || "") + " [" + (currVOD?.verse || "") + "]")
                             }}
                         >
                             <Text style={styles.fc3t}>

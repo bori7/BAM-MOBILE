@@ -8,6 +8,7 @@
 #import <AppCenterReactNative.h>
 #import <AppCenterReactNativeAnalytics.h>
 #import <AppCenterReactNativeCrashes.h>
+#import <TrustKit/TrustKit.h>
 
 @implementation AppDelegate
 
@@ -23,6 +24,23 @@
   // You can add your custom initial props in the dictionary below.
   // They will be passed down to the ViewController used by React Native.
   self.initialProps = @{};
+
+  NSDictionary *trustKitConfig =
+  @{
+      kTSKSwizzleNetworkDelegates: @YES,
+     kTSKPinnedDomains: @{
+          @"sslpinning.com" : @{
+              kTSKIncludeSubdomains: @YES,
+             kTSKEnforcePinning: @YES,
+              kTSKDisableDefaultReportUri: @YES,
+             kTSKPublicKeyHashes : @[
+                @"m43Nb229eGJK4V75w3Isj+MXxc341n31TXjEn1itTk=",
+                @"fe6e3735bdb6f5e1892b857be70dc8b23f8c5f1737e359f7d535e3127d62b539",
+              ],
+         },
+      }};
+   [TrustKit initSharedInstanceWithConfiguration:trustKitConfig];
+
 
   return [super application:application didFinishLaunchingWithOptions:launchOptions];
 }

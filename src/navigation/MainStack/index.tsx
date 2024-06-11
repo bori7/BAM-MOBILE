@@ -9,7 +9,7 @@ import {
   VerseOfTheDay,
   Home,
 } from "../../pages/Main";
-import { MainParamList, MainRoutes } from "../../shared/const/routerMain";
+import { MainParamList, MainRoutes } from "@shared/const/routerMain";
 
 const Main = createStackNavigator<MainParamList>();
 

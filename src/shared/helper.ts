@@ -4,10 +4,13 @@ import {getIpAddressAsync} from 'expo-network';
 import {ENCRYPTED, GENERAL_SYM_KEY, PUBLIC_KEY} from "@constants/props";
 import {CipherUtils} from "@shared/lib/cipher";
 import {resetAuthAfter401} from "@services/index";
+// import {CertificatePinner} from 'react-native-cert-pinner';
+import certificates from 'certificates.json';
 
 export const TEXT_PLAIN = 'text/plain';
 export const APPLICATION_JSON = 'application/json';
 
+// const certPinner = new CertificatePinner(certificates);
 
 export const apiCallInit = (otherHeaders: any) => {
     const axiosInstance = axios.create({
@@ -27,8 +30,13 @@ export const apiCallInit = (otherHeaders: any) => {
     let oneTimeKey = "";
 
     axiosInstance.interceptors.request.use(
-        (config) => {
+        async (config) => {
             debug.log('Request CONFIG:', config);
+
+            // const pinned = await certPinner.check(config.url);
+            // if (!pinned) {
+            //     throw new Error('Certificate pinning failed');
+            // }
 
             debug.log("RAW request data", config.data);
 

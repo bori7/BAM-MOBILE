@@ -13,6 +13,7 @@ declare module "*.png";
 declare module "react-native-password-strength-checker";
 declare module "react-native-material-textinput";
 declare module "react-native-cached-image";
+declare module 'react-native-cert-pinner';
 
 type OptionalRecord<K extends keyof any, T> = {
     [P in K]?: T;

@@ -6,14 +6,14 @@ import {
 } from "react-native";
 
 import React, { useEffect, useState } from "react";
-import { Text, View } from "../../../components/Themed";
+import { Text, View } from "@components/Themed";
 import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "../../../store";
-import { COLORS, SIZES } from "../../../constants/Colors";
+import { AppDispatch, RootState } from "@store/index";
+import { COLORS, SIZES } from "@constants/Colors";
 import { AntDesign, Feather } from "@expo/vector-icons";
 import { CompositeScreenProps, useFocusEffect } from "@react-navigation/native";
-import { RootScreenProps, RootRoutes } from "../../../shared/const/routerRoot";
-import { SearchProps, SearchRoutes } from "../../../shared/const/routerSearch";
+import { RootScreenProps, RootRoutes } from "@shared/const/routerRoot";
+import { SearchProps, SearchRoutes } from "@shared/const/routerSearch";
 
 // type NavigationProps = NotesProps<NotesRoutes.NotesMain>;
 

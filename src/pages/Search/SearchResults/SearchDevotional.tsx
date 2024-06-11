@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { Text, View } from "../../../components/Themed";
+import { Text, View } from "@components/Themed";
 import { StyleSheet } from "react-native";
-import { COLORS, SIZES } from "../../../constants/Colors";
+import { COLORS, SIZES } from "@constants/Colors";
 
 type IProps = {
   text: string;

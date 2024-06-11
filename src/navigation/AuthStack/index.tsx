@@ -1,7 +1,7 @@
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 
-import { AuthParamList, AuthRoutes } from "../../shared/const/routerAuth";
+import { AuthParamList, AuthRoutes } from "@shared/const/routerAuth";
 import {
   DaDB,
   DaSB,

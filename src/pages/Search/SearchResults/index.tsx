@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Text, View } from "../../../components/Themed";
+import { Text, View } from "@components/Themed";
 import {
   Keyboard,
   ScrollView,
@@ -7,7 +7,7 @@ import {
   StyleSheet,
   TouchableOpacity,
 } from "react-native";
-import { COLORS, SIZES } from "../../../constants/Colors";
+import { COLORS, SIZES } from "@constants/Colors";
 import {
   AntDesign,
   Entypo,
@@ -16,11 +16,11 @@ import {
   Ionicons,
 } from "@expo/vector-icons";
 import { CompositeScreenProps, useFocusEffect } from "@react-navigation/native";
-import { RootRoutes, RootScreenProps } from "../../../shared/const/routerRoot";
+import { RootRoutes, RootScreenProps } from "@shared/const/routerRoot";
 import { TextInput } from "react-native-paper";
-import { RootState } from "../../../store";
+import { RootState } from "@store/index";
 import { useSelector } from "react-redux";
-import { SearchProps, SearchRoutes } from "../../../shared/const/routerSearch";
+import { SearchProps, SearchRoutes } from "@shared/const/routerSearch";
 import SearchSuggestion from "./SearchSuggestion";
 import SearchDevotional from "./SearchDevotional";
 

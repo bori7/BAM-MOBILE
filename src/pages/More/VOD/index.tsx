@@ -1,29 +1,29 @@
 import React, {useEffect, useState} from "react";
-import {Text, View} from "../../../components/Themed";
+import {Text, View} from "@components/Themed";
 import {
     ScrollView, Share,
     StatusBar,
     StyleSheet,
     TouchableOpacity,
 } from "react-native";
-import {COLORS, SIZES} from "../../../constants/Colors";
+import {COLORS, SIZES} from "@constants/Colors";
 import {Entypo, Feather, Ionicons} from "@expo/vector-icons";
 import {CompositeScreenProps, useFocusEffect} from "@react-navigation/native";
-import {RootRoutes, RootScreenProps} from "../../../shared/const/routerRoot";
+import {RootRoutes, RootScreenProps} from "@shared/const/routerRoot";
 import {
     GeneralVerseOfTheDayType,
     NoteProps,
-} from "../../../shared/types/slices";
-import {AppDispatch, RootState} from "../../../store";
+} from "@shared/types/slices";
+import {AppDispatch, RootState} from "@store/index";
 import {useDispatch, useSelector} from "react-redux";
 import {OptionsPopUp} from "../../Main/Home/OptionsPopUp";
 import {TextInput} from "react-native-paper";
-import {notesActions} from "../../../store/slices/notes";
-import {MoreProps, MoreRoutes} from "../../../shared/const/routerMore";
-import {MainRoutes} from "../../../shared/const/routerMain";
+import {notesActions} from "@store/slices/notes";
+import {MoreProps, MoreRoutes} from "@shared/const/routerMore";
+import {MainRoutes} from "@shared/const/routerMain";
 import * as Clipboard from "expo-clipboard";
-import {createPrayerCall} from "../../../store/apiThunks/prayer";
-import {prayersActions} from "../../../store/slices/prayer";
+import {createPrayerCall} from "@store/apiThunks/prayer";
+import {prayersActions} from "@store/slices/prayer";
 
 // type NavigationProps = NotesProps<NotesRoutes.NotesSearch>;
 

@@ -8,7 +8,7 @@ import {
     NotificationsFormSliceType,
     PrayerProps,
     SelectedDevotionalDataType, TermsOfServiceType,
-} from "../shared/types/slices";
+} from "@shared/types/slices";
 import {IMAGES} from "./Colors";
 
 export const testNotes: NoteProps[] = [
