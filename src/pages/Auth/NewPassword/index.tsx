@@ -8,22 +8,22 @@ import {
 } from "react-native";
 
 import React, {useEffect, useState} from "react";
-import {Text, View} from "../../../components/Themed";
-import {AuthProps, AuthRoutes} from "../../../shared/const/routerAuth";
-import {COLORS, IMAGES, SIZES} from "../../../constants/Colors";
+import {Text, View} from "@components/Themed";
+import {AuthProps, AuthRoutes} from "@shared/const/routerAuth";
+import {COLORS, IMAGES, SIZES} from "@constants/Colors";
 import {MainButton} from "../../../components";
 import CancelIcon from "../../../shared/assets/images/svg/iconoir_cancel.svg";
 import {TextInput} from "react-native-paper";
 import {useDispatch, useSelector} from "react-redux";
-import {screenNotificationActions} from "../../../store/slices/notification";
-import {AppDispatch, RootState} from "../../../store";
+import {screenNotificationActions} from "@store/slices/notification";
+import {AppDispatch, RootState} from "@store/index";
 import ValidateData from "../../../shared/lib/validateData";
-import {validateObject} from "../../../shared/helper";
-import {resetUserPasswordCall, updateUserPasswordCall} from "../../../store/apiThunks/user";
-import {RootRoutes} from "../../../shared/const/routerRoot";
-import {MainRoutes} from "../../../shared/const/routerMain";
-import {MoreRoutes} from "../../../shared/const/routerMore";
-import {userActions} from "../../../store/slices/user";
+import {validateObject} from "@shared/helper";
+import {resetUserPasswordCall, updateUserPasswordCall} from "@store/apiThunks/user";
+import {RootRoutes} from "@shared/const/routerRoot";
+import {MainRoutes} from "@shared/const/routerMain";
+import {MoreRoutes} from "@shared/const/routerMore";
+import {userActions} from "@store/slices/user";
 import {CancelIconSVG} from "@shared/components/SVGS";
 
 type NavigationProps = AuthProps<AuthRoutes.NewPassword>;

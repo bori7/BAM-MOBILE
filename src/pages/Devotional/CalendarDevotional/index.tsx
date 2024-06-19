@@ -7,17 +7,17 @@ import {
 } from "react-native";
 
 import React, {useEffect, useRef, useState} from "react";
-import {Text, View} from "../../../components/Themed";
-import {COLORS, IMAGES, SIZES} from "../../../constants/Colors";
+import {Text, View} from "@components/Themed";
+import {COLORS, IMAGES, SIZES} from "@constants/Colors";
 import {useDispatch, useSelector} from "react-redux";
-import {AppDispatch, RootState} from "../../../store";
+import {AppDispatch, RootState} from "@store/index";
 import {Ionicons} from "@expo/vector-icons";
 import {CompositeScreenProps, useFocusEffect} from "@react-navigation/native";
-import {DevotionalItemProps} from "../../../shared/types/slices";
+import {DevotionalItemProps} from "@shared/types/slices";
 import {
     DevotionalProps,
     DevotionalRoutes,
-} from "../../../shared/const/routerDevotional";
+} from "@shared/const/routerDevotional";
 import CalendarView from "./CalendarView";
 
 type NavigationProps = DevotionalProps<DevotionalRoutes.CalendarDevotional>;
@@ -50,6 +50,7 @@ const CalendarDevotional: React.FC<NavigationProps> =
             switch (type) {
                 case "Devotional Info":
                     navigation.navigate(DevotionalRoutes.AboutDevotional);
+                    break;
                 case "Pray":
                     break;
                 case "Save":

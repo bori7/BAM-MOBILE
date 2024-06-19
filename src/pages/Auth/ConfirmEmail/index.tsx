@@ -8,17 +8,14 @@ import {
 } from "react-native";
 
 import React, {useEffect, useState} from "react";
-import {Text, View} from "../../../components/Themed";
-import {AuthProps, AuthRoutes} from "../../../shared/const/routerAuth";
-import {COLORS, IMAGES, SIZES} from "../../../constants/Colors";
-import {MainButton} from "../../../components";
-import CancelIcon from "../../../shared/assets/images/svg/iconoir_cancel.svg";
-import {TextInput} from "react-native-paper";
+import {Text, View} from "@components/Themed";
+import {AuthProps, AuthRoutes} from "@shared/const/routerAuth";
+import {COLORS, IMAGES, SIZES} from "@constants/Colors";
 import {useDispatch, useSelector} from "react-redux";
-import {AppDispatch, RootState} from "../../../store";
-import {CancelIconSVG, SendMailImageSVG} from "../../../shared/components/SVGS";
-import {ConfirmationCode} from "../../../shared/components/ConfirmationCode";
-import {generateVerificationCodeCall, verificationVerificationCodeCall} from "../../../store/apiThunks/user";
+import {AppDispatch, RootState} from "@store/index";
+import {CancelIconSVG, SendMailImageSVG} from "@shared/components/SVGS";
+import {ConfirmationCode} from "@shared/components/ConfirmationCode";
+import { verificationVerificationCodeCall} from "@store/apiThunks/user";
 
 type NavigationProps = AuthProps<AuthRoutes.ConfirmEmail>;
 
@@ -102,7 +99,8 @@ const ConfirmEmail: React.FC<NavigationProps> = ({navigation, route}) => {
                                 setCode(val)
                             }}
                             error={!!errorText}
-                            errorMessage={errorText}/>
+                            errorMessage={errorText}
+                        />
                         <View style={styles.r3}>
                             <SendMailImageSVG
                                 // fill={"white"}

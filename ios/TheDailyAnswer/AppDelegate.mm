@@ -9,6 +9,8 @@
 #import <AppCenterReactNativeAnalytics.h>
 #import <AppCenterReactNativeCrashes.h>
 #import <TrustKit/TrustKit.h>
+#import <TrustKit/TSKPinningValidator.h>
+#import <TrustKit/TSKPinningValidatorCallback.h>
 
 @implementation AppDelegate
 
@@ -27,19 +29,36 @@
 
   NSDictionary *trustKitConfig =
   @{
+      // Swizzling because we can't access the NSURLSession instance used in React Native's fetch method
       kTSKSwizzleNetworkDelegates: @YES,
-     kTSKPinnedDomains: @{
-          @"sslpinning.com" : @{
-              kTSKIncludeSubdomains: @YES,
-             kTSKEnforcePinning: @YES,
+      kTSKPinnedDomains: @{
+          @"onrender.com" : @{
+              kTSKIncludeSubdomains: @YES, // Pin all subdomains
+              kTSKEnforcePinning: @YES, // Block connections if pinning validation failed
               kTSKDisableDefaultReportUri: @YES,
-             kTSKPublicKeyHashes : @[
-                @"m43Nb229eGJK4V75w3Isj+MXxc341n31TXjEn1itTk=",
-                @"fe6e3735bdb6f5e1892b857be70dc8b23f8c5f1737e359f7d535e3127d62b539",
+              kTSKPublicKeyHashes : @[
+                @"611PgQ0PrKKrrIM3fOr640S6lCDCt0WfypcIB7Gz2F8=", // new key generation: echo "Get HTTP/1.0" | openssl s_client -showcerts -connect ecobank.tapston.com:8888 | openssl x509 -pubkey -noout | openssl pkey -pubin -outform der | openssl dgst -sha256 -binary | openssl enc -base64
+                @"RFaIwRi0LrYXoW3ycESQfibZcT21s9v3ZsVOqrZ2Z44=", // Fake backup key but we need to provide 2 pins
               ],
-         },
-      }};
+          },
+          @"checkout.paystack.com" : @{
+              kTSKIncludeSubdomains: @YES,
+              kTSKEnforcePinning: @YES,
+              kTSKDisableDefaultReportUri: @YES,
+              kTSKPublicKeyHashes : @[
+                  @"y6pwDedgA200nMh3JTDlAA73vlZ1EOE/IIV04F7m52U=",
+                  @"Dbmf0GLeR880mGNs9WSW1XOL6v7xsVmWO6ks0LxybzU="
+              ],
+          },
+    }};
    [TrustKit initSharedInstanceWithConfiguration:trustKitConfig];
+     [TrustKit sharedInstance].pinningValidatorCallback = ^(TSKPinningValidatorResult *result, NSString *notedHostname, TKSDomainPinningPolicy *policy) {
+       if (result.finalTrustDecision == TSKTrustEvaluationFailedNoMatchingPin) {
+         NSLog(@"TrustKit certificate matching failed");
+         // Add more logging here. i.e. Sentry, BugSnag etc
+       }
+     };
+     //end TrustKit
 
 
   return [super application:application didFinishLaunchingWithOptions:launchOptions];

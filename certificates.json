@@ -1,10 +1,15 @@
 {
   "https://bam-financial-2.onrender.com": [
-    "sha256/fe6e3735bdb6f5e1892b857be70dc8b23f8c5f1737e359f7d535e3127d62b539",
+    "sha256/611PgQ0PrKKrrIM3fOr640S6lCDCt0WfypcIB7Gz2F8=",
     "sha256/m43Nb229eGJK4V75w3Isj+MXxc341n31TXjEn1itTk="
   ],
   "https://bam-mainbackend-6-1.onrender.com": [
-    "sha256/fe6e3735bdb6f5e1892b857be70dc8b23f8c5f1737e359f7d535e3127d62b539",
+    "sha256/611PgQ0PrKKrrIM3fOr640S6lCDCt0WfypcIB7Gz2F8=",
     "sha256/m43Nb229eGJK4V75w3Isj+MXxc341n31TXjEn1itTk="
+  ],
+  "https://checkout.paystack.com": [
+    "sha256/y6pwDedgA200nMh3JTDlAA73vlZ1EOE/IIV04F7m52U=",
+    "sha256/cbaa700de760036d349cc8772530e5000ef7be567510e13f208574e05ee6e765"
+
   ]
 }

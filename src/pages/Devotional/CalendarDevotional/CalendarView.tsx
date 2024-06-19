@@ -1,16 +1,16 @@
 import {Dimensions, ScrollView, StyleSheet, TouchableOpacity} from "react-native";
-import {Text, View} from "../../../components/Themed";
+import {Text, View} from "@components/Themed";
 import React, {useCallback, useEffect, useState} from "react";
-import {COLORS, SIZES} from "../../../constants/Colors";
+import {COLORS, SIZES} from "@constants/Colors";
 import {Feather} from "@expo/vector-icons";
 import {JsonCalendar} from "json-calendar";
 import {useDispatch, useSelector} from "react-redux";
-import {AppDispatch, RootState} from "../../../store";
-import {diffBetweenTwoDates} from "../../../shared/helper";
-import {fetchDevotionalByIdCall} from "../../../store/apiThunks/devotional";
-import {RootRoutes} from "../../../shared/const/routerRoot";
-import {DevotionalNavigationProps, DevotionalRoutes} from "../../../shared/const/routerDevotional";
-import {screenNotificationActions} from "../../../store/slices/notification";
+import {AppDispatch, RootState} from "@store/index";
+import {diffBetweenTwoDates} from "@shared/helper";
+import {fetchDevotionalByIdCall} from "@store/apiThunks/devotional";
+import {RootRoutes} from "@shared/const/routerRoot";
+import {DevotionalNavigationProps, DevotionalRoutes} from "@shared/const/routerDevotional";
+import {screenNotificationActions} from "@store/slices/notification";
 import {useNavigation} from "@react-navigation/native";
 
 const screenHeight = Dimensions.get('window').height;

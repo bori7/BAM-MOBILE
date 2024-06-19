@@ -1,25 +1,23 @@
 import React, {useEffect, useState} from "react";
-import {Text, View} from "../../../components/Themed";
+import {Text, View} from "@components/Themed";
 import {
     ScrollView,
     StatusBar,
     StyleSheet,
     TouchableOpacity,
 } from "react-native";
-import {COLORS, SIZES} from "../../../constants/Colors";
+import {COLORS, SIZES} from "@constants/Colors";
 import {Entypo, Feather, Ionicons} from "@expo/vector-icons";
 import {CompositeScreenProps, useFocusEffect} from "@react-navigation/native";
-import {RootRoutes, RootScreenProps} from "../../../shared/const/routerRoot";
-import {PrayerProps} from "../../../shared/types/slices";
-import {AppDispatch, RootState} from "../../../store";
+import {RootRoutes, RootScreenProps} from "@shared/const/routerRoot";
+import {PrayerProps} from "@shared/types/slices";
+import {AppDispatch, RootState} from "@store/index";
 import {useDispatch, useSelector} from "react-redux";
 import {OptionsPopUp} from "../../Main/Home/OptionsPopUp";
 import {TextInput} from "react-native-paper";
-import {MoreProps, MoreRoutes} from "../../../shared/const/routerMore";
-import {prayersActions} from "../../../store/slices/prayer";
-import {deleteNoteCall, updateNoteCall} from "../../../store/apiThunks/note";
-import {notesActions} from "../../../store/slices/notes";
-import {deletePrayerCall, updatePrayerCall} from "../../../store/apiThunks/prayer";
+import {MoreProps, MoreRoutes} from "@shared/const/routerMore";
+import {prayersActions} from "@store/slices/prayer";
+import {deletePrayerCall, updatePrayerCall} from "@store/apiThunks/prayer";
 
 // type NavigationProps = PrayersProps<PrayersRoutes.PrayersSearch>;
 

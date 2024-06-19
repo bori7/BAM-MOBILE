@@ -146,8 +146,8 @@ const styles = StyleSheet.create({
         marginTop: 14,
     },
     iconError: {
-        height: '20',
-        width: '20',
+        height: 20,
+        width: 20,
         marginRight: 8,
     },
     errorMessage: {

@@ -17,6 +17,8 @@ import expo.modules.ApplicationLifecycleDispatcher;
 import expo.modules.ReactNativeHostWrapper;
 import com.microsoft.codepush.react.CodePush;
 
+import com.facebook.react.modules.network.OkHttpClientProvider;
+
 import java.util.List;
 
 public class MainApplication extends Application implements ReactApplication {
@@ -66,6 +68,9 @@ public class MainApplication extends Application implements ReactApplication {
   @Override
   public void onCreate() {
     super.onCreate();
+
+    OkHttpClientProvider.setOkHttpClientFactory(new SSLPinnerFactory());
+
     SoLoader.init(this, /* native exopackage */ false);
     if (!BuildConfig.REACT_NATIVE_UNSTABLE_USE_RUNTIME_SCHEDULER_ALWAYS) {
       ReactFeatureFlags.unstable_useRuntimeSchedulerAlways = false;
@@ -77,6 +82,7 @@ public class MainApplication extends Application implements ReactApplication {
     if (BuildConfig.DEBUG) {
       ReactNativeFlipper.initializeFlipper(this, getReactNativeHost().getReactInstanceManager());
     }
+
     ApplicationLifecycleDispatcher.onApplicationCreate(this);
   }
 

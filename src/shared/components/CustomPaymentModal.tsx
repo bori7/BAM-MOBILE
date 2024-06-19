@@ -1,5 +1,5 @@
 import React, {useRef} from "react";
-import {Text, View} from "../../components/Themed";
+import {Text, View} from "@components/Themed";
 import {
     Alert,
     Image,
@@ -10,12 +10,12 @@ import {
     // ActivityIndicator,
 } from "react-native";
 import {Feather} from "@expo/vector-icons";
-import {COLORS, IMAGES, SIZES} from "../../constants/Colors";
+import {COLORS, IMAGES, SIZES} from "@constants/Colors";
 import {ActivityIndicator} from "react-native-paper";
 import WebView from "react-native-webview";
 import {useSelector} from "react-redux";
 import {RootState} from "../../store";
-import {CONSTANT_URL_CONTEXT} from "../../constants/props";
+import {CONSTANT_URL_CONTEXT} from "@constants/props";
 // import { ActivityIndicator } from "react-native-paper";
 
 type ICustomPaymentProps = {
