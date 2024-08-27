@@ -6,7 +6,6 @@
 // export const BASE_IP = `${BASE_HOST}:9082`;
 // export const PAYMENT_BASE_IP = `${PAYMENT_BASE_HOST}:9084`;
 
-
 export const BASE_HOST: string = "https://bam-mainbackend-9.onrender.com";
 export const PAYMENT_BASE_HOST: string = "https://bam-financial-4.onrender.com";
 export const BASE_IP = `${BASE_HOST}`;

@@ -620,7 +620,6 @@ PODS:
   - SSZipArchive (2.2.3)
   - TextToSpeech (4.1.0):
     - React
-  - TrustKit (1.6.5)
   - Yoga (1.14.0)
 
 DEPENDENCIES:
@@ -709,7 +708,6 @@ DEPENDENCIES:
   - RNScreens (from `../node_modules/react-native-screens`)
   - RNSVG (from `../node_modules/react-native-svg`)
   - TextToSpeech (from `../node_modules/react-native-tts`)
-  - TrustKit (= 1.6.5)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
@@ -722,7 +720,6 @@ SPEC REPOS:
     - libevent
     - SocketRocket
     - SSZipArchive
-    - TrustKit
 
 EXTERNAL SOURCES:
   appcenter-analytics:
@@ -986,9 +983,8 @@ SPEC CHECKSUMS:
   SocketRocket: f32cd54efbe0f095c4d7594881e52619cfe80b17
   SSZipArchive: 62d4947b08730e4cda640473b0066d209ff033c9
   TextToSpeech: b3aa777ff5585705f179c0a2436bfd0926d1716e
-  TrustKit: 073855e3adecd317417bda4ac9e9ac54a2e3b9f2
   Yoga: 87e59f6d458e5061d2421086c5de994b3f7cd151
 
-PODFILE CHECKSUM: 2cb250a86877737a4cf5b3bfcf84afe1ff4d4a4e
+PODFILE CHECKSUM: 20c7138bd4c65fc57ea0be085fb49724cf878105
 
-COCOAPODS: 1.14.2
+COCOAPODS: 1.15.2
