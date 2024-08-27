@@ -9,20 +9,18 @@ import {
 } from "react-native";
 
 import React, { useEffect, useState } from "react";
-import { Text, View } from "../../../components/Themed";
-import { COLORS, IMAGES, SIZES } from "../../../constants/Colors";
+import { Text, View } from "@components/Themed";
+import { COLORS, IMAGES, SIZES } from "@constants/Colors";
 import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "../../../store";
+import { AppDispatch, RootState } from "@store/index";
 import { AntDesign, Ionicons } from "@expo/vector-icons";
-import { CompositeScreenProps, useFocusEffect } from "@react-navigation/native";
-import { DevotionalItemProps } from "../../../shared/types/slices";
+import { DevotionalItemProps } from "@shared/types/slices";
 import {
   DevotionalProps,
   DevotionalRoutes,
-} from "../../../shared/const/routerDevotional";
-import ClockModal from "./ClockModal";
-import { timeOptions } from "../../../constants/values";
-import {convertTo12HourFormat, getDaysElapsed, getDaysInYear, getPercentUsedInYear} from "../../../shared/helper";
+} from "@shared/const/routerDevotional";
+import { timeOptions } from "@constants/values";
+import {convertTo12HourFormat, getDaysElapsed, getDaysInYear, getPercentUsedInYear} from "@shared/helper";
 
 type NavigationProps = DevotionalProps<DevotionalRoutes.SettingsDevotional>;
 

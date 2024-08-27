@@ -7,25 +7,25 @@ import {
 } from "react-native";
 
 import React, {useEffect, useState} from "react";
-import {Text, View} from "../../../components/Themed";
-import {COLORS, IMAGES, SIZES} from "../../../constants/Colors";
+import {Text, View} from "@components/Themed";
+import {COLORS, IMAGES, SIZES} from "@constants/Colors";
 import {useDispatch, useSelector} from "react-redux";
-import {AppDispatch, RootState} from "../../../store";
+import {AppDispatch, RootState} from "@store/index";
 import {AntDesign, Entypo, Feather, Ionicons} from "@expo/vector-icons";
 import MidDoubleTick from "../../../shared/assets/images/svg/mdi_check_all.svg";
 import {CompositeScreenProps, useFocusEffect} from "@react-navigation/native";
-import {DevotionalItemProps} from "../../../shared/types/slices";
+import {DevotionalItemProps} from "@shared/types/slices";
 import {
     DevotionalProps,
     DevotionalRoutes,
-} from "../../../shared/const/routerDevotional";
+} from "@shared/const/routerDevotional";
 import {OptionsPopUp} from "../../Main/Home/OptionsPopUp";
 import FilterModal from "./FilterModal";
-import {screenNotificationActions} from "../../../store/slices/notification";
-import {fetchDevotionalByIdCall, updateUserDevotionalCall} from "../../../store/apiThunks/devotional";
-import {devotionalActions} from "../../../store/slices/devotional";
-import {RootRoutes} from "../../../shared/const/routerRoot";
-import {diffBetweenTwoDates, equalityBetweenTwoDates} from "../../../shared/helper";
+import {screenNotificationActions} from "@store/slices/notification";
+import {fetchDevotionalByIdCall, updateUserDevotionalCall} from "@store/apiThunks/devotional";
+import {devotionalActions} from "@store/slices/devotional";
+import {RootRoutes} from "@shared/const/routerRoot";
+import {diffBetweenTwoDates, equalityBetweenTwoDates} from "@shared/helper";
 
 type NavigationProps = DevotionalProps<DevotionalRoutes.FilterDevotional>;
 
