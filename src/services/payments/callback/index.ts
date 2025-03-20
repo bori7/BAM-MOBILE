@@ -4,7 +4,7 @@ import {getByWithPathParam, postCall} from "../../index";
 import {
     CALLBACK_GET_URL,
     CALLBACK_POST_URL
-} from "../../../constants/url";
+} from "@constants/url";
 import {CallbackGetRequestType, CallbackGetResponsePayload, CallbackPostRequestType} from "./type";
 
 export class CallbackService {

@@ -290,10 +290,10 @@ export const userSlice = createSlice({
             // state.userData = null;
             state.userError = {
                 code: action.payload?.response?.data?.responseCode || "87",
-                message:
-                    action.payload?.response?.data?.message ||
-                    // action.error?.message ||
-                    "Unable to fetch live subscription at the moment",
+                message:""
+                    // action.payload?.response?.data?.message ||
+                    // // action.error?.message ||
+                    // "Unable to fetch live subscription at the moment",
             }
         })
 

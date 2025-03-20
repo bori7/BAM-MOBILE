@@ -172,10 +172,10 @@ export const moreSlice = createSlice({
             // state.userData = null;
             state.moreError = {
                 code: action.payload?.response?.data?.responseCode || "87",
-                message:
-                    action.payload?.response?.data?.message ||
-                    // action.error?.message ||
-                    "Unable to fetch live subscription at the moment",
+                message: ""
+                    // action.payload?.response?.data?.message ||
+                    // // action.error?.message ||
+                    // "Unable to fetch live subscription at the moment",
             }
         })
 
@@ -211,10 +211,10 @@ export const moreSlice = createSlice({
             // state.userData = null;
             state.moreError = {
                 code: action.payload?.response?.data?.responseCode || "87",
-                message:
-                    action.payload?.response?.data?.message ||
-                    // action.error?.message ||
-                    "Unable to fetch all givings at the moment",
+                message:""
+                    // action.payload?.response?.data?.message ||
+                    // // action.error?.message ||
+                    // "Unable to fetch all givings at the moment",
             }
         })
 
@@ -248,10 +248,10 @@ export const moreSlice = createSlice({
             // state.userData = null;
             state.moreError = {
                 code: action.payload?.response?.data?.responseCode || "87",
-                message:
-                    action.payload?.response?.data?.message ||
-                    // action.error?.message ||
-                    "Unable to fetch this detail at the moment",
+                message: ""
+                    // action.payload?.response?.data?.message ||
+                    // // action.error?.message ||
+                    // "Unable to fetch this detail at the moment",
             }
         })
 

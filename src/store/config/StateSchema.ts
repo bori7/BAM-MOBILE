@@ -11,7 +11,7 @@ import {
     InitialMoreStateType,
     InitialNotesStateType, InitialPrayersStateType,
     InitialScreenNotificationStateType, InitialUserStateType
-} from "../../shared/types/slices";
+} from "@shared/types/slices";
 
 
 export interface StateSchema {

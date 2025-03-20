@@ -3,7 +3,7 @@ import {GenericResponseType} from "../../type";
 import {getFor, postCall} from "../../index";
 import {
     PAYSTACK_INITIATE_URL, PAYSTACK_VERIFY_URL
-} from "../../../constants/url";
+} from "@constants/url";
 import {InitiatePaystackPayloadType, InitiatePaystackRequestType, VerifyPaystackRequestType} from "./type";
 import {FetchDevotionalPayloadType} from "../../devotional/type";
 

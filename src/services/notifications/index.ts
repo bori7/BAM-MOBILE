@@ -5,7 +5,7 @@ import {
     CREATE_NOTIFICATION_URL,
     FETCH_NOTIFICATION_URL,
     UPDATE_NOTIFICATION_URL
-} from "../../constants/url";
+} from "@constants/url";
 import {CreateNotificationsPayloadType, CreateNotificationsRequestType, FetchNotificationByIdType} from "./type";
 
 

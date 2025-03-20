@@ -36,6 +36,7 @@ import {fetchPrayerByUserIdCall} from "@store/apiThunks/prayer";
 import {fetchLiveSubscriptionCall} from "@store/apiThunks/payment";
 import {CancelIconSVG} from "@shared/components/SVGS";
 import biometrics from "@shared/lib/biometrics";
+import {EncStorage} from "@shared/lib/encStorage";
 
 // type NavigationProps = CompositeScreenProps<
 //   RootScreenProps<RootRoutes.Main>,
@@ -50,6 +51,7 @@ const SignIn: React.FC<NavigationProps> = ({navigation, route}) => {
     // const [username, setUsername] = useState<string>("");
     const [fullName, setFullName] = useState<string>("");
     const [password, setPassword] = useState<string>("");
+    const [deletedUsers, setDeletedUsers] = useState<string>("");
     // const [validEmail, setValidEmail] = useState<boolean>(false);
     // const [allowEmailError, setAllowEmailError] = useState<boolean>(false);
     // const [emailErrorText, setEmailErrorText] = useState<string>("");
@@ -83,7 +85,6 @@ const SignIn: React.FC<NavigationProps> = ({navigation, route}) => {
     // });
 
     const setBiometricData = async () => {
-
         await biometrics.setDataBiometricUser(fullName, password);
     };
 
@@ -130,9 +131,19 @@ const SignIn: React.FC<NavigationProps> = ({navigation, route}) => {
         )).unwrap()
             .then(async (res) => {
                 debug.log("res", res)
-                await dispatch(fetchLiveSubscriptionCall({
-                    fetchLiveSubscriptionRequest: {}
-                }))
+                debug.log("deletedUsers", deletedUsers);
+                if (deletedUsers?.includes(res.payload.id)) {
+                    dispatch(
+                        screenNotificationActions.updateNotificationData({
+                            duration: 4000,
+                            message: "This user has already been deleted.",
+                        })
+                    );
+                    return;
+                }
+                // await dispatch(fetchLiveSubscriptionCall({
+                //     fetchLiveSubscriptionRequest: {}
+                // }))
                 await dispatch(fetchAllVodCall(
                     {fetchAllVodRequest: null}
                 )).unwrap()
@@ -168,6 +179,9 @@ const SignIn: React.FC<NavigationProps> = ({navigation, route}) => {
             const data = await biometrics.getPassword("");
             setFullName(data?.username || "");
             setPassword(data?.password || "");
+
+            const deletedUser = (await EncStorage.getItem("deletedUser")) || "";
+            setDeletedUsers(deletedUser);
         } catch (e) {
             debug.error('e in checkBiometrics', e);
         }

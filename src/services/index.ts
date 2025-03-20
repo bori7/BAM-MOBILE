@@ -6,6 +6,7 @@ import {CipherUtils} from "@shared/lib/cipher";
 import {ENCRYPTED, GENERAL_SYM_KEY, PUBLIC_KEY} from "@constants/props";
 
 
+// @ts-ignore
 export const apiPost = async (
     url: string,
     headers: any,
@@ -65,6 +66,7 @@ export const postCall = async <R, T>(
     }
 };
 
+// @ts-ignore
 export const apiPut = async (
     url: string,
     headers: any,

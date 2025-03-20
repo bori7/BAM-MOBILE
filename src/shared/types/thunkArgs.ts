@@ -1,28 +1,28 @@
-import {CreateNoteRequestType, FetchNoteByIdType, FetchNoteByUserIdType} from "../../services/note/type";
-import {StateSchema} from "../../store/config";
-import {CallbackGetRequestType, CallbackPostRequestType} from "../../services/payments/callback/type";
-import {FetchGivingRequestType, InitiatePaystackRequestType} from "../../services/payments/paystack/type";
-import {CreateNotificationsRequestType, FetchNotificationByIdType} from "../../services/notifications/type";
-import {CreatePrayerRequestType, FetchPrayerByIdType} from "../../services/prayer/type";
+import {CreateNoteRequestType, FetchNoteByIdType, FetchNoteByUserIdType} from "@services/note/type";
+import {StateSchema} from "@store/config";
+import {CallbackGetRequestType, CallbackPostRequestType} from "@services/payments/callback/type";
+import {FetchGivingRequestType, InitiatePaystackRequestType} from "@services/payments/paystack/type";
+import {CreateNotificationsRequestType, FetchNotificationByIdType} from "@services/notifications/type";
+import {CreatePrayerRequestType, FetchPrayerByIdType} from "@services/prayer/type";
 import {
     CreateDevotionalPayloadType,
     CreateDevotionalRequestType, DevotionalType,
     FetchDevotionalByIdType
-} from "../../services/devotional/type";
+} from "@services/devotional/type";
 import {
     CreateUserDevotionalPayloadType,
     CreateUserDevotionalRequestType,
     FetchUserDevotionalByIdType
-} from "../../services/userdevotional/type";
+} from "@services/userdevotional/type";
 import {
     GenerateVerificationCodeRequestType,
     GoogleSignInRequestType,
     GoogleSignUpRequestType, ResetUserPasswordRequestType,
     SignInRequestType,
     SignUpRequestType, UpdateUserImageRequestType, UpdateUserPasswordRequestType, VerifyVerificationCodeRequestType
-} from "../../services/user/type";
-import {CreateVODRequestType} from "../../services/vod/type";
-import {SubscriptionFetchRequestType} from "../../services/payments/subscription/type";
+} from "@services/user/type";
+import {CreateVODRequestType} from "@services/vod/type";
+import {SubscriptionFetchRequestType} from "@services/payments/subscription/type";
 
 export type InitBAMThunkApiConfig = { state: StateSchema };
 

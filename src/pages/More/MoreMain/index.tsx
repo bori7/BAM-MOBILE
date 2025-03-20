@@ -60,18 +60,18 @@ const MoreMain: React.FC<NavigationProps> = ({ navigation, route }) => {
         });
       },
     },
-    {
-      icon: <MoreCreditCardSVG />,
-      name: "Subscription",
-      onPressFunc: () => {
-        navigation?.navigate(RootRoutes.More, {
-          screen: MoreRoutes.SubscriptionMain,
-          params: undefined,
-        });
-
-        // navigation?.navigate(MoreRoutes.SubscriptionMain);
-      },
-    },
+    // {
+    //   icon: <MoreCreditCardSVG />,
+    //   name: "Subscription",
+    //   onPressFunc: () => {
+    //     navigation?.navigate(RootRoutes.More, {
+    //       screen: MoreRoutes.SubscriptionMain,
+    //       params: undefined,
+    //     });
+    //
+    //     // navigation?.navigate(MoreRoutes.SubscriptionMain);
+    //   },
+    // },
     {
       icon: <CalendarHeartSVG />,
       name: "Memory Verse",
@@ -103,16 +103,16 @@ const MoreMain: React.FC<NavigationProps> = ({ navigation, route }) => {
         });
       },
     },
-    {
-      icon: <MoreGivingSVG />,
-      name: "Donation",
-      onPressFunc: () => {
-        navigation?.navigate(RootRoutes.More, {
-          screen: MoreRoutes.Give,
-          params: undefined,
-        });
-      },
-    },
+    // {
+    //   icon: <MoreGivingSVG />,
+    //   name: "Donation",
+    //   onPressFunc: () => {
+    //     navigation?.navigate(RootRoutes.More, {
+    //       screen: MoreRoutes.Give,
+    //       params: undefined,
+    //     });
+    //   },
+    // },
     {
       icon: <MoreAboutSVG />,
       name: "About",

@@ -8,18 +8,18 @@ import {
 } from "react-native";
 
 import React, {useEffect, useState} from "react";
-import {Text, View} from "../../../components/Themed";
-import {AuthProps, AuthRoutes} from "../../../shared/const/routerAuth";
-import {COLORS, IMAGES, SIZES} from "../../../constants/Colors";
+import {Text, View} from "@components/Themed";
+import {AuthProps, AuthRoutes} from "@shared/const/routerAuth";
+import {COLORS, IMAGES, SIZES} from "@constants/Colors";
 import {MainButton} from "../../../components";
 import CancelIcon from "../../../shared/assets/images/svg/iconoir_cancel.svg";
 import {TextInput} from "react-native-paper";
 import {useDispatch, useSelector} from "react-redux";
-import {AppDispatch, RootState} from "../../../store";
+import {AppDispatch, RootState} from "@store/index";
 import ValidateData from "../../../shared/lib/validateData";
-import {validateObject} from "../../../shared/helper";
-import {userActions} from "../../../store/slices/user";
-import {generateVerificationCodeCall} from "../../../store/apiThunks/user";
+import {validateObject} from "@shared/helper";
+import {userActions} from "@store/slices/user";
+import {generateVerificationCodeCall} from "@store/apiThunks/user";
 import {CancelIconSVG} from "@shared/components/SVGS";
 
 type NavigationProps = AuthProps<AuthRoutes.ForgotPassword>;

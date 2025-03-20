@@ -7,7 +7,7 @@ import {
     GIVING_FETCH_ALL_URL,
     GIVING_FETCH_URL,
     PAYSTACK_VERIFY_URL
-} from "../../../constants/url";
+} from "@constants/url";
 import {CreateNoteRequestType, FetchNoteByIdType} from "../../note/type";
 import {FetchGivingPayloadType} from "./type";
 

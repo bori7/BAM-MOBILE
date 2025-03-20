@@ -122,7 +122,7 @@ const ContentDevotional: React.FC<NavigationProps> =
         useEffect(() => {
             setShowModal(false);
             setTimeout(() => {
-                setShowSubscription(!userData?.hasSubscribed);
+                // setShowSubscription(!userData?.hasSubscribed);
                 // setHideSubscription(false);
             }, 5000);
         }, []);

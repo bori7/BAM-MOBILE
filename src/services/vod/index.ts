@@ -5,7 +5,7 @@ import {
     CREATE_VOD_URL,
     DELETE_VOD_URL, FETCH_VOD_URL,
     UPDATE_VOD_URL
-} from "../../constants/url";
+} from "@constants/url";
 import {CreateVODPayloadType, CreateVODRequestType} from "./type";
 
 export class VODService {

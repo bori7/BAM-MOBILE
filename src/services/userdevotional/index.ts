@@ -4,7 +4,7 @@ import {getByWithPathParam, getFor, postCall, putCall} from "../index";
 import {
     CREATE_USER_DEVOTIONAL_URL, DELETE_USER_DEVOTIONAL_URL,
     FETCH_USER_DEVOTIONAL_BY_ID_URL, UPDATE_USER_DEVOTIONAL_URL
-} from "../../constants/url";
+} from "@constants/url";
 import {
     CreateUserDevotionalPayloadType,
     CreateUserDevotionalRequestType,

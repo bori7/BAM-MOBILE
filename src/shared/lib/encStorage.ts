@@ -9,6 +9,7 @@ type StoreKeyType =
     | 'refreshToken'
     | 'password'
     | 'username'
+    | 'deletedUser'
     | 'isBiometricActive';
 
 export class EncStorage {

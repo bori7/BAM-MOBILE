@@ -158,30 +158,30 @@ const AboutDevotional: React.FC<NavigationProps> = ({navigation, route}) => {
                             improve and update our app based on user feedback and theological insights to better serve
                             our global community.
                         </Text>
-                        <View style={styles.r4}>
-                            <MainButton
-                                // title={"Give Now"}
-                                title={
-                                    <View style={styles.r4BtnTextContainer}>
-                                        <Text style={styles.r4BtnText}>{"Donate Now"}</Text>
-                                        <Feather
-                                            name="arrow-right"
-                                            size={24}
-                                            color={COLORS.Light.background}
-                                        />
-                                    </View>
-                                }
-                                onPressFunction={() => {
-                                    navigation?.navigate(RootRoutes.More, {
-                                        screen: MoreRoutes.Give,
-                                        params: undefined,
-                                    });
-                                }}
-                                err={false}
-                                btnStyle={styles.r4btn}
-                                // disabled={!proceed}
-                            />
-                        </View>
+                        {/*<View style={styles.r4}>*/}
+                        {/*    <MainButton*/}
+                        {/*        // title={"Give Now"}*/}
+                        {/*        title={*/}
+                        {/*            <View style={styles.r4BtnTextContainer}>*/}
+                        {/*                <Text style={styles.r4BtnText}>{"Donate Now"}</Text>*/}
+                        {/*                <Feather*/}
+                        {/*                    name="arrow-right"*/}
+                        {/*                    size={24}*/}
+                        {/*                    color={COLORS.Light.background}*/}
+                        {/*                />*/}
+                        {/*            </View>*/}
+                        {/*        }*/}
+                        {/*        onPressFunction={() => {*/}
+                        {/*            navigation?.navigate(RootRoutes.More, {*/}
+                        {/*                screen: MoreRoutes.Give,*/}
+                        {/*                params: undefined,*/}
+                        {/*            });*/}
+                        {/*        }}*/}
+                        {/*        err={false}*/}
+                        {/*        btnStyle={styles.r4btn}*/}
+                        {/*        // disabled={!proceed}*/}
+                        {/*    />*/}
+                        {/*</View>*/}
                     </ScrollView>
                 </View>
             </View>

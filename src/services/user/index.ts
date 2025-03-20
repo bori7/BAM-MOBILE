@@ -13,7 +13,7 @@ import {
     USER_SIGN_UP_URL,
     USER_UPDATE_URL,
     USER_VERIFY_VERIFICATION_CODE_URL
-} from "../../constants/url";
+} from "@constants/url";
 import {
     GenerateVerificationCodePayloadType,
     GenerateVerificationCodeRequestType,

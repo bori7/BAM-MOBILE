@@ -1,6 +1,6 @@
 import React from "react";
 import { View, Image, Text, StyleSheet } from "react-native";
-import { COLORS, IMAGES, SIZES } from "../../constants/Colors";
+import { COLORS, IMAGES, SIZES } from "@constants/Colors";
 
 function CustomToast({ toast }: any) {
   return (

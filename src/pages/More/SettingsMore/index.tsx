@@ -26,6 +26,7 @@ import {screenNotificationActions} from "@store/slices/notification";
 import {prayersActions} from "@store/slices/prayer";
 import {userActions} from "@store/slices/user";
 import biometrics from "@shared/lib/biometrics";
+import {EncStorage} from "@shared/lib/encStorage";
 
 // type NavigationProps = NotesProps<NotesRoutes.NotesSearch>;
 
@@ -35,6 +36,9 @@ type NavigationProps = CompositeScreenProps<
 >;
 
 const SettingsMore: React.FC<NavigationProps> = ({navigation, route}) => {
+    const userState = useSelector((state: RootState) => state.user);
+    const {userData} = userState;
+
     const dispatch = useDispatch<AppDispatch>();
     const [hideStatusBar, setHideStatusBar] = useState<boolean>(false);
 
@@ -127,6 +131,27 @@ const SettingsMore: React.FC<NavigationProps> = ({navigation, route}) => {
                                 }}
                             >
                                 <Text style={styles.innerTimeText}>Change Password</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity
+                                style={styles.v3c}
+                                onPress={async () => {
+                                    const currentDeletedUsers = await EncStorage.getItem("deletedUser") || "";
+                                    await EncStorage.setItem("deletedUser", currentDeletedUsers + (userData?.id || ""));
+                                    await biometrics.clearBiometricUser();
+                                    dispatch(devotionalActions.clearDevotionalState())
+                                    dispatch(generalActions.clearGeneralState())
+                                    dispatch(moreActions.clearMoreState())
+                                    dispatch(notesActions.clearNotesState())
+                                    dispatch(screenNotificationActions.clearNotificationState())
+                                    dispatch(screenNotificationActions.clearScreenNotificationState())
+                                    dispatch(screenNotificationActions.clearScreenState())
+                                    dispatch(prayersActions.clearPrayersState())
+                                    dispatch(userActions.clearUserState())
+
+                                    navigation?.dispatch(resetAction);
+                                }}
+                            >
+                                <Text style={styles.v3ct}>Delete Profile</Text>
                             </TouchableOpacity>
                             {/*          TODO: MVP2*/}
                             {/*<TouchableOpacity*/}

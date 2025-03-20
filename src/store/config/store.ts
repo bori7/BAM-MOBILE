@@ -1,5 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {configureStore, ReducersMapObject} from "@reduxjs/toolkit";
+// @ts-ignore
 import {CombinedState, Reducer} from "redux";
 import {createLogger} from "redux-logger";
 import {persistReducer, persistStore} from "redux-persist";

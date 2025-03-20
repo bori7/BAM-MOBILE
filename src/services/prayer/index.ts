@@ -6,7 +6,7 @@ import {
     DELETE_PRAYER_URL, FETCH_NOTE_BY_USER_ID_URL,
     FETCH_PRAYER_BY_ID_URL,
     UPDATE_PRAYER_URL,
-} from "../../constants/url";
+} from "@constants/url";
 import {CreatePrayerPayloadType, CreatePrayerRequestType, FetchPrayerByIdType} from "./type";
 
 export class PrayerService {

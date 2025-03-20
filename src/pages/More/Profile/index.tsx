@@ -6,45 +6,32 @@ import {
   TouchableOpacity,
 } from "react-native";
 
-import React, { ReactNode, useEffect, useState } from "react";
-import { Text, View } from "../../../components/Themed";
-import { COLORS, IMAGES, SIZES } from "../../../constants/Colors";
+import React, { useEffect, useState } from "react";
+import { Text, View } from "@components/Themed";
+import { COLORS, SIZES } from "@constants/Colors";
 import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "../../../store";
+import { AppDispatch, RootState } from "@store/index";
 import {
-  AntDesign,
-  Entypo,
-  Feather,
   Ionicons,
-  MaterialCommunityIcons,
+
 } from "@expo/vector-icons";
-import { MoreProps, MoreRoutes } from "../../../shared/const/routerMore";
+import { MoreProps, MoreRoutes } from "@shared/const/routerMore";
 import { CompositeScreenProps, useFocusEffect } from "@react-navigation/native";
-import { RootRoutes, RootScreenProps } from "../../../shared/const/routerRoot";
-import { TextInput } from "react-native-paper";
-import DropDownInput from "../../../components/DropDownInput";
+import { RootRoutes, RootScreenProps } from "@shared/const/routerRoot";
 import {
-  CardAddSVG,
   MainProfileSVG,
-  MdiBankSVG,
-  MdiNairaSVG,
-  MoreProfileSVG,
-  RewardHeartSVG,
-} from "../../../shared/components/SVGS";
-import { MainButton } from "../../../components";
-import { screenNotificationActions } from "../../../store/slices/notification";
-import { MainRoutes } from "../../../shared/const/routerMain";
-import { moreActions } from "../../../store/slices/more";
-import ControlModal2 from "../../Devotional/ContentDevotional/ControlModal2";
-import { OptionsPopUp } from "../../Main/Home/OptionsPopUp";
-import CustomDatePicker from "../../Devotional/FilterDevotional/CustomDatePicker";
-import { formatDate } from "../../../shared/helper";
+
+
+
+
+} from "@shared/components/SVGS";
+import { formatDate } from "@shared/helper";
 import {
   GivingPaymentMethodType,
   NoteProps,
   PrayerProps,
-} from "../../../shared/types/slices";
-import { NotesRoutes } from "../../../shared/const/routerNotes";
+} from "@shared/types/slices";
+import { NotesRoutes } from "@shared/const/routerNotes";
 import PrayerListView from "../Prayer/PrayerListView";
 
 type NavigationProps = CompositeScreenProps<

@@ -1,6 +1,6 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
-import {GenericResponseType} from "../../services/type";
-import {CreateNotePayloadType, CreateNoteRequestType} from "../../services/note/type";
+import {GenericResponseType} from "@services/type";
+import {CreateNotePayloadType, CreateNoteRequestType} from "@services/note/type";
 import {
     InitBAMThunkApiConfig,
     InitCreateDevotionalThunkArg,
@@ -14,21 +14,21 @@ import {
     InitFetchNoteByIdThunkArg, InitFetchUserDevotionalByIdThunkArg, InitFetchUserDevotionalThunkArg,
     InitUpdateDevotionalThunkArg,
     InitUpdateNoteThunkArg, InitUpdateUserDevotionalThunkArg
-} from "../../shared/types/thunkArgs";
-import {getDeviceIpAddress} from "../../shared/helper";
-import {NoteService} from "../../services/note";
+} from "@shared/types/thunkArgs";
+import {getDeviceIpAddress} from "@shared/helper";
+import {NoteService} from "@services/note";
 import {
     CreateDevotionalPayloadType,
     FetchDevotionalByParamPayloadType,
     FetchDevotionalPayloadType
-} from "../../services/devotional/type";
-import {DevotionalService} from "../../services/devotional";
+} from "@services/devotional/type";
+import {DevotionalService} from "@services/devotional";
 import {
     CreateUserDevotionalPayloadType,
     CreateUserDevotionalRequestType,
     FetchUserDevotionalPayloadType
-} from "../../services/userdevotional/type";
-import {UserDevotionalService} from "../../services/userdevotional";
+} from "@services/userdevotional/type";
+import {UserDevotionalService} from "@services/userdevotional";
 
 
 export const createDevotionalCall = createAsyncThunk<

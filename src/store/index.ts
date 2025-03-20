@@ -24,7 +24,7 @@ export const store = configureStore({
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: false,
-    }).concat(logger),
+    }).concat(logger as unknown as any),
 });
 
 export type RootState = ReturnType<typeof store.getState>;
