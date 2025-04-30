@@ -28,6 +28,7 @@ import { CompositeScreenProps } from "@react-navigation/native";
 import { RootScreenProps, RootRoutes } from "@shared/const/routerRoot";
 import { NotesRoutes } from "@shared/const/routerNotes";
 import { DevotionalRoutes } from "@shared/const/routerDevotional";
+import {navigateReset} from "@shared/lib/navigate";
 
 export type MoreContentType = {
   icon: ReactNode;
@@ -143,6 +144,13 @@ const MoreMain: React.FC<NavigationProps> = ({ navigation, route }) => {
       },
     },
   ];
+
+  useEffect(() => {
+    if (!userData?.token) {
+      navigateReset(RootRoutes.Auth);
+    }
+  }, [userData?.token]);
+
   return (
     <View style={styles.main}>
       <StatusBar barStyle="dark-content" />

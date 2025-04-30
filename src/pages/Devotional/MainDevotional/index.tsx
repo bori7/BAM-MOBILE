@@ -23,6 +23,7 @@ import {
 import {screenNotificationActions} from "@store/slices/notification";
 import {fetchDevotionalByIdCall, updateUserDevotionalCall} from "@store/apiThunks/devotional";
 import {devotionalActions} from "@store/slices/devotional";
+import {navigateReset} from "@shared/lib/navigate";
 
 // type NavigationProps = MainProps<MainRoutes.HomeScreen>;
 
@@ -109,6 +110,12 @@ const MainDevotional: React.FC<NavigationProps> = ({navigation, route}) => {
         })
     }
 
+    useEffect(() => {
+        if (!userData?.token) {
+            navigateReset(RootRoutes.Auth);
+        }
+    }, [userData?.token]);
+
 
     return (
         <View style={styles.main}>
@@ -126,8 +133,8 @@ const MainDevotional: React.FC<NavigationProps> = ({navigation, route}) => {
                             onPress={() => {
                                 navigation?.navigate(
                                     RootRoutes.Devotional, {
-                                    screen: DevotionalRoutes.FilterDevotional,
-                                });
+                                        screen: DevotionalRoutes.FilterDevotional,
+                                    });
                             }}
                         >
                             <Feather name="search" size={28} color={COLORS.Light.colorFour}/>

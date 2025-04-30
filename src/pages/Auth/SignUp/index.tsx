@@ -1,6 +1,4 @@
 import {
-    Image,
-    ImageBackground,
     ScrollView,
     StatusBar,
     StyleSheet,
@@ -12,17 +10,18 @@ import {Text, View} from "@components/Themed";
 import {AuthProps, AuthRoutes} from "@shared/const/routerAuth";
 import {COLORS, IMAGES, SIZES} from "@constants/Colors";
 import {MainButton} from "../../../components";
-import CancelIcon from "../../../shared/assets/images/svg/iconoir_cancel.svg";
 import {TextInput} from "react-native-paper";
-import AppleLogo from "../../../shared/assets/images/svg/Apple.svg";
 import {useDispatch, useSelector} from "react-redux";
-import {screenNotificationActions} from "@store/slices/notification";
 import {AppDispatch, RootState} from "@store/index";
 import {signUpCall} from "@store/apiThunks/user";
 import {validateObject} from "@shared/helper";
 import ValidateData from "../../../shared/lib/validateData";
-import {createUserDevotionalCall} from "@store/apiThunks/devotional";
+import {createUserDevotionalCall, fetchAllDevotionalCall} from "@store/apiThunks/devotional";
 import {CancelIconSVG} from "@shared/components/SVGS";
+import {fetchAllVodCall} from "@store/apiThunks/vod";
+import {CommonActions} from "@react-navigation/native";
+import {RootRoutes} from "@shared/const/routerRoot";
+import {MainRoutes} from "@shared/const/routerMain";
 
 type NavigationProps = AuthProps<AuthRoutes.SignUp>;
 
@@ -43,6 +42,17 @@ const SignUp: React.FC<NavigationProps> = ({navigation, route}) => {
     // );
     // const {screenLoading} = screenNotificationState;
 
+    const resetAction = CommonActions.reset({
+        index: 1,
+        routes: [
+            {
+                name: RootRoutes.Main,
+                params: {
+                    screen: MainRoutes.HomeScreen,
+                },
+            },
+        ],
+    });
 
     const SCHEME = {
         fullName: (fullName: string) => fullName?.length > 4,
@@ -66,6 +76,14 @@ const SignUp: React.FC<NavigationProps> = ({navigation, route}) => {
         // @ts-ignore
         SCHEME,
     );
+
+    const handleWithoutSignIn = async () => {
+        await dispatch(fetchAllVodCall(
+            {fetchAllVodRequest: null}
+        )).unwrap()
+        await dispatch(fetchAllDevotionalCall({fetchAllDevotionalRequest: null})).unwrap()
+        navigation?.dispatch(resetAction);
+    }
 
     const handleContinue = async () => {
 
@@ -390,6 +408,16 @@ const SignUp: React.FC<NavigationProps> = ({navigation, route}) => {
                                 <Text style={styles.r7t2}> Sign In</Text>
                             </TouchableOpacity>
                         </View>
+                        <Text style={styles.r7t1}> or </Text>
+                        <View style={styles.r7}>
+                            <TouchableOpacity
+                                onPress={() => {
+                                    handleWithoutSignIn()
+                                }}
+                            >
+                                <Text style={styles.r7t2ii}>See what we have for You</Text>
+                            </TouchableOpacity>
+                        </View>
                     </ScrollView>
                 </View>
             </View>
@@ -523,6 +551,16 @@ const styles = StyleSheet.create({
         fontWeight: "500",
         textAlign: "center",
     },
+    r7t2ii: {
+        color: COLORS.Light.deeperGreyColor,
+        fontSize: SIZES.sizeFiveB,
+        fontWeight: "500",
+        textAlign: "center",
+        // textDecorationStyle: "dotted",
+        fontStyle: "italic",
+        textDecorationLine: "underline"
+    },
+
     inputContent: {
         fontSize: SIZES.sizeSeven,
         fontWeight: "500",

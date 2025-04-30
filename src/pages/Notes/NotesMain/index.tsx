@@ -15,7 +15,7 @@ import {AntDesign, Feather, Ionicons} from "@expo/vector-icons";
 import { CompositeScreenProps, useFocusEffect } from "@react-navigation/native";
 import { RootScreenProps, RootRoutes } from "@shared/const/routerRoot";
 import { NoteProps } from "@shared/types/slices";
-import { notesActions } from "@store/slices/notes";
+import {navigateReset} from "@shared/lib/navigate";
 
 // type NavigationProps = NotesProps<NotesRoutes.NotesMain>;
 
@@ -30,6 +30,9 @@ const NotesMain: React.FC<NavigationProps> = ({ navigation, route }) => {
   const [validEmail, setValidEmail] = useState<boolean>(false);
   const [notes, setNotes] = useState<NoteProps[]>([]);
 
+  const userState = useSelector((state: RootState) => state.user);
+  const {userData} = userState;
+
   const notesState = useSelector((state: RootState) => state.notes);
   const { notesData } = notesState;
 
@@ -43,6 +46,12 @@ const NotesMain: React.FC<NavigationProps> = ({ navigation, route }) => {
     (state: RootState) => state.screenNotification
   );
   const { screenLoading } = screenNotificationState;
+
+  useEffect(() => {
+    if (!userData?.token) {
+      navigateReset(RootRoutes.Auth);
+    }
+  }, [userData?.token]);
 
   return (
     <View style={styles.main}>

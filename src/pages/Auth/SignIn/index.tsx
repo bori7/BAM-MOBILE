@@ -1,6 +1,4 @@
 import {
-    Image,
-    ImageBackground,
     ScrollView,
     StatusBar,
     StyleSheet,
@@ -12,16 +10,11 @@ import {Text, View} from "@components/Themed";
 import {AuthProps, AuthRoutes} from "@shared/const/routerAuth";
 import {COLORS, IMAGES, SIZES} from "@constants/Colors";
 import {MainButton} from "../../../components";
-import CancelIcon from "@shared/assets/images/svg/iconoir_cancel.svg";
 import {TextInput} from "react-native-paper";
-import AppleLogo from "../../../shared/assets/images/svg/Apple.svg";
 import {useDispatch, useSelector} from "react-redux";
-import {screenNotificationActions} from "@store/slices/notification";
 import {AppDispatch, RootState} from "@store/index";
 import {
     CommonActions,
-    CompositeScreenProps,
-    useFocusEffect,
 } from "@react-navigation/native";
 import {RootRoutes, RootScreenProps} from "@shared/const/routerRoot";
 import {MainRoutes} from "@shared/const/routerMain";
@@ -33,7 +26,6 @@ import {userActions} from "@store/slices/user";
 import {fetchAllDevotionalCall, fetchUserDevotionalCall} from "@store/apiThunks/devotional";
 import {fetchNoteByUserIdCall} from "@store/apiThunks/note";
 import {fetchPrayerByUserIdCall} from "@store/apiThunks/prayer";
-import {fetchLiveSubscriptionCall} from "@store/apiThunks/payment";
 import {CancelIconSVG} from "@shared/components/SVGS";
 import biometrics from "@shared/lib/biometrics";
 import {EncStorage} from "@shared/lib/encStorage";
@@ -107,6 +99,14 @@ const SignIn: React.FC<NavigationProps> = ({navigation, route}) => {
         SCHEME,
     );
 
+    const handleWithoutSignIn = async () => {
+        await dispatch(fetchAllVodCall(
+            {fetchAllVodRequest: null}
+        )).unwrap()
+        await dispatch(fetchAllDevotionalCall({fetchAllDevotionalRequest: null})).unwrap()
+        navigation?.dispatch(resetAction);
+    }
+
     const handleContinue = async () => {
         validation = validateObject(
             {
@@ -132,7 +132,7 @@ const SignIn: React.FC<NavigationProps> = ({navigation, route}) => {
             .then(async (res) => {
                 debug.log("res", res)
                 debug.log("deletedUsers", deletedUsers);
-                if (deletedUsers?.includes(res.payload.id)) {
+                /*if (deletedUsers?.includes(res.payload.id)) {
                     dispatch(
                         screenNotificationActions.updateNotificationData({
                             duration: 4000,
@@ -140,7 +140,7 @@ const SignIn: React.FC<NavigationProps> = ({navigation, route}) => {
                         })
                     );
                     return;
-                }
+                }*/
                 // await dispatch(fetchLiveSubscriptionCall({
                 //     fetchLiveSubscriptionRequest: {}
                 // }))
@@ -163,6 +163,7 @@ const SignIn: React.FC<NavigationProps> = ({navigation, route}) => {
 
                 navigation?.dispatch(resetAction);
                 setBiometricData();
+                EncStorage.setItem("alreadyUser", res.payload.id);
             }).catch((err) => {
                 debug.error("err while  signing in", err)
             }).finally(() => {
@@ -387,6 +388,16 @@ const SignIn: React.FC<NavigationProps> = ({navigation, route}) => {
                                 <Text style={styles.r7t2}> Sign Up</Text>
                             </TouchableOpacity>
                         </View>
+                        <Text style={styles.r7t1}> or </Text>
+                        <View style={styles.r7}>
+                            <TouchableOpacity
+                                onPress={() => {
+                                    handleWithoutSignIn()
+                                }}
+                            >
+                                <Text style={styles.r7t2ii}>See what we have for You</Text>
+                            </TouchableOpacity>
+                        </View>
                     </ScrollView>
                 </View>
             </View>
@@ -529,6 +540,15 @@ const styles = StyleSheet.create({
         fontSize: SIZES.sizeSix,
         fontWeight: "500",
         textAlign: "center",
+    },
+    r7t2ii: {
+        color: COLORS.Light.deeperGreyColor,
+        fontSize: SIZES.sizeFiveB,
+        fontWeight: "500",
+        textAlign: "center",
+        // textDecorationStyle: "dotted",
+        fontStyle: "italic",
+        textDecorationLine: "underline"
     },
     inputContent: {
         fontSize: SIZES.sizeSeven,

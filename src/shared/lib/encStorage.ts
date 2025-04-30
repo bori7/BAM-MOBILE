@@ -10,6 +10,7 @@ type StoreKeyType =
     | 'password'
     | 'username'
     | 'deletedUser'
+    | 'alreadyUser'
     | 'isBiometricActive';
 
 export class EncStorage {

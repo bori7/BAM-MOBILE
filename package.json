@@ -6,6 +6,7 @@
     "start": "expo start --dev-client ",
     "android": "expo run:android",
     "ios": "expo run:ios",
+    "ios:ipad": "react-native run-ios --simulator='iPad Air 13-inch (M2)'",
     "web": "expo start --web ",
     "test": "jest --watchAll "
   },
