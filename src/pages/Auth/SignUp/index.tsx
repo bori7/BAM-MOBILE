@@ -191,6 +191,20 @@ const SignUp: React.FC<NavigationProps> = ({navigation, route}) => {
                             </TouchableOpacity>
                             <Text style={styles.r1t2}>Create Account</Text>
                         </View>
+                        <View style={styles.r8}>
+                            <MainButton
+                                title={"Go to Devotionals"}
+                                // disabled={!filledFields()}
+                                onPressFunction={() => {
+                                    // navigation?.navigate(AuthRoutes.SignUp);
+                                    handleWithoutSignIn()
+                                }}
+                                err={false}
+                                btnStyle={styles.r8t2}
+                                textStyle={styles.r8t3}
+                                // disabled={!proceed}
+                            />
+                        </View>
                         <View style={styles.r3}>
                             <Text style={styles.r3t1}>Full Name</Text>
                             <TextInput
@@ -504,6 +518,14 @@ const styles = StyleSheet.create({
         width: "100%",
     },
     r8t1: {},
+    r8t2: {
+        backgroundColor: COLORS.Light.background,
+        borderWidth: 1,
+        borderColor: COLORS.Light.colorOne,
+    },
+    r8t3: {
+        color: COLORS.Light.colorOne,
+    },
     r9: {
         marginVertical: 10,
     },

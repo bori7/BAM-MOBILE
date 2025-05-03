@@ -8,7 +8,7 @@ import {
 import React, {useCallback, useEffect, useState} from "react";
 import {Text, View} from "@components/Themed";
 import {AuthProps, AuthRoutes} from "@shared/const/routerAuth";
-import {COLORS, IMAGES, SIZES} from "@constants/Colors";
+import Colors, {COLORS, IMAGES, SIZES} from "@constants/Colors";
 import {MainButton} from "../../../components";
 import {TextInput} from "react-native-paper";
 import {useDispatch, useSelector} from "react-redux";
@@ -29,6 +29,7 @@ import {fetchPrayerByUserIdCall} from "@store/apiThunks/prayer";
 import {CancelIconSVG} from "@shared/components/SVGS";
 import biometrics from "@shared/lib/biometrics";
 import {EncStorage} from "@shared/lib/encStorage";
+import {screenNotificationActions} from "@store/slices/notification";
 
 // type NavigationProps = CompositeScreenProps<
 //   RootScreenProps<RootRoutes.Main>,
@@ -132,7 +133,7 @@ const SignIn: React.FC<NavigationProps> = ({navigation, route}) => {
             .then(async (res) => {
                 debug.log("res", res)
                 debug.log("deletedUsers", deletedUsers);
-                /*if (deletedUsers?.includes(res.payload.id)) {
+                if (deletedUsers?.includes(res.payload.id)) {
                     dispatch(
                         screenNotificationActions.updateNotificationData({
                             duration: 4000,
@@ -140,7 +141,7 @@ const SignIn: React.FC<NavigationProps> = ({navigation, route}) => {
                         })
                     );
                     return;
-                }*/
+                }
                 // await dispatch(fetchLiveSubscriptionCall({
                 //     fetchLiveSubscriptionRequest: {}
                 // }))
@@ -234,6 +235,20 @@ const SignIn: React.FC<NavigationProps> = ({navigation, route}) => {
                                 {/*<CancelIcon width={30} height={30}/>*/}
                             </TouchableOpacity>
                             <Text style={styles.r1t2}>Sign In</Text>
+                        </View>
+                        <View style={styles.r8}>
+                            <MainButton
+                                title={"Go to Devotionals"}
+                                // disabled={!filledFields()}
+                                onPressFunction={() => {
+                                    // navigation?.navigate(AuthRoutes.SignUp);
+                                    handleWithoutSignIn()
+                                }}
+                                err={false}
+                                btnStyle={styles.r8t2}
+                                textStyle={styles.r8t3}
+                                // disabled={!proceed}
+                            />
                         </View>
                         <View style={styles.r3}>
                             <Text style={styles.r3t1}>Username/Email</Text>
@@ -354,6 +369,7 @@ const SignIn: React.FC<NavigationProps> = ({navigation, route}) => {
                                 }}
                                 err={false}
                                 btnStyle={styles.r8t1}
+                                // btnStyle={styles.r8t3}
                                 // disabled={!proceed}
                             />
                         </View>
@@ -483,7 +499,17 @@ const styles = StyleSheet.create({
         paddingVertical: 5,
         width: "100%",
     },
-    r8t1: {},
+    r8t1: {
+
+    },
+    r8t2: {
+        backgroundColor: COLORS.Light.background,
+        borderWidth: 1,
+        borderColor: COLORS.Light.colorOne,
+    },
+    r8t3: {
+        color: COLORS.Light.colorOne,
+    },
     fp: {
         marginTop: 10,
         marginBottom: 30,
