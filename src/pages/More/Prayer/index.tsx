@@ -20,6 +20,7 @@ import { notesActions } from "@store/slices/notes";
 import { MoreProps, MoreRoutes } from "@shared/const/routerMore";
 import PrayerListView from "./PrayerListView";
 import AnsweredList from "./AnsweredList";
+import {navigateReset} from "@shared/lib/navigate";
 
 // type NavigationProps = NotesProps<NotesRoutes.NotesSearch>;
 
@@ -44,6 +45,10 @@ const Prayer: React.FC<NavigationProps> = ({ navigation, route }) => {
   const prayersState = useSelector((state: RootState) => state.prayer);
   const { prayersData } = prayersState;
 
+  const userState = useSelector((state: RootState) => state.user);
+  const { userData,userImageBase64 } = userState;
+
+
   const options = [
     { name: "Copy" },
     { name: "Pray" },
@@ -55,6 +60,12 @@ const Prayer: React.FC<NavigationProps> = ({ navigation, route }) => {
     setPrayers(prayersData?.prayersList?.filter((p, _) => !p.answered) || []);
     setAnsPrayers(prayersData?.prayersList?.filter((p, _) => p.answered) || []);
   }, [prayersData]);
+
+  useEffect(() => {
+    if (!userData?.token) {
+      navigateReset(RootRoutes.Auth);
+    }
+  }, [userData?.token]);
 
   return (
     <View style={[styles.main]}>
