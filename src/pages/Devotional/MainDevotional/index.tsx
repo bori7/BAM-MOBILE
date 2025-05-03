@@ -110,11 +110,11 @@ const MainDevotional: React.FC<NavigationProps> = ({navigation, route}) => {
         })
     }
 
-    useEffect(() => {
-        if (!userData?.token) {
-            navigateReset(RootRoutes.Auth);
-        }
-    }, [userData?.token]);
+    // useEffect(() => {
+    //     if (!userData?.token) {
+    //         navigateReset(RootRoutes.Auth);
+    //     }
+    // }, [userData?.token]);
 
 
     return (
