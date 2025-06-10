@@ -35,11 +35,12 @@ import ControlModal2 from "../../Devotional/ContentDevotional/ControlModal2";
 import PaymentMethodModal, {PaymentChannelType} from "./PaymentMethodModal";
 import {OptionsPopUp} from "../../Main/Home/OptionsPopUp";
 import {GivingPaymentMethodType, PaymentMethodType, StatusType, SubscriptionType} from "@shared/types/slices";
-import {initiatePaymentCall, paystackGetCall} from "@store/apiThunks/payment";
+import {initiatePaymentCall, paystackGetCall, stripeCallbackGetCall} from "@store/apiThunks/payment";
 import {nanoid} from "@reduxjs/toolkit";
 import {CustomPaymentModal} from "@shared/components/CustomPaymentModal";
 import StringsFormat from "../../../shared/lib/stringsFormat";
 import {userActions} from "@store/slices/user";
+import useSubscription from "@shared/components/SubscriptionComponent";
 
 type NavigationProps = CompositeScreenProps<
     MoreProps<MoreRoutes.Give>,
@@ -56,19 +57,19 @@ const Give: React.FC<NavigationProps> = ({navigation, route}) => {
         useState<GivingPaymentMethodType>("C");
     // const [allowEmailError, setAllowEmailError] = useState<boolean>(false);
     const [hideCurrency, setHideCurrency] = useState<boolean>(false);
-    const [selectedCurrencyIndex, setSelectedCurrencyIndex] = useState<number>(3);
+    const [selectedCurrencyIndex, setSelectedCurrencyIndex] = useState<number>(0);
 
     const [cancelled, setCancelled] = useState<boolean>(false);
     const [callbackCount, setCallbackCount] = useState<number>(0);
 
 
     const currencies = [
-        "NGN Nigerian Naira",
+        // "NGN Nigerian Naira",
         // "CAD Canada Dollar",
-        "GBP United Kingdom Pound",
-        "JPY Japan Yen",
+        // "GBP United Kingdom Pound",
+        // "JPY Japan Yen",
         "USD United States Dollar",
-        "EUR Euro Member Countries",
+        // "EUR Euro Member Countries",
     ];
 
     const paymentChannels: PaymentChannelType[] = [
@@ -110,6 +111,19 @@ const Give: React.FC<NavigationProps> = ({navigation, route}) => {
 
     const [showPaymentModal, setShowPaymentModal] = useState<boolean>(false);
 
+    const [publishableKey, setPublishableKey] = useState<string>("");
+    const [checkoutUrl, setCheckoutUrl] = useState<string>("");
+
+    const {
+        products,
+        loading,
+        error,
+        buySubscription,
+        refreshSubscriptions,
+        buyProductInApply,
+        buyProductInApplyWithStripe
+    } = useSubscription();
+
     const options = [{name: "Giving History"}];
 
     const onClickOption = (type: string) => {
@@ -122,14 +136,38 @@ const Give: React.FC<NavigationProps> = ({navigation, route}) => {
         }
     };
 
+    const handleStripePublishableKey = (key: string, key2: string) => {
+        debug.log("handleStripePublishableKey", key);
+        debug.log("checkOutUrl", key2);
+        setPublishableKey(key);
+        setWebUrl(key2)
+        setCheckoutUrl(key2)
+    }
+
+    const getPaymentSessionStatus = (valUrl: string) => {
+        if (!valUrl) {
+            return ""
+        }
+
+        const valUrlSplits = valUrl.split("/");
+        const n = valUrlSplits.length
+        return valUrlSplits[n - 1]
+
+    }
+
     const handleCallBack = async () => {
         dispatch(screenNotificationActions.updateScreenLoading(true));
         debug.log("callbackCount", callbackCount)
         setCallbackCount(callbackCount + 1)
-        await dispatch(paystackGetCall({
+        // await dispatch(paystackGetCall({
+        // paystackGetRequest: {
+        //     trxref: generalData?.paymentReference || "",
+        //         reference: generalData?.paymentReference || ""
+        // }
+        await dispatch(stripeCallbackGetCall({
             paystackGetRequest: {
-                trxref: generalData?.paymentReference || "",
-                reference: generalData?.paymentReference || ""
+                trxref: getPaymentSessionStatus(generalData?.paymentRedirectUrl || "") || generalData?.paymentReference || "",
+                reference:  `GIVING_${generalData?.paymentSessionId || ""}`
             }
         })).unwrap()
             .then(async (res) => {
@@ -247,6 +285,31 @@ const Give: React.FC<NavigationProps> = ({navigation, route}) => {
             })
     }
 
+    const handleStripeCheckout = () => {
+        debug.log("handling Stripe Checkout in GIVE");
+        buyProductInApplyWithStripe({
+                userId: userData?.id || '',
+                shippingAddress: userData?.location || 'Alberta, Canada',
+                price: amountF || '0',
+                recipientPhoneNumber: userData?.phone_number || '8103429144',
+                ccy: 'USD',
+                paymentType: 'CARD',
+                orderItems: [{
+                    productId: userData?.id || '',
+                    quantity: "1",
+                    price: amountF || '0',
+                    id: '',
+                }],
+                email: userData?.email_address || "",
+                subscriptionType: "MONTHLY",
+                reference: `GIVING_${nanoid()}`,
+                title:"DONATIONS"
+            },
+            handleStripePublishableKey
+        )
+        setShowPaymentModal(!showPaymentModal)
+    }
+
     const handleDismiss = async () => {
         if (cancelled) {
             setCancelled(false)
@@ -256,6 +319,7 @@ const Give: React.FC<NavigationProps> = ({navigation, route}) => {
     }
 
 
+    // @ts-ignore
     return (
         <View style={styles.main}>
             <CustomPaymentModal
@@ -455,20 +519,21 @@ const Give: React.FC<NavigationProps> = ({navigation, route}) => {
                                 </View>
                             ))}
 
-                        <TouchableOpacity
-                            style={styles.r6}
-                            onPress={() => {
-                                setHideModal(true);
-                            }}
-                        >
-                            <Text style={styles.r6t}>Change payment method</Text>
-                        </TouchableOpacity>
+                        {/*<TouchableOpacity*/}
+                        {/*    style={styles.r6}*/}
+                        {/*    onPress={() => {*/}
+                        {/*        setHideModal(true);*/}
+                        {/*    }}*/}
+                        {/*>*/}
+                        {/*    <Text style={styles.r6t}>Change payment method</Text>*/}
+                        {/*</TouchableOpacity>*/}
                         <View style={styles.r4}>
                             <MainButton
                                 title={"Next"}
                                 onPressFunction={() => {
                                     // navigation?.navigate(AuthRoutes.SignUp);
-                                    onNext()
+                                    // onNext()
+                                    handleStripeCheckout()
                                     // dispatch(
                                     //   screenNotificationActions.updateScreenLoadingFunc({
                                     //     screenLoading: true,
@@ -494,7 +559,8 @@ const Give: React.FC<NavigationProps> = ({navigation, route}) => {
                         <PaymentMethodModal
                             onPressButtonFunc={() => {
                                 setHideModal(false);
-                                onNext()
+                                // onNext()
+                                handleStripeCheckout()
                                 // dispatch(
                                 //   screenNotificationActions.updateScreenLoadingFunc({
                                 //     screenLoading: true,

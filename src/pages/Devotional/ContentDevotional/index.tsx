@@ -76,13 +76,13 @@ const ContentDevotional: React.FC<NavigationProps> =
             setSelectedDevotionals(selectedDevotionalData);
         });
 
-        // useFocusEffect(() => {
-        //     setTimeout(() => {
-        //         setShowModal(false);
-        //         setShowSubscription(!userData?.hasSubscribed);
-        //         // setHideSubscription(false);
-        //     }, 5000);
-        // });
+        useFocusEffect(() => {
+            setTimeout(() => {
+                setShowModal(false);
+                setShowSubscription(!userData?.hasSubscribed);
+                // setHideSubscription(false);
+            }, 5000);
+        });
 
         useEffect(() => {
             Tts.addEventListener('tts-start', (event) => {
@@ -122,7 +122,7 @@ const ContentDevotional: React.FC<NavigationProps> =
         useEffect(() => {
             setShowModal(false);
             setTimeout(() => {
-                // setShowSubscription(!userData?.hasSubscribed);
+                setShowSubscription(!userData?.hasSubscribed);
                 // setHideSubscription(false);
             }, 5000);
         }, []);

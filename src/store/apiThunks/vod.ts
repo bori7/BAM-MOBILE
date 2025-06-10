@@ -1,13 +1,18 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
-import {GenericResponseType} from "../../services/type";
+import {GenericResponseType} from "@services/type";
 import {
-    InitBAMThunkApiConfig,
-    InitCreateVodThunkArg, InitDeleteVODThunkArg,
-    InitFetchAllVodThunkArg, InitUpdateVODThunkArg
-} from "../../shared/types/thunkArgs";
-import {getDeviceIpAddress} from "../../shared/helper";
-import {CreateVODPayloadType, CreateVODRequestType} from "../../services/vod/type";
-import {VODService} from "../../services/vod";
+    InitBAMThunkApiConfig, InitCreatePdThunkArg,
+    InitCreateVodThunkArg, InitDeletePdThunkArg, InitDeleteVODThunkArg, InitFetchAllPdThunkArg,
+    InitFetchAllVodThunkArg, InitUpdatePdThunkArg, InitUpdateVODThunkArg
+} from "@shared/types/thunkArgs";
+import {getDeviceIpAddress} from "@shared/helper";
+import {
+    CreatePropheticDeclarationPayloadType,
+    CreatePropheticDeclarationRequestType,
+    CreateVODPayloadType,
+    CreateVODRequestType
+} from "@services/vod/type";
+import {VODService} from "@services/vod";
 
 export const createVodCall = createAsyncThunk<
     GenericResponseType<CreateVODPayloadType>,
@@ -101,6 +106,103 @@ export const deleteVODCall = createAsyncThunk<
             })
             .catch((err) => {
                 debug.api_error("deleteVOD Error", err);
+                return rejectWithValue(err);
+            });
+    }
+);
+
+export const createPdCall = createAsyncThunk<
+    GenericResponseType<CreatePropheticDeclarationPayloadType>,
+    InitCreatePdThunkArg,
+    InitBAMThunkApiConfig
+>(
+    "prophetic-declaration/create",
+    async ({createPdRequest}, {rejectWithValue, getState, dispatch}) => {
+        let ipAddress = await getDeviceIpAddress();
+        const state = getState();
+
+        const accessToken = state.user.userData?.token || "";
+        return await VODService.createPropheticDeclaration(accessToken, createPdRequest)
+            .then((res) => {
+                debug.api_success("createPd", res);
+
+                return res;
+            })
+            .catch((err) => {
+                debug.api_error("createPd Error", err);
+                return rejectWithValue(err);
+            });
+    }
+);
+
+
+export const fetchAllPdCall = createAsyncThunk<
+    GenericResponseType<CreatePropheticDeclarationRequestType[]>,
+    InitFetchAllPdThunkArg,
+    InitBAMThunkApiConfig
+>(
+    "prophetic-declaration/fetchAll",
+    async ({fetchAllPdRequest}, {rejectWithValue, getState, dispatch}) => {
+        let ipAddress = await getDeviceIpAddress();
+        const state = getState();
+
+        const accessToken = state.user.userData?.token || "";
+        return await VODService.fetchAllPropheticDeclaration(accessToken)
+            .then((res) => {
+                debug.api_success("fetchAllPd", res);
+
+                return res;
+            })
+            .catch((err) => {
+                debug.api_error("fetchAllPd Error", err);
+                return rejectWithValue(err);
+            });
+    }
+);
+
+export const updatePdCall = createAsyncThunk<
+    GenericResponseType<CreatePropheticDeclarationPayloadType>,
+    InitUpdatePdThunkArg,
+    InitBAMThunkApiConfig
+>(
+    "prophetic-declaration/update",
+    async ({updatePdRequest}, {rejectWithValue, getState, dispatch}) => {
+        let ipAddress = await getDeviceIpAddress();
+        const state = getState();
+
+        const accessToken = state.user.userData?.token || "";
+        return await VODService.updatePropheticDeclaration(accessToken, updatePdRequest)
+            .then((res) => {
+                debug.api_success("updatePd", res);
+
+                return res;
+            })
+            .catch((err) => {
+                debug.api_error("updatePd Error", err);
+                return rejectWithValue(err);
+            });
+    }
+);
+
+export const deletePdCall = createAsyncThunk<
+    GenericResponseType<CreatePropheticDeclarationPayloadType>,
+    InitDeletePdThunkArg,
+    InitBAMThunkApiConfig
+>(
+    "prophetic-declaration/delete",
+    async ({deletePdRequest}, {rejectWithValue, getState, dispatch}) => {
+        let ipAddress = await getDeviceIpAddress();
+        const state = getState();
+        const accessToken = state.user.userData?.token || "";
+
+        return await VODService.deletePropheticDeclaration(accessToken, deletePdRequest)
+            .then((res) => {
+                debug.api_success("deletePd", res);
+
+                return res;
+            })
+            .catch((err) => {
+                debug.api_error("deletePd Error", err);
                 return rejectWithValue(err);
             });
     }

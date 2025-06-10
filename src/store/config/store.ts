@@ -15,6 +15,7 @@ import {notesReducer} from "../slices/notes";
 import {devotionalReducer} from "../slices/devotional";
 import {moreReducer} from "../slices/more";
 import {prayersReducer} from "../slices/prayer";
+import {orderReducer} from "@store/slices/order";
 
 // TODO: rootReducers (add new app)
 const persistConfig: PersistSchema = {
@@ -27,6 +28,7 @@ const persistConfig: PersistSchema = {
         "devotional",
         "more",
         "prayer",
+        "order",
     ],
     storage: AsyncStorage,
 };
@@ -46,6 +48,7 @@ export function createReduxStore(
         more: moreReducer,
         prayer: prayersReducer,
         general: generalReducer,
+        order: orderReducer,
     };
 
 

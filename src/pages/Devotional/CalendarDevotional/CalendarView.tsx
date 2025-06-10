@@ -8,7 +8,6 @@ import {useDispatch, useSelector} from "react-redux";
 import {AppDispatch, RootState} from "@store/index";
 import {diffBetweenTwoDates} from "@shared/helper";
 import {fetchDevotionalByIdCall} from "@store/apiThunks/devotional";
-import {RootRoutes} from "@shared/const/routerRoot";
 import {DevotionalNavigationProps, DevotionalRoutes} from "@shared/const/routerDevotional";
 import {screenNotificationActions} from "@store/slices/notification";
 import {useNavigation} from "@react-navigation/native";
@@ -55,13 +54,19 @@ const CalendarView = ({scrollRef}: ICalendarView) => {
             // debug.log("calendar.weeks", calendar.weeks);
 
             const monthDevotionals = devotionalList.filter((dev, monIdx_) => {
+
+                    // const devoMonth = new Date(dev.date).getMonth();
+                    const devoMonth = new Date(dev.datetime).getMonth();
+                    // const devoYear = new Date(dev.date).getFullYear();
+                    const devoYear = new Date(dev.datetime).getFullYear();
+
+                    // debug.log("devoMonth", devoMonth);
+                    // debug.log("devoYear", devoYear);
+
                     // debug.log("new Date(dev.datetime).getMonth()", new Date(dev.date).getMonth());
                     // debug.log("monthIdx", monthIdx);
                     // debug.log("new Date(dev.datetime).getFullYear()", new Date(dev.date).getFullYear());
                     // debug.log("year", year);
-
-                    const devoMonth = new Date(dev.date).getMonth();
-                    const devoYear = new Date(dev.date).getFullYear();
 
                     const monthCheck = devoMonth == monthIdx;
                     const yearCheck = devoYear == year;
@@ -83,8 +88,8 @@ const CalendarView = ({scrollRef}: ICalendarView) => {
                 const to = week[lenOfWeek - 1].date.toISOString();
 
                 const weekDevotionals = monthDevotionals?.filter((dev, wdIdx_) => {
-                    const leftDiff = diffBetweenTwoDates(fro, dev.date);
-                    const rightDiff = diffBetweenTwoDates(dev.date, to);
+                    const leftDiff = diffBetweenTwoDates(fro, new Date(dev.datetime).toISOString());
+                    const rightDiff = diffBetweenTwoDates(new Date(dev.datetime).toISOString(), to);
                     return (leftDiff >= 0 && rightDiff >= 0)
                 })
 
@@ -97,7 +102,7 @@ const CalendarView = ({scrollRef}: ICalendarView) => {
                     const dayDevotional = weekDevotionals?.filter((dayDev, _) => {
                         // debug.log("new Date(dayDev.date).getDay()", new Date(dayDev.date).getDay());
                         // debug.log("day.day", day.date.getDay());
-                        return (new Date(dayDev.date).getDay() === day.date.getDay())
+                        return (new Date(dayDev.datetime).getDay() === day.date.getDay())
                     })
                     let devoFix = null;
                     if (dayDevotional.length > 0) {
@@ -133,8 +138,9 @@ const CalendarView = ({scrollRef}: ICalendarView) => {
     useEffect(() => {
         // const calendar = new JsonCalendar({ today: new Date() });
         const calendar = new JsonCalendar({year: year});
-        // console.log(calendar.monthNames);
-        // console.log(calendar);
+        // debug.log("calendar.monthNames> ", calendar.monthNames);
+        // debug.log(calendar);
+        // debug.log("year> ", year);
 
         setMonthNames(calendar.monthNames);
     }, []);
@@ -147,7 +153,10 @@ const CalendarView = ({scrollRef}: ICalendarView) => {
                     onLayout={(event) => {
                         const layout = event.nativeEvent.layout;
                         // debug.log("here now for:", layout)
-                        // debug.log("here now for:", monthIdx)
+                        // debug.log("here now for monthIdx:", monthIdx)
+                        // debug.log("here now for mon:", mon)
+                        // debug.log("new Date().getMonth()> ", new Date().getMonth());
+                        // debug.log("=============");
                         if (monthIdx === new Date().getMonth()) {
                             // debug.log("here now for:", new Date())
                             // debug.log("here now for:", monthIdx)
@@ -178,6 +187,7 @@ const CalendarView = ({scrollRef}: ICalendarView) => {
                                     key={dayIdx}
 
                                     onPress={async () => {
+                                        // debug.log("devo from calendar", devo)
                                         if (!devo) {
                                             return
                                         }

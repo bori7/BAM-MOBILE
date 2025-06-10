@@ -15,13 +15,14 @@ import {QueryClient, QueryClientProvider} from "react-query";
 import {useFonts} from "expo-font";
 import {newConsole} from "@shared/lib/debug";
 import CodePush from 'react-native-code-push';
+import {StripeProvider} from "@stripe/stripe-react-native";
 
 // import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 const queryClient = new QueryClient();
 
 
-const App = ()=> {
+const App = () => {
     // const colorScheme = useColorScheme();
     const colorScheme = "light";
 
@@ -39,29 +40,34 @@ const App = ()=> {
     debug = newConsole();
 
 
-
-  return (
-    <ToastProvider
-      offsetTop={20}
-      swipeEnabled
-      renderToast={(toast) => <CustomToast toast={toast} />}
-    >
-      <InactivityWrapper>
-        <SafeAreaProvider>
-          <QueryClientProvider client={queryClient}>
-            <Provider store={store}>
-              <PaperProvider>
-                {/* <GestureHandlerRootView> */}
-                <Wrapper child={<Navigation colorScheme={colorScheme} />} />
-                {/* </GestureHandlerRootView> */}
-                <StatusBar />
-              </PaperProvider>
-            </Provider>
-          </QueryClientProvider>
-        </SafeAreaProvider>
-      </InactivityWrapper>
-    </ToastProvider>
-  );
+    return (
+        <ToastProvider
+            offsetTop={20}
+            swipeEnabled
+            renderToast={(toast) => <CustomToast toast={toast}/>}
+        >
+            <InactivityWrapper>
+                <SafeAreaProvider>
+                    <QueryClientProvider client={queryClient}>
+                        <StripeProvider
+                            publishableKey={"pk_test_51RGIJtRrrqtGQv7EGo4OhpOV0sPV5ehbDI6Fa177Jupzonh6jh9r6fStECTkJxotj268ywE9bsUFlvBTKKouOvvw000xPH1ycR"}
+                            merchantIdentifier="com.bibleapp.bamobile.monthly_15"
+                            // urlScheme="your-url-scheme"
+                        >
+                            <Provider store={store}>
+                                <PaperProvider>
+                                    {/* <GestureHandlerRootView> */}
+                                    <Wrapper child={<Navigation colorScheme={colorScheme}/>}/>
+                                    {/* </GestureHandlerRootView> */}
+                                    <StatusBar/>
+                                </PaperProvider>
+                            </Provider>
+                        </StripeProvider>
+                    </QueryClientProvider>
+                </SafeAreaProvider>
+            </InactivityWrapper>
+        </ToastProvider>
+    );
 }
 // }
 

@@ -1,4 +1,6 @@
-export const CONSTANT_URL_CONTEXT = "paystack/callback";
+// export const CONSTANT_URL_CONTEXT = "webhoook-callback";
+export const CONSTANT_URL_SUCCESS_CONTEXT = "PAYMENT_SUCCESS";
+export const CONSTANT_URL_FAILED_CONTEXT = "PAYMENT_FAILED";
 export const ENCRYPTED: boolean = true;
 export const GENERAL_SYM_KEY: string = "drBn4++0Zj1j2IRc98MheQ==";
 export const PUBLIC_KEY: string = "-----BEGIN PUBLIC KEY-----" +

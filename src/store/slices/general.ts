@@ -3,22 +3,23 @@ import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {
     InitialGeneralStateType,
     GeneralDataType,
-    NotificationsFormSliceType, GeneralVerseOfTheDayType,
+    NotificationsFormSliceType, GeneralVerseOfTheDayType, GeneralPropheticDeclarationType,
 } from "@shared/types/slices";
 import {
     testNotificationsForm,
     testVerseOfTheDayList,
 } from "@constants/values";
 import {NotificationsFormType} from "@pages/More/EmailNotifications";
-import {signInCall, signUpCall} from "../apiThunks/user";
-import {fetchAllVodCall} from "../apiThunks/vod";
+import {fetchAllPdCall, fetchAllVodCall} from "../apiThunks/vod";
 import {initiatePaymentCall} from "../apiThunks/payment";
+import {CreatePropheticDeclarationPayloadType} from "@services/vod/type";
 
 const initialGeneralState: InitialGeneralStateType = {
     generalData: null,
     generalEmailNotificationForms: testNotificationsForm,
     generalPushNotificationForms: testNotificationsForm,
-    generalVerseOfTheDayList: testVerseOfTheDayList,
+    generalVerseOfTheDayList: [],
+    generalPropheticDeclarationList:[],
     generalLoading: false,
     generalError: null,
     generalMessage: "",
@@ -31,6 +32,18 @@ export const generalSlice = createSlice({
         updateGeneralData: (state, action: PayloadAction<GeneralDataType>) => {
             state.generalData = action.payload;
         },
+        updateGeneralDataPaymentSessionData: (state, action: PayloadAction<GeneralDataType>) => {
+            state.generalData = {
+                ...state.generalData,
+                ...action.payload,
+            };
+        },
+        // updateGeneralDataPaymentRed: (state, action: PayloadAction<string>) => {
+        //     state.generalData = {
+        //        ...state.generalData,
+        //         paymentSessionId: action.payload,
+        //     };
+        // },
         updateGeneralState: (
             state,
             action: PayloadAction<InitialGeneralStateType>
@@ -101,6 +114,35 @@ export const generalSlice = createSlice({
             });
             debug.log("vodList", vodList)
             state.generalVerseOfTheDayList = vodList
+        })
+
+        builder.addCase(fetchAllPdCall.pending, state => {
+            state.generalLoading = true
+        })
+        builder.addCase(fetchAllPdCall.rejected, (state, action: any) => {
+            state.generalLoading = false;
+            state.generalMessage = "";
+            state.generalError = {
+                code: action.payload?.response?.data?.responseCode || "89",
+                message:
+                    action.payload?.response?.data?.message ||
+                    // action.error?.message ||
+                    "Unable to fetch prophetic declaration at the moment",
+            }
+
+        })
+        builder.addCase(fetchAllPdCall.fulfilled, (state, {payload}) => {
+            state.generalLoading = false;
+            state.generalError = null;
+            state.generalMessage = `Successfully fetched prophetic declaration from the server`;
+            const pdList: GeneralPropheticDeclarationType[] = payload.payload.map((pd, idx) => {
+                return {
+                    text: pd.text,
+                    date: pd.date,
+                }
+            });
+            debug.log("pdList", pdList)
+            state.generalPropheticDeclarationList = pdList
         })
 
         builder.addCase(initiatePaymentCall.pending, state => {

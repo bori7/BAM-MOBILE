@@ -9,7 +9,7 @@ import {
 import {
     InitialDevotionalStateType, InitialGeneralStateType,
     InitialMoreStateType,
-    InitialNotesStateType, InitialPrayersStateType,
+    InitialNotesStateType, InitialOrderStateType, InitialPrayersStateType,
     InitialScreenNotificationStateType, InitialUserStateType
 } from "@shared/types/slices";
 
@@ -22,6 +22,7 @@ export interface StateSchema {
     more: InitialMoreStateType;
     prayer: InitialPrayersStateType;
     general: InitialGeneralStateType;
+    order: InitialOrderStateType;
 }
 
 

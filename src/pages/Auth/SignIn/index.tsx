@@ -21,7 +21,7 @@ import {MainRoutes} from "@shared/const/routerMain";
 import ValidateData from "../../../shared/lib/validateData";
 import {validateObject} from "@shared/helper";
 import {signInCall, signUpCall} from "@store/apiThunks/user";
-import {fetchAllVodCall} from "@store/apiThunks/vod";
+import {fetchAllPdCall, fetchAllVodCall} from "@store/apiThunks/vod";
 import {userActions} from "@store/slices/user";
 import {fetchAllDevotionalCall, fetchUserDevotionalCall} from "@store/apiThunks/devotional";
 import {fetchNoteByUserIdCall} from "@store/apiThunks/note";
@@ -30,6 +30,7 @@ import {CancelIconSVG} from "@shared/components/SVGS";
 import biometrics from "@shared/lib/biometrics";
 import {EncStorage} from "@shared/lib/encStorage";
 import {screenNotificationActions} from "@store/slices/notification";
+import {fetchLiveSubscriptionCall} from "@store/apiThunks/payment";
 
 // type NavigationProps = CompositeScreenProps<
 //   RootScreenProps<RootRoutes.Main>,
@@ -142,11 +143,14 @@ const SignIn: React.FC<NavigationProps> = ({navigation, route}) => {
                     );
                     return;
                 }
-                // await dispatch(fetchLiveSubscriptionCall({
-                //     fetchLiveSubscriptionRequest: {}
-                // }))
+                await dispatch(fetchLiveSubscriptionCall({
+                    fetchLiveSubscriptionRequest: {}
+                }))
                 await dispatch(fetchAllVodCall(
                     {fetchAllVodRequest: null}
+                )).unwrap()
+                await dispatch(fetchAllPdCall(
+                    {fetchAllPdRequest: null}
                 )).unwrap()
                 await dispatch(fetchAllDevotionalCall({fetchAllDevotionalRequest: null})).unwrap()
                 await dispatch(fetchUserDevotionalCall({fetchUserDevotionalRequest: null})).unwrap()
@@ -182,8 +186,10 @@ const SignIn: React.FC<NavigationProps> = ({navigation, route}) => {
             setFullName(data?.username || "");
             setPassword(data?.password || "");
 
-            const deletedUser = (await EncStorage.getItem("deletedUser")) || "";
-            setDeletedUsers(deletedUser);
+            await EncStorage.removeItem("deletedUser");
+
+            // const deletedUser = (await EncStorage.getItem("deletedUser")) || "";
+            // setDeletedUsers(deletedUser);
         } catch (e) {
             debug.error('e in checkBiometrics', e);
         }
@@ -499,9 +505,7 @@ const styles = StyleSheet.create({
         paddingVertical: 5,
         width: "100%",
     },
-    r8t1: {
-
-    },
+    r8t1: {},
     r8t2: {
         backgroundColor: COLORS.Light.background,
         borderWidth: 1,

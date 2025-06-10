@@ -1,12 +1,12 @@
 import {
-    Image,
+    Image, RefreshControl,
     ScrollView,
     StatusBar,
     StyleSheet,
     TouchableOpacity,
 } from "react-native";
 
-import React, {useEffect, useState} from "react";
+import React, {useCallback, useEffect, useState} from "react";
 import {Text, View} from "@components/Themed";
 import {COLORS, IMAGES, SIZES} from "@constants/Colors";
 import {useDispatch, useSelector} from "react-redux";
@@ -21,9 +21,8 @@ import {
     DevotionalRoutes,
 } from "@shared/const/routerDevotional";
 import {screenNotificationActions} from "@store/slices/notification";
-import {fetchDevotionalByIdCall, updateUserDevotionalCall} from "@store/apiThunks/devotional";
+import {fetchAllDevotionalCall, fetchDevotionalByIdCall, updateUserDevotionalCall} from "@store/apiThunks/devotional";
 import {devotionalActions} from "@store/slices/devotional";
-import {navigateReset} from "@shared/lib/navigate";
 
 // type NavigationProps = MainProps<MainRoutes.HomeScreen>;
 
@@ -36,6 +35,8 @@ const MainDevotional: React.FC<NavigationProps> = ({navigation, route}) => {
     const dispatch = useDispatch<AppDispatch>();
     const [hideOptions, setHideOptions] = useState<boolean>(false);
     const [devotionals, setDevotionals] = useState<DevotionalItemProps[]>([]);
+    const [refreshing, setRefreshing] = useState<boolean>(false);
+
 
     const devotionalState = useSelector((state: RootState) => state.devotional);
     const {devotionalData: {devotionalList, userDevotional}} = devotionalState;
@@ -116,6 +117,15 @@ const MainDevotional: React.FC<NavigationProps> = ({navigation, route}) => {
     //     }
     // }, [userData?.token]);
 
+    const onRefresh = useCallback(() => {
+        setRefreshing(true);
+        dispatch(fetchAllDevotionalCall({fetchAllDevotionalRequest: null}))
+            .unwrap()
+            .finally(() => {
+                setRefreshing(false);
+            });
+    }, []);
+
 
     return (
         <View style={styles.main}>
@@ -146,6 +156,9 @@ const MainDevotional: React.FC<NavigationProps> = ({navigation, route}) => {
                         showsVerticalScrollIndicator={false}
                         contentContainerStyle={styles.scrollContent}
                         style={styles.scroll}
+                        refreshControl={
+                            <RefreshControl refreshing={refreshing} onRefresh={onRefresh}/>
+                        }
                     >
                         <View style={styles.contentHeaderC}>
                             <Text style={styles.ft1}>Today’s Devotional</Text>
@@ -209,7 +222,7 @@ const MainDevotional: React.FC<NavigationProps> = ({navigation, route}) => {
                             </View>
                         </View>
                         <Text style={styles.ft2}>Previous Days</Text>
-                        {devotionals.map((devo, idx) => (
+                        {devotionals.slice(1).map((devo, idx) => (
                             <View style={styles.v2} key={idx}>
                                 <TouchableOpacity
                                     style={styles.v2r1}

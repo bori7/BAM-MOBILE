@@ -28,7 +28,6 @@ import { CompositeScreenProps } from "@react-navigation/native";
 import { RootScreenProps, RootRoutes } from "@shared/const/routerRoot";
 import { NotesRoutes } from "@shared/const/routerNotes";
 import { DevotionalRoutes } from "@shared/const/routerDevotional";
-import {navigateReset} from "@shared/lib/navigate";
 
 export type MoreContentType = {
   icon: ReactNode;
@@ -61,18 +60,17 @@ const MoreMain: React.FC<NavigationProps> = ({ navigation, route }) => {
         });
       },
     },
-    // {
-    //   icon: <MoreCreditCardSVG />,
-    //   name: "Subscription",
-    //   onPressFunc: () => {
-    //     navigation?.navigate(RootRoutes.More, {
-    //       screen: MoreRoutes.SubscriptionMain,
-    //       params: undefined,
-    //     });
-    //
-    //     // navigation?.navigate(MoreRoutes.SubscriptionMain);
-    //   },
-    // },
+    {
+      icon: <MoreCreditCardSVG />,
+      name: "Subscription",
+      onPressFunc: () => {
+        navigation?.navigate(RootRoutes.More, {
+          screen: MoreRoutes.SubscriptionMain,
+          params: undefined,
+        });
+        // navigation?.navigate(MoreRoutes.SubscriptionMain);
+      },
+    },
     {
       icon: <CalendarHeartSVG />,
       name: "Memory Verse",
@@ -104,16 +102,16 @@ const MoreMain: React.FC<NavigationProps> = ({ navigation, route }) => {
         });
       },
     },
-    // {
-    //   icon: <MoreGivingSVG />,
-    //   name: "Donation",
-    //   onPressFunc: () => {
-    //     navigation?.navigate(RootRoutes.More, {
-    //       screen: MoreRoutes.Give,
-    //       params: undefined,
-    //     });
-    //   },
-    // },
+    {
+      icon: <MoreGivingSVG />,
+      name: "Donation",
+      onPressFunc: () => {
+        navigation?.navigate(RootRoutes.More, {
+          screen: MoreRoutes.Give,
+          params: undefined,
+        });
+      },
+    },
     {
       icon: <MoreAboutSVG />,
       name: "About",
@@ -145,11 +143,11 @@ const MoreMain: React.FC<NavigationProps> = ({ navigation, route }) => {
     },
   ];
 
-  useEffect(() => {
-    if (!userData?.token) {
-      navigateReset(RootRoutes.Auth);
-    }
-  }, [userData?.token]);
+  // useEffect(() => {
+  //   if (!userData?.token) {
+  //     navigateReset(RootRoutes.Auth);
+  //   }
+  // }, [userData?.token]);
 
   return (
     <View style={styles.main}>

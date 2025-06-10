@@ -1,5 +1,6 @@
 import {
-    Image,
+    ActivityIndicator,
+    Image, Platform,
     ScrollView,
     StatusBar,
     StyleSheet,
@@ -19,7 +20,6 @@ import {
     MaterialIcons,
 } from "@expo/vector-icons";
 import {MoreProps, MoreRoutes} from "@shared/const/routerMore";
-import {MdiNairaSVG} from "@shared/components/SVGS";
 import {MainButton} from "../../../components";
 import {screenNotificationActions} from "@store/slices/notification";
 import {CompositeScreenProps} from "@react-navigation/native";
@@ -28,16 +28,18 @@ import {MainRoutes} from "@shared/const/routerMain";
 import {moreActions} from "@store/slices/more";
 import {PaymentMethodType, StatusType, SubscriptionType} from "@shared/types/slices";
 import {userActions} from "@store/slices/user";
-import {initiatePaymentCall, paystackGetCall} from "@store/apiThunks/payment";
+import {initiatePaymentCall, stripeCallbackGetCall} from "@store/apiThunks/payment";
 import {nanoid} from "@reduxjs/toolkit";
 import {CustomPaymentModal} from "@shared/components/CustomPaymentModal";
 import StringsFormat from "../../../shared/lib/stringsFormat";
 import ControlModal2 from "@pages/Devotional/ContentDevotional/ControlModal2";
 import SupportContentModal from "@pages/More/Support/SupportContentModal";
+import useSubscription from "@shared/components/SubscriptionComponent";
 
 type ISubscriptionType = {
     period: SubscriptionType;
     price: string;
+    priceTag: string;
     amount: string;
     currency: string;
 };
@@ -56,8 +58,35 @@ const SubscriptionMain: React.FC<NavigationProps> = ({navigation, route}) => {
         });
     }, [navigation]);
     const dispatch = useDispatch<AppDispatch>();
+
+    const userState = useSelector(
+        (state: RootState) => state.user
+    );
+
+    const {userData} = userState;
+
+    const generalState = useSelector(
+        (state: RootState) => state.general
+    );
+    const {generalData} = generalState;
+
     const [selectedSubscriptionIndex, setSelectedSubscriptionIndex] =
         useState<number>(0);
+
+    const {
+        products,
+        loading,
+        error,
+        buySubscription,
+        refreshSubscriptions,
+        buyProductInApply,
+        buyProductInApplyWithStripe
+    } = useSubscription();
+
+    debug.log("error from SubscriptionMain:: ", error)
+    debug.log("products from SubscriptionMain:: ", products)
+    debug.log("loading from SubscriptionMain:: ", loading)
+    // debug.log("error from SubscriptionMain:: ", error)
 
     const [webUrl, setWebUrl] = useState<string>("");
 
@@ -71,6 +100,8 @@ const SubscriptionMain: React.FC<NavigationProps> = ({navigation, route}) => {
 
     const [hideModal, setHideModal] = useState<boolean>(false);
 
+    const [publishableKey, setPublishableKey] = useState<string>("");
+    const [checkoutUrl, setCheckoutUrl] = useState<string>("");
 
     const merits = [
         "Support quality writing",
@@ -79,26 +110,10 @@ const SubscriptionMain: React.FC<NavigationProps> = ({navigation, route}) => {
     ];
 
     const subcriptions: ISubscriptionType[] = [
-        {period: "Annually", price: "180.00/year", amount: "180", currency: "NGN"},
-        {period: "Quarterly", price: "60.00/quarter", amount: "60", currency: "NGN"},
-        {period: "Monthly", price: "15.00/month", amount: "15", currency: "NGN"},
+        {period: "Annually", price: "180.00/year", priceTag: "180.00", amount: "180", currency: "USD"},
+        {period: "Quarterly", price: "60.00/quarter", priceTag: "60.00", amount: "60", currency: "USD"},
+        {period: "Monthly", price: "15.00/month", priceTag: "15.00", amount: "15", currency: "USD"},
     ];
-
-
-    useEffect(() => {
-        setCallbackCount(0)
-    }, []);
-
-    const userState = useSelector(
-        (state: RootState) => state.user
-    );
-    const {userData} = userState;
-
-    const generalState = useSelector(
-        (state: RootState) => state.general
-    );
-    const {generalData} = generalState;
-
 
     const handleSubscribe = async () => {
         await dispatch(initiatePaymentCall(
@@ -123,20 +138,35 @@ const SubscriptionMain: React.FC<NavigationProps> = ({navigation, route}) => {
             })
     }
 
+    const getPaymentSessionStatus = (valUrl: string) => {
+        if (!valUrl) {
+            return ""
+        }
+
+        const valUrlSplits = valUrl.split("/");
+        const n = valUrlSplits.length
+        return valUrlSplits[n - 1]
+
+    }
+
     const handleCallBack = async () => {
         dispatch(screenNotificationActions.updateScreenLoading(true));
-        debug.log("callbackCount", callbackCount)
+        debug.log("callbackCount in subscription main", callbackCount)
         setCallbackCount(callbackCount + 1)
-        await dispatch(paystackGetCall({
+        // await dispatch(paystackGetCall({
+        // paystackGetRequest: {
+        //     trxref: generalData?.paymentReference || "",
+        //         reference: generalData?.paymentReference || ""
+        // }
+        await dispatch(stripeCallbackGetCall({
             paystackGetRequest: {
-                trxref: generalData?.paymentReference || "",
-                reference: generalData?.paymentReference || ""
+                trxref: getPaymentSessionStatus(generalData?.paymentRedirectUrl || "") || generalData?.paymentReference || "",
+                reference: `SUBSCRIPTION_${generalData?.paymentSessionId || ""}`
             }
         })).unwrap()
             .then(async (res) => {
 
                 if ("PENDING" === res?.payload?.status?.toUpperCase()) {
-
                     if (callbackCount >= 5) {
                         navigation?.navigate(RootRoutes.Main, {
                             screen: MainRoutes.Success,
@@ -231,6 +261,82 @@ const SubscriptionMain: React.FC<NavigationProps> = ({navigation, route}) => {
         await handleCallBack();
     }
 
+    // const setupIAP = async () => {
+    //     try {
+    //         const result = await RNIap.initConnection();
+    //         debug.log('IAP connection', result);
+    //         debug.log('IAP Product ID', IN_APP_PRODUCT_IDS);
+    //     } catch (err) {
+    //         debug.warn('IAP init error', err);
+    //     }
+    // };
+
+    const handleStripePublishableKey = (key: string, key2: string) => {
+        debug.log("handleStripePublishableKey", key);
+        debug.log("checkOutUrl", key2);
+        setPublishableKey(key);
+        setCheckoutUrl(key2)
+    }
+
+    const handleStripeCheckout = () => {
+        debug.log("handling Stripe Checkout");
+        buyProductInApplyWithStripe({
+                userId: userData?.id || '',
+                shippingAddress: userData?.location || 'Alberta, Canada',
+                price: subcriptions[selectedSubscriptionIndex]?.priceTag || '0',
+                recipientPhoneNumber: userData?.phone_number || '8103429144',
+                ccy: subcriptions[selectedSubscriptionIndex]?.currency || 'USD',
+                paymentType: 'CARD',
+                orderItems: [{
+                    productId: userData?.id || '',
+                    quantity: "1",
+                    price: subcriptions[selectedSubscriptionIndex]?.priceTag || '0',
+                    id: '',
+                }],
+                email: userData?.email_address || "",
+                subscriptionType: subcriptions[selectedSubscriptionIndex]?.period?.toUpperCase() || "MONTHLY",
+                reference: `SUBSCRIPTION_${nanoid()}`,
+                title: "SUBSCRIPTIONS"
+            },
+            handleStripePublishableKey
+        )
+        setShowModal(!showModal);
+    }
+
+
+    useEffect(() => {
+        setCallbackCount(0)
+    }, []);
+
+    useEffect(() => {
+        setCheckoutUrl("");
+    }, []);
+
+    // const SUBSCRIPTION_SKUS = Platform.select({
+    //     ios: ['com.bibleapp.bamobile.monthly'],
+    //     android: ['com.boriios.bamobile']
+    // }) || [];
+    //
+    // if (checkoutUrl) {
+    //     return <View>
+    //         <WebView
+    //             source={{uri: checkoutUrl}}
+    //             onNavigationStateChange={(navState) => {
+    //                 if (navState.url.includes("success")) {
+    //                     debug.log(" Payment successful!")
+    //                 } else if (navState.url.includes("cancel")) {
+    //                     debug.log(" Payment cancelled!")
+    //                 }
+    //             }}
+    //             originWhitelist={['*']}
+    //             javaScriptEnabled={true}
+    //             domStorageEnabled={true}
+    //             startInLoadingState={true}
+    //         />
+    //     </View>
+    // }
+
+
     return (
         <View style={styles.main}>
             <CustomPaymentModal
@@ -238,7 +344,7 @@ const SubscriptionMain: React.FC<NavigationProps> = ({navigation, route}) => {
                     setShowModal(!showModal)
                 }}
                 visible={showModal}
-                webUrl={webUrl}
+                webUrl={webUrl || checkoutUrl}
                 onDismissFunc={() => {
                     handleDismiss()
                 }}
@@ -269,12 +375,65 @@ const SubscriptionMain: React.FC<NavigationProps> = ({navigation, route}) => {
                         </View>
                     </View>
                 </View>
+                {/*<StripeProvider*/}
+                {/*    publishableKey={publishableKey}*/}
+                {/*    merchantIdentifier="merchant.identifier"*/}
+                {/*    // urlScheme="your-url-scheme"*/}
+                {/*>*/}
                 <View style={styles.bodyContainer}>
                     <ScrollView
                         showsVerticalScrollIndicator={false}
                         contentContainerStyle={styles.scrollContent}
                         style={styles.scroll}
                     >
+                        {/*<View style={styles.subscontainer}>*/}
+                        {/*    <Text style={styles.title}>Bible App Pro Subscription</Text>*/}
+
+                        {/*    {loading && (*/}
+                        {/*        <ActivityIndicator size="large" color="#007AFF"/>*/}
+                        {/*    )}*/}
+
+                        {/*    {error && (*/}
+                        {/*        <View style={styles.errorContainer}>*/}
+                        {/*            <Text style={styles.errorText}>{error}</Text>*/}
+                        {/*            <TouchableOpacity*/}
+                        {/*                style={styles.retryButton}*/}
+                        {/*                onPress={refreshSubscriptions}*/}
+                        {/*            >*/}
+                        {/*                <Text style={styles.retryButtonText}>Retry</Text>*/}
+                        {/*            </TouchableOpacity>*/}
+                        {/*        </View>*/}
+                        {/*    )}*/}
+
+                        {/*    {products.length > 0 ? (*/}
+                        {/*        <View style={styles.productsContainer}>*/}
+                        {/*            {products.map((product) => (*/}
+                        {/*                <View key={product.productId} style={styles.productCard}>*/}
+                        {/*                    <Text style={styles.productTitle}>{product.title}</Text>*/}
+                        {/*                    <Text style={styles.productDescription}>{product.description}</Text>*/}
+                        {/*                    <Text style={styles.productPrice}>{product.localizedPrice}</Text>*/}
+                        {/*                    <TouchableOpacity*/}
+                        {/*                        style={styles.subscribeButton}*/}
+                        {/*                        onPress={buySubscription}*/}
+                        {/*                        disabled={loading}*/}
+                        {/*                    >*/}
+                        {/*                        <Text style={styles.subscribeButtonText}>Subscribe</Text>*/}
+                        {/*                    </TouchableOpacity>*/}
+                        {/*                </View>*/}
+                        {/*            ))}*/}
+                        {/*        </View>*/}
+                        {/*    ) : !loading && !error && (*/}
+                        {/*        <View style={styles.noProductsContainer}>*/}
+                        {/*            <Text style={styles.noProductsText}>No subscription plans available</Text>*/}
+                        {/*            <TouchableOpacity*/}
+                        {/*                style={styles.retryButton}*/}
+                        {/*                onPress={refreshSubscriptions}*/}
+                        {/*            >*/}
+                        {/*                <Text style={styles.retryButtonText}>Refresh</Text>*/}
+                        {/*            </TouchableOpacity>*/}
+                        {/*        </View>*/}
+                        {/*    )}*/}
+                        {/*</View>*/}
                         <Image source={IMAGES.logoDailyAnswer} style={styles.rmt}/>
                         <Text style={styles.r1t}>
                             Subscribe to get full access to all devotional contents on The Daily
@@ -339,25 +498,48 @@ const SubscriptionMain: React.FC<NavigationProps> = ({navigation, route}) => {
                                 </View>
                             </TouchableOpacity>
                         ))}
-
                         <View style={styles.r4}>
+                            {/*<CardField*/}
+                            {/*    postalCodeEnabled={true}*/}
+                            {/*    placeholders={{*/}
+                            {/*        number: '4242 4242 4242 4242',*/}
+                            {/*    }}*/}
+                            {/*    cardStyle={{*/}
+                            {/*        backgroundColor: '#FFFFFF',*/}
+                            {/*        textColor: '#000000',*/}
+                            {/*    }}*/}
+                            {/*    style={{*/}
+                            {/*        width: '100%',*/}
+                            {/*        height: 50,*/}
+                            {/*        marginVertical: 30,*/}
+                            {/*    }}*/}
+                            {/*/>*/}
+                            {/*<MainButton*/}
+                            {/*    title={"In-App Purchase"}*/}
+                            {/*    onPressFunction={() => {*/}
+                            {/*        handleStripeCheckout()*/}
+                            {/*    }}*/}
+                            {/*    err={false}*/}
+                            {/*    btnStyle={styles.r4btnInApp}*/}
+                            {/*    loading={loading}*/}
+                            {/*    // disabled={!proceed}*/}
+                            {/*/>*/}
                             <MainButton
                                 title={"Subscribe"}
                                 onPressFunction={() => {
-                                    // navigation?.navigate(AuthRoutes.SignUp);
-                                    handleSubscribe()
-                                    // dispatch(
-                                    //     screenNotificationActions.updateScreenLoadingFunc({
-                                    //         screenLoading: true,
-                                    //     })
-                                    // );
+                                    // handleSubscribe();
+                                    // buySubscription();
+                                    handleStripeCheckout();
                                 }}
                                 err={false}
                                 btnStyle={styles.r4btn}
+                                loading={loading}
                                 // disabled={!proceed}
                             />
                         </View>
-
+                        {/*<View style={styles.r4}>*/}
+                        {/*    */}
+                        {/*</View>*/}
                         <TouchableOpacity
                             style={styles.r56}
                             onPress={() => {
@@ -392,6 +574,7 @@ const SubscriptionMain: React.FC<NavigationProps> = ({navigation, route}) => {
                         </Text>
                     </ScrollView>
                 </View>
+                {/*</StripeProvider>*/}
             </View>
             <ControlModal2
                 visible={hideModal}
@@ -559,14 +742,17 @@ const styles = StyleSheet.create({
         marginVertical: 50,
         writingDirection: "rtl",
         width: "100%",
+        gap: 10
     },
     r4btn: {},
+    r4btnInApp: {
+        backgroundColor: COLORS.Light.colorFour
+    },
     r56: {
         alignSelf: "flex-start",
     },
     r5t: {
         marginBottom: 25,
-
         textDecorationLine: "underline",
         fontSize: SIZES.sizeSix,
         fontWeight: "300",
@@ -591,5 +777,89 @@ const styles = StyleSheet.create({
         fontSize: SIZES.sizeSix,
         fontWeight: "300",
         lineHeight: 23,
+    },
+    subscontainer: {
+        flex: 1,
+        padding: 16,
+        backgroundColor: '#F8F9FA',
+    },
+    title: {
+        fontSize: 24,
+        fontWeight: 'bold',
+        marginBottom: 24,
+        textAlign: 'center',
+    },
+    productsContainer: {
+        marginTop: 16,
+    },
+    productCard: {
+        backgroundColor: '#FFFFFF',
+        borderRadius: 12,
+        padding: 16,
+        marginBottom: 16,
+        shadowColor: '#000',
+        shadowOffset: {width: 0, height: 1},
+        shadowOpacity: 0.2,
+        shadowRadius: 3,
+        elevation: 2,
+    },
+    productTitle: {
+        fontSize: 18,
+        fontWeight: 'bold',
+    },
+    productDescription: {
+        marginTop: 8,
+        color: '#666',
+        fontSize: 14,
+    },
+    productPrice: {
+        marginTop: 12,
+        fontSize: 20,
+        color: '#333',
+        fontWeight: '600',
+    },
+    subscribeButton: {
+        backgroundColor: '#007AFF',
+        borderRadius: 8,
+        padding: 12,
+        alignItems: 'center',
+        marginTop: 16,
+    },
+    subscribeButtonText: {
+        color: '#FFFFFF',
+        fontSize: 16,
+        fontWeight: '600',
+    },
+    errorContainer: {
+        backgroundColor: '#FFF1F0',
+        padding: 16,
+        borderRadius: 8,
+        borderWidth: 1,
+        borderColor: '#FFCCC7',
+        marginVertical: 16,
+    },
+    errorText: {
+        color: '#CF1322',
+        marginBottom: 8,
+    },
+    retryButton: {
+        backgroundColor: 'transparent',
+        padding: 8,
+        alignItems: 'center',
+        borderRadius: 4,
+        borderWidth: 1,
+        borderColor: '#007AFF',
+    },
+    retryButtonText: {
+        color: '#007AFF',
+    },
+    noProductsContainer: {
+        alignItems: 'center',
+        marginTop: 32,
+    },
+    noProductsText: {
+        fontSize: 16,
+        color: '#666',
+        marginBottom: 16,
     },
 });

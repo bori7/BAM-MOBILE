@@ -33,6 +33,7 @@ import {
 } from "@shared/types/slices";
 import { NotesRoutes } from "@shared/const/routerNotes";
 import PrayerListView from "../Prayer/PrayerListView";
+import {navigateReset} from "@shared/lib/navigate";
 
 type NavigationProps = CompositeScreenProps<
   MoreProps<MoreRoutes.Profile>,
@@ -105,6 +106,12 @@ const Profile: React.FC<NavigationProps> = ({ navigation, route }) => {
 
   const userState = useSelector((state: RootState) => state.user);
   const { userData, userImageBase64 } = userState;
+
+  useEffect(() => {
+    if (!userData?.token) {
+      navigateReset(RootRoutes.Auth);
+    }
+  }, [userData?.token]);
 
   return (
     <View style={styles.main}>

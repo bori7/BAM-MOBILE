@@ -21,8 +21,9 @@ import {
     SignInRequestType,
     SignUpRequestType, UpdateUserImageRequestType, UpdateUserPasswordRequestType, VerifyVerificationCodeRequestType
 } from "@services/user/type";
-import {CreateVODRequestType} from "@services/vod/type";
+import {CreatePropheticDeclarationRequestType, CreateVODRequestType} from "@services/vod/type";
 import {SubscriptionFetchRequestType} from "@services/payments/subscription/type";
+import {PlaceOrderRequestType} from "@services/order/type";
 
 export type InitBAMThunkApiConfig = { state: StateSchema };
 
@@ -74,6 +75,10 @@ export type InitCreateVodThunkArg = {
     createVodRequest: CreateVODRequestType;
 }
 
+export type InitCreatePdThunkArg = {
+    createPdRequest: CreatePropheticDeclarationRequestType;
+}
+
 export type InitCreateUserDevotionalThunkArg = {
     createUserDevotionalRequest: CreateUserDevotionalRequestType;
 }
@@ -98,6 +103,10 @@ export type InitUpdateVODThunkArg = {
     updateVodRequest: CreateVODRequestType;
 }
 
+export type InitUpdatePdThunkArg = {
+    updatePdRequest: CreatePropheticDeclarationRequestType;
+}
+
 export type InitUpdateUserDevotionalThunkArg = {
     updateUserDevotionalRequest: CreateUserDevotionalRequestType;
 }
@@ -120,6 +129,10 @@ export type InitFetchAllDevotionalThunkArg = {
 
 export type InitFetchAllVodThunkArg = {
     fetchAllVodRequest: null;
+}
+
+export type InitFetchAllPdThunkArg = {
+    fetchAllPdRequest: null;
 }
 
 export type InitFetchUserDevotionalThunkArg = {
@@ -165,6 +178,10 @@ export type InitDeleteVODThunkArg = {
     deleteVODdRequest: CreateVODRequestType;
 }
 
+export type InitDeletePdThunkArg = {
+    deletePdRequest: CreatePropheticDeclarationRequestType;
+}
+
 
 export type InitDeleteUserDevotionalThunkArg = {
     deleteUserDevotionalByIdRequest: CreateUserDevotionalRequestType;
@@ -203,3 +220,8 @@ export type InitVerifyPaymentThunkArg = {
 export type InitFetchLiveSubscriptionThunkArg = {
     fetchLiveSubscriptionRequest: SubscriptionFetchRequestType;
 }
+
+// ########################## ORDER #########################
+export type InitPlaceOrderProductThunkArg = {
+    placeOrderRequest: PlaceOrderRequestType;
+};

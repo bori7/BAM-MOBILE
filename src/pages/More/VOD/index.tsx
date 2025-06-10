@@ -1,6 +1,7 @@
-import React, {useEffect, useState} from "react";
+import React, {useCallback, useEffect, useState} from "react";
 import {Text, View} from "@components/Themed";
 import {
+    RefreshControl,
     ScrollView, Share,
     StatusBar,
     StyleSheet,
@@ -24,6 +25,8 @@ import {MainRoutes} from "@shared/const/routerMain";
 import * as Clipboard from "expo-clipboard";
 import {createPrayerCall} from "@store/apiThunks/prayer";
 import {prayersActions} from "@store/slices/prayer";
+import {fetchAllDevotionalCall} from "@store/apiThunks/devotional";
+import {fetchAllVodCall} from "@store/apiThunks/vod";
 
 // type NavigationProps = NotesProps<NotesRoutes.NotesSearch>;
 
@@ -41,6 +44,9 @@ const VOD: React.FC<NavigationProps> = ({navigation, route}) => {
     const [hideOptions, setHideOptions] = useState<boolean>(false);
     const [optionsIdx, setOptionsIdx] = useState<number>(-1);
     const [allowEdit, setAllowEdit] = useState<boolean>(false);
+
+    const [refreshing, setRefreshing] = useState<boolean>(false);
+
 
     const generalState = useSelector((state: RootState) => state.general);
     const {generalVerseOfTheDayList} = generalState;
@@ -94,8 +100,7 @@ const VOD: React.FC<NavigationProps> = ({navigation, route}) => {
     };
 
     const prayClick = async (vodx: GeneralVerseOfTheDayType) => {
-        const existingPrayer = prayersData?.prayersList?.
-        filter((p, idx_) => p.title === vodx?.verse) || [];
+        const existingPrayer = prayersData?.prayersList?.filter((p, idx_) => p.title === vodx?.verse) || [];
 
         if (existingPrayer.length === 0) {
             await handlePray(vodx);
@@ -142,11 +147,20 @@ const VOD: React.FC<NavigationProps> = ({navigation, route}) => {
         }
     };
 
-
     const copyToClipboard = async (val: string) => {
         await Clipboard.setString(val);
         // setCopiedText('Text copied to clipboard!');
     };
+
+    const onRefresh = useCallback(() => {
+        setRefreshing(true);
+        dispatch(fetchAllVodCall(
+            {fetchAllVodRequest: null}
+        )).unwrap()
+            .finally(() => {
+                setRefreshing(false);
+            });
+    }, []);
 
     return (
         <View style={[styles.main]}>
@@ -209,6 +223,9 @@ const VOD: React.FC<NavigationProps> = ({navigation, route}) => {
                         showsVerticalScrollIndicator={false}
                         contentContainerStyle={styles.scrollContent}
                         style={styles.scroll}
+                        refreshControl={
+                            <RefreshControl refreshing={refreshing} onRefresh={onRefresh}/>
+                        }
                     >
                         {fetchedVODList.map((vod, idx) => (
                             <View style={styles.v1} key={idx.toString()}>

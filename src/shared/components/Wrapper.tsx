@@ -12,6 +12,7 @@ import {devotionalActions} from "@store/slices/devotional";
 import {notesActions} from "@store/slices/notes";
 import {prayersActions} from "@store/slices/prayer";
 import {moreActions} from "@store/slices/more";
+import {orderActions} from "@store/slices/order";
 
 type props = {
     child: any;
@@ -75,6 +76,9 @@ export default function Wrapper({child}: props) {
     const moreState = useSelector((state: RootState) => state.more);
     const {moreError, moreMessage, moreLoading} = moreState;
 
+    const orderState = useSelector((state: RootState) => state.order);
+    const {orderError, orderMessage, orderLoading} = orderState;
+
 
     const screenNotificationState = useSelector(
         (state: RootState) => state.screenNotification
@@ -122,6 +126,11 @@ export default function Wrapper({child}: props) {
         if (moreError !== null) {
             Toaster("error", moreError?.message, () => {
                 dispatch(moreActions.clearMoreError())
+            });
+        }
+        if (orderError !== null) {
+            Toaster("error", orderError?.message, () => {
+                dispatch(orderActions.clearOrderError())
             });
         }
 

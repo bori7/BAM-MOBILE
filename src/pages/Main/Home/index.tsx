@@ -1,13 +1,13 @@
 import {
     Image,
-    ImageBackground, ImageURISource,
+    ImageBackground, ImageURISource, RefreshControl,
     ScrollView, Share,
     StatusBar,
     StyleSheet,
     TouchableOpacity,
 } from "react-native";
 import * as Clipboard from 'expo-clipboard';
-import React, {useEffect, useState} from "react";
+import React, {useCallback, useEffect, useState} from "react";
 import {Text, View} from "@components/Themed";
 import {COLORS, IMAGES, SIZES} from "@constants/Colors";
 import {useDispatch, useSelector} from "react-redux";
@@ -28,12 +28,13 @@ import {
     getPartOfDay,
 } from "@shared/helper";
 import {GeneralVerseOfTheDayType} from "@shared/types/slices";
-import {fetchDevotionalByIdCall, updateUserDevotionalCall} from "@store/apiThunks/devotional";
+import {fetchAllDevotionalCall, fetchDevotionalByIdCall, updateUserDevotionalCall} from "@store/apiThunks/devotional";
 import {devotionalActions} from "@store/slices/devotional";
-import {MainProfileSVG} from "@shared/components/SVGS";
 import {MoreRoutes} from "@shared/const/routerMore";
 import {createPrayerCall} from "@store/apiThunks/prayer";
 import {prayersActions} from "@store/slices/prayer";
+import {fetchAllPdCall, fetchAllVodCall} from "@store/apiThunks/vod";
+import StringsFormat from "@shared/lib/stringsFormat";
 
 // type NavigationProps = MainProps<MainRoutes.HomeScreen>;
 
@@ -46,6 +47,7 @@ const Home: React.FC<NavigationProps> = ({navigation, route}) => {
     const dispatch = useDispatch<AppDispatch>();
     const [hideOptions, setHideOptions] = useState<boolean>(false);
     const [currVOD, setCurrVod] = useState<GeneralVerseOfTheDayType>();
+    const [refreshing, setRefreshing] = useState<boolean>(false);
 
 
     const screenNotificationState = useSelector(
@@ -54,7 +56,7 @@ const Home: React.FC<NavigationProps> = ({navigation, route}) => {
     const {screenLoading} = screenNotificationState;
 
     const generalState = useSelector((state: RootState) => state.general);
-    const {generalVerseOfTheDayList} = generalState;
+    const {generalVerseOfTheDayList, generalPropheticDeclarationList} = generalState;
 
     const userState = useSelector((state: RootState) => state.user);
     const {userData, userImageBase64} = userState;
@@ -185,6 +187,26 @@ const Home: React.FC<NavigationProps> = ({navigation, route}) => {
         }
     }];
 
+    const onRefresh = useCallback(() => {
+        setRefreshing(true);
+        dispatch(fetchAllDevotionalCall({fetchAllDevotionalRequest: null}))
+            .unwrap()
+            .finally(() => {
+                setRefreshing(false);
+            });
+        dispatch(fetchAllVodCall(
+            {fetchAllVodRequest: null}
+        )).unwrap()
+            .finally(() => {
+                setRefreshing(false);
+            });
+        dispatch(fetchAllPdCall(
+            {fetchAllPdRequest: null}
+        )).unwrap()
+            .finally(() => {
+                setRefreshing(false);
+            });
+    }, []);
 
     return (
         <View style={styles.main}>
@@ -194,7 +216,7 @@ const Home: React.FC<NavigationProps> = ({navigation, route}) => {
                     <View style={styles.header}>
                         <View style={styles.headerC1}>
                             <Text
-                                style={styles.headerC1t1}>Good {getPartOfDay()} {userData?.first_name || userData?.username} 👋</Text>
+                                style={styles.headerC1t1}>Good {getPartOfDay()} {StringsFormat.capitalize(userData?.first_name || userData?.username || "")} 👋</Text>
                             <Text style={styles.headerC1t2}>
                                 {getDayOfTheWeek(new Date().getUTCDay())}{" "}
                                 {formatNoteDate(new Date())}
@@ -225,6 +247,9 @@ const Home: React.FC<NavigationProps> = ({navigation, route}) => {
                         showsVerticalScrollIndicator={false}
                         contentContainerStyle={styles.scrollContent}
                         style={styles.scroll}
+                        refreshControl={
+                            <RefreshControl refreshing={refreshing} onRefresh={onRefresh}/>
+                        }
                     >
                         <View style={styles.v1}>
                             <Text style={styles.v1t1}>Memory Verse</Text>
@@ -369,6 +394,14 @@ const Home: React.FC<NavigationProps> = ({navigation, route}) => {
                             >
                                 <Text style={styles.v3ct}>Pray Now</Text>
                             </TouchableOpacity>
+                        </View>
+                        <View style={styles.v3}>
+                            <View style={styles.v3a}>
+                                <Text style={styles.v3at1}>Prophetic Declaration</Text>
+                            </View>
+                            <Text style={styles.v3b}>
+                                {generalPropheticDeclarationList?.[0]?.text || ""}
+                            </Text>
                         </View>
                     </ScrollView>
                 </View>

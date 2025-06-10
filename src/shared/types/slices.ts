@@ -1,6 +1,6 @@
-import {ImageSourcePropType} from "react-native";
 import {NotificationsFormType} from "@pages/More/EmailNotifications";
 import {FetchUserDevotionalPayloadType} from "@services/userdevotional/type";
+import {OrderItemType} from "@services/order/type";
 
 export interface InitialUserStateType {
     userData: UserDataType | null;
@@ -188,15 +188,18 @@ export interface InitialGeneralStateType {
     generalEmailNotificationForms: NotificationsFormSliceType;
     generalPushNotificationForms: NotificationsFormSliceType;
     generalVerseOfTheDayList: GeneralVerseOfTheDayType[];
+    generalPropheticDeclarationList: GeneralPropheticDeclarationType[];
     generalLoading: boolean;
     generalError: InitialUserErrorType | null;
     generalMessage: string;
 }
 
 export interface GeneralDataType {
-    paymentWebUrl: string;
-    paymentAccessCode: string;
-    paymentReference: string;
+    paymentWebUrl?: string;
+    paymentAccessCode?: string;
+    paymentReference?: string;
+    paymentRedirectUrl?: string;
+    paymentSessionId?: string;
 }
 
 export interface NotificationsFormSliceType {
@@ -209,7 +212,44 @@ export interface GeneralVerseOfTheDayType {
     date: string;
 }
 
+export interface GeneralPropheticDeclarationType {
+    text: string;
+    date: string;
+}
+
 export interface TermsOfServiceType {
     subtitle: string;
     text: string;
+}
+
+export interface InitialOrderStateType {
+    orderData: OrderDataType | null;
+    allOrders: OrderDataType[] | [];
+    orderLoading: boolean;
+    orderError: InitialUserErrorType | null;
+    orderMessage: string;
+}
+
+export interface OrderDataType {
+    id?: string;
+    userId?: string;
+    sessionId?: string;
+    orderId?: string;
+    clientSecret?: string;
+    checkoutSessionUrl?: string;
+    message?: string;
+    status?: string;
+    ccy?: string;
+    price?: string;
+    orderStatusChangeTime?: string;
+    orderRating?: string;
+    shippingAddress?: string;
+    paymentIntentId?: string;
+    deliveryTrackingId?: string;
+    recipientPhoneNumber?: string;
+    paymentType?: string;
+    orderItem?: OrderItemType[];
+    orderItems?: OrderItemType[];
+    orderDate?: string;
+    orderTime?: string;
 }

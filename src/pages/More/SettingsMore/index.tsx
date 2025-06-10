@@ -27,6 +27,7 @@ import {prayersActions} from "@store/slices/prayer";
 import {userActions} from "@store/slices/user";
 import biometrics from "@shared/lib/biometrics";
 import {EncStorage} from "@shared/lib/encStorage";
+import {navigateReset} from "@shared/lib/navigate";
 
 // type NavigationProps = NotesProps<NotesRoutes.NotesSearch>;
 
@@ -56,6 +57,12 @@ const SettingsMore: React.FC<NavigationProps> = ({navigation, route}) => {
             },
         ],
     });
+
+    useEffect(() => {
+        if (!userData?.token) {
+            navigateReset(RootRoutes.Auth);
+        }
+    }, [userData?.token]);
 
     return (
         <View style={[styles.main]}>

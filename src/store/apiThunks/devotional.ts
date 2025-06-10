@@ -109,7 +109,7 @@ export const fetchUserDevotionalCall = createAsyncThunk<
     InitFetchUserDevotionalThunkArg,
     InitBAMThunkApiConfig
 >(
-    "userdevotional/fetch",
+    "user-devotional/fetch",
     async ({fetchUserDevotionalRequest}, {rejectWithValue, getState, dispatch}) => {
         let ipAddress = await getDeviceIpAddress();
         const state = getState();
@@ -117,12 +117,12 @@ export const fetchUserDevotionalCall = createAsyncThunk<
         const accessToken = state.user.userData?.token || "";
         return await UserDevotionalService.fetchUserDevotional(accessToken, state.user.userData?.id || "")
             .then((res) => {
-                debug.api_success("fetchAllDevotional", res);
+                debug.api_success("fetchUserDevotional", res);
 
                 return res;
             })
             .catch((err) => {
-                debug.api_error("fetchAllDevotional Error", err);
+                debug.api_error("fetchUserDevotional Error", err);
                 return rejectWithValue(err);
             });
     }

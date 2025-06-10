@@ -1,15 +1,15 @@
-
-// export const BASE_HOST = "http://localhost";
-// export const PAYMENT_BASE_HOST =  "http://localhost";
+export const BASE_HOST = "http://localhost";
+export const PAYMENT_BASE_HOST = "http://localhost";
 // export const BASE_HOST = "http://10.0.2.2";
 // export const PAYMENT_BASE_HOST = "http://10.0.2.2";
-// export const BASE_IP = `${BASE_HOST}:9082`;
-// export const PAYMENT_BASE_IP = `${PAYMENT_BASE_HOST}:9084`;
+export const BASE_IP = `${BASE_HOST}:9082`;
+export const PAYMENT_BASE_IP = `${PAYMENT_BASE_HOST}:9085`;
 
-export const BASE_HOST: string = "https://bam-mainbackend-9.onrender.com";
-export const PAYMENT_BASE_HOST: string = "https://bam-financial-4.onrender.com";
-export const BASE_IP = `${BASE_HOST}`;
-export const PAYMENT_BASE_IP = `${PAYMENT_BASE_HOST}`;
+///---PROD---///
+// export const BASE_HOST: string = "https://bam-mainbackend-9.onrender.com";
+// export const PAYMENT_BASE_HOST: string = "https://bam-financial-4.onrender.com";
+// export const BASE_IP = `${BASE_HOST}`;
+// export const PAYMENT_BASE_IP = `${PAYMENT_BASE_HOST}`;
 
 export const BASE_URL = `${BASE_IP}/bible-app-mobile`;
 export const PAYMENT_BASE_URL = `${PAYMENT_BASE_IP}/bible-app-mobile-finance`;
@@ -42,6 +42,11 @@ export const CREATE_VOD_URL = `${BASE_URL}/vod`;
 export const FETCH_VOD_URL = `${BASE_URL}/vod`;
 export const UPDATE_VOD_URL = `${BASE_URL}/vod/update`;
 export const DELETE_VOD_URL = `${BASE_URL}/vod/delete`;
+// #######################################PropheticDeclaration############################################################
+export const CREATE_PD_URL = `${BASE_URL}/vod/prophetic-declaration`;
+export const FETCH_PD_URL = `${BASE_URL}/vod/prophetic-declaration`;
+export const UPDATE_PD_URL = `${BASE_URL}/vod/prophetic-declaration/update`;
+export const DELETE_PD_URL = `${BASE_URL}/vod/prophetic-declaration/delete`;
 // #######################################NOTIFICATION############################################################
 export const CREATE_NOTIFICATION_URL = `${BASE_URL}/notifications`;
 export const FETCH_NOTIFICATION_URL = `${BASE_URL}/notifications/{id}`;
@@ -76,3 +81,7 @@ export const SUBSCRIPTION_FETCH_URL = `${PAYMENT_BASE_URL}/subscription/{userId}
 // #######################################PAYMENT_CALLBACK############################################################
 export const CALLBACK_POST_URL = `${PAYMENT_BASE_URL}/paystack/callback`;
 export const CALLBACK_GET_URL = `${PAYMENT_BASE_URL}/paystack/callback?trxref={trxref}&reference={ref}`;
+// ###################################### ORDER ############################################################
+export const PLACE_ORDER_URL = `${PAYMENT_BASE_URL}/api/v1/order`;
+export const STRIPE_CALLBACK_GET_URL = `${PAYMENT_BASE_URL}/api/v1/order/{status}/{reference}`;
+export const ORDER_CREATE_SESSION_URL = `${PAYMENT_BASE_URL}/api/v1/order/create-checkout-session`;

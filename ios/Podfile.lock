@@ -582,6 +582,8 @@ PODS:
     - React-Core
   - RNGestureHandler (2.12.1):
     - React-Core
+  - RNIap (12.16.2):
+    - React-Core
   - RNReanimated (3.3.0):
     - DoubleConversion
     - FBLazyVector
@@ -618,6 +620,42 @@ PODS:
     - React-Core
   - SocketRocket (0.6.1)
   - SSZipArchive (2.2.3)
+  - Stripe (24.14.0):
+    - StripeApplePay (= 24.14.0)
+    - StripeCore (= 24.14.0)
+    - StripePayments (= 24.14.0)
+    - StripePaymentsUI (= 24.14.0)
+    - StripeUICore (= 24.14.0)
+  - stripe-react-native (0.47.0):
+    - React-Core
+    - Stripe (~> 24.14.0)
+    - StripeApplePay (~> 24.14.0)
+    - StripeFinancialConnections (~> 24.14.0)
+    - StripePayments (~> 24.14.0)
+    - StripePaymentSheet (~> 24.14.0)
+    - StripePaymentsUI (~> 24.14.0)
+  - StripeApplePay (24.14.0):
+    - StripeCore (= 24.14.0)
+  - StripeCore (24.14.0)
+  - StripeFinancialConnections (24.14.0):
+    - StripeCore (= 24.14.0)
+    - StripeUICore (= 24.14.0)
+  - StripePayments (24.14.0):
+    - StripeCore (= 24.14.0)
+    - StripePayments/Stripe3DS2 (= 24.14.0)
+  - StripePayments/Stripe3DS2 (24.14.0):
+    - StripeCore (= 24.14.0)
+  - StripePaymentSheet (24.14.0):
+    - StripeApplePay (= 24.14.0)
+    - StripeCore (= 24.14.0)
+    - StripePayments (= 24.14.0)
+    - StripePaymentsUI (= 24.14.0)
+  - StripePaymentsUI (24.14.0):
+    - StripeCore (= 24.14.0)
+    - StripePayments (= 24.14.0)
+    - StripeUICore (= 24.14.0)
+  - StripeUICore (24.14.0):
+    - StripeCore (= 24.14.0)
   - TextToSpeech (4.1.0):
     - React
   - Yoga (1.14.0)
@@ -704,9 +742,11 @@ DEPENDENCIES:
   - "RNCAsyncStorage (from `../node_modules/@react-native-async-storage/async-storage`)"
   - "RNDateTimePicker (from `../node_modules/@react-native-community/datetimepicker`)"
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
+  - RNIap (from `../node_modules/react-native-iap`)
   - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNScreens (from `../node_modules/react-native-screens`)
   - RNSVG (from `../node_modules/react-native-svg`)
+  - "stripe-react-native (from `../node_modules/@stripe/stripe-react-native`)"
   - TextToSpeech (from `../node_modules/react-native-tts`)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
@@ -720,6 +760,14 @@ SPEC REPOS:
     - libevent
     - SocketRocket
     - SSZipArchive
+    - Stripe
+    - StripeApplePay
+    - StripeCore
+    - StripeFinancialConnections
+    - StripePayments
+    - StripePaymentSheet
+    - StripePaymentsUI
+    - StripeUICore
 
 EXTERNAL SOURCES:
   appcenter-analytics:
@@ -880,12 +928,16 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-community/datetimepicker"
   RNGestureHandler:
     :path: "../node_modules/react-native-gesture-handler"
+  RNIap:
+    :path: "../node_modules/react-native-iap"
   RNReanimated:
     :path: "../node_modules/react-native-reanimated"
   RNScreens:
     :path: "../node_modules/react-native-screens"
   RNSVG:
     :path: "../node_modules/react-native-svg"
+  stripe-react-native:
+    :path: "../node_modules/@stripe/stripe-react-native"
   TextToSpeech:
     :path: "../node_modules/react-native-tts"
   Yoga:
@@ -977,11 +1029,21 @@ SPEC CHECKSUMS:
   RNCAsyncStorage: d74501eeac0371fb58b3643704451a11b760af80
   RNDateTimePicker: a3d13ed62d7d781dfe0ebc79d04340a4e6350e2b
   RNGestureHandler: 627182485becfd74f122c83f93cce2be20c2e8c8
+  RNIap: f94647b3a3dbd5fa08ad7ed847eb588aa5fe95fe
   RNReanimated: 66b73d76033ee90993b08707aea68416eae2ebc5
   RNScreens: 39db1910d2ea9ae885dcda43086818e9f8b714d0
   RNSVG: 67c430ac7a54043cac37f6bd7bc94f8e22d8a64a
   SocketRocket: f32cd54efbe0f095c4d7594881e52619cfe80b17
   SSZipArchive: 62d4947b08730e4cda640473b0066d209ff033c9
+  Stripe: 6d254bcbf0706a656fb5d9d84cd77365c8b3c9f6
+  stripe-react-native: d35e2578ee89b38a4303c7fc4ed1604be112bfed
+  StripeApplePay: 4b1ef56530fb97ed699ec1d9120cdcbf3013748f
+  StripeCore: 16957868cac857937324a7cf4c9380ca1eda7e38
+  StripeFinancialConnections: ccaa2b1a77f8f617d16e51f7410a0d59d7a87346
+  StripePayments: 861a570434090ec08f8ba62e211fd03813b2a2f4
+  StripePaymentSheet: e4ae294f0e09b296a7dfc2c702e26ee30fe088a5
+  StripePaymentsUI: a8480e78da13266ce2d94e4ed0990258583a9cab
+  StripeUICore: 86c852985d9aece3658420f28ff73b27310e4249
   TextToSpeech: c5dd8320193bf69930cfe972c4127ca3dc8c878e
   Yoga: 87e59f6d458e5061d2421086c5de994b3f7cd151
 

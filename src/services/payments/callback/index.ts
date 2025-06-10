@@ -3,7 +3,7 @@ import {GenericResponseType} from "../../type";
 import {getByWithPathParam, postCall} from "../../index";
 import {
     CALLBACK_GET_URL,
-    CALLBACK_POST_URL
+    CALLBACK_POST_URL, STRIPE_CALLBACK_GET_URL
 } from "@constants/url";
 import {CallbackGetRequestType, CallbackGetResponsePayload, CallbackPostRequestType} from "./type";
 
@@ -27,6 +27,23 @@ export class CallbackService {
         let url = CALLBACK_GET_URL.replace("{trxref}", request.trxref);
         url = url.replace("{ref}", request.reference);
         token = "";
+        return await getByWithPathParam(
+            url,
+            token,
+            param,
+            paramValue
+        );
+    };
+
+    static stripeCallbackGet = async (
+        token: string | undefined,
+        request: CallbackGetRequestType
+    ): Promise<GenericResponseType<CallbackGetResponsePayload>> => {
+        const param = Object.keys(request);
+        const paramValue = Object.values(request);
+        let url = STRIPE_CALLBACK_GET_URL.replace("{status}", request.trxref);
+        url = url.replace("{reference}", request.reference);
+        // token = "";
         return await getByWithPathParam(
             url,
             token,

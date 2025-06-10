@@ -1,5 +1,6 @@
 // ###############################################################
 
+
 import {
     DevotionalItemProps,
     GeneralVerseOfTheDayType,
@@ -10,6 +11,8 @@ import {
     SelectedDevotionalDataType, TermsOfServiceType,
 } from "@shared/types/slices";
 import {IMAGES} from "./Colors";
+
+export const IN_APP_PRODUCT_IDS: string[] = ['com.bibleapp.bamobile.monthly_15','com.bibleapp.bamobile.monthly', 'tda_monthly'];
 
 export const testNotes: NoteProps[] = [
     {

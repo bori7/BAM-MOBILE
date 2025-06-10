@@ -48,7 +48,7 @@ export const paystackGetCall = createAsyncThunk<
     InitPaystaclkGetThunkArg,
     InitBAMThunkApiConfig
 >(
-    "payment/paystackget",
+    "payment/paystack-get",
     async (
         {paystackGetRequest},
         {rejectWithValue, getState, dispatch}
@@ -65,6 +65,32 @@ export const paystackGetCall = createAsyncThunk<
             })
             .catch((err) => {
                 debug.api_error("paystackGetRequestError", err);
+                return rejectWithValue(err);
+            });
+    }
+);
+
+export const stripeCallbackGetCall = createAsyncThunk<
+    GenericResponseType<CallbackGetResponsePayload>,
+    InitPaystaclkGetThunkArg,
+    InitBAMThunkApiConfig
+>(
+    "payment/stripe-get",
+    async (
+        {paystackGetRequest},
+        {rejectWithValue, getState, dispatch}
+    ) => {
+        let ipAddress = await getDeviceIpAddress();
+        const state = getState();
+
+        const accessToken = state.user.userData?.token || "";
+        return await CallbackService.stripeCallbackGet(accessToken, paystackGetRequest)
+            .then((res) => {
+                debug.api_success("stripeCallbackGet", res);
+                return res;
+            })
+            .catch((err) => {
+                debug.api_error("stripeCallbackGet RequestError", err);
                 return rejectWithValue(err);
             });
     }
@@ -202,7 +228,7 @@ export const fetchLiveSubscriptionCall = createAsyncThunk<
     InitFetchLiveSubscriptionThunkArg,
     InitBAMThunkApiConfig
 >(
-    "payment/fetchlivesubscription",
+    "payment/fetch-live-subscription",
     async (
         {fetchLiveSubscriptionRequest},
         {rejectWithValue, getState, dispatch}

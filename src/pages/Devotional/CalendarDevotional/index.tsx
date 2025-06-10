@@ -99,18 +99,18 @@ const CalendarDevotional: React.FC<NavigationProps> =
                             contentContainerStyle={styles.scrollContent}
                             style={styles.scroll}
                         >
-                            <Text style={styles.fv2}>
-                                Lorem ipsum dolor sit amet consectetur. Et ridiculus morbi
-                                consequat pulvinar ut dui arcu. At arcu volutpat orci urna enim
-                                sed quis.
-                            </Text>
+                            {/*<Text style={styles.fv2}>*/}
+                            {/*    Lorem ipsum dolor sit amet consectetur. Et ridiculus morbi*/}
+                            {/*    consequat pulvinar ut dui arcu. At arcu volutpat orci urna enim*/}
+                            {/*    sed quis.*/}
+                            {/*</Text>*/}
 
                             {/* <Text style={styles.fv1}>DAILY ANSWER DEVOTIONAL</Text> */}
 
                             {/* <Text style={styles.fv3}>January</Text> */}
                             <View style={styles.fv4}>
                                 <CalendarView
-                                scrollRef={scrollViewRef}
+                                    scrollRef={scrollViewRef}
                                 />
                             </View>
                         </ScrollView>

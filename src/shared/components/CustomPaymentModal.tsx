@@ -11,11 +11,11 @@ import {
 } from "react-native";
 import {Feather} from "@expo/vector-icons";
 import {COLORS, IMAGES, SIZES} from "@constants/Colors";
-import {ActivityIndicator} from "react-native-paper";
 import WebView from "react-native-webview";
-import {useSelector} from "react-redux";
-import {RootState} from "../../store";
-import {CONSTANT_URL_CONTEXT} from "@constants/props";
+import {useDispatch, useSelector} from "react-redux";
+import {AppDispatch, RootState} from "../../store";
+import {CONSTANT_URL_FAILED_CONTEXT, CONSTANT_URL_SUCCESS_CONTEXT,} from "@constants/props";
+import {generalActions} from "@store/slices/general";
 // import { ActivityIndicator } from "react-native-paper";
 
 type ICustomPaymentProps = {
@@ -40,6 +40,8 @@ export const CustomPaymentModal = (
 
     }: ICustomPaymentProps) => {
 
+    const dispatch = useDispatch<AppDispatch>();
+
     const webViewRef = useRef<WebView>(null);
 
     const generalState = useSelector(
@@ -47,7 +49,8 @@ export const CustomPaymentModal = (
     );
     const {generalData} = generalState;
 
-    const defaultWebUrl = "https://checkout.paystack.com/b7r6ulepnufdy1i";
+    // const defaultWebUrl = "https://checkout.paystack.com/b7r6ulepnufdy1i";
+    const defaultWebUrl = "https://checkout.stripe.com/c/pay/cs_test_a12BLZiLEXtTYaIgsSRvRe3U9K6nhg6OmWjIBQz3Zb6gbzhzjxO0AIsaPF#fidkdWxOYHwnPyd1blpxYHZxWjA0V1BRSGxDU2hPc0xqYl9NazBofHR8bkJCVHNIVFVddHRmSHdXUFVkdWNoN0lQM3NJQzdsRkJgdWNfcEtxMm1WRmAxUmxCNkd8aFU8NV1rTDdpZzZOZHdXNTVmNzBhNHRuNCcpJ2N3amhWYHdzYHcnP3F3cGApJ2lkfGpwcVF8dWAnPyd2bGtiaWBabHFgaCcpJ2BrZGdpYFVpZGZgbWppYWB3dic%2FcXdwYHgl";
 
     // const CONSTANT_URL_CONTEXT = "paystack/callback";
     const refreshWebView = () => {
@@ -76,6 +79,7 @@ export const CustomPaymentModal = (
         );
 
     }
+
     const handleNavigationStateChange = async (newNavState: any) => {
         debug.log('newNavState:', newNavState);
         if (!newNavState || !newNavState.url) {
@@ -84,8 +88,15 @@ export const CustomPaymentModal = (
         const url = newNavState.url;
         debug.log('present url:', url);
 
-        if (url && url?.includes(CONSTANT_URL_CONTEXT)) {
+        if (url &&
+          (  url?.includes(CONSTANT_URL_SUCCESS_CONTEXT) ||
+            url?.includes(CONSTANT_URL_FAILED_CONTEXT))
+        ) {
             debug.log('URL matches the specific string:', url);
+            dispatch(generalActions.updateGeneralDataPaymentSessionData({
+                paymentRedirectUrl: url,
+            }))
+
             closeModal();
             // setTimeout(() => {
             //
@@ -105,7 +116,6 @@ export const CustomPaymentModal = (
             onShow={onShowFunc}
         >
             <View style={styles.modalContainer}>
-
                 <View style={styles.modalContent}>
                     <View style={styles.modalHeader}>
                         <TouchableOpacity style={styles.modalImage} onPress={handleCloseModal}>
@@ -125,6 +135,10 @@ export const CustomPaymentModal = (
                         style={styles.webView}
                         // onMessage={onMessage}
                         onNavigationStateChange={handleNavigationStateChange}
+                        originWhitelist={['*']}
+                        javaScriptEnabled={true}
+                        domStorageEnabled={true}
+                        startInLoadingState={true}
                     />
 
                 </View>
