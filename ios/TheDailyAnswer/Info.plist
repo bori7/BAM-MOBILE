@@ -63,10 +63,6 @@
 	<string>$(PRODUCT_NAME) save images to your photo library when you choose to download or export content from the app.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>$(PRODUCT_NAME) access your photo library so you can select pictures to upload for your profile.</string>
-	<key>UIBackgroundModes</key>
-	<array>
-		<string>audio</string>
-	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>SplashScreen</string>
 	<key>UIRequiredDeviceCapabilities</key>
