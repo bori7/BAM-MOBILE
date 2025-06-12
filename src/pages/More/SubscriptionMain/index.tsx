@@ -386,54 +386,54 @@ const SubscriptionMain: React.FC<NavigationProps> = ({navigation, route}) => {
                         contentContainerStyle={styles.scrollContent}
                         style={styles.scroll}
                     >
-                        {/*<View style={styles.subscontainer}>*/}
-                        {/*    <Text style={styles.title}>Bible App Pro Subscription</Text>*/}
+                        <View style={styles.subscontainer}>
+                            <Text style={styles.title}>Bible App Pro Subscription</Text>
 
-                        {/*    {loading && (*/}
-                        {/*        <ActivityIndicator size="large" color="#007AFF"/>*/}
-                        {/*    )}*/}
+                            {loading && (
+                                <ActivityIndicator size="large" color="#007AFF"/>
+                            )}
 
-                        {/*    {error && (*/}
-                        {/*        <View style={styles.errorContainer}>*/}
-                        {/*            <Text style={styles.errorText}>{error}</Text>*/}
-                        {/*            <TouchableOpacity*/}
-                        {/*                style={styles.retryButton}*/}
-                        {/*                onPress={refreshSubscriptions}*/}
-                        {/*            >*/}
-                        {/*                <Text style={styles.retryButtonText}>Retry</Text>*/}
-                        {/*            </TouchableOpacity>*/}
-                        {/*        </View>*/}
-                        {/*    )}*/}
+                            {error && (
+                                <View style={styles.errorContainer}>
+                                    <Text style={styles.errorText}>{error}</Text>
+                                    <TouchableOpacity
+                                        style={styles.retryButton}
+                                        onPress={refreshSubscriptions}
+                                    >
+                                        <Text style={styles.retryButtonText}>Retry</Text>
+                                    </TouchableOpacity>
+                                </View>
+                            )}
 
-                        {/*    {products.length > 0 ? (*/}
-                        {/*        <View style={styles.productsContainer}>*/}
-                        {/*            {products.map((product) => (*/}
-                        {/*                <View key={product.productId} style={styles.productCard}>*/}
-                        {/*                    <Text style={styles.productTitle}>{product.title}</Text>*/}
-                        {/*                    <Text style={styles.productDescription}>{product.description}</Text>*/}
-                        {/*                    <Text style={styles.productPrice}>{product.localizedPrice}</Text>*/}
-                        {/*                    <TouchableOpacity*/}
-                        {/*                        style={styles.subscribeButton}*/}
-                        {/*                        onPress={buySubscription}*/}
-                        {/*                        disabled={loading}*/}
-                        {/*                    >*/}
-                        {/*                        <Text style={styles.subscribeButtonText}>Subscribe</Text>*/}
-                        {/*                    </TouchableOpacity>*/}
-                        {/*                </View>*/}
-                        {/*            ))}*/}
-                        {/*        </View>*/}
-                        {/*    ) : !loading && !error && (*/}
-                        {/*        <View style={styles.noProductsContainer}>*/}
-                        {/*            <Text style={styles.noProductsText}>No subscription plans available</Text>*/}
-                        {/*            <TouchableOpacity*/}
-                        {/*                style={styles.retryButton}*/}
-                        {/*                onPress={refreshSubscriptions}*/}
-                        {/*            >*/}
-                        {/*                <Text style={styles.retryButtonText}>Refresh</Text>*/}
-                        {/*            </TouchableOpacity>*/}
-                        {/*        </View>*/}
-                        {/*    )}*/}
-                        {/*</View>*/}
+                            {products.length > 0 ? (
+                                <View style={styles.productsContainer}>
+                                    {products.map((product) => (
+                                        <View key={product.productId} style={styles.productCard}>
+                                            <Text style={styles.productTitle}>{product.title}</Text>
+                                            <Text style={styles.productDescription}>{product.description}</Text>
+                                            <Text style={styles.productPrice}>{product.localizedPrice}</Text>
+                                            <TouchableOpacity
+                                                style={styles.subscribeButton}
+                                                onPress={buySubscription}
+                                                disabled={loading}
+                                            >
+                                                <Text style={styles.subscribeButtonText}>Subscribe</Text>
+                                            </TouchableOpacity>
+                                        </View>
+                                    ))}
+                                </View>
+                            ) : !loading && !error && (
+                                <View style={styles.noProductsContainer}>
+                                    <Text style={styles.noProductsText}>No subscription plans available</Text>
+                                    <TouchableOpacity
+                                        style={styles.retryButton}
+                                        onPress={refreshSubscriptions}
+                                    >
+                                        <Text style={styles.retryButtonText}>Refresh</Text>
+                                    </TouchableOpacity>
+                                </View>
+                            )}
+                        </View>
                         <Image source={IMAGES.logoDailyAnswer} style={styles.rmt}/>
                         <Text style={styles.r1t}>
                             Subscribe to get full access to all devotional contents on The Daily
@@ -514,28 +514,28 @@ const SubscriptionMain: React.FC<NavigationProps> = ({navigation, route}) => {
                             {/*        marginVertical: 30,*/}
                             {/*    }}*/}
                             {/*/>*/}
-                            {/*<MainButton*/}
-                            {/*    title={"In-App Purchase"}*/}
-                            {/*    onPressFunction={() => {*/}
-                            {/*        handleStripeCheckout()*/}
-                            {/*    }}*/}
-                            {/*    err={false}*/}
-                            {/*    btnStyle={styles.r4btnInApp}*/}
-                            {/*    loading={loading}*/}
-                            {/*    // disabled={!proceed}*/}
-                            {/*/>*/}
                             <MainButton
-                                title={"Subscribe"}
+                                title={"In-App Purchase"}
                                 onPressFunction={() => {
-                                    // handleSubscribe();
-                                    // buySubscription();
-                                    handleStripeCheckout();
+                                    buySubscription();
                                 }}
                                 err={false}
-                                btnStyle={styles.r4btn}
+                                btnStyle={styles.r4btnInApp}
                                 loading={loading}
                                 // disabled={!proceed}
                             />
+                            {/*<MainButton*/}
+                            {/*    title={"Subscribe"}*/}
+                            {/*    onPressFunction={() => {*/}
+                            {/*        // handleSubscribe();*/}
+                            {/*        // buySubscription();*/}
+                            {/*        handleStripeCheckout();*/}
+                            {/*    }}*/}
+                            {/*    err={false}*/}
+                            {/*    btnStyle={styles.r4btn}*/}
+                            {/*    loading={loading}*/}
+                            {/*    // disabled={!proceed}*/}
+                            {/*/>*/}
                         </View>
                         {/*<View style={styles.r4}>*/}
                         {/*    */}

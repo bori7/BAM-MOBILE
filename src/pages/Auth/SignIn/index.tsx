@@ -134,15 +134,15 @@ const SignIn: React.FC<NavigationProps> = ({navigation, route}) => {
             .then(async (res) => {
                 debug.log("res", res)
                 debug.log("deletedUsers", deletedUsers);
-                if (deletedUsers?.includes(res.payload.id)) {
-                    dispatch(
-                        screenNotificationActions.updateNotificationData({
-                            duration: 4000,
-                            message: "This user has already been deleted.",
-                        })
-                    );
-                    return;
-                }
+                // if (deletedUsers?.includes(res.payload.id)) {
+                //     dispatch(
+                //         screenNotificationActions.updateNotificationData({
+                //             duration: 4000,
+                //             message: "This user has already been deleted.",
+                //         })
+                //     );
+                //     return;
+                // }
                 await dispatch(fetchLiveSubscriptionCall({
                     fetchLiveSubscriptionRequest: {}
                 }))

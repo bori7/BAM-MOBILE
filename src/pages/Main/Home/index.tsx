@@ -27,7 +27,6 @@ import {
     getDayOfTheWeek,
     getPartOfDay,
 } from "@shared/helper";
-import {GeneralVerseOfTheDayType} from "@shared/types/slices";
 import {fetchAllDevotionalCall, fetchDevotionalByIdCall, updateUserDevotionalCall} from "@store/apiThunks/devotional";
 import {devotionalActions} from "@store/slices/devotional";
 import {MoreRoutes} from "@shared/const/routerMore";
@@ -46,7 +45,7 @@ type NavigationProps = CompositeScreenProps<
 const Home: React.FC<NavigationProps> = ({navigation, route}) => {
     const dispatch = useDispatch<AppDispatch>();
     const [hideOptions, setHideOptions] = useState<boolean>(false);
-    const [currVOD, setCurrVod] = useState<GeneralVerseOfTheDayType>();
+    // const [currVOD, setCurrVod] = useState<GeneralVerseOfTheDayType>();
     const [refreshing, setRefreshing] = useState<boolean>(false);
 
 
@@ -67,9 +66,9 @@ const Home: React.FC<NavigationProps> = ({navigation, route}) => {
     const prayersState = useSelector((state: RootState) => state.prayer);
     const {prayersData} = prayersState;
 
-    useEffect(() => {
-        setCurrVod(generalVerseOfTheDayList[0] || null);
-    }, []);
+    // useEffect(() => {
+    //     setCurrVod(generalVerseOfTheDayList[0] || null);
+    // }, []);
 
     const clickDevotional = async () => {
         dispatch(
@@ -131,8 +130,8 @@ const Home: React.FC<NavigationProps> = ({navigation, route}) => {
             {
                 createPrayerRequest: {
                     // id: "",
-                    title: currVOD?.verse || "",
-                    text: currVOD?.text || "",
+                    title: generalVerseOfTheDayList?.[0]?.verse || "",
+                    text: generalVerseOfTheDayList?.[0]?.text || "",
                     dateTime: "",
                     date: "",
                     time: "",
@@ -144,8 +143,8 @@ const Home: React.FC<NavigationProps> = ({navigation, route}) => {
                 dispatch(
                     prayersActions.updateOrAddPrayer({
                         uid: res.payload.prayerId,
-                        title: currVOD?.verse || "",
-                        text: currVOD?.text || "",
+                        title: generalVerseOfTheDayList?.[0]?.verse || "",
+                        text: generalVerseOfTheDayList?.[0]?.text || "",
                         datetime: "",
                         date: "",
                         time: "",
@@ -172,7 +171,7 @@ const Home: React.FC<NavigationProps> = ({navigation, route}) => {
     }, {
         name: "Pray", func: async () => {
 
-            const existingPrayer = prayersData?.prayersList?.filter((p, idx_) => p.title === currVOD?.verse) || [];
+            const existingPrayer = prayersData?.prayersList?.filter((p, idx_) => p.title === generalVerseOfTheDayList?.[0]?.verse) || [];
 
             if (existingPrayer.length === 0) {
                 await handlePray();
@@ -260,14 +259,14 @@ const Home: React.FC<NavigationProps> = ({navigation, route}) => {
                                     });
                                 }}
                             >
-                                <Text style={styles.v1t2}>{currVOD?.text}</Text>
+                                <Text style={styles.v1t2}>{generalVerseOfTheDayList?.[0]?.text}</Text>
                             </TouchableOpacity>
                             <View style={styles.v1r}>
-                                <Text style={styles.v1rt1}>{currVOD?.verse}</Text>
+                                <Text style={styles.v1rt1}>{generalVerseOfTheDayList?.[0]?.verse}</Text>
                                 <View style={styles.v1rb}>
                                     <TouchableOpacity style={styles.v1rbt1} onPress={() => {
                                         shareData(
-                                            currVOD?.text || ""
+                                            generalVerseOfTheDayList?.[0]?.text || ""
                                         )
                                     }}>
                                         <Entypo name="share" size={24} color={COLORS.Light.gray}/>
@@ -310,7 +309,7 @@ const Home: React.FC<NavigationProps> = ({navigation, route}) => {
                                                     key={idx}
                                                     style={styles.optionBody}
                                                     onPress={() => {
-                                                        option.func(currVOD?.text || "");
+                                                        option.func(generalVerseOfTheDayList?.[0]?.text || "");
                                                         setHideOptions(!hideOptions);
                                                     }}
                                                 >
@@ -397,9 +396,9 @@ const Home: React.FC<NavigationProps> = ({navigation, route}) => {
                         </View>
                         <View style={styles.v3}>
                             <View style={styles.v3a}>
-                                <Text style={styles.v3at1}>Prophetic Declaration</Text>
+                                <Text style={styles.v3at1Pd}>Prophetic Declaration</Text>
                             </View>
-                            <Text style={styles.v3b}>
+                            <Text style={styles.v3bPd}>
                                 {generalPropheticDeclarationList?.[0]?.text || ""}
                             </Text>
                         </View>
@@ -612,6 +611,11 @@ const styles = StyleSheet.create({
         fontWeight: "600",
         // marginBottom: 20,
     },
+    v3at1Pd: {
+        fontSize: SIZES.sizeSevenB,
+        fontWeight: "600",
+        // marginBottom: 20,
+    },
     v3at2: {
         alignItems: "center",
         justifyContent: "center",
@@ -620,6 +624,13 @@ const styles = StyleSheet.create({
         fontSize: SIZES.sizeSixC,
         fontWeight: "400",
         marginVertical: 20,
+    },
+    v3bPd: {
+        fontSize: SIZES.sizeSixC,
+        fontWeight: "400",
+        marginVertical: 20,
+        letterSpacing: 0.4,
+        lineHeight: 28,
     },
     v3c: {
         backgroundColor: COLORS.Light.colorOneLight,

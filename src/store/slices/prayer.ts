@@ -7,7 +7,6 @@ import {
 import {dateOptions, testPrayers, timeOptions} from "@constants/values";
 import {fetchDateFromInstant, formatNoteDate} from "@shared/helper";
 import {createPrayerCall, deletePrayerCall, fetchPrayerByUserIdCall, updatePrayerCall} from "../apiThunks/prayer";
-import {createNoteCall, deleteNoteCall, fetchNoteByUserIdCall, updateNoteCall} from "../apiThunks/note";
 
 const initialPrayersState: InitialPrayersStateType = {
     prayersData: {

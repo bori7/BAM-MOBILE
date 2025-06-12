@@ -23,8 +23,8 @@ import {generalActions} from "@store/slices/general";
 
 // Define separate IDs for iOS and Android
 const SUBSCRIPTION_SKUS: string[] = Platform.select({
-    ios: ['com.bibleapp.bamobile.monthly_15', 'com.bibleapp.bamobile.monthly',],
-    android: ['com.bibleapp.bamobile.monthly_15', 'com.bibleapp.bamobile.monthly']
+    ios: ['com.bibleapp.bamobile.annually_180', 'com.bibleapp.bamobile.quarterly_60', 'com.bibleapp.bamobile.monthly_15',],
+    android: ['com.bibleapp.bamobile.annually_180', 'com.bibleapp.bamobile.quarterly_60', 'com.bibleapp.bamobile.monthly_15',]
 }) || [];
 
 interface SubscriptionHookResult {
@@ -170,10 +170,10 @@ const useSubscription = (): SubscriptionHookResult => {
         setLoading(true);
         setError(null);
         try {
-            const products = await getProducts({skus: IN_APP_PRODUCT_IDS});
+            const products = await getProducts({skus: SUBSCRIPTION_SKUS});
             debug.log('Purchase products:', products);
             setProducts(products);
-            const result = await requestPurchase({sku: IN_APP_PRODUCT_IDS[0]});
+            const result = await requestPurchase({sku: SUBSCRIPTION_SKUS[0]});
             debug.log('Purchase result:', result);
             setLoading(false);
         } catch (err) {
